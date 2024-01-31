@@ -1,0 +1,17 @@
+header {
+  width:80%;
+  margin:1em auto;
+  height:2em;
+  border:1px solid black;
+}
+
+header nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+header nav div {
+  display: flex;
+  grid-gap:1em;
+}
