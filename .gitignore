@@ -3,6 +3,14 @@
 # Learn more about .gitignore:
 #     https://www.atlassian.com/git/tutorials/saving-changes/gitignore
 
+# Other
+out/
+build/
+*.tmp
+.angular/
+.npm
+.env
+
 # Node artifact files
 node_modules/
 dist/
@@ -23,8 +31,10 @@ dist/
 target/
 dist/
 
-# JetBrains IDE
+# IDE
 .idea/
+.vscode/
+.code/
 
 # Unit test reports
 TEST*.xml
