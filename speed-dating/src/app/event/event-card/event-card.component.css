@@ -1,0 +1,47 @@
+.event_card_container{
+  width:350px;
+  height:150px;
+  border:1px solid black;
+  display: flex;
+  flex-direction: column;
+}
+
+.event_card_image{
+  height:70%;
+  background: url("src/assets/img/card/card_placeholder.png") center;
+  background-size: cover;
+  display: flex;
+  grid-gap:0.5rem;
+  padding:0.5rem;
+  flex-wrap: wrap;
+
+}
+
+.event_card_information{
+  background-color: hsla(100, 100%, 100%, 0.5);
+  height:1rem;
+  padding:0.5rem 1rem;
+  border-radius:20px;
+}
+
+.event_card_footer{
+  height:30%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding:0 0.5rem;
+  font-size:0.75rem;
+}
+
+.event_card_footer i {
+  font-size:2rem;
+}
+
+.event_card_buttons {
+  display: flex;
+  grid-gap:0.25rem;
+}
+
+.event_card_buttons button {
+}
+

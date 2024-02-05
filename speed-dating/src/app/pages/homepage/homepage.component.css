@@ -33,7 +33,6 @@
 }
 
 .homepage_events{
-  height:800px;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -47,11 +46,7 @@
 .homepage_events h3{
   font-size:1.5rem;
 }
-.placeholder{
-  width:250px;
-  height:150px;
-  border:1px solid black;
-}
+
 
 .event_container{
   display: flex;
