@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose  = require("mongoose");
-const User = require("./models/user")
+const User = require("./models/userModel")
+const authRoutes = require("./routes/authRoutes")
 require('dotenv').config();
 const app = express();
 const port = 3000;
