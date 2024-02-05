@@ -16,6 +16,15 @@ import { TagsComponent } from './util/tags/tags.component';
 import { MatchPrecentageBarComponent } from './util/match-precentage-bar/match-precentage-bar.component';
 import { DateComponent } from './event/date/date.component';
 import { ProfileInfoComponent } from './profile/profile-info/profile-info.component';
+import { EventPageComponent } from './pages/event-page/event-page.component';
+import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
+import { OverviewPageComponent } from './pages/overview-page/overview-page.component';
+import { LoginComponent } from './util/login/login.component';
+import { SignUpComponent } from './util/sign-up/sign-up.component';
+import { CardContainerComponent } from './util/card-container/card-container.component';
+import { DateReviewComponent } from './event/date-review/date-review.component';
+import { ParticipantAnswerComponent } from './event/participant-answer/participant-answer.component';
+import { FilterComponent } from './util/filter/filter.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomepageComponent } from './pages/homepage/homepage.component';
@@ -35,6 +44,15 @@ import { HomepageComponent } from './pages/homepage/homepage.component';
     MatchPrecentageBarComponent,
     DateComponent,
     ProfileInfoComponent,
+    EventPageComponent,
+    ProfilePageComponent,
+    OverviewPageComponent,
+    LoginComponent,
+    SignUpComponent,
+    CardContainerComponent,
+    DateReviewComponent,
+    ParticipantAnswerComponent,
+    FilterComponent,
     HeaderComponent,
     FooterComponent,
     HomepageComponent,
