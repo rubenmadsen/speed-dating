@@ -28,6 +28,7 @@ import { FilterComponent } from './util/filter/filter.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomepageComponent } from './pages/homepage/homepage.component';
+import { CreateEventComponent } from './util/create-event/create-event.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,6 +57,7 @@ import { HomepageComponent } from './pages/homepage/homepage.component';
     HeaderComponent,
     FooterComponent,
     HomepageComponent,
+    CreateEventComponent,
   ],
   imports: [
     BrowserModule,
