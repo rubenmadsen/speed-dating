@@ -1,17 +1,16 @@
 header {
   width:80%;
-  margin:1em auto;
+  margin:auto;
   height:2em;
   display: flex;
   align-items: center;
   justify-content: space-between;
   background: white;
-  border-radius:50px;
+  padding:0.5rem;
 }
 
 img {
   height:100%;
-  border-bottom-left-radius: 50px;
 }
 
 header nav {

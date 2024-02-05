@@ -1,3 +1,68 @@
-.placeholder{
+.homepage_container {
+
+}
+
+
+.homepage_header{
+  height:600px;
+  background-image: url("src/assets/img/homepage/background.png");
+  background-size: cover;
+  margin:0;
+}
+
+.homepage_header {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  grid-gap:1rem;
+  color:white;
+}
+
+.homepage_header h1{
+  font-size:3rem;
+}
+
+.buttons {
+  display: flex;
+  grid-gap:1rem;
+}
+
+.buttons button {
+  padding:0.5rem 1rem;
+}
+
+.homepage_events{
   height:800px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width:80%;
+  margin:auto;
+  padding:2rem;
+  grid-gap:2rem;
+}
+
+
+.homepage_events h3{
+  font-size:1.5rem;
+}
+.placeholder{
+  width:250px;
+  height:150px;
+  border:1px solid black;
+}
+
+.event_container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-gap:1em;
+  flex-wrap: wrap;
+}
+
+
+select {
+  width:15rem;
+  padding:1rem;
 }
