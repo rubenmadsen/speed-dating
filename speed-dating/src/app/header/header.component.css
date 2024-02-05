@@ -2,16 +2,22 @@ header {
   width:80%;
   margin:1em auto;
   height:2em;
-  border:1px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  border-radius:50px;
+}
+
+img {
+  height:100%;
+  border-bottom-left-radius: 50px;
 }
 
 header nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-
-header nav div {
-  display: flex;
   grid-gap:1em;
 }
+
