@@ -1,0 +1,22 @@
+header {
+  width:80%;
+  margin:auto;
+  height:2em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  padding:0.5rem;
+}
+
+img {
+  height:100%;
+}
+
+header nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  grid-gap:1em;
+}
+

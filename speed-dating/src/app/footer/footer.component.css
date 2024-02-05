@@ -1,0 +1,17 @@
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  height:200px;
+  background: var(--black-clr);
+}
+
+
+footer div {
+  display: flex;
+  align-items: center;
+  color: var(--white-clr);
+  flex-direction: column;
+  justify-content: center;
+  grid-gap:1em;
+}
