@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-<<<<<<< HEAD
 import { SmileyComponent } from './event/smiley/smiley.component';
 import { EventCardComponent } from './event/event-card/event-card.component';
 import { EventInfoComponent } from './event/event-info/event-info.component';
@@ -17,16 +16,12 @@ import { TagsComponent } from './util/tags/tags.component';
 import { MatchPrecentageBarComponent } from './util/match-precentage-bar/match-precentage-bar.component';
 import { DateComponent } from './event/date/date.component';
 import { ProfileInfoComponent } from './profile/profile-info/profile-info.component';
-=======
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomepageComponent } from './pages/homepage/homepage.component';
->>>>>>> dev
-
 @NgModule({
   declarations: [
     AppComponent,
-<<<<<<< HEAD
     SmileyComponent,
     EventCardComponent,
     EventInfoComponent,
@@ -39,12 +34,10 @@ import { HomepageComponent } from './pages/homepage/homepage.component';
     TagsComponent,
     MatchPrecentageBarComponent,
     DateComponent,
-    ProfileInfoComponent
-=======
+    ProfileInfoComponent,
     HeaderComponent,
     FooterComponent,
     HomepageComponent,
->>>>>>> dev
   ],
   imports: [
     BrowserModule,
