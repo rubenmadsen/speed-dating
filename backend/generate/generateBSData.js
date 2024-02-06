@@ -14,6 +14,7 @@ function generateDatabase(){
 
 }
 
+/********************************************************************/
 function generateRandomUser(){
     const newUser = User();
     newUser.imagePath = "https://source.unsplash.com/random/";
@@ -26,6 +27,17 @@ function generateRandomUser(){
     newUser.description = getRandomDescription();
     return newUser;
 }
+function generateRandomEvent(){
+    const newEvent = Event();
+    newEvent.startDate = getRandomDate();
+    newEvent.location = getRandomVenue()
+    newEvent.city = getRandomCity();
+    newEvent.address = getRandomAddress();
+    newEvent.description = getRandomVenueDescription();
+    return newEvent;
+}
+/********************************************************************/
+
 function generateNRandomUsers(N){
     let users = [];
     for (let i = 0; i < N; i++) {
@@ -38,14 +50,6 @@ function generateNRandomUsers(N){
     }
 }
 
-function generateRandomEvent(){
-    const newEvent = Event();
-    newEvent.startDate = getRandomDate();
-    newEvent.location = getRandomVenue()
-    newEvent.address = getRandomAddress() + ", " + getRandomCity();
-    newEvent.description = getRandomVenueDescription();
-    return newEvent;
-}
 function generateNRandomEvents(N){
     let events = [];
     for (let i = 0; i < N; i++) {
