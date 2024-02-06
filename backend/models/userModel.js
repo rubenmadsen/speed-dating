@@ -57,7 +57,19 @@ const userSchema = new Schema({
         default:[]
     },
     preferences:{
-        type:[String],
+        type:[{
+            name:{
+                type:String
+            },
+            min:{
+                type:Number,
+                default:0
+            },
+            max:{
+                type:Number,
+                default:1
+            }
+        }],
         default:[]
     },
     interests:{
