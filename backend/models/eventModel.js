@@ -8,7 +8,7 @@ const eventSchema = new Schema({
     },
     endDate:{
         type:Date,
-        required:[true, "An event must have an end date"]
+        required:[false, "An event must have an end date"]
     },
     location:{
         type:String,

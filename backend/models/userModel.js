@@ -11,15 +11,16 @@ const userSchema = new Schema({
         type:String,
         required:[true, "You must upload a profile image"]
     },
-    username:{
-        type:String,
-        required:[true, "You must enter a username"],
-        unique:[true, "Username already exists"],
-        lowercase:true,
-        minlength:[4,"Username needs to be atleast 4 characters long"],
-        maxLength:64,
-        validate:[(val) => { validate(val) }, "Use only a-z and 0-9"]
-    },
+    // username:{
+    //     type:String,
+    //     required:[false, "You must enter a username"],
+    //     unique:[true, "Username already exists"],
+    //     lowercase:true,
+    //     minlength:[4,"Username needs to be atleast 4 characters long"],
+    //     maxLength:64,
+    //     validate:[(val) => { validate(val) }, "Use only a-z and 0-9"],
+    //     default:"No name"
+    // },
     password:{
         type:String,
         required:[true, "You must enter a password"],
@@ -73,7 +74,7 @@ const userSchema = new Schema({
         default:[]
     },
     matchingData:{
-
+        required:[false]
     }
 });
 //
