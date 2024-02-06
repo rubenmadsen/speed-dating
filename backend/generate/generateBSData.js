@@ -3,6 +3,16 @@ const Event = require('../models/eventModel')
 const { Router } = require('express');
 const router = Router();
 
+function clearDatabase(){
+
+}
+
+function generateDatabase(){
+    clearDatabase();
+    generateNRandomUsers(30);
+    generateNRandomEvents(5);
+
+}
 
 function generateRandomUser(){
     const newUser = User();
