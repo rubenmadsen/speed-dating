@@ -11,10 +11,11 @@ const categoryRoutes = require('./routes/categoryRoutes')
 require('dotenv').config();
 const app = express();
 const port = 3000;
-
+const path = require('path')
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use(express.static('public'));
 app.use(userRoutes);
 app.use(eventRoutes);
 app.use(dateRoutes);
