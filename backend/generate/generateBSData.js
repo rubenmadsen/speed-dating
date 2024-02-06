@@ -17,9 +17,9 @@ function generateDatabase(){
 /********************************************************************/
 function generateRandomUser(){
     const newUser = User();
-    newUser.imagePath = "https://source.unsplash.com/random/";
-    newUser.password = 1234;
     newUser.gender = getRandomGender();
+    newUser.imagePath = newUser.gender === "male" ? "MaleProfilePlaceholder.png" : "FemaleProfilePlaceholder.png";
+    newUser.password = 1234;
     newUser.firstname = getRandomFirstName(newUser.gender)
     newUser.lastname = getRandomLastName();
     newUser.age = getRandomAge()
