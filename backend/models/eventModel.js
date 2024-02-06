@@ -6,9 +6,17 @@ const eventSchema = new Schema({
         type:Date,
         required:[true, "An event must have a start date"]
     },
-    endDate:{
-        type:Date,
-        required:[false, "An event must have an end date"]
+    // endDate:{
+    //     type:Date,
+    //     required:[false, "An event must have an end date"]
+    // },
+    hasEnded:{
+        type:Boolean,
+        default:false
+    },
+    round:{
+        type:Number,
+        default:0
     },
     location:{
         type:String,
@@ -19,6 +27,10 @@ const eventSchema = new Schema({
         type:String,
         required:[true, "An event must have an address"],
         maxLength:64
+    },
+    city:{
+      type:String,
+      required:[true, "An event must have a city"]
     },
     longitude:{
         type:String,

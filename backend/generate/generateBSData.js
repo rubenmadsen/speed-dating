@@ -16,6 +16,17 @@ function generateRandomUser(){
     newUser.description = getRandomDescription();
     return newUser;
 }
+function generateNRandomUsers(N){
+    let users = [];
+    for (let i = 0; i < N; i++) {
+        const newUser = generateRandomUser();
+        User.create(newUser).then(user => {
+                console.log("Created",newUser);
+              }).catch(err => {
+                console.log(err);
+              });
+    }
+}
 
 function generateRandomEvent(){
     const newEvent = Event();
@@ -25,7 +36,13 @@ function generateRandomEvent(){
     newEvent.description = getRandomVenueDescription();
     return newEvent;
 }
-
+function generateNRandomEvents(N){
+    let events = [];
+    for (let i = 0; i < N; i++) {
+        events.push(generateRandomUser());
+    }
+    return events;
+}
 
 
 //
@@ -460,3 +477,5 @@ Object.freeze(venueDescriptions);
 
 module.exports.generateRandomUser = generateRandomUser;
 module.exports.generateRandomEvent = generateRandomEvent;
+module.exports.generateNRandomUsers = generateNRandomUsers;
+module.exports.generateNRandomEvents = generateNRandomEvents;

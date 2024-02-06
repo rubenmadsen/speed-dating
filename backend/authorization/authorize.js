@@ -1,24 +1,24 @@
-const jwt           = require("jsonwebtoken");
+// const jwt = require("jsonwebtoken");
 
 
 // Check if user is logged in
 const authorizeUser = (req,res,next) =>{
-    const token = req.cookies.jwt;
-    if(token){
-        jwt.verify(token,"Äldre damer brinner bäst",(err,decodedToken) => {
-            if(err){
-                console.log(err);
-                res.redirect("/loggedin");
-            }else{
-                console.log(decodedToken);
-                next();
-            }
-        });
-    }
-    else{
-        res.redirect("/loggedin");
-    }
-
+    // const token = req.cookies.jwt;
+    // if(token){
+    //     jwt.verify(token,"Äldre damer brinner bäst",(err,decodedToken) => {
+    //         if(err){
+    //             console.log(err);
+    //             res.redirect("/loggedin");
+    //         }else{
+    //             console.log(decodedToken);
+    //             next();
+    //         }
+    //     });
+    // }
+    // else{
+    //     res.redirect("/loggedin");
+    // }
+    next();
 }
 
 module.exports = {authorizeUser};

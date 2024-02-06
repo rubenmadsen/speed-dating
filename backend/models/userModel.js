@@ -11,19 +11,10 @@ const userSchema = new Schema({
         type:String,
         required:[true, "You must upload a profile image"]
     },
-    // username:{
-    //     type:String,
-    //     required:[false, "You must enter a username"],
-    //     unique:[true, "Username already exists"],
-    //     lowercase:true,
-    //     minlength:[4,"Username needs to be atleast 4 characters long"],
-    //     maxLength:64,
-    //     validate:[(val) => { validate(val) }, "Use only a-z and 0-9"],
-    //     default:"No name"
-    // },
     password:{
         type:String,
         required:[true, "You must enter a password"],
+        select:false,
         minlength:[4,"Password needs to be atleast 4 characters long"],
         maxLength:256
     },
@@ -60,7 +51,7 @@ const userSchema = new Schema({
         ref:'EventModel',
         default:[]
     },
-    matches:{
+    sharedContacts:{
         type:[Schema.Types.ObjectId],
         ref:'UserModel',
         default:[]
@@ -74,7 +65,17 @@ const userSchema = new Schema({
         default:[]
     },
     matchingData:{
-        required:[false]
+        type:[
+            {
+                category:{
+                    type:Number
+                },
+                points:{
+                    type:Number
+                }
+            }
+        ],
+        default:[]
     }
 });
 //
