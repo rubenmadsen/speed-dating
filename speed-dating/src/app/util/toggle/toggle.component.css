@@ -1,0 +1,52 @@
+.share-contacts-switch{
+  margin-right: 1rem;
+  float: right;
+  position: relative;
+  display: inline-block;
+  width: 3rem;
+  height: 1.9rem;
+}
+
+.share-contacts-switch input{
+  opacity: 0;
+  height: 0;
+  width: 0;
+}
+
+.slider{
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #ccc;
+  -webkit-transition: .4s;
+  border-radius: 34px;
+}
+
+.slider:before{
+  border-radius: 50%;
+  position: absolute;
+  content: "";
+  background-color: var(--white-clr);
+  height: 1.6rem;
+  width: 1.6rem;
+  left: 4px;
+  bottom: 2px;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+
+input:checked + .slider{
+  background-color: var(--accent-clr);
+}
+
+
+input:checked + .slider:before{
+  -webkit-transform: translateX(1rem);
+  -ms-transform: translateY(1.5rem);
+  transform: translateX(1rem);
+}
+
