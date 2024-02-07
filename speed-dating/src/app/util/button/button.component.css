@@ -1,0 +1,71 @@
+.button {
+  padding: 0.5rem 1.5rem;
+  border-radius: 10px;
+  border:none;
+}
+
+.button:hover{
+  cursor: pointer;
+
+}
+
+.clr-primary{
+  color:var(--primary-clr);
+}
+
+.clr-secondary {
+  color: var(--secondary-clr);
+}
+
+.clr-accent {
+  color:var(--accent-clr);
+}
+
+.clr-black {
+  color: var(--black-clr);
+}
+
+.primary {
+  background: var(--primary-clr);
+}
+
+.accent {
+  background: var(--accent-clr);
+}
+
+.trans {
+  background: none;
+}
+
+.secondary {
+  background:var(--accent-clr);
+}
+
+.secondary:hover{
+  background: var(--accent-clr);
+}
+
+.alternative{
+  background: var(--secondary-clr);
+}
+
+.border-primary{
+  border: 1px solid var(--primary-clr);
+}
+
+.border-secondary{
+  border: 1px solid var(--secondary-clr);
+}
+
+.border-accent{
+  border: 1px solid var(--accent-clr);
+}
+
+.small {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.75rem;
+}
+
+.clr-white {
+  color:var(--white-clr)
+}
