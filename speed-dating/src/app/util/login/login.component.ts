@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {faX} from "@fortawesome/free-solid-svg-icons/faX";
 
 @Component({
   selector: 'app-login',
@@ -7,4 +8,5 @@ import { Component } from '@angular/core';
 })
 export class LoginComponent {
 
+  protected readonly faX = faX;
 }

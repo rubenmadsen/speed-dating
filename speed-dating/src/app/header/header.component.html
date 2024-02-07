@@ -3,6 +3,10 @@
   <img src="./assets/img/logo/header_logo.png" alt="logo" routerLink="/">
   <nav>
     <app-button [buttonClass]="'trans clr-accent border-accent'" [buttonText]="'Sign up'"> </app-button>
-    <app-button [buttonClass]="'accent border-accent clr-white '" [buttonText]="'Login'"> </app-button>
+    <app-button [buttonClass]="'accent border-accent clr-white '" [buttonText]="'Login'" (click)="toggleLoginPopup()"> </app-button>
   </nav>
 </header>
+<div class="hide_out_background" *ngIf="showLoginPopup" (click)="toggleLoginPopup()">
+</div>
+<app-login *ngIf="showLoginPopup"></app-login>
+
