@@ -11,14 +11,19 @@
   background: url("src/assets/img/card/card_placeholder.png") center;
   background-size: cover;
   display: flex;
-  grid-gap:0.5rem;
   padding:0.5rem;
   flex-wrap: wrap;
+  justify-content: space-between;
+  font-weight:bold;
+}
 
+.event_card_image div{
+  display: flex;
+  grid-gap:0.5rem;
 }
 
 .event_card_information{
-  background-color: hsla(100, 100%, 100%, 0.5);
+  background-color: hsla(100, 100%, 100%, 0.7);
   height:1rem;
   padding:0.5rem 1rem;
   border-radius:20px;
@@ -28,7 +33,7 @@
   height:30%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   padding:0 0.5rem;
   font-size:0.75rem;
 }
@@ -42,6 +47,18 @@
   grid-gap:0.25rem;
 }
 
-.event_card_buttons button {
+#event_card_footer_clock{
+  font-size:1rem;
 }
 
+#event_card_information_map{
+  cursor:pointer;
+  background: var(--secondary-clr);
+  padding: 0.5rem;
+  color:var(--black-clr);
+  transition: scale 150ms ease-out;
+}
+
+#event_card_information_map:hover{
+  scale: 111%;
+}

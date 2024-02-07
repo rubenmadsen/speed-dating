@@ -1,0 +1,37 @@
+.login_form_container {
+  background: var(--white-clr);
+  border-radius: 10px;
+  position:fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -25rem;
+  margin-left: -10rem;
+  height:20rem;
+  width:20rem;
+
+}
+
+.login_form {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  grid-gap:2rem;
+  height:100%;
+}
+
+input {
+  font-size:1.2rem;
+}
+
+.x_close_form {
+  cursor:pointer;
+  padding:1rem;
+}
+
+.login_form_header{
+
+  display: flex;
+  justify-content: flex-end;
+  height:2rem;
+}

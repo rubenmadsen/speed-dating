@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {faGripVertical} from "@fortawesome/free-solid-svg-icons/faGripVertical";
 
 @Component({
   selector: 'app-event-page',
@@ -7,4 +8,5 @@ import { Component } from '@angular/core';
 })
 export class EventPageComponent {
 
+  protected readonly faGripVertical = faGripVertical;
 }

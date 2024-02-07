@@ -1,0 +1,14 @@
+#wholeBar {
+    position: relative;
+    background-color: var(--white-clr);
+    border: 1px solid var(--primary-clr);
+}
+
+#progressText {
+    text-align: center;
+    background-color: transparent;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%)
+}

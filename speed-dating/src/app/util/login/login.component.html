@@ -1,1 +1,11 @@
-<p>login works!</p>
+<div class="login_form_container">
+  <div class="login_form_header">
+    <fa-icon [icon]="faX" class="x_close_form"></fa-icon>
+  </div>
+  <form class="login_form">
+    <input class="input email" placeholder="E-Mail">
+    <input class="input password" placeholder="Password">
+    <app-button type="submit" [buttonClass]="'accent clr-white'" [buttonText]="'Log in'"></app-button>
+    <p>Register</p>
+  </form>
+</div>

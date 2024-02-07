@@ -1,15 +1,17 @@
 <div class="event_card_container">
   <div class="event_card_image">
-    <p class="event_card_information">
-        Göteborg
-    </p>
-    <p class="event_card_information">
-      Slottskogen
-    </p>
-    <i class="event_card_information open_map">V</i>
+    <div>
+      <p class="event_card_information unselectable">
+          Göteborg
+      </p>
+      <p class="event_card_information unselectable">
+        Slottskogen
+      </p>
+    </div>
+    <fa-icon [icon]="faMapLocationDot" class="event_card_information" id="event_card_information_map" (click)="openMap()"></fa-icon>
   </div>
   <div class="event_card_footer">
-    <i>&#x29D6;</i>
+    <fa-icon [icon]="faClock" id="event_card_footer_clock"></fa-icon>
     <p> 18/9 | 18:30 - 19:30</p>
     <div class="event_card_buttons">
       <app-button [buttonClass]="'trans clr-accent border-accent small'" [buttonText]="'Information'" > </app-button>
