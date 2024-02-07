@@ -1,9 +1,9 @@
 :root{
-  --white-clr: #fff;
-  --black-clr: #000;
-  --primary-clr: #fff;
-  --secondary-clr: #fff;
-  --accent-clr: #fff;
+  --white-clr: #F7FFF7;
+  --black-clr: #Svart;
+  --primary-clr: #2F3061;
+  --secondary-clr: #FFE66D;
+  --accent-clr: #6CA6C1;
   --alternate-clr: #fff;
   --attention-color: #fff;
 }
