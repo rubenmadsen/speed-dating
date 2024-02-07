@@ -9,7 +9,7 @@ build/
 *.tmp
 .angular/
 .npm
-.env
+backend/.env
 
 # Node artifact files
 node_modules/
