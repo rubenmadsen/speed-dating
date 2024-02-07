@@ -2,16 +2,31 @@ footer {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  height:200px;
+  height:15rem;
   background: var(--black-clr);
 }
 
-
-footer div {
+div {
   display: flex;
   align-items: center;
   color: var(--white-clr);
   flex-direction: column;
   justify-content: center;
   grid-gap:1em;
+}
+
+img {
+  width: 7rem;
+  margin-top: 1rem;
+}
+
+.social-container {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  align-content: center;
+}
+
+.social-icon {
+  padding: 1rem;
+  font-size: 1.5rem;
 }
