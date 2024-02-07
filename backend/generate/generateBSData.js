@@ -25,7 +25,9 @@ function generateDatabase() {
     return clearDatabase().then(async () => {
         await generateNRandomUsers(30,false); // Participants
         await generateNRandomUsers(2,true); // Organizers
-        await generateNRandomEvents(5);
+        await generateNRandomEvents(15);
+        await User.create(generateDummyParticipant());
+        await User.create(generateDummyOrganizer());
         const events = await Event.find({});
         for (const event of events) {
             const men = await User.aggregate([
@@ -39,10 +41,12 @@ function generateDatabase() {
             // Assuming event's participants field is an array of user IDs
             for (const woman of women) {
                 (await event).participants.push(woman._id);
+                (await woman).events.push(event);
                 (await event).currentParticipants++;
             }
             for (const man of men) {
                 (await event).participants.push(man._id);
+                (await man).events.push(event);
                 (await event).currentParticipants++;
             }
 
@@ -55,7 +59,18 @@ function generateDatabase() {
 }
 
 /********************************************************************/
-
+function generateDummyParticipant(){
+    const newDummy = generateRandomUser(false);
+    newDummy.email = "p@p.p";
+    newDummy.password = "1234";
+    return newDummy;
+}
+function generateDummyOrganizer(){
+    const newDummy = generateRandomUser(false);
+    newDummy.email = "o@o.o";
+    newDummy.password = "1234";
+    return newDummy;
+}
 function generateRandomUser(isOrganizer){
     const newUser = User();
     newUser.gender = getRandomGender();

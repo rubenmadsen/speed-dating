@@ -1,6 +1,8 @@
 const express = require('express');
 const randomGenerations = require('./generate/generateBSData')
 const mongoose  = require("mongoose");
+const cookieParser = require('cookie-parser');
+const cors = require('cors')
 const User = require("./models/userModel")
 const Event = require('./models/eventModel')
 const Date = require('./models/dateModel')
@@ -14,14 +16,18 @@ const app = express();
 const port = 3000;
 const path = require('path')
 
+app.use(cors({origin:["http://localhost"],credentials:true}));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static('public'));
+app.use(cookieParser());
+
 app.use(userRoutes);
 app.use(eventRoutes);
 app.use(dateRoutes);
 app.use(categoryRoutes);
 app.use(generationRoutes);
+
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
