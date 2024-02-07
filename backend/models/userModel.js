@@ -73,7 +73,10 @@ const userSchema = new Schema({
         default:[]
     },
     interests:{
-        type:[String],
+        type:{
+            category:Number,
+            activities:[String]
+        },
         default:[]
     },
     matchingData:{
