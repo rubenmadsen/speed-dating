@@ -31,6 +31,30 @@ export class BackendService {
   login(email:string, password:string):Observable<any>{
     return this.http.post<any>(this.userURL + "login", {email, password},this.requestOptions);
   }
+  logout():Observable<any>{
+    return this.http.post<any>(this.userURL + "logout", this.requestOptions);
+  }
+
+  /**
+   * Checks if the chosen email address is available
+   * @param email The god-damn email address
+   */
+  checkAvailability(email:string):Observable<any>{
+    return this.http.post<any>(this.userURL +  "available",{},this.requestOptions);
+  }
+
+  // Event
+
+
+  // Date
+
+
+  // DateFeedback
+
+
+  // EventFeedback
+
+
 
 
   //Ex
