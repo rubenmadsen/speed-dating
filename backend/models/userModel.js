@@ -41,6 +41,10 @@ const userSchema = new Schema({
         type:String,
         required:[true, "You must choose a gender"]
     },
+    isOrganizer:{
+        type:Boolean,
+        default:false
+    },
     description:{
         type:String,
         required:[true, "You must tell us about yourself"],
