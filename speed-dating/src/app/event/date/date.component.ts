@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import {faInfo} from "@fortawesome/free-solid-svg-icons";
+import {faInfo} from "@fortawesome/free-solid-svg-icons/faInfo";
+
 
 @Component({
   selector: 'app-date',
@@ -7,6 +8,7 @@ import {faInfo} from "@fortawesome/free-solid-svg-icons";
   styleUrls: ['./date.component.css']
 })
 export class DateComponent {
+
 
   protected readonly faInfo = faInfo;
 }
