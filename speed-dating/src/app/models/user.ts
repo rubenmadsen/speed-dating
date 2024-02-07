@@ -1,4 +1,6 @@
-export interface User {
+import {Base} from "./base";
+
+export interface User extends Base {
   imagePath: string;
   email: string;
   firstname: string;
