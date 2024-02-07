@@ -30,7 +30,7 @@ mongoose.connect(process.env.DB_SERVER).then(result => {
     console.log("Connected to mongo.");
     console.log("Backend listening in port " + port + "...");
 
-    randomGenerations.generateNRandomUsers(20);
+    //randomGenerations.generateNRandomUsers(20);
 
   //   const newUser = randomGenerations.generateRandomUser();
   //   User.create(newUser).then(user => {
