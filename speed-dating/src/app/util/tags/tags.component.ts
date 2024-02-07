@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {faClose} from "@fortawesome/free-solid-svg-icons/faClose";
 
 @Component({
   selector: 'app-tags',
@@ -7,4 +8,13 @@ import { Component } from '@angular/core';
 })
 export class TagsComponent {
 
+  @Input()  tagClass = ''
+  @Input()   tagLabel= ''
+  protected readonly faClose = faClose;
+
+  @Output() tagOnClick = new EventEmitter
+
+  onClick(){
+    this.tagOnClick.emit()
+  }
 }

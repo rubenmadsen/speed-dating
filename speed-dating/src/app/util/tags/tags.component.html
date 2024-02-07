@@ -1,1 +1,4 @@
-<p>tags works!</p>
+<div [ngClass]="tagClass" class="tag">
+  <fa-icon (click)="onClick()" [icon]="faClose" ></fa-icon>
+  <p>{{tagLabel}}</p>
+</div>

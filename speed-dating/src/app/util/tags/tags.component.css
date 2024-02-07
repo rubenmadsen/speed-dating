@@ -1,0 +1,15 @@
+.accent{
+  background-color: var(--accent-clr);
+}
+
+.tag{
+  border-radius: 2rem;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  grid-gap: 1rem;
+}
+
+fa-icon{
+  cursor: pointer;
+}
