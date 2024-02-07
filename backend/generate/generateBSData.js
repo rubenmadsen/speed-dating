@@ -1,23 +1,65 @@
 const User = require('../models/userModel');
 const Event = require('../models/eventModel')
+const EventFeedback = require('../models/eventFeedbackModel')
+const DateFeedback = require('../models/dateFeedbackModel')
+const Date = require('../models/dateModel')
 const { Router } = require('express');
 const router = Router();
 
-function clearDatabase(){
-
+async function clearDatabase() {
+    await clearCollection(User);
+    await clearCollection(Event);
+    await clearCollection(EventFeedback);
+    await clearCollection(DateFeedback);
+    await clearCollection(Date);
+}
+function clearCollection(Model){
+    return Model.deleteMany({}).then(result => {
+        console.log("cleared ");
+    }).catch(err => {
+        console.log(err);
+    })
 }
 
-function generateDatabase(){
-    clearDatabase();
-    generateNRandomUsers(30);
-    generateNRandomEvents(5);
+function generateDatabase() {
+    return clearDatabase().then(async () => {
+        await generateNRandomUsers(30,false); // Participants
+        await generateNRandomUsers(2,true); // Organizers
+        await generateNRandomEvents(5);
+        const events = await Event.find({});
+        for (const event of events) {
+            const men = await User.aggregate([
+                {$match: {gender: "male",isOrganizer:false}},
+                {$sample: {size: 10}}
+            ]);
+            const women = await User.aggregate([
+                {$match: {gender: "female", isOrganizer:false}},
+                {$sample: {size: 10}}
+            ]);
+            // Assuming event's participants field is an array of user IDs
+            for (const woman of women) {
+                (await event).participants.push(woman._id);
+                (await event).currentParticipants++;
+            }
+            for (const man of men) {
+                (await event).participants.push(man._id);
+                (await event).currentParticipants++;
+            }
 
+            await (await event).save();
+            console.log('Event updated successfully with participants.');
+        }
+    }).catch(err => console.log(err)).then(() => {
+
+    })
 }
 
 /********************************************************************/
-function generateRandomUser(){
+
+function generateRandomUser(isOrganizer){
     const newUser = User();
     newUser.gender = getRandomGender();
+    newUser.isOrganizer = isOrganizer;
     newUser.imagePath = newUser.gender === "male" ? "MaleProfilePlaceholder.png" : "FemaleProfilePlaceholder.png";
     newUser.password = 1234;
     newUser.firstname = getRandomFirstName(newUser.gender)
@@ -38,24 +80,22 @@ function generateRandomEvent(){
 }
 /********************************************************************/
 
-function generateNRandomUsers(N){
-    let users = [];
+function generateNRandomUsers(N,isOrganizer){
+    const promises = [];
     for (let i = 0; i < N; i++) {
-        const newUser = generateRandomUser();
-        User.create(newUser).then(user => {
-                console.log("Created",newUser);
-              }).catch(err => {
-                console.log(err);
-              });
+        const newUser = generateRandomUser(isOrganizer);
+        promises.push(User.create(newUser));
     }
+    return Promise.all(promises);
 }
 
 function generateNRandomEvents(N){
-    let events = [];
+    let promises = [];
     for (let i = 0; i < N; i++) {
-        events.push(generateRandomUser());
+        const newEvent = generateRandomEvent();
+        promises.push(Event.create(newEvent));
     }
-    return events;
+    return Promise.all(promises);
 }
 
 
@@ -103,7 +143,7 @@ function getRandomCity(){
     return getRandomFromList(cities);
 }
 function getRandomDate() {
-    return new Date(new Date().getTime() + Math.random() + Math.floor(Math.random() * 70) + 18);
+    return new global.Date(new global.Date().getTime() + Math.random() + Math.floor(Math.random() * 70) + 18);
 }
 const femaleNames = [
     "Emma", "Olivia", "Ava", "Isabella", "Sophia",
@@ -493,3 +533,6 @@ module.exports.generateRandomUser = generateRandomUser;
 module.exports.generateRandomEvent = generateRandomEvent;
 module.exports.generateNRandomUsers = generateNRandomUsers;
 module.exports.generateNRandomEvents = generateNRandomEvents;
+
+module.exports.clearCollection = clearCollection;
+module.exports.generateDatabase = generateDatabase;
