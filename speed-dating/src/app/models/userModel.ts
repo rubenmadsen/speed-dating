@@ -1,6 +1,7 @@
-import {Base} from "./base";
+import {BaseModel} from "./baseModel";
+import {EventModel} from "./eventModel";
 
-export interface User extends Base {
+export interface UserModel extends BaseModel {
   imagePath: string;
   email: string;
   firstname: string;
@@ -8,8 +9,8 @@ export interface User extends Base {
   age: number;
   gender: 'male' | 'female';
   description: string;
-  events: Event[];
-  sharedContacts: User[];
+  events: EventModel[];
+  sharedContacts: UserModel[];
   preferences: {
     name: string;
     min: number;
