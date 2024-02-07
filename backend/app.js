@@ -8,6 +8,7 @@ const userRoutes = require('./routes/userRoutes')
 const eventRoutes = require('./routes/eventRoutes')
 const dateRoutes = require('./routes/dateRoutes')
 const categoryRoutes = require('./routes/categoryRoutes')
+const generationRoutes = require('./routes/generationRoutes')
 require('dotenv').config();
 const app = express();
 const port = 3000;
@@ -20,6 +21,7 @@ app.use(userRoutes);
 app.use(eventRoutes);
 app.use(dateRoutes);
 app.use(categoryRoutes);
+app.use(generationRoutes);
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
@@ -29,22 +31,5 @@ mongoose.connect(process.env.DB_SERVER).then(result => {
   app.listen(port,function(){
     console.log("Connected to mongo.");
     console.log("Backend listening in port " + port + "...");
-
-    //randomGenerations.generateNRandomUsers(20);
-
-  //   const newUser = randomGenerations.generateRandomUser();
-  //   User.create(newUser).then(user => {
-  //
-  //     console.log("Created",newUser);
-  //   }).catch(err => {
-  //     console.log(err);
-  //   });
-  //
-  //   const newEvent = randomGenerations.generateRandomEvent();
-  //   Event.create(newEvent).then(event => {
-  //     console.log("Created new event",event);
-  //   }).catch(err => {
-  //     console.log(err)
-  //   })
   });
 });
