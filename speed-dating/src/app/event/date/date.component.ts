@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {faInfo} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-date',
@@ -7,4 +8,5 @@ import { Component } from '@angular/core';
 })
 export class DateComponent {
 
+  protected readonly faInfo = faInfo;
 }
