@@ -36,6 +36,6 @@ app.get('/', (req, res) => {
 mongoose.connect(process.env.DB_SERVER).then(result => {
   app.listen(port,function(){
     console.log("Connected to mongo.");
-    console.log("Backend listening in port " + port + "...");
+    console.log(`Backend listening in port ${port} ...`);
   });
 });

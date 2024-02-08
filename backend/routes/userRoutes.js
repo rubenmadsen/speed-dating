@@ -42,7 +42,7 @@ const handleErrors = (err) => {
 /**
  * Get all users
  */
-router.get('/users', function (req, res) {
+router.get('/user', function (req, res) {
     User.find({}).then(result => {
         res.status(200).send(result);
     }).catch(err => {
@@ -51,16 +51,13 @@ router.get('/users', function (req, res) {
     });
 });
 
-
-
-
 /**
  * Check availability of user email
  * 200 Available
  * 409 Taken
  */
-router.post('/users/available', function (req,res){
-    User.findOne({ where: { email: req.body.email } }).then(user => {
+router.get('/user/:email', function (req,res){
+    User.findOne({ email: req.params.email}).then(user => {
         if (user) {
             res.status(409).json({ message: 'Email is already taken.' });
         } else {
@@ -72,24 +69,9 @@ router.post('/users/available', function (req,res){
 });
 
 /**
- * Register new user
- * 201 OK
- * 500 Internal server error
- */
-router.post('/users/register', function(req,res){
-    User.create(req.body).then(result => {
-        res.status(201).send(result)
-    }).catch(err => {
-        console.log(err)
-        req.status(500).send({message:"Registration error"});
-    });
-});
-
-
-/**
  *
  */
-router.post('/users/login',async function (req, res) {
+router.post('/user/login',async function (req, res) {
     const {email, password} = req.body;
     try {
         const user = await User.login(req.body.email, req.body.password)
@@ -103,4 +85,54 @@ router.post('/users/login',async function (req, res) {
     }
 });
 
+/**
+ * Register new user
+ * 201 OK
+ * 500 Internal server error
+ */
+router.post('/user', function(req,res){
+    User.create(req.body).then(result => {
+        res.status(201).send(result)
+    }).catch(err => {
+        console.log(err)
+        req.status(500).send({message:"Registration error"});
+    });
+});
+
+router.get('/user/:id/contacts', function(req, res){
+    User.findById(req.params.id).populate("sharedContacts").then(user => {
+        res.status(200).send(user.sharedContacts);
+    }).catch(err => {
+        console.log(err)
+        res.status(500);
+    })
+});
+
+router.get('/user/:id/preferences', function(req, res){
+    console.log(`Finding user ${req.params.id}`)
+    User.findById(req.params.id).populate("preferences").then(user => {
+        res.status(200).send(user.preferences)
+    }).catch(err => {
+        console.log(err)
+        res.status(500);
+    })
+});
+
+router.get('/user/:id/interests', function(req, res){
+    User.findById(req.params.id).populate("interests").then(user => {
+        res.status(200).send(user.interests)
+    }).catch(err => {
+        console.log(err)
+        res.status(500);
+    })
+});
+
+router.get('/user/:id/matchdata', function(req, res){
+    User.findById(req.params.id).populate("matchingData").then(user => {
+        res.status(200).send(user.matchingData)
+    }).catch(err => {
+        console.log(err)
+        res.status(500);
+    })
+});
 module.exports = router;
