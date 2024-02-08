@@ -57,7 +57,7 @@ const userSchema = new Schema({
     },
     sharedContacts:{
         type:[Schema.Types.ObjectId],
-        ref:'UserModel',
+        ref:'user',
         default:[]
     },
     preferences:{
