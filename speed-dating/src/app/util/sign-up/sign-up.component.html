@@ -1,1 +1,82 @@
-<p>sign-up works!</p>
+<div class="signup-form-container" *ngIf="isVisible">
+  <div class="signup-form-header">
+    <fa-icon [icon]="faX" class="x_close_form" (click)="closeForm()"></fa-icon>
+  </div>
+
+  <form class="signup-form" name="form" #f="ngForm" novalidate>
+    <div class="user-option-container">
+      <label>
+        <input type="radio" name="option" [(ngModel)]="form.option" value="A" #option="ngModel" (change)="onOptionChange()">
+        Organizer
+      </label>
+      <label>
+        <input type="radio" name="option" [(ngModel)]="form.option" value="B" #option="ngModel" (change)="onOptionChange()">
+        Participant
+      </label>
+    </div>
+
+    <input type="email"
+           class="input email"
+           placeholder="E-Mail"
+           name="email"
+           required
+           [(ngModel)]="form.email"
+           #email = "ngModel">
+
+    <div *ngIf="email.invalid && email.touched" class="error-message">
+      Email is required.
+    </div>
+
+    <input type="password"
+           class="input password"
+           placeholder="Password"
+           name="password"
+           required
+           [(ngModel)]="form.password"
+           #password="ngModel">
+
+    <input type="password"
+           class="input password"
+           placeholder="Confirm Password"
+           name="confirmPassword"
+           required
+           [(ngModel)]="form.confirmPassword"
+           #confirmPassword="ngModel">
+
+    <input type="text"
+           class="input text"
+           placeholder="Name"
+           name="name"
+           required
+           [(ngModel)]="form.name"
+           #name="ngModel">
+
+    <input type="text"
+           class="input city"
+           placeholder="City"
+           name="city"
+           required
+           [(ngModel)]="form.city"
+           #city="ngModel">
+
+    <input type="number"
+           class="input age"
+           placeholder="Age"
+           required
+           name="age"
+           [(ngModel)]="form.age"
+           #age="ngModel">
+
+    <app-button *ngIf="isOrganizer"
+                [buttonClass]="'accent clr-white'"
+                [buttonText]="'Register'"
+                (appClick)="register()"
+                [disabled]="!f.valid"></app-button>
+
+    <app-button *ngIf="!isOrganizer"
+                [buttonClass]="'accent clr-white'"
+                [buttonText]="'Next'"
+                (appClick)="next()"
+                [disabled]="!f.valid"></app-button>
+  </form>
+</div>

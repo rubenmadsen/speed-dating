@@ -13,8 +13,9 @@ export class ButtonComponent {
   @Input() buttonClass: string = '';
 
   @Output() appClick = new EventEmitter<void>();
-
+  @Input() disabled: boolean = false;
   onClick() {
-    this.appClick.emit();
-  }
+    if (!this.disabled) {
+      this.appClick.emit();
+    }  }
 }

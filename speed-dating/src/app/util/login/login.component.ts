@@ -32,7 +32,7 @@ export class LoginComponent {
     });
   }
   closeForm() {
-    this.isVisible = false; // Set the visibility flag to false
+    this.isVisible = false;
   }
 }
 
