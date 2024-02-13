@@ -1,1 +1,12 @@
-<p>participant-list works!</p>
+<p [ngStyle]="{'text-align': 'center', 'margin-bottom': '10px'}">TESTING</p>
+<div cdkDropListGroup class="center">
+    <div cdkDropList class="participantList" id="list" [cdkDropListData]="listUsers" (cdkDropListDropped)="drop($event)">
+        <p>List of participants</p>
+        <div class="participant" cdkDrag *ngFor="let user of listUsers">{{user}}</div>
+    </div>
+
+    <div cdkDropList class="participantList" id="table" [cdkDropListData]="tableUsers" (cdkDropListDropped)="drop($event)">
+        <p>Table X</p>
+        <div class="participant" cdkDrag *ngFor="let user of tableUsers">{{user}}</div>
+    </div>
+</div>

@@ -32,7 +32,7 @@ import { CreateEventComponent } from './util/create-event/create-event.component
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BackendService } from './services/backend.service';
 import {HttpClientModule} from "@angular/common/http";
-
+import {DragDropModule} from '@angular/cdk/drag-drop'; 
 
 
 @NgModule({
@@ -69,7 +69,8 @@ import {HttpClientModule} from "@angular/common/http";
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    DragDropModule
   ],
   providers: [
     BackendService,
