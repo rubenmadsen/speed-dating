@@ -3,6 +3,7 @@ const Event = require('../models/eventModel')
 const EventFeedback = require('../models/eventFeedbackModel')
 const DateFeedback = require('../models/dateFeedbackModel')
 const Date = require('../models/dateModel')
+const City = require('../models/cityModel')
 const { Router } = require('express');
 const router = Router();
 
@@ -12,6 +13,7 @@ async function clearDatabase() {
     await clearCollection(EventFeedback);
     await clearCollection(DateFeedback);
     await clearCollection(Date);
+    await clearCollection(City);
 }
 function clearCollection(Model){
     return Model.deleteMany({}).then(result => {
@@ -23,6 +25,7 @@ function clearCollection(Model){
 
 function generateDatabase() {
     return clearDatabase().then(async () => {
+        await generateCities();
         await generateNRandomUsers(30,false); // Participants
         await generateNRandomUsers(2,true); // Organizers
         await generateNRandomEvents(15);
@@ -77,6 +80,7 @@ function generateRandomUser(isOrganizer){
     newUser.isOrganizer = isOrganizer;
     newUser.imagePath = newUser.gender === "male" ? "MaleProfilePlaceholder.png" : "FemaleProfilePlaceholder.png";
     newUser.password = 1234;
+    newUser.city =
     newUser.firstname = getRandomFirstName(newUser.gender)
     newUser.lastname = getRandomLastName();
     newUser.age = getRandomAge()
@@ -93,8 +97,15 @@ function generateRandomEvent(){
     newEvent.description = getRandomVenueDescription();
     return newEvent;
 }
-/********************************************************************/
 
+/********************************************************************/
+function generateCities(){
+    const promises = [];
+    cities.forEach(city => {
+        promises.push(City.create({name:city}));
+    })
+    return Promise.all(promises);
+}
 function generateNRandomUsers(N,isOrganizer){
     const promises = [];
     for (let i = 0; i < N; i++) {
