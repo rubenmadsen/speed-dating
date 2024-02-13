@@ -14,6 +14,17 @@ const eventSchema = new Schema({
         type:Boolean,
         default:false
     },
+    floorPlan:{
+        type:[{
+            x:{
+
+            },
+            y:{
+
+            }
+        }],
+        default:[]
+    },
     round:{
         type:Number,
         default:0

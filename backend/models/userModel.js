@@ -41,6 +41,10 @@ const userSchema = new Schema({
         type:String,
         required:[true, "You must choose a gender"]
     },
+    isOrganizer:{
+        type:Boolean,
+        default:false
+    },
     description:{
         type:String,
         required:[true, "You must tell us about yourself"],
@@ -53,7 +57,7 @@ const userSchema = new Schema({
     },
     sharedContacts:{
         type:[Schema.Types.ObjectId],
-        ref:'UserModel',
+        ref:'user',
         default:[]
     },
     preferences:{
@@ -72,12 +76,18 @@ const userSchema = new Schema({
         }],
         default:[]
     },
-    interests:{
-        type:{
-            category:Number,
-            activities:[String]
-        },
-        default:[]
+    interests: {
+        type: [{
+            category: {
+                type: Number,
+                required: true
+            },
+            activities: {
+                type: [String],
+                default: []
+            }
+        }],
+        default: []
     },
     matchingData:{
         type:[
@@ -93,23 +103,29 @@ const userSchema = new Schema({
         default:[]
     }
 });
-//
-// // Static method for validating a user
-// userSchema.statics.login = async function(username,password){
-//     const user = await this.findOne({username});
-//     if(user){
-//         const isOK = await bcrypt.compare(password,user.password)
-//         if(isOK){
-//             // Password matches
-//             return user;
-//         }
-//         else{
-//             // Wrong password
-//             throw Error("Wrong password")
-//         }
-//     }
-//     throw Error("UserModel does not exist");
-// }
+
+// Static method for validating a user
+userSchema.statics.login = async function(email,password){
+    console.log("entering",email,password)
+    const user = await this.findOne({email}).select('+password');
+    //console.log("Found user",user)
+    if(user){
+        const isOK = password === user.password;
+        //const isOK = await bcrypt.compare(password,user.password);
+        if(isOK){
+            console.log("right passwrod");
+            return user;
+        }
+        else{
+            console.log("Wrong password");
+
+            throw Error("Wrong password");
+        }
+    }
+    console.log("UserModel no exit");
+
+    throw Error("UserModel does not exist");
+}
 
 // // Hooks
 // userSchema.pre('save', async function() {
