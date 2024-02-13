@@ -48,15 +48,6 @@
 }
 
 
-.event_container{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  grid-gap:1em;
-  flex-wrap: wrap;
-}
-
-
 select {
   width:15rem;
   padding:1rem;

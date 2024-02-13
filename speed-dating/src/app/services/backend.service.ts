@@ -22,7 +22,7 @@ export class BackendService {
     'Access-Control-Allow-Origin': 'Content-Type'
   }
   requestOptions = {
-    //headers: new HttpHeaders(this.headerDict),
+    // headers: new HttpHeaders(this.headerDict),
     withCredentials:true
   };
   constructor(private http:HttpClient) {
@@ -82,13 +82,13 @@ export class BackendService {
 
 
   // Event
-  getAllEvents():Observable<Event[]>{
-    return this.http.get<Event[]>(this.eventURL , this.requestOptions);
+  getAllEvents(): Promise<EventModel[]>{
+    const endPoint = this.backendURL + 'event';
+    const responseObservable = this.http.get<EventModel[]>(endPoint);
+    return firstValueFrom(responseObservable);
   }
 
-
   // Date
-
 
 
   // DateFeedback
