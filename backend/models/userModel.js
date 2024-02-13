@@ -43,7 +43,7 @@ const userSchema = new Schema({
     },
     city:{
       type:Schema.Types.ObjectId,
-      ref:'cityModel',
+      ref:'city',
       required:[true, "User must contain a city"]
     },
     isOrganizer:{
