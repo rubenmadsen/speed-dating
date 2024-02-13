@@ -32,6 +32,7 @@ import { CreateEventComponent } from './util/create-event/create-event.component
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BackendService } from './services/backend.service';
 import {HttpClientModule} from "@angular/common/http";
+import { ProfileCardComponent } from './profile/profile-card/profile-card.component';
 
 
 
@@ -64,6 +65,7 @@ import {HttpClientModule} from "@angular/common/http";
     FooterComponent,
     HomepageComponent,
     CreateEventComponent,
+    ProfileCardComponent,
   ],
   imports: [
     BrowserModule,

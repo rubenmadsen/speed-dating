@@ -1,0 +1,22 @@
+.Profile-card-container{
+  cursor: pointer;
+  margin-left: 100px;
+  background-color: #f3f3f3;
+  border: darkgray 1px solid;
+  width: 170px;
+  height: 200px;
+  display: inline-block;
+  text-align: center;
+}
+img{
+  width: 8rem;
+  border-radius: 50%;
+  margin: 1rem;
+}
+
+p{
+  margin: auto;
+  padding-bottom: 5px;
+  width: fit-content;
+  text-align: center;
+}
