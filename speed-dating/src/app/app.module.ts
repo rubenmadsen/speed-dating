@@ -69,7 +69,7 @@ import { ProfileCardComponent } from './profile/profile-card/profile-card.compon
     HomepageComponent,
     CreateEventComponent,
     ProfileCardComponent,
-    MinmaxSliderComponent,
+    MinmaxSliderComponent
   ],
   imports: [
     BrowserModule,
