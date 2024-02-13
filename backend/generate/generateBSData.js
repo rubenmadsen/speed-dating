@@ -69,18 +69,22 @@ function generateDummyParticipant(){
     return newDummy;
 }
 function generateDummyOrganizer(){
-    const newDummy = generateRandomUser(false);
+    const newDummy = generateRandomUser(true);
     newDummy.email = "o@o.o";
     newDummy.password = "1234";
     return newDummy;
 }
-function generateRandomUser(isOrganizer){
+
+async function generateRandomUser(isOrganizer) {
     const newUser = User();
     newUser.gender = getRandomGender();
     newUser.isOrganizer = isOrganizer;
     newUser.imagePath = newUser.gender === "male" ? "MaleProfilePlaceholder.png" : "FemaleProfilePlaceholder.png";
     newUser.password = 1234;
-    newUser.city =
+    const random_city_name = cities.at(Math.random() * cities.length);
+    const aCity = await City.findOne({name: random_city_name});
+    console.log("City",aCity._id);
+    newUser.city = aCity._id;
     newUser.firstname = getRandomFirstName(newUser.gender)
     newUser.lastname = getRandomLastName();
     newUser.age = getRandomAge()
@@ -88,6 +92,7 @@ function generateRandomUser(isOrganizer){
     newUser.description = getRandomDescription();
     return newUser;
 }
+
 function generateRandomEvent(){
     const newEvent = Event();
     newEvent.startDate = getRandomDate();
@@ -106,14 +111,17 @@ function generateCities(){
     })
     return Promise.all(promises);
 }
-function generateNRandomUsers(N,isOrganizer){
+async function generateNRandomUsers(N, isOrganizer) {
     const promises = [];
     for (let i = 0; i < N; i++) {
-        const newUser = generateRandomUser(isOrganizer);
-        promises.push(User.create(newUser));
+        const newUserPromise = generateRandomUser(isOrganizer).then(newUser => {
+            return User.create(newUser);
+        });
+        promises.push(newUserPromise);
     }
     return Promise.all(promises);
 }
+
 
 function generateNRandomEvents(N){
     let promises = [];
