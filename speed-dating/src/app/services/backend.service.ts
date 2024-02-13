@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {firstValueFrom, Observable} from "rxjs";
-import {EventModel} from "../models/eventModel";
+import { Observable } from "rxjs";
+import {UserModel} from "../models/userModel";
 
 
 @Injectable({
@@ -13,6 +13,7 @@ export class BackendService {
   //private readonly backendURL: string = "http://pro_url:" + this.PORT + "/";  // remote
 
   private readonly userURL: string = this.backendURL + "user/";
+  private readonly eventURL: string = this.backendURL + "event/";
 
   headerDict = {
     'Content-Type': 'application/json',
@@ -28,7 +29,12 @@ export class BackendService {
 
   }
 
-  // User
+  /**
+   * 200 for ok
+   * 400 for everything else
+   * @param email An email address
+   * @param password A password
+   */
   login(email:string, password:string):Observable<any>{
     return this.http.post<any>(this.userURL + "login", {email, password},this.requestOptions);
   }
@@ -37,12 +43,43 @@ export class BackendService {
   }
 
   /**
+   * 200 available
+   * 409 not available
    * Checks if the chosen email address is available
    * @param email The god-damn email address
    */
   checkAvailability(email:string):Observable<any>{
-    return this.http.post<any>(this.userURL +  "available",{},this.requestOptions);
+    return this.http.get<any>(this.userURL +  `/${email}`,this.requestOptions);
   }
+
+  /**
+   * 201 ok
+   * 500 registration error
+   * Register new user
+   * @param user
+   */
+  registerUser(user:UserModel):Observable<UserModel>{
+    return this.http.post<UserModel>(this.userURL ,user);
+  }
+
+  getUserSharedContacts(user:UserModel):Observable<UserModel[]>{
+    return this.http.get<UserModel[]>(this.userURL + `/${user.id}/contacts`,this.requestOptions);
+  }
+
+  getUserPreferences(user:UserModel):Observable<any>{
+    return this.http.get<any>(this.userURL + `/${user.id}/preferences`,this.requestOptions);
+  }
+
+  getUserInterests(user:UserModel):Observable<any>{
+    return this.http.get<any>(this.userURL + `/${user.id}/interests`,this.requestOptions);
+  }
+
+  getUserMatchingData(user:UserModel):Observable<any>{
+    return this.http.get<any>(this.userURL + `/${user.id}/matchdata`,this.requestOptions);
+  }
+
+
+
 
   // Event
   getAllEvents(): Promise<EventModel[]>{
