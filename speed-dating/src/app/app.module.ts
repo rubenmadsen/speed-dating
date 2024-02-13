@@ -33,6 +33,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BackendService } from './services/backend.service';
 import {HttpClientModule} from "@angular/common/http";
 import { FormsModule } from '@angular/forms';
+import { MinmaxSliderComponent } from './util/minmax-slider/minmax-slider.component';
 
 
 
@@ -66,6 +67,7 @@ import { FormsModule } from '@angular/forms';
     FooterComponent,
     HomepageComponent,
     CreateEventComponent,
+    MinmaxSliderComponent,
   ],
   imports: [
     BrowserModule,
