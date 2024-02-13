@@ -7,6 +7,10 @@ const dateSchema = new Schema({
         ref:'EventModel',
         required:[true, "A date must belong to an event"]
     },
+    tableNumber:{
+      type:Number,
+      default:0
+    },
     dateRound:{
         type:Number,
         default:0
