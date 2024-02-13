@@ -2,21 +2,21 @@
   <div class="event_card_image">
     <div>
       <p class="event_card_information unselectable">
-          Göteborg
+        {{event?.city}}
+
       </p>
       <p class="event_card_information unselectable">
-        Slottskogen
+        {{event?.location}}
       </p>
     </div>
     <fa-icon [icon]="faMapLocationDot" class="event_card_information" id="event_card_information_map" (click)="openMap()"></fa-icon>
   </div>
   <div class="event_card_footer">
     <fa-icon [icon]="faClock" id="event_card_footer_clock"></fa-icon>
-    <p> 18/9 | 18:30 - 19:30</p>
+    <p>{{ event?.startDate | date:'dd/MM HH:mm' }}</p>
     <div class="event_card_buttons">
       <app-button [buttonClass]="'trans clr-accent border-accent small'" [buttonText]="'Information'" > </app-button>
       <app-button [buttonClass]="'accent clr-white border-accent small'" [buttonText]="'Read More'"> </app-button>
     </div>
   </div>
-
 </div>

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from "rxjs";
+import {firstValueFrom, Observable} from "rxjs";
+import {EventModel} from "../models/eventModel";
 
 
 @Injectable({
@@ -20,7 +21,7 @@ export class BackendService {
     'Access-Control-Allow-Origin': 'Content-Type'
   }
   requestOptions = {
-    //headers: new HttpHeaders(this.headerDict),
+    // headers: new HttpHeaders(this.headerDict),
     withCredentials:true
   };
   constructor(private http:HttpClient) {
@@ -44,7 +45,11 @@ export class BackendService {
   }
 
   // Event
-
+  getAllEvents(): Promise<EventModel[]>{
+    const endPoint = this.backendURL + 'event';
+    const responseObservable = this.http.get<EventModel[]>(endPoint);
+    return firstValueFrom(responseObservable);
+  }
 
   // Date
 
