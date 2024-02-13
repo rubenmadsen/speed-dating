@@ -2,12 +2,11 @@ footer {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  height:200px;
+  height:15rem;
   background: var(--black-clr);
 }
 
-
-footer div {
+div {
   display: flex;
   align-items: center;
   color: var(--white-clr);
@@ -15,3 +14,49 @@ footer div {
   justify-content: center;
   grid-gap:1em;
 }
+
+img {
+  width: 7rem;
+  margin-top: 1rem;
+}
+
+.social-container {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  align-content: center;
+}
+
+.contact-container {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  align-content: center;
+}
+
+.social-icon {
+  padding: 1rem;
+  font-size: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.social-icon:hover {
+  transform: scale(1.2);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  background-color: transparent;
+  font-style: normal;
+  font-weight: normal;
+  transition: transform 0.3s ease;
+}
+
+h1 {
+  font-size: larger;
+  font-weight: bolder;
+}
+
+a:hover {
+  transform: scale(1.2);
+}
+
