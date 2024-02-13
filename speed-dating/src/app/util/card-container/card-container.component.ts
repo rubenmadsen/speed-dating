@@ -18,8 +18,6 @@ export class CardContainerComponent {
 
   async ngOnInit(){
     await this.backend.getAllEvents().then(events => this.events = events.sort((a,b) => a.startDate > b.startDate ? 1 : -1))
-    console.log('Sorted Events:', this.events);
-
   }
 
 

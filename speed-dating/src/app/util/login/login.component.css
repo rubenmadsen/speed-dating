@@ -30,8 +30,13 @@ input {
 }
 
 .login_form_header{
-
   display: flex;
   justify-content: flex-end;
   height:2rem;
+}
+
+.login-error-message {
+  font-size:0.7rem;
+  color: red;
+
 }
