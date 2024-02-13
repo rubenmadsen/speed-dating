@@ -5,102 +5,45 @@
 
 }
 .minMaxSliderContainer{
-  /*position: relative;*/
-  border: 1px solid red;
-  padding: 0.05rem;
+    border: 1px solid red;
+  /*background-color: #2F3061;*/
+  padding: 1rem;
+  /*height: 50px;*/
+  border-radius: 1rem;
 }
 .slidersAndPreviewsContainer{
+  position: relative;
   display: flex;
-  border: 1px solid #0059ff;
-  /*padding: 1rem;*/
-  /*padding-top: 0.25rem;*/
-  padding: 0.25rem 1rem 0.25rem 1rem;
-}
-.slidersContainer{
-  position:relative;
-  display: flex;
-  flex:1;
   border: 1px solid #3c9417;
-  margin-left: 0.25rem;
-  margin-right: 0.25rem;
 }
-.sliderLabel{
+.track{
+  border: 1px solid #0059ff;
+  position: relative;
+  flex: 1;
+  height: 2px;
+  margin-top:auto;
+  margin-bottom:auto;
+
+}
+.handles{
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius:50%;
+  border: 1px solid black;
+  transform: translateY(-50%);
+
+}
+#highHandle{
+  background-color: #FFE66D;
+  right: 0px;
+}
+#lowHandle{
+  background-color: #FFE66D;
+}
+.label{
   text-align: center;
 }
-.sliderPreview{
+.previews{
 
-}
-.sliderMinPreview{
-
-}
-.sliderMaxPreview{
-
-}
-
-input[type=range] {
-  position: absolute;
-  /*width: 100%;*/
-  left: 0.01rem;
-  right: 0.01rem;
-  flex:1;
-}
-
-.min-slider {
-  top: 0.0001rem;
-  z-index: 100;
-  display:inherit;
-}
-
-.max-slider {
-  top: 0.0001rem;
-  z-index: 101;
-  rotate: 180deg;
-  display: inherit;
-}
-.minMaxSliderContainer {
-  /*height: 100px;*/
-}
-/*#topSlider1 {*/
-/*  background: #00000000;*/
-/*}*/
-
-input[type="range"] {
-  /* removing default appearance */
-  -webkit-appearance: none;
-  appearance: none;
-  /* creating a custom design */
-  width: 100%;
-  cursor: pointer;
-  outline: none;
-  /*  slider progress trick  */
-  overflow: hidden;
-  border-radius: 16px;
-}
-/* Track: webkit browsers */
-input[type="range"]::-webkit-slider-runnable-track {
-  height: 15px;
-  background: rgba(204, 204, 204, 0);
-  border-radius: 16px;
-}
-
-/* Track: Mozilla Firefox */
-input[type="range"]::-moz-range-track {
-  height: 15px;
-  background: rgba(204, 204, 204, 0);
-  border-radius: 16px;
-}
-
-/* Thumb: webkit */
-input[type="range"]::-webkit-slider-thumb {
-  /* removing default appearance */
-  -webkit-appearance: none;
-  appearance: none;
-  /* creating a custom design */
-  height: 15px;
-  width: 15px;
-  background-color: rgba(255, 255, 255, 0);
-  border-radius: 50%;
-  border: 2px solid #f50;
-  /*  slider progress trick  */
-  box-shadow: -407px 0 0 400px rgb(255, 85, 0);
 }
