@@ -1,7 +1,6 @@
 footer {
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
   height:15rem;
   background: var(--black-clr);
 }
@@ -60,3 +59,17 @@ a:hover {
   transform: scale(1.2);
 }
 
+footer > div {
+  width: 33vw;
+}
+
+@media (max-width: 660px) {
+  footer {
+    flex-direction: column;
+    height: 30em;
+  }
+  footer > div {
+    width: 100vw;
+    padding-top: 2em;
+  }
+}
