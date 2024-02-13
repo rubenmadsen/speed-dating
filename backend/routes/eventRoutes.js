@@ -6,7 +6,7 @@ const router = Router()
 /**
  * Get all events
  */
-router.get('/event', authorizeUser, function (req,res){
+router.get('/event', function (req,res){
     Event.find({}).then(result => {
         res.status(200).send(result);
     }).catch(err => {
