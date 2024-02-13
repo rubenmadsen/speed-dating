@@ -35,6 +35,7 @@ import {HttpClientModule} from "@angular/common/http";
 import { FormsModule } from '@angular/forms';
 import { MinmaxSliderComponent } from './util/minmax-slider/minmax-slider.component';
 
+import { ProfileCardComponent } from './profile/profile-card/profile-card.component';
 
 
 
@@ -67,6 +68,7 @@ import { MinmaxSliderComponent } from './util/minmax-slider/minmax-slider.compon
     FooterComponent,
     HomepageComponent,
     CreateEventComponent,
+    ProfileCardComponent,
     MinmaxSliderComponent,
   ],
   imports: [
