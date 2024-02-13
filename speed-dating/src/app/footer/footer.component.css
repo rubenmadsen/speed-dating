@@ -26,7 +26,37 @@ img {
   align-content: center;
 }
 
+.contact-container {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  align-content: center;
+}
+
 .social-icon {
   padding: 1rem;
   font-size: 1.5rem;
+  transition: transform 0.3s ease;
 }
+
+.social-icon:hover {
+  transform: scale(1.2);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  background-color: transparent;
+  font-style: normal;
+  font-weight: normal;
+  transition: transform 0.3s ease;
+}
+
+h1 {
+  font-size: larger;
+  font-weight: bolder;
+}
+
+a:hover {
+  transform: scale(1.2);
+}
+
