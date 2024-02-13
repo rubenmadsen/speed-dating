@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from "rxjs";
+import {firstValueFrom, Observable} from "rxjs";
 import {UserModel} from "../models/userModel";
+import {EventModel} from "../models/eventModel";
 
 
 @Injectable({
@@ -77,8 +78,6 @@ export class BackendService {
   getUserMatchingData(user:UserModel):Observable<any>{
     return this.http.get<any>(this.userURL + `/${user.id}/matchdata`,this.requestOptions);
   }
-
-
 
 
   // Event
