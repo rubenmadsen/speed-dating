@@ -106,10 +106,10 @@ const userSchema = new Schema({
 
 // Static method for validating a user
 userSchema.statics.login = async function(email,password){
-    console.log("entering",email,password)
     const user = await this.findOne({email}).select('+password');
     //console.log("Found user",user)
     if(user){
+        console.log(user);
         const isOK = password === user.password;
         //const isOK = await bcrypt.compare(password,user.password);
         if(isOK){

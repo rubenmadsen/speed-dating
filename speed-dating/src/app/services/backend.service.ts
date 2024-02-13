@@ -21,7 +21,7 @@ export class BackendService {
     'Access-Control-Allow-Origin': 'Content-Type'
   }
   requestOptions = {
-    // headers: new HttpHeaders(this.headerDict),
+    headers: new HttpHeaders(this.headerDict),
     withCredentials:true
   };
   constructor(private http:HttpClient) {

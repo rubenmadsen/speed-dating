@@ -2,10 +2,27 @@
   <div class="login_form_header">
     <fa-icon [icon]="faX" class="x_close_form"></fa-icon>
   </div>
-  <form class="login_form">
-    <input class="input email" placeholder="E-Mail">
-    <input class="input password" placeholder="Password">
-    <app-button type="submit" [buttonClass]="'accent clr-white'" [buttonText]="'Log in'"></app-button>
+  <form class="login_form"
+        name="form"
+        (ngSubmit)="login()"
+        #f="ngForm"
+        novalidate
+  >
+    <input type="email"
+           class="input email"
+           placeholder="E-Mail"
+           name="email"
+           [(ngModel)]="form.email"
+           #email = "ngModel"
+    >
+    <input type="password"
+           class="input password"
+           placeholder="Password"
+           name="password"
+           [(ngModel)]="form.password"
+           #password="ngModel"
+    >
+    <app-button [buttonClass]="'accent clr-white'" [buttonText]="'Log in'" (appClick)="login()"></app-button>
     <p>Register</p>
   </form>
 </div>
