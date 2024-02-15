@@ -28,8 +28,12 @@ export class CardContainerComponent implements OnInit{
     });
   }
 
-  protected filterEvents(selectedCity: string) {
-    this.filteredEvents = this.events.filter(event => event.city === selectedCity)
+  protected filterEvents(selectedCity: string | null) {
+    if (selectedCity !== null) {
+      this.filteredEvents = this.events.filter(event => event.city === selectedCity)
+    } else {
+      this.filteredEvents = this.events
+    }
   }
 
 }
