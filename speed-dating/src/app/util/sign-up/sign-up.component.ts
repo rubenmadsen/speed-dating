@@ -5,6 +5,7 @@ import { NgForm } from '@angular/forms';
 import {CityModel} from "../../models/cityModel";
 import {CategoryModel} from "../../models/categoryModel";
 import {solid} from "@fortawesome/fontawesome-svg-core/import.macro";
+import {UserModel} from "../../models/userModel";
 
 @Component({
   selector: 'app-sign-up',
@@ -36,6 +37,8 @@ export class SignUpComponent {
     age: null,
     interests: '',
   };
+
+
   protected readonly faX = faX;
   constructor(private backend: BackendService) {
     this.cities = [];
@@ -48,36 +51,44 @@ export class SignUpComponent {
     console.log(this.categories);
   }
 
-
-
-  onCategoryChange() {
-    const category = this.categories.find(cat => cat.name === this.form.interests);
-    console.log(category);
-    if (category) {
-      this.selectedCategory = category;
-      this.activities = category.activities || [];
-      console.log(this.activities)
-      // If activities need to be fetched separately, you might need an additional backend call here
-    }
-  }
-
-
   // Will be used for organizer
   // Is not callable if not every field is filled
   register(){
-    this.notUsedEmail()
+    this.backend.checkAvailability(this.form.email).subscribe({
+      next: (response) =>
+
+
+        this.backend.registerUser(),
+      error: (error) => console.log(error)
+
+    });
+
+    if(this.form.valid) {
+      const user: UserModel = {
+        email: this.form.email,
+        password: this.form.password,
+        name: this.form.name,
+        city: this.form.city,
+        age: this.form.age,
+        interests: this.form.interests,
+      };
+    }
+
   }
 
   notUsedEmail(): boolean {
-    console.log(this.backend.checkAvailability(this.form.email));
+    this.backend.checkAvailability(this.form.email).subscribe({
+      next: (response) => this.backend.registerUser(),
+      error: (error) => console.log(error)
+
+    });
     return true;
   }
 
   next(event: Event) {
     event.stopPropagation();
     if (!this.nextIsPressed && !this.signupForm.valid) {
-      this.signupForm.control.markAllAsTouched();
-      // return;
+      return;
     }
     this.nextIsPressed = !this.nextIsPressed;
   }
@@ -92,10 +103,18 @@ export class SignUpComponent {
     return isLongEnough && containsNumber;
   }
 
+  onCategoryChange() {
+    const category = this.categories.find(cat => cat.name === this.form.interests);
+    console.log(category);
+    if (category) {
+      this.selectedCategory = category;
+      this.activities = category.activities || [];
+    }
+  }
+
   verifyAge(): boolean {
     return this.form.age > 18;
   }
-
 
   closeForm(){
     this.isVisible = false;
@@ -105,4 +124,5 @@ export class SignUpComponent {
     this.isOrganizer = !this.isOrganizer;
     this.form.interests = "";
   }
+
 }

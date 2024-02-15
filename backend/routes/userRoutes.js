@@ -57,6 +57,7 @@ router.get('/user', function (req, res) {
  * 409 Taken
  */
 router.get('/user/:email', function (req,res){
+    console.log("ekr");
     User.findOne({ email: req.params.email}).then(user => {
         if (user) {
             res.status(409).json({ message: 'Email is already taken.' });

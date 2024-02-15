@@ -1,12 +1,15 @@
 import {BaseModel} from "./baseModel";
 import {EventModel} from "./eventModel";
+import {CityModel} from "./cityModel";
 
 export interface UserModel extends BaseModel {
   imagePath: string;
   email: string;
-  firstname: string;
+  name: string;
   lastname: string;
   age: number;
+  city: CityModel,
+  password: string,
   gender: 'male' | 'female';
   description: string;
   events: EventModel[];

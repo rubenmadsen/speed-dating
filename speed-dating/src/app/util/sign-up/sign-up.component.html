@@ -26,7 +26,7 @@
       </div>
 
       <input type="password" class="input password" placeholder="Confirm Password" name="confirmPassword" required [(ngModel)]="form.confirmPassword" #confirmPassword="ngModel"
-             [class.input-error]="confirmPassword.invalid && confirmPassword.touched || !passwordsMatch()">
+             [class.input-error]="!passwordsMatch()">
       <div *ngIf="confirmPassword.touched && !passwordsMatch()" class="error-message">
         Passwords do not match.
       </div>
