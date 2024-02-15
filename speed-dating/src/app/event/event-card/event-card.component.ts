@@ -1,6 +1,5 @@
 import {Component, Input} from '@angular/core';
 import {faClock} from "@fortawesome/free-regular-svg-icons";
-import {faMapLocationDot} from "@fortAwesome/free-solid-svg-icons";
 import { EventModel } from 'src/app/models/eventModel';
 
 
@@ -12,7 +11,6 @@ import { EventModel } from 'src/app/models/eventModel';
 export class EventCardComponent {
 
   protected readonly faClock = faClock;
-  protected readonly faMapLocationDot = faMapLocationDot;
 
   @Input() event?: EventModel;
 

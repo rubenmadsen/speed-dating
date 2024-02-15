@@ -47,11 +47,6 @@
   grid-gap:0.25rem;
 }
 
-.event_card_location{
-  flex-wrap:wrap;
-  width:80%;
-}
-
 
 #event_card_footer_clock{
   font-size:1rem;
