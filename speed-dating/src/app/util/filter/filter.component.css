@@ -6,14 +6,19 @@ div {
 }
 
 select {
-  width:15rem;
-  padding:1rem;
+  width: 15rem;
+  padding: 1rem;
   margin-bottom: 1rem;
+  font: inherit;
+}
+
+option {
+  font: inherit;
 }
 
 .reset-button {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 70%;
+  width: 10rem;
 }

@@ -27,7 +27,7 @@ export class FilterComponent implements OnInit {
     this.citySelected.emit(this.selectedCity);
   }
 
-  protected resetFilter() {
+  protected resetFilter(): void {
     this.selectedCity = null;
     this.onCityChange();
   }
