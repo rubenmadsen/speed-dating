@@ -4,6 +4,9 @@ const EventFeedback = require('../models/eventFeedbackModel')
 const DateFeedback = require('../models/dateFeedbackModel')
 const Date = require('../models/dateModel')
 const City = require('../models/cityModel')
+const Category = require('../models/categoryModel')
+const Activity = require('../models/activityModel')
+const CatAct = require('../data/matchingBase.json')
 const { Router } = require('express');
 const router = Router();
 
@@ -14,6 +17,8 @@ async function clearDatabase() {
     await clearCollection(DateFeedback);
     await clearCollection(Date);
     await clearCollection(City);
+    await clearCollection(Category);
+    await clearCollection(Activity);
 }
 function clearCollection(Model){
     return Model.deleteMany({}).then(result => {
@@ -25,12 +30,13 @@ function clearCollection(Model){
 
 function generateDatabase() {
     return clearDatabase().then(async () => {
+        await generateCatAct();
         await generateCities();
         await generateNRandomUsers(30,false); // Participants
         await generateNRandomUsers(2,true); // Organizers
         await generateNRandomEvents(15);
-        await User.create(generateDummyParticipant());
-        await User.create(generateDummyOrganizer());
+        await User.create(await generateDummyParticipant());
+        await User.create(await generateDummyOrganizer());
         const events = await Event.find({});
         for (const event of events) {
             const men = await User.aggregate([
@@ -62,14 +68,14 @@ function generateDatabase() {
 }
 
 /********************************************************************/
-function generateDummyParticipant(){
-    const newDummy = generateRandomUser(false);
+async function generateDummyParticipant() {
+    const newDummy = await generateRandomUser(false);
     newDummy.email = "p@p.p";
     newDummy.password = "1234";
     return newDummy;
 }
-function generateDummyOrganizer(){
-    const newDummy = generateRandomUser(true);
+async function generateDummyOrganizer() {
+    const newDummy = await generateRandomUser(true);
     newDummy.email = "o@o.o";
     newDummy.password = "1234";
     return newDummy;
@@ -90,6 +96,12 @@ async function generateRandomUser(isOrganizer) {
     newUser.age = getRandomAge()
     newUser.email = newUser.firstname + newUser.age + "@" + newUser.firstname + newUser.lastname + ".com";
     newUser.description = getRandomDescription();
+    await Activity.find({}).then(activities => {
+        for (const activity of activities) {
+
+            newUser.activityData.push({activity:activity._id, points:(Math.random() * 4) + 1});
+        }
+    });
     return newUser;
 }
 
@@ -111,6 +123,27 @@ function generateCities(){
     })
     return Promise.all(promises);
 }
+async function generateCatAct() {
+    for (const cat of CatAct) {
+        const newCat = new Category();
+        newCat.name = cat["name"];
+        try {
+            const createdCategory = await Category.create(newCat);
+            //console.log(cat["name"]);
+            for (const actName of cat["activities"]) {
+                const newAct = new Activity();
+                newAct.name = actName;
+                newAct.category = createdCategory;
+                const createdActivity = await Activity.create(newAct);
+                //console.log(createdActivity.name);
+            }
+        } catch (error) {
+            console.error('An error occurred:', error);
+        }
+    }
+}
+
+
 async function generateNRandomUsers(N, isOrganizer) {
     const promises = [];
     for (let i = 0; i < N; i++) {
