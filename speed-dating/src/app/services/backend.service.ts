@@ -98,10 +98,10 @@ export class BackendService {
   // EventFeedback
 
   // City
-  getAllCities():Observable<CityModel[]>{
-    return this.http.get<CityModel[]>(this.cityURL, this.requestOptions);
+  getAllCities():Promise<CityModel[]>{
+    const responseObservable = this.http.get<CityModel[]>(this.cityURL);
+    return firstValueFrom(responseObservable);
   }
-
 
   //Ex
   // register(username:string, password:string):Observable<any>{
