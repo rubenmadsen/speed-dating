@@ -2,81 +2,55 @@
   <div class="signup-form-header">
     <fa-icon [icon]="faX" class="x_close_form" (click)="closeForm()"></fa-icon>
   </div>
+  <form class="signup-form" name="form" #f="ngForm">
+    <div class="signup-form" *ngIf="!nextIsPressed">
+      <div class="user-option-container">
+        <label>
+          <input type="radio" name="option" [(ngModel)]="form.option" value="A" #option="ngModel" (change)="onOptionChange()">
+          Organizer
+        </label>
 
-  <form class="signup-form" name="form" #f="ngForm" novalidate>
-    <div class="user-option-container">
-      <label>
-        <input type="radio" name="option" [(ngModel)]="form.option" value="A" #option="ngModel" (change)="onOptionChange()">
-        Organizer
-      </label>
-      <label>
-        <input type="radio" name="option" [(ngModel)]="form.option" value="B" #option="ngModel" (change)="onOptionChange()">
-        Participant
-      </label>
+        <label>
+          <input type="radio" name="option" [(ngModel)]="form.option" value="B" #option="ngModel" (change)="onOptionChange()">
+          Participant
+        </label>
+      </div>
+
+      <input type="email" class="input email" [placeholder]="email.invalid && email.touched ? 'E-mail is required' : 'E-Mail'" name="email" required [(ngModel)]="form.email" #email="ngModel"
+             [class.input-error]="email.invalid && email.touched">
+
+      <input type="password" class="input password" placeholder="Password" name="password" required [(ngModel)]="form.password" #password="ngModel"
+             [class.input-error]="password.invalid && password.touched ||  password.touched && !passwordValidation()">
+      <div *ngIf="password.touched && !passwordValidation()" class="error-message">
+        Password needs to be at least 6 characters long with one number.
+      </div>
+
+      <input type="password" class="input password" placeholder="Confirm Password" name="confirmPassword" required [(ngModel)]="form.confirmPassword" #confirmPassword="ngModel"
+             [class.input-error]="confirmPassword.invalid && confirmPassword.touched || !passwordsMatch()">
+      <div *ngIf="confirmPassword.touched && !passwordsMatch()" class="error-message">
+        Passwords do not match.
+      </div>
+
+      <input type="text" class="input text" [placeholder]="name.invalid && name.touched ? 'Name is required' : 'Name'" name="name" required [(ngModel)]="form.name" #name="ngModel"
+             [class.input-error]="name.invalid && name.touched">
+
+
+      <input type="text" class="input city" placeholder="City" name="city" required [(ngModel)]="form.city" #city="ngModel">
+
+      <input type="number" class="input age" placeholder="Age" required name="age" [(ngModel)]="form.age" #age="ngModel">
+
+
+
+      <app-button *ngIf="isOrganizer" [buttonClass]="'accent clr-white'" [buttonText]="'Register'" (appClick)="register()"></app-button>
+      <app-button *ngIf="!isOrganizer && !nextIsPressed" [buttonClass]="'accent clr-white'" [buttonText]="'Next'" (appClick)="next($event)"></app-button>
     </div>
 
-    <input type="email"
-           class="input email"
-           placeholder="E-Mail"
-           name="email"
-           required
-           [(ngModel)]="form.email"
-           #email = "ngModel">
+    <div class="signup-form" *ngIf="nextIsPressed">
+      <input type="text" class="input interests" placeholder="Interests" name="interests" required [(ngModel)]="form.interests" #interests = "ngModel">
 
-    <div *ngIf="email.invalid && email.touched" class="error-message">
-      Email is required.
+      <app-button [buttonClass]="'accent clr-white'" [buttonText]="'Register'" (appClick)="register()"></app-button>
+
+      <app-button *ngIf="nextIsPressed" [buttonClass]="'accent clr-white'" [buttonText]="'Back'" (appClick)="next($event)"></app-button>
     </div>
-
-    <input type="password"
-           class="input password"
-           placeholder="Password"
-           name="password"
-           required
-           [(ngModel)]="form.password"
-           #password="ngModel">
-
-    <input type="password"
-           class="input password"
-           placeholder="Confirm Password"
-           name="confirmPassword"
-           required
-           [(ngModel)]="form.confirmPassword"
-           #confirmPassword="ngModel">
-
-    <input type="text"
-           class="input text"
-           placeholder="Name"
-           name="name"
-           required
-           [(ngModel)]="form.name"
-           #name="ngModel">
-
-    <input type="text"
-           class="input city"
-           placeholder="City"
-           name="city"
-           required
-           [(ngModel)]="form.city"
-           #city="ngModel">
-
-    <input type="number"
-           class="input age"
-           placeholder="Age"
-           required
-           name="age"
-           [(ngModel)]="form.age"
-           #age="ngModel">
-
-    <app-button *ngIf="isOrganizer"
-                [buttonClass]="'accent clr-white'"
-                [buttonText]="'Register'"
-                (appClick)="register()"
-                [disabled]="!f.valid"></app-button>
-
-    <app-button *ngIf="!isOrganizer"
-                [buttonClass]="'accent clr-white'"
-                [buttonText]="'Next'"
-                (appClick)="next()"
-                [disabled]="!f.valid"></app-button>
   </form>
 </div>

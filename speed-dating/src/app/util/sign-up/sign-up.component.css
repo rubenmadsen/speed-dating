@@ -13,6 +13,10 @@ input {
   font-size:1.2rem;
 }
 
+.input-error {
+  border: 1px solid red;
+}
+
 .signup-form {
   display: flex;
   align-items: center;
