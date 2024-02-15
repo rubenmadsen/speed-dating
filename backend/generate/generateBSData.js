@@ -3,6 +3,7 @@ const Event = require('../models/eventModel')
 const EventFeedback = require('../models/eventFeedbackModel')
 const DateFeedback = require('../models/dateFeedbackModel')
 const Date = require('../models/dateModel')
+const City = require('../models/cityModel')
 const { Router } = require('express');
 const router = Router();
 
@@ -12,6 +13,7 @@ async function clearDatabase() {
     await clearCollection(EventFeedback);
     await clearCollection(DateFeedback);
     await clearCollection(Date);
+    await clearCollection(City);
 }
 function clearCollection(Model){
     return Model.deleteMany({}).then(result => {
@@ -23,6 +25,7 @@ function clearCollection(Model){
 
 function generateDatabase() {
     return clearDatabase().then(async () => {
+        await generateCities();
         await generateNRandomUsers(30,false); // Participants
         await generateNRandomUsers(2,true); // Organizers
         await generateNRandomEvents(15);
@@ -66,17 +69,22 @@ function generateDummyParticipant(){
     return newDummy;
 }
 function generateDummyOrganizer(){
-    const newDummy = generateRandomUser(false);
+    const newDummy = generateRandomUser(true);
     newDummy.email = "o@o.o";
     newDummy.password = "1234";
     return newDummy;
 }
-function generateRandomUser(isOrganizer){
+
+async function generateRandomUser(isOrganizer) {
     const newUser = User();
     newUser.gender = getRandomGender();
     newUser.isOrganizer = isOrganizer;
     newUser.imagePath = newUser.gender === "male" ? "MaleProfilePlaceholder.png" : "FemaleProfilePlaceholder.png";
     newUser.password = 1234;
+    const random_city_name = cities.at(Math.random() * cities.length);
+    const aCity = await City.findOne({name: random_city_name});
+    console.log("City",aCity._id);
+    newUser.city = aCity._id;
     newUser.firstname = getRandomFirstName(newUser.gender)
     newUser.lastname = getRandomLastName();
     newUser.age = getRandomAge()
@@ -84,6 +92,7 @@ function generateRandomUser(isOrganizer){
     newUser.description = getRandomDescription();
     return newUser;
 }
+
 function generateRandomEvent(){
     const newEvent = Event();
     newEvent.startDate = getRandomDate();
@@ -93,16 +102,26 @@ function generateRandomEvent(){
     newEvent.description = getRandomVenueDescription();
     return newEvent;
 }
-/********************************************************************/
 
-function generateNRandomUsers(N,isOrganizer){
+/********************************************************************/
+function generateCities(){
+    const promises = [];
+    cities.forEach(city => {
+        promises.push(City.create({name:city}));
+    })
+    return Promise.all(promises);
+}
+async function generateNRandomUsers(N, isOrganizer) {
     const promises = [];
     for (let i = 0; i < N; i++) {
-        const newUser = generateRandomUser(isOrganizer);
-        promises.push(User.create(newUser));
+        const newUserPromise = generateRandomUser(isOrganizer).then(newUser => {
+            return User.create(newUser);
+        });
+        promises.push(newUserPromise);
     }
     return Promise.all(promises);
 }
+
 
 function generateNRandomEvents(N){
     let promises = [];

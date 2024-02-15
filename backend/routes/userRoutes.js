@@ -43,7 +43,7 @@ const handleErrors = (err) => {
  * Get all users
  */
 router.get('/user', function (req, res) {
-    User.find({}).then(result => {
+    User.find({}).populate('city').then(result => {
         res.status(200).send(result);
     }).catch(err => {
         console.error(err);

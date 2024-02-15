@@ -1,7 +1,8 @@
 import {Component, Input} from '@angular/core';
 import {faClock} from "@fortawesome/free-regular-svg-icons";
-import {faMapLocationDot} from "@fortAwesome/free-solid-svg-icons";
 import { EventModel } from 'src/app/models/eventModel';
+import {EventService} from "../../services/event.service";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -12,12 +13,13 @@ import { EventModel } from 'src/app/models/eventModel';
 export class EventCardComponent {
 
   protected readonly faClock = faClock;
-  protected readonly faMapLocationDot = faMapLocationDot;
 
-  @Input() event?: EventModel;
+  @Input() event!: EventModel;
 
-  openMap() {
-    //TODO: SET OPEN THE LATITUDE AND LONGITUDE OF THE LOCATION FROM BACKEND
-    window.open("https://maps.google.com", "_blank");
+  constructor(private eventService: EventService, private router: Router) { }
+
+  onEventSelected() {
+    this.eventService.changeEvent(this.event);
+    this.router.navigate(['event']);
   }
 }

@@ -11,6 +11,7 @@ const eventRoutes = require('./routes/eventRoutes')
 const dateRoutes = require('./routes/dateRoutes')
 const categoryRoutes = require('./routes/categoryRoutes')
 const generationRoutes = require('./routes/generationRoutes')
+const cityRoutes = require('./routes/cityRoutes')
 require('dotenv').config();
 const app = express();
 const port = 3000;
@@ -27,6 +28,7 @@ app.use(eventRoutes);
 app.use(dateRoutes);
 app.use(categoryRoutes);
 app.use(generationRoutes);
+app.use(cityRoutes);
 
 
 app.get('/', (req, res) => {

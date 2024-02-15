@@ -1,22 +1,16 @@
-<div class="event_card_container">
+<div class="event_card_container" (click)="onEventSelected()">
   <div class="event_card_image">
-    <div>
+    <div class="event_card_location">
       <p class="event_card_information unselectable">
-        {{event?.city}}
-
+        {{event.city}}
       </p>
       <p class="event_card_information unselectable">
-        {{event?.location}}
+        {{event.location}}
       </p>
     </div>
-    <fa-icon [icon]="faMapLocationDot" class="event_card_information" id="event_card_information_map" (click)="openMap()"></fa-icon>
   </div>
   <div class="event_card_footer">
     <fa-icon [icon]="faClock" id="event_card_footer_clock"></fa-icon>
-    <p>{{ event?.startDate | date:'dd/MM HH:mm' }}</p>
-    <div class="event_card_buttons">
-      <app-button [buttonClass]="'trans clr-accent border-accent small'" [buttonText]="'Information'" > </app-button>
-      <app-button [buttonClass]="'accent clr-white border-accent small'" [buttonText]="'Read More'"> </app-button>
-    </div>
+    <p>{{ event.startDate | date:'dd/MM HH:mm' }}</p>
   </div>
 </div>
