@@ -1,1 +1,38 @@
-<p>rating-form works!</p>
+<form action="submit" name="rating-form">
+    <div class="questions">
+        <div class="form" id="q1">
+            <p>How would you rate your match?</p>
+            <label *ngFor="let item of [].constructor(10), let i = index" for="Q1{{i+1}}">{{i+1}}<br/>
+            <input type="text" name="valueQ1" id="Q1{{i+1}}" type="radio" [value]="i+1" (change)="changeValueQ1(i+1)">
+            </label>
+        </div>
+    
+        <div class="form" id="q2">
+            <p>Question 2</p>
+            <label *ngFor="let item of [].constructor(10), let i = index" for="Q2{{i+1}}">{{i+1}}<br/>
+            <input name="valueQ2" id="Q2{{i+1}}" type="radio" [value]="i+1" (change)="changeValueQ2(i+1)">
+            </label>
+        </div>
+    
+        <div class="form" id="q3">
+            <p>Question 3</p>
+            <label *ngFor="let item of [].constructor(10), let i = index" for="Q3{{i+1}}">{{i+1}}<br/>
+            <input name="valueQ3" id="Q3{{i+1}}" type="radio" value="{{i+1}}" (change)="changeValueQ3(i+1)">
+            </label>
+        </div>
+
+        <div class="form" id="q4">
+            <p>Question 4</p>
+            <label *ngFor="let item of [].constructor(10), let i = index" for="Q4{{i+1}}">{{i+1}}<br/>
+            <input name="valueQ4" id="Q4{{i+1}}" type="radio" value="{{i+1}}" (change)="changeValueQ4(i+1)">
+            </label>
+        </div>
+
+        <div class="form" id="q5">
+            <p>Question 5</p>
+            <label *ngFor="let item of [].constructor(10), let i = index" for="Q5{{i+1}}">{{i+1}}<br/>
+            <input name="valueQ5" id="Q5{{i+1}}" type="radio" value="{{i+1}}" (change)="changeValueQ5(i+1)">
+            </label>
+        </div>
+    </div>
+</form>

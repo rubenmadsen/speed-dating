@@ -1,0 +1,13 @@
+label {
+    float: left;
+    padding: 0 0.3em;
+    text-align: center;
+}
+
+.questions {
+    display: inline-block;
+}
+
+.form p {
+    margin-top: 3em;
+}
