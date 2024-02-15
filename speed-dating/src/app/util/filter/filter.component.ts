@@ -9,12 +9,12 @@ import {EventModel} from "../../models/eventModel"
 })
 export class FilterComponent {
   events: EventModel[]
-  selectedCity: string;
+  selectedCity: string | null;
   @Output() citySelected: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(private backend: BackendService) {
     this.events = [];
-    this.selectedCity = "";
+    this.selectedCity = '';
   }
 
   async ngOnInit() {
@@ -24,7 +24,14 @@ export class FilterComponent {
   }
 
   onCityChange(): void {
-    this.citySelected.emit(this.selectedCity);
+    if (this.selectedCity !== null) {
+      this.citySelected.emit(this.selectedCity);
+    }
+  }
+
+  protected resetFilter() {
+    this.selectedCity = '';
+    this.onCityChange();
   }
 
 }

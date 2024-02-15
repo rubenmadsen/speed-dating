@@ -1,5 +1,8 @@
-<select [(ngModel)]="selectedCity" (change)="onCityChange()">
-  <option [disabled]="true" [selected]="true" value="">Filter cities</option>
-  <option *ngFor="let event of events" [value]="event.city">{{event.city}}</option>
-</select>
+<div>
+  <select [(ngModel)]="selectedCity" (change)="onCityChange()">
+    <option [disabled]="true" [selected]="true" value="">Filter cities</option>
+    <option *ngFor="let event of events" [value]="event.city">{{event.city}}</option>
+  </select>
+  <app-button [buttonClass]="'accent border-accent clr-white '" [buttonText]="'Reset filter'" (click)="resetFilter()"> </app-button>
+</div>
 
