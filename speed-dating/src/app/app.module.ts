@@ -77,7 +77,7 @@ import { ProfileCardComponent } from './profile/profile-card/profile-card.compon
     HttpClientModule,
     AppRoutingModule,
     FontAwesomeModule,
-    DragDropModule
+    DragDropModule,
     FormsModule,
     FontAwesomeModule
   ],
