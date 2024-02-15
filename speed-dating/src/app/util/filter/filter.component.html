@@ -1,1 +1,5 @@
-<p>filter works!</p>
+<select>
+  <option [disabled]="true" [selected]="true">Filter cities</option>
+  <option *ngFor="let event of events" [value]="event.city">{{event.city}}</option>
+</select>
+
