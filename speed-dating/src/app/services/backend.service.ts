@@ -105,8 +105,9 @@ export class BackendService {
     return firstValueFrom(responseObservable);
   }
   // Category
-  getAllCategories():Observable<CategoryModel[]>{
-    return this.http.get<CategoryModel[]>(this.categoryURL, this.requestOptions);
+  getAllCategories():Promise<CategoryModel[]>{
+    const responseObservable = this.http.get<CategoryModel[]>(this.categoryURL, this.requestOptions);
+    return firstValueFrom(responseObservable);
   }
 
 

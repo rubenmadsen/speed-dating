@@ -51,10 +51,22 @@
     </div>
 
     <div class="signup-form" *ngIf="nextIsPressed">
-      <input type="text" class="input interests" placeholder="Interests" name="interests" required [(ngModel)]="form.interests" #interests = "ngModel">
+
+      <select class="input interests" name="interests" required [(ngModel)]="form.interests" #interests="ngModel"
+              [class.input-error]="interests.invalid && interests.touched" (ngModelChange)="onCategoryChange()">
+        <option value="" disabled selected>Select your interests</option>
+        <option *ngFor="let category of categories" [value]="category.name">{{ category.name }}</option>
+      </select>
+
+      <div *ngIf="selectedCategory && activities.length > 0">
+        <h3>Activities</h3>
+        <ul>
+          <li *ngFor="let activity of activities">{{ activity }}</li>
+        </ul>
+      </div>
+
 
       <app-button [buttonClass]="'accent clr-white'" [buttonText]="'Register'" (appClick)="register()"></app-button>
-
       <app-button *ngIf="nextIsPressed" [buttonClass]="'accent clr-white'" [buttonText]="'Back'" (appClick)="next($event)"></app-button>
     </div>
   </form>
