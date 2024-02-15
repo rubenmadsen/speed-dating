@@ -1,0 +1,21 @@
+<div class="minMaxSliderContainer"
+     (mousemove)="move($event)"
+     (mouseleave)="drag($event,false)">
+  <p class="label">{{sliderLabel}}</p>
+  <div class="slidersAndPreviewsContainer">
+  <p class="previews">{{getLowValue()}}</p>
+  <div class="track" #trackRef>
+    <div class="handles" id="lowHandle" #handleRef
+         (mousedown)="drag($event,true)"
+         (mouseup)="drag($event,false)"
+         >
+    </div>
+      <div class="handles" id="highHandle"
+           (mousedown)="drag($event,true)"
+           (mouseup)="drag($event,false)"
+           >
+    </div>
+  </div>
+  <p class="previews">{{getHighValue()}}</p>
+  </div>
+</div>

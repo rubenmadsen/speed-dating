@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {firstValueFrom, Observable} from "rxjs";
 import {UserModel} from "../models/userModel";
 import {EventModel} from "../models/eventModel";
+import {CityModel} from "../models/cityModel";
 
 
 @Injectable({
@@ -15,6 +16,7 @@ export class BackendService {
 
   private readonly userURL: string = this.backendURL + "user/";
   private readonly eventURL: string = this.backendURL + "event/";
+  private readonly cityURL: string = this.backendURL + "city/";
 
   headerDict = {
     'Content-Type': 'application/json',
@@ -95,7 +97,10 @@ export class BackendService {
 
   // EventFeedback
 
-
+  // City
+  getAllCities():Observable<CityModel[]>{
+    return this.http.get<CityModel[]>(this.cityURL, this.requestOptions);
+  }
 
 
   //Ex

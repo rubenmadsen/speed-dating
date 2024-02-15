@@ -41,6 +41,11 @@ const userSchema = new Schema({
         type:String,
         required:[true, "You must choose a gender"]
     },
+    city:{
+      type:Schema.Types.ObjectId,
+      ref:'city',
+      required:[true, "User must contain a city"]
+    },
     isOrganizer:{
         type:Boolean,
         default:false
