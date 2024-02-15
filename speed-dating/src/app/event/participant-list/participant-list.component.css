@@ -1,5 +1,5 @@
 .participantList {
-    border: 5px solid yellow;
+    border: 2px solid black;
     width: 500px;
     margin-bottom: 15px;
 }
@@ -7,10 +7,12 @@
 .participant {
     cursor: grab;
     height: 30px;
-    background-color: red;
-    border: 1px solid black;
-    margin-top: 10px;
 }
+
 p {
     text-align: center;
+}
+
+.participant:nth-child(odd) {
+    background: var(--secondary-clr);
 }

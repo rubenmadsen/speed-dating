@@ -16,3 +16,23 @@
   align-items: center;
   background: var(--secondary-clr);
 }
+
+
+.participant {
+  cursor: grab;
+  height: 30px;
+  background-color: red;
+  border: 1px solid black;
+  margin-top: 2px;
+  background: var(--secondary-clr);
+}
+
+.participant:nth-child(odd) {
+  background-color: white;
+}
+
+.participantList {
+  border: 1px solid black;
+  width: 500px;
+  margin-bottom: 15px;
+}

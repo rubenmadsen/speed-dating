@@ -8,33 +8,25 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class ParticipantListComponent {
   listUsers: Array<string> = []
-  tableUsers: [string, string] = ["MALE", "TBD"]
 
   ngOnInit() {
     this.populateList();
   }
 
-  populateList() { //TODO: Puplate the list and retrieve patricipants from backend
+  populateList() { //TODO: Populate the list and retrieve patricipants from backend
     this.listUsers = ["Qwerty Larsson", "Greta Larsson", "Stina Persson", "Lennart Adolfsson", "ASD KJHJ"]
   }
 
   drop(event: any) {
-    const current = event.container.id === 'table' ? this.tableUsers : this.listUsers
-    if (event.previousContainer.id === 'table' && event.previousIndex === 0) { // To not move a male of table
-      return;
-    }
-
+    console.log("To: " + event.container.id + " in part ts");
     if (event.container === event.previousContainer) { // Drag and drop within same container
-      moveItemInArray(current, event.previousIndex, event.currentIndex)
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex)
     } else { 
-      const target = event.container.id === 'table' ? this.listUsers : this.tableUsers
-      transferArrayItem(target, current, event.previousIndex, 1)
-      if (this.tableUsers.length > 2) {
-        for (let i = 2; i < this.tableUsers.length; i++) {
-          this.listUsers.push(this.tableUsers[i])
-        }
-        this.tableUsers = [this.tableUsers[0], this.tableUsers[1]]
-      }
+      transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, 1)
     }
+  }
+
+  recieveItem(item: any) {
+    this.listUsers.push(item)
   }
 }
