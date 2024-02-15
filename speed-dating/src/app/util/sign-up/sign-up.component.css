@@ -7,6 +7,7 @@
   margin-top: -25rem;
   margin-left: -10rem;
   width: 20rem;
+  padding: 0.5rem;
 }
 
 input {
@@ -15,6 +16,11 @@ input {
 
 .input-error {
   border: 1px solid red;
+}
+.button-container{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
 }
 
 .signup-form {
@@ -30,10 +36,19 @@ input {
   padding:1rem;
 }
 
+select.input {
+  font-size: 1.2rem;
+  padding: 0.4rem;
+  width: 100%;
+  cursor: pointer;
+}
+
+
 .signup-form-header {
   display: flex;
   justify-content: flex-end;
   height:2rem;
+  margin-bottom: 0.5rem;
 }
 .error-message {
    font-size:0.7rem;

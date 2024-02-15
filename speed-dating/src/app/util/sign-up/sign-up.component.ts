@@ -6,6 +6,7 @@ import {CityModel} from "../../models/cityModel";
 import {CategoryModel} from "../../models/categoryModel";
 import {solid} from "@fortawesome/fontawesome-svg-core/import.macro";
 import {UserModel} from "../../models/userModel";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-sign-up',
@@ -26,21 +27,21 @@ export class SignUpComponent {
   activities: any[] = [];
   selectedCategory: any = null;
 
-
   form: any = {
     option: 'B',
+    firstname: '',
+    lastname:'',
+    gender:'',
     email: '',
     password: '',
     confirmPassword: '',
-    name: '',
     city:'',
     age: null,
     interests: '',
   };
 
-
   protected readonly faX = faX;
-  constructor(private backend: BackendService) {
+  constructor(private backend: BackendService, private router: Router) {
     this.cities = [];
     this.categories = [];
   }
@@ -48,41 +49,40 @@ export class SignUpComponent {
   async ngOnInit(){
     await this.backend.getAllCities().then(cities => this.cities = cities.sort(( a , b ) => a.name > b.name ? 1 : - 1));
     await this.backend.getAllCategories().then(categories => this.categories = categories.sort((a , b) => a.name > b.name ? 1 : -1));
-    console.log(this.categories);
   }
 
-  // Will be used for organizer
-  // Is not callable if not every field is filled
-  register(){
+  register() {
     this.backend.checkAvailability(this.form.email).subscribe({
-      next: (response) =>
-
-
-        this.backend.registerUser(),
+      next: (response) => {
+        if (this.signupForm.valid) {
+          console.log(this.form.city)
+          const user: UserModel = {
+            id: '',
+            email: this.form.email,
+            password: this.form.password,
+            firstname: this.form.firstname,
+            lastname: this.form.lastname,
+            age: this.form.age,
+            city: this.form.city,
+            gender: this.form.gender,
+            description: "",
+            interests: [],
+            matchingData: [],
+            events: [],
+            sharedContacts: [],
+            preferences: [],
+            imagePath: "",
+          };
+          this.backend.registerUser(user).subscribe({
+            next: (userResponse) => {
+              this.router.navigate(['profile']);
+            },
+            error: (registerError) => console.error('Registration error', registerError)
+          });
+        }
+      },
       error: (error) => console.log(error)
-
     });
-
-    if(this.form.valid) {
-      const user: UserModel = {
-        email: this.form.email,
-        password: this.form.password,
-        name: this.form.name,
-        city: this.form.city,
-        age: this.form.age,
-        interests: this.form.interests,
-      };
-    }
-
-  }
-
-  notUsedEmail(): boolean {
-    this.backend.checkAvailability(this.form.email).subscribe({
-      next: (response) => this.backend.registerUser(),
-      error: (error) => console.log(error)
-
-    });
-    return true;
   }
 
   next(event: Event) {
@@ -105,7 +105,6 @@ export class SignUpComponent {
 
   onCategoryChange() {
     const category = this.categories.find(cat => cat.name === this.form.interests);
-    console.log(category);
     if (category) {
       this.selectedCategory = category;
       this.activities = category.activities || [];

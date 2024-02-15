@@ -5,7 +5,7 @@ import {CityModel} from "./cityModel";
 export interface UserModel extends BaseModel {
   imagePath: string;
   email: string;
-  name: string;
+  firstname: string;
   lastname: string;
   age: number;
   city: CityModel,

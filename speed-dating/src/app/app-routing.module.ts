@@ -7,7 +7,7 @@ import { ProfilePageComponent } from './pages/profile-page/profile-page.componen
 const routes: Routes = [
   { path: '', component: HomepageComponent },
   { path: 'event', component: EventPageComponent },
-  { path: 'testing', component: ProfilePageComponent },
+  { path: 'profile', component: ProfilePageComponent },
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes, {scrollPositionRestoration: 'enabled'})],
