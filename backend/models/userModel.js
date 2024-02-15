@@ -81,32 +81,19 @@ const userSchema = new Schema({
         }],
         default:[]
     },
-    interests: {
-        type: [{
-            category: {
-                type: Number,
-                required: true
-            },
-            activities: {
-                type: [String],
-                default: []
+    activityData: {
+        type:[{
+           activity:{
+               type:Schema.Types.ObjectId,
+               ref:'activityModel'
+           },
+            points:{
+               type:Number,
+                default:0
             }
         }],
         default: []
     },
-    matchingData:{
-        type:[
-            {
-                category:{
-                    type:Number
-                },
-                points:{
-                    type:Number
-                }
-            }
-        ],
-        default:[]
-    }
 });
 
 // Static method for validating a user
