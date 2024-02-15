@@ -59,6 +59,7 @@ export class SignUpComponent {
           const user: UserModel = {
             id: '',
             email: this.form.email,
+            isOrganizer: true,
             password: this.form.password,
             firstname: this.form.firstname,
             lastname: this.form.lastname,
@@ -66,8 +67,7 @@ export class SignUpComponent {
             city: this.form.city,
             gender: this.form.gender,
             description: "",
-            interests: [],
-            matchingData: [],
+            activityData: [],
             events: [],
             sharedContacts: [],
             preferences: [],
@@ -107,7 +107,7 @@ export class SignUpComponent {
     const category = this.categories.find(cat => cat.name === this.form.interests);
     if (category) {
       this.selectedCategory = category;
-      this.activities = category.activities || [];
+      // this.activities = category.activities || [];
     }
   }
 

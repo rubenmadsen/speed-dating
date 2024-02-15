@@ -15,55 +15,63 @@
         </label>
       </div>
 
-      <input type="text" class="input text" [placeholder]="firstname.invalid && firstname.touched ? 'Firstname is required' : 'Firstname'" name="firstname" required [(ngModel)]="form.firstname" #firstname="ngModel"
-             [class.input-error]="firstname.invalid && firstname.touched">
+      <div class="middle-container">
+        <div class="left-container">
+          <input type="text" class="input text" [placeholder]="firstname.invalid && firstname.touched ? 'Firstname is required' : 'Firstname'" name="firstname" required [(ngModel)]="form.firstname" #firstname="ngModel"
+                 [class.input-error]="firstname.invalid && firstname.touched">
 
-      <input type="text" class="input text" [placeholder]="lastname.invalid && lastname.touched ? 'Lastname is required' : 'Lastname'" name="lastname" required [(ngModel)]="form.lastname" #lastname="ngModel"
-             [class.input-error]="lastname.invalid && lastname.touched">
+          <input type="text" class="input text" [placeholder]="lastname.invalid && lastname.touched ? 'Lastname is required' : 'Lastname'" name="lastname" required [(ngModel)]="form.lastname" #lastname="ngModel"
+                 [class.input-error]="lastname.invalid && lastname.touched">
+
+          <select class="input gender" name="gender" required [(ngModel)]="form.gender" #gender="ngModel">
+            <option value="" disabled>Select gender</option>
+            <option value="male"> Male</option>
+            <option value="female"> Female </option>
+          </select>
+          <div *ngIf="gender.touched && gender.invalid" class="error-message">
+            Must choose gender
+          </div>
+
+          <input type="number" class="input age" [placeholder]="age.invalid && age.touched ? 'Age is required' : 'Age'" required name="age" [(ngModel)]="form.age" #age="ngModel"
+                 [class.input-error]="age.invalid && age.touched" min="0">
+          <div *ngIf="age.touched && !verifyAge()" class="error-message">
+            Must be older than 18.
+          </div>
+
+          <input type="email" class="input email" [placeholder]="email.invalid && email.touched ? 'E-mail is required' : 'E-Mail'" name="email" required [(ngModel)]="form.email" #email="ngModel"
+                 [class.input-error]="email.invalid && email.touched">
+
+          <input type="password" class="input password" placeholder="Password" name="password" required [(ngModel)]="form.password" #password="ngModel"
+                 [class.input-error]="password.invalid && password.touched ||  password.touched && !passwordValidation()">
+          <div *ngIf="password.touched && !passwordValidation()" class="error-message">
+            Password needs to be at least 6 characters long with one number.
+          </div>
+
+          <input type="password" class="input password" placeholder="Confirm Password" name="confirmPassword" required [(ngModel)]="form.confirmPassword" #confirmPassword="ngModel"
+                 [class.input-error]="!passwordsMatch()">
+          <div *ngIf="confirmPassword.touched && !passwordsMatch()" class="error-message">
+            Passwords do not match.
+          </div>
+
+        </div>
+
+        <div class="right-container">
+          <select class="input city" name="city" required [(ngModel)]="form.city" #city="ngModel"
+                  [class.input-error]="city.invalid && city.touched">
+            <option value="" disabled selected>Select your city</option>
+            <option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</option>
+          </select>
 
 
-
-      <select class="input gender" name="gender" required [(ngModel)]="form.gender" #gender="ngModel">
-        <option value="" disabled>Select gender</option>
-        <option value="male"> Male</option>
-        <option value="female"> Female </option>
-      </select>
-      <div *ngIf="gender.touched && gender.invalid" class="error-message">
-        Must choose gender
+        </div>
       </div>
 
-      <input type="number" class="input age" [placeholder]="age.invalid && age.touched ? 'Age is required' : 'Age'" required name="age" [(ngModel)]="form.age" #age="ngModel"
-             [class.input-error]="age.invalid && age.touched" min="0">
-      <div *ngIf="age.touched && !verifyAge()" class="error-message">
-        Must be older than 18.
+
+      <div class="button-container one">
+        <app-button *ngIf="isOrganizer" [buttonClass]="'accent clr-white'" [buttonText]="'Register'" (appClick)="register()"></app-button>
+        <app-button *ngIf="!isOrganizer && !nextIsPressed" [buttonClass]="'accent clr-white'" [buttonText]="'Next'" (appClick)="next($event)"></app-button>
       </div>
 
-      <input type="email" class="input email" [placeholder]="email.invalid && email.touched ? 'E-mail is required' : 'E-Mail'" name="email" required [(ngModel)]="form.email" #email="ngModel"
-             [class.input-error]="email.invalid && email.touched">
-
-      <input type="password" class="input password" placeholder="Password" name="password" required [(ngModel)]="form.password" #password="ngModel"
-             [class.input-error]="password.invalid && password.touched ||  password.touched && !passwordValidation()">
-      <div *ngIf="password.touched && !passwordValidation()" class="error-message">
-        Password needs to be at least 6 characters long with one number.
-      </div>
-
-      <input type="password" class="input password" placeholder="Confirm Password" name="confirmPassword" required [(ngModel)]="form.confirmPassword" #confirmPassword="ngModel"
-             [class.input-error]="!passwordsMatch()">
-      <div *ngIf="confirmPassword.touched && !passwordsMatch()" class="error-message">
-        Passwords do not match.
-      </div>
-
-
-      <select class="input city" name="city" required [(ngModel)]="form.city" #city="ngModel"
-              [class.input-error]="city.invalid && city.touched">
-        <option value="" disabled selected>Select your city</option>
-        <option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</option>
-      </select>
-
-
-
-      <app-button *ngIf="isOrganizer" [buttonClass]="'accent clr-white'" [buttonText]="'Register'" (appClick)="register()"></app-button>
-      <app-button *ngIf="!isOrganizer && !nextIsPressed" [buttonClass]="'accent clr-white'" [buttonText]="'Next'" (appClick)="next($event)"></app-button>
     </div>
 
     <div class="signup-form" *ngIf="nextIsPressed">
