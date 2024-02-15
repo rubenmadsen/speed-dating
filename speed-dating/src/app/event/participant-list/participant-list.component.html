@@ -1,1 +1,4 @@
-<p>participant-list works!</p>
+<div cdkDropList class="participantList" id="list" [cdkDropListData]="listUsers" (cdkDropListDropped)="drop($event)">
+    <p>List of participants</p>
+    <div class="participant" cdkDrag *ngFor="let user of listUsers">{{user}}</div>
+</div>

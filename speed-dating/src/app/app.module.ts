@@ -32,6 +32,7 @@ import { CreateEventComponent } from './util/create-event/create-event.component
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BackendService } from './services/backend.service';
 import {HttpClientModule} from "@angular/common/http";
+import {DragDropModule} from '@angular/cdk/drag-drop'; 
 import { FormsModule } from '@angular/forms';
 import { MinmaxSliderComponent } from './util/minmax-slider/minmax-slider.component';
 
@@ -75,6 +76,8 @@ import { ProfileCardComponent } from './profile/profile-card/profile-card.compon
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
+    FontAwesomeModule,
+    DragDropModule,
     FormsModule,
     FontAwesomeModule
   ],

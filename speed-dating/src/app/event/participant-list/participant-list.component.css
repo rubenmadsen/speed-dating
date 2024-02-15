@@ -1,0 +1,18 @@
+.participantList {
+    border: 2px solid black;
+    width: 500px;
+    margin-bottom: 15px;
+}
+
+.participant {
+    cursor: grab;
+    height: 30px;
+}
+
+p {
+    text-align: center;
+}
+
+.participant:nth-child(odd) {
+    background: var(--secondary-clr);
+}
