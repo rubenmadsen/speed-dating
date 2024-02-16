@@ -97,6 +97,11 @@ export class BackendService {
     const responseObservable = this.http.get<EventModel[]>(endPoint);
     return firstValueFrom(responseObservable);
   }
+
+  /**
+   * NOT IMPLEMENTED
+   * @param sender
+   */
   getEventsByLocation(sender:CityModel | UserModel){
     const id = (sender as UserModel).city._id !== undefined ? (sender as CityModel)._id : (sender as UserModel).city._id;
     this.http.get(this.eventURL + ":id",this.requestOptions);
