@@ -7,6 +7,9 @@ import {CategoryModel} from "../../models/categoryModel";
 import {solid} from "@fortawesome/fontawesome-svg-core/import.macro";
 import {UserModel} from "../../models/userModel";
 import {Router} from "@angular/router";
+import {ActivityModel} from "../../models/activityModel";
+import {ActivityRatingModel} from "../../models/activityRatingModel";
+import {ActivitiesRatingComponent} from "../activities-rating/activities-rating.component";
 
 @Component({
   selector: 'app-sign-up',
@@ -23,17 +26,18 @@ export class SignUpComponent {
   nextIsPressed: boolean = false;
 
   cities: CityModel[];
-  categories: CategoryModel[];
-  activities: any[] = [];
-  selectedCategory: any = null;
+  @ViewChild(ActivitiesRatingComponent) activitiesRatingComponent!: ActivitiesRatingComponent;
+
 
   form: any = {
     option: 'B',
     firstname: '',
     lastname:'',
+    description: '',
     gender:'',
     email: '',
     password: '',
+    activityData:'',
     confirmPassword: '',
     city:'',
     age: null,
@@ -43,44 +47,55 @@ export class SignUpComponent {
   protected readonly faX = faX;
   constructor(private backend: BackendService, private router: Router) {
     this.cities = [];
-    this.categories = [];
+
   }
 
   async ngOnInit(){
     await this.backend.getAllCities().then(cities => this.cities = cities.sort(( a , b ) => a.name > b.name ? 1 : - 1));
-    await this.backend.getAllCategories().then(categories => this.categories = categories.sort((a , b) => a.name > b.name ? 1 : -1));
   }
 
+
   register() {
+    if (!this.signupForm.valid) {
+      Object.keys(this.signupForm.controls).forEach(field => {
+        const control = this.signupForm.controls[field];
+        control.markAsTouched({onlySelf: true});
+        return;
+      })
+    }
+
+
     this.backend.checkAvailability(this.form.email).subscribe({
-      next: (response) => {
-        if (this.signupForm.valid) {
-          console.log(this.form.city)
-          const user: UserModel = {
-            id: '',
-            email: this.form.email,
-            isOrganizer: true,
-            password: this.form.password,
-            firstname: this.form.firstname,
-            lastname: this.form.lastname,
-            age: this.form.age,
-            city: this.form.city,
-            gender: this.form.gender,
-            description: "",
-            activityData: [],
-            events: [],
-            sharedContacts: [],
-            preferences: [],
-            imagePath: "",
-          };
-          this.backend.registerUser(user).subscribe({
-            next: (userResponse) => {
-              this.router.navigate(['profile']);
-            },
-            error: (registerError) => console.error('Registration error', registerError)
-          });
-        }
-      },
+    next: (response) => {
+      const ratings = this.activitiesRatingComponent.activityRatings;
+
+      if (this.signupForm.valid) {
+        console.log(this.form.city)
+        const user: UserModel = {
+          _id: '',
+          email: this.form.email,
+          activityData: ratings,
+          isOrganizer: true,
+          password: this.form.password,
+          firstname: this.form.firstname,
+          lastname: this.form.lastname,
+          age: this.form.age,
+          city: this.form.city,
+          gender: this.form.gender,
+          description: this.form.description,
+          events: [],
+          sharedContacts: [],
+          preferences: [],
+          imagePath: "ononoeope",
+        };
+        this.backend.registerUser(user).subscribe({
+          next: (userResponse) => {
+            this.router.navigate(['profile']);
+          },
+          error: (registerError) => console.error('Registration error', registerError)
+        });
+      }
+    },
       error: (error) => console.log(error)
     });
   }
@@ -88,7 +103,7 @@ export class SignUpComponent {
   next(event: Event) {
     event.stopPropagation();
     if (!this.nextIsPressed && !this.signupForm.valid) {
-      return;
+      // return;
     }
     this.nextIsPressed = !this.nextIsPressed;
   }
@@ -103,14 +118,6 @@ export class SignUpComponent {
     return isLongEnough && containsNumber;
   }
 
-  onCategoryChange() {
-    const category = this.categories.find(cat => cat.name === this.form.interests);
-    if (category) {
-      this.selectedCategory = category;
-      // this.activities = category.activities || [];
-    }
-  }
-
   verifyAge(): boolean {
     return this.form.age > 18;
   }
@@ -118,10 +125,8 @@ export class SignUpComponent {
   closeForm(){
     this.isVisible = false;
   }
-
   onOptionChange(){
     this.isOrganizer = !this.isOrganizer;
     this.form.interests = "";
   }
-
 }

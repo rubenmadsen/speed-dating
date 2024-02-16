@@ -70,19 +70,19 @@ export class BackendService {
   }
 
   getUserSharedContacts(user:UserModel):Observable<UserModel[]>{
-    return this.http.get<UserModel[]>(this.userURL + `/${user.id}/contacts`,this.requestOptions);
+    return this.http.get<UserModel[]>(this.userURL + `/${user._id}/contacts`,this.requestOptions);
   }
 
   getUserPreferences(user:UserModel):Observable<any>{
-    return this.http.get<any>(this.userURL + `/${user.id}/preferences`,this.requestOptions);
+    return this.http.get<any>(this.userURL + `/${user._id}/preferences`,this.requestOptions);
   }
 
   getUserInterests(user:UserModel):Observable<any>{
-    return this.http.get<any>(this.userURL + `/${user.id}/interests`,this.requestOptions);
+    return this.http.get<any>(this.userURL + `/${user._id}/interests`,this.requestOptions);
   }
 
   getUserMatchingData(user:UserModel):Observable<any>{
-    return this.http.get<any>(this.userURL + `/${user.id}/matchdata`,this.requestOptions);
+    return this.http.get<any>(this.userURL + `/${user._id}/matchdata`,this.requestOptions);
   }
 
 
@@ -113,8 +113,9 @@ export class BackendService {
   }
 
   // Activity
-  getAllActivities():Observable<ActivityModel[]>{
-    return this.http.get<ActivityModel[]>(this.activityURL, this.requestOptions);
+  getAllActivities():Promise<ActivityModel[]>{
+    const responseObservable = this.http.get<ActivityModel[]>(this.activityURL, this.requestOptions);
+    return firstValueFrom(responseObservable);
   }
 
   //Ex

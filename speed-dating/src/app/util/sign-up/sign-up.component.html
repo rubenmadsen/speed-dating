@@ -23,20 +23,8 @@
           <input type="text" class="input text" [placeholder]="lastname.invalid && lastname.touched ? 'Lastname is required' : 'Lastname'" name="lastname" required [(ngModel)]="form.lastname" #lastname="ngModel"
                  [class.input-error]="lastname.invalid && lastname.touched">
 
-          <select class="input gender" name="gender" required [(ngModel)]="form.gender" #gender="ngModel">
-            <option value="" disabled>Select gender</option>
-            <option value="male"> Male</option>
-            <option value="female"> Female </option>
-          </select>
-          <div *ngIf="gender.touched && gender.invalid" class="error-message">
-            Must choose gender
-          </div>
-
           <input type="number" class="input age" [placeholder]="age.invalid && age.touched ? 'Age is required' : 'Age'" required name="age" [(ngModel)]="form.age" #age="ngModel"
                  [class.input-error]="age.invalid && age.touched" min="0">
-          <div *ngIf="age.touched && !verifyAge()" class="error-message">
-            Must be older than 18.
-          </div>
 
           <input type="email" class="input email" [placeholder]="email.invalid && email.touched ? 'E-mail is required' : 'E-Mail'" name="email" required [(ngModel)]="form.email" #email="ngModel"
                  [class.input-error]="email.invalid && email.touched">
@@ -56,16 +44,25 @@
         </div>
 
         <div class="right-container">
-          <select class="input city" name="city" required [(ngModel)]="form.city" #city="ngModel"
-                  [class.input-error]="city.invalid && city.touched">
-            <option value="" disabled selected>Select your city</option>
-            <option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</option>
-          </select>
-
-
+          <div class="select-container">
+            <select class="input city" name="city" required [(ngModel)]="form.city" #city="ngModel"
+                    [class.input-error]="city.invalid && city.touched">
+              <option value="" disabled selected>Select your city</option>
+              <option *ngFor="let city of cities" [value]="city._id">{{ city.name }}</option>
+            </select>
+            <select class="input gender" name="gender" required [(ngModel)]="form.gender" #gender="ngModel" [class.input-error]="gender.invalid && gender.touched">
+              <option value="" disabled>Select gender</option>
+              <option value="male"> Male</option>
+              <option value="female"> Female </option>
+            </select>
+          </div>
+          <div class="description-container">
+            <textarea class="input description" required name="description" [(ngModel)]="form.description" #description="ngModel"
+                      [class.input-error]="description.invalid && description.touched" rows="11" maxlength="500"
+                      [placeholder]="description.invalid && description.touched ? 'Description is required and max 500 characters' : 'Personal description (max 500 characters)'"></textarea>
+          </div>
         </div>
       </div>
-
 
       <div class="button-container one">
         <app-button *ngIf="isOrganizer" [buttonClass]="'accent clr-white'" [buttonText]="'Register'" (appClick)="register()"></app-button>
@@ -75,18 +72,8 @@
     </div>
 
     <div class="signup-form" *ngIf="nextIsPressed">
-
-      <select class="input interests" name="interests" required [(ngModel)]="form.interests" #interests="ngModel"
-              [class.input-error]="interests.invalid && interests.touched" (ngModelChange)="onCategoryChange()">
-        <option value="" disabled selected>Select your interests</option>
-        <option *ngFor="let category of categories" [value]="category.name">{{ category.name }}</option>
-      </select>
-
-      <div *ngIf="selectedCategory && activities.length > 0">
-        <h3>Activities</h3>
-        <ul>
-          <li *ngFor="let activity of activities">{{ activity }}</li>
-        </ul>
+      <div class="interests-container">
+        <app-activities-rating></app-activities-rating>
       </div>
 
       <div class="button-container">

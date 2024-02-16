@@ -37,6 +37,7 @@ import { FormsModule } from '@angular/forms';
 import { MinmaxSliderComponent } from './util/minmax-slider/minmax-slider.component';
 
 import { ProfileCardComponent } from './profile/profile-card/profile-card.component';
+import { ActivitiesRatingComponent } from './util/activities-rating/activities-rating.component';
 
 
 
@@ -70,7 +71,8 @@ import { ProfileCardComponent } from './profile/profile-card/profile-card.compon
     HomepageComponent,
     CreateEventComponent,
     ProfileCardComponent,
-    MinmaxSliderComponent
+    MinmaxSliderComponent,
+    ActivitiesRatingComponent
   ],
   imports: [
     BrowserModule,

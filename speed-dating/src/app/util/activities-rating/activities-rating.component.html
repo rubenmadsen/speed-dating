@@ -1,0 +1,20 @@
+<div class="activities-rating-container">
+  <div *ngFor="let category of categories" class="category-row">
+    <div class="category">{{ category.name }}</div>
+    <div class="activity-container">
+      <ng-container *ngFor="let activity of activities">
+        <div *ngIf="activity.category._id === category._id" class="activity">
+          <div class="activity-name"> {{ activity.name }}</div>
+          <div class="star-rating">
+            <fa-icon *ngFor="let i of [1, 2, 3, 4, 5]"
+                     [ngClass]="{'filled': isStarFilled(activity._id, i), 'hovered': hoverState[activity._id] >= i}"
+                     [icon]="faStar"
+                     (click)="setRatingForActivity(activity._id, i)"
+                     (mouseenter)="handleMouseEnter(activity._id, i)"
+                     (mouseleave)="handleMouseLeave(activity._id)"></fa-icon>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
