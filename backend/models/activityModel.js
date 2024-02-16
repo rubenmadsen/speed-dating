@@ -8,7 +8,7 @@ const activitySchema = new Schema({
     },
     category:{
         type:Schema.Types.ObjectId,
-        ref:'CategoryModel',
+        ref:'category',
         required:[true, "An activity must be associated with a categoryModel"]
     }
 });

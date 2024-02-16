@@ -5,6 +5,7 @@ import {UserModel} from "../models/userModel";
 import {EventModel} from "../models/eventModel";
 import {CityModel} from "../models/cityModel";
 import {CategoryModel} from "../models/categoryModel";
+import {ActivityModel} from "../models/activityModel";
 
 
 @Injectable({
@@ -19,6 +20,7 @@ export class BackendService {
   private readonly eventURL: string = this.backendURL + "event/";
   private readonly cityURL: string = this.backendURL + "city/";
   private readonly categoryURL: string = this.backendURL + "categories/";
+  private readonly activityURL: string = this.backendURL + "activity/";
 
   headerDict = {
     'Content-Type': 'application/json',
@@ -110,6 +112,10 @@ export class BackendService {
     return firstValueFrom(responseObservable);
   }
 
+  // Activity
+  getAllActivities():Observable<ActivityModel[]>{
+    return this.http.get<ActivityModel[]>(this.activityURL, this.requestOptions);
+  }
 
   //Ex
   // register(username:string, password:string):Observable<any>{
