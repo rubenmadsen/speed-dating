@@ -3,11 +3,8 @@ import {faX} from "@fortawesome/free-solid-svg-icons/faX";
 import {BackendService} from "../../services/backend.service";
 import { NgForm } from '@angular/forms';
 import {CityModel} from "../../models/cityModel";
-import {CategoryModel} from "../../models/categoryModel";
-import {solid} from "@fortawesome/fontawesome-svg-core/import.macro";
 import {UserModel} from "../../models/userModel";
 import {Router} from "@angular/router";
-import {ActivityModel} from "../../models/activityModel";
 import {ActivityRatingModel} from "../../models/activityRatingModel";
 import {ActivitiesRatingComponent} from "../activities-rating/activities-rating.component";
 
@@ -18,13 +15,11 @@ import {ActivitiesRatingComponent} from "../activities-rating/activities-rating.
 })
 export class SignUpComponent {
 
-  @ViewChild('f') signupForm!: NgForm; // Reference to the form
-
+  @ViewChild('f') signupForm!: NgForm;
 
   isVisible: boolean = true;
   isOrganizer: boolean = false;
   nextIsPressed: boolean = false;
-
   cities: CityModel[];
   @ViewChild(ActivitiesRatingComponent) activitiesRatingComponent!: ActivitiesRatingComponent;
 
@@ -41,13 +36,12 @@ export class SignUpComponent {
     confirmPassword: '',
     city:'',
     age: null,
-    interests: '',
   };
 
   protected readonly faX = faX;
+
   constructor(private backend: BackendService, private router: Router) {
     this.cities = [];
-
   }
 
   async ngOnInit(){
@@ -67,15 +61,16 @@ export class SignUpComponent {
 
     this.backend.checkAvailability(this.form.email).subscribe({
     next: (response) => {
-      const ratings = this.activitiesRatingComponent.activityRatings;
-
+      let ratings : ActivityRatingModel[]= [];
+      if (!this.isOrganizer) {
+        ratings = this.activitiesRatingComponent.activityRatings;
+      }
       if (this.signupForm.valid) {
-        console.log(this.form.city)
         const user: UserModel = {
-          _id: '',
+          _id: null,
           email: this.form.email,
           activityData: ratings,
-          isOrganizer: true,
+          isOrganizer: this.isOrganizer,
           password: this.form.password,
           firstname: this.form.firstname,
           lastname: this.form.lastname,
@@ -90,6 +85,7 @@ export class SignUpComponent {
         };
         this.backend.registerUser(user).subscribe({
           next: (userResponse) => {
+            this.isVisible = false;
             this.router.navigate(['profile']);
           },
           error: (registerError) => console.error('Registration error', registerError)
@@ -127,6 +123,5 @@ export class SignUpComponent {
   }
   onOptionChange(){
     this.isOrganizer = !this.isOrganizer;
-    this.form.interests = "";
   }
 }

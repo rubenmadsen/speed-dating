@@ -96,7 +96,7 @@ router.post('/user', function(req,res){
         res.status(201).send(result)
     }).catch(err => {
         console.log(err)
-        req.status(500).send({message:"Registration error"});
+        res.status(500).send({message:"Registration error"});
     });
 });
 
