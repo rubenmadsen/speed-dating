@@ -73,7 +73,6 @@ import { ErrorbarComponent } from './util/errorbar/errorbar.component';
     ProfileCardComponent,
     MinmaxSliderComponent,
     ErrorbarComponent,
-    FloorplanComponent
   ],
   imports: [
     BrowserModule,
