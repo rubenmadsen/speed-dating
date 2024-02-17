@@ -14,19 +14,21 @@ export class MinmaxSliderComponent implements AfterViewInit{
   @Input() sliderLabel:string = 'Slider label';
   @ViewChild('trackRef') trackElementRef!: ElementRef;
   @ViewChild('handleRef') handleElementRef!: ElementRef;
-  scaler:number = 100;
-  width:number = 0;
-  handleSize:number = 0;
-  step:number = 0;
+  min = 0;
+  max = 100;
+  private scaler:number = 1;
+  private width:number = 0;
+  private handleSize:number = 0;
+  private step:number = 0;
   ngAfterViewInit() {
     this.handleSize = this.handleElementRef.nativeElement.getBoundingClientRect().width;
     this.width = this.trackElementRef.nativeElement.getBoundingClientRect().width-2;
     this.step = 1/this.width;
   }
-  lowHandle:Handle = {min:0, value:0.2, max:0.8};
-  highHandle:Handle = {min:0.2,value:0.8, max:1};
-  dragged:HTMLElement | null = null;
-  dragOffset:number = 0;
+  private lowHandle:Handle = {min:0, value:0.2, max:0.8};
+  private highHandle:Handle = {min:0.2,value:0.8, max:1};
+  private dragged:HTMLElement | null = null;
+  private dragOffset:number = 0;
   drag(event: MouseEvent, startDrag: boolean): void {
     if (startDrag) {
       this.dragged = event.target as HTMLElement;
@@ -43,8 +45,8 @@ export class MinmaxSliderComponent implements AfterViewInit{
   getHighValue(){
     return (Math.round(this.highHandle.value*this.step*this.scaler));
   }
-    move(event: MouseEvent): void {
-      if (!this.dragged) return;
+  move(event: MouseEvent): void {
+    if (!this.dragged) return;
     const trackRect = this.trackElementRef.nativeElement.getBoundingClientRect();
     let newLeft = event.clientX - trackRect.left-this.dragOffset; // Relative X position within the track
     const handleWidth = this.dragged.offsetWidth;
@@ -57,10 +59,10 @@ export class MinmaxSliderComponent implements AfterViewInit{
     let viewValue = (this.dragged.getBoundingClientRect().x+(this.handleSize/2)) - trackRect.x - (this.handleSize/2);
     //viewValue =  Math.round(viewValue*this.step*this.scaler);
     if(element.id === "highHandle"){
-      this.highHandle.value = viewValue;
+      this.highHandle.value = this.remap(viewValue,0,1,this.min,this.max);
     }
     else{
-      this.lowHandle.value = viewValue;
+      this.lowHandle.value = this.remap(viewValue,0,1,this.min,this.max);
     }
   }
   private pad(data:number | string):string{
@@ -70,5 +72,8 @@ export class MinmaxSliderComponent implements AfterViewInit{
       padded = "0" + padded;
     }
     return padded;
+  }
+   remap(value: number, from1: number, to1: number, from2: number, to2: number): number {
+    return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
   }
 }
