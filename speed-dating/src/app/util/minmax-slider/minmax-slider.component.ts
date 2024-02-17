@@ -12,18 +12,15 @@ interface Handle{
 
 export class MinmaxSliderComponent implements AfterViewInit{
   @Input() sliderLabel:string = 'Slider label';
+  @Input() min:number = 0;
+  @Input() max:number = 100;
   @ViewChild('trackRef') trackElementRef!: ElementRef;
   @ViewChild('handleRef') handleElementRef!: ElementRef;
-  min = 0;
-  max = 100;
-  private scaler:number = 1;
   private width:number = 0;
   private handleSize:number = 0;
-  private step:number = 0;
   ngAfterViewInit() {
     this.handleSize = this.handleElementRef.nativeElement.getBoundingClientRect().width;
-    this.width = this.trackElementRef.nativeElement.getBoundingClientRect().width-2;
-    this.step = 1/this.width;
+    this.width = this.trackElementRef.nativeElement.getBoundingClientRect().width-this.handleSize;
   }
   private lowHandle:Handle = {min:0, value:0.2, max:0.8};
   private highHandle:Handle = {min:0.2,value:0.8, max:1};
@@ -39,15 +36,34 @@ export class MinmaxSliderComponent implements AfterViewInit{
     }
   }
   getLowValue(){
-    return (Math.round(this.lowHandle.value*this.step*this.scaler));
-    //return this.lowHandle.value;
+    return Math.floor(this.remap(this.lowHandle.value,0,this.width,this.min, this.max +1));
   }
   getHighValue(){
-    return (Math.round(this.highHandle.value*this.step*this.scaler));
+    return Math.ceil(this.remap(this.highHandle.value,0,this.width,this.min, this.max +1));
+  }
+
+  /**
+   * NOT WORKING YET
+   * @param value
+   * @private
+   */
+  private setLowValue(value:number){
+    this.lowHandle.value = this.width * ((this.getLowValue()-this.min) / (this.max+1-this.min));
+
+  }
+
+  /**
+   * NOT WORKING YET
+   * @param value
+   * @private
+   */
+  private setHighValue(value:number){
+
   }
   move(event: MouseEvent): void {
     if (!this.dragged) return;
     const trackRect = this.trackElementRef.nativeElement.getBoundingClientRect();
+    this.width = trackRect.width;
     let newLeft = event.clientX - trackRect.left-this.dragOffset; // Relative X position within the track
     const handleWidth = this.dragged.offsetWidth;
     const maxLeft = trackRect.width - handleWidth;
@@ -55,19 +71,24 @@ export class MinmaxSliderComponent implements AfterViewInit{
     this.dragged.style.left = newLeft + "px";
     const element = this.dragged as HTMLElement;
     // x on track
-
-    let viewValue = (this.dragged.getBoundingClientRect().x+(this.handleSize/2)) - trackRect.x - (this.handleSize/2);
+    const draggedCenter = (this.dragged.getBoundingClientRect().x+(this.handleSize/2))
+    const trackStart = (trackRect.x+(this.handleSize/2));
+    const position = draggedCenter - trackStart;
+    // console.log("dragged center", draggedCenter);
+    // console.log("track.start", trackStart);
+    // console.log("valu",position)
+    // let viewValue = (this.dragged.getBoundingClientRect().x+(this.handleSize/2)) - (trackRect.x + (this.handleSize/2));
     //viewValue =  Math.round(viewValue*this.step*this.scaler);
     if(element.id === "highHandle"){
-      this.highHandle.value = this.remap(viewValue,0,1,this.min,this.max);
+      this.highHandle.value = position;
     }
     else{
-      this.lowHandle.value = this.remap(viewValue,0,1,this.min,this.max);
+      this.lowHandle.value = position;
     }
   }
   private pad(data:number | string):string{
     let padded = data + "";
-    let zeroes = (this.scaler + "").length-padded.length;
+    let zeroes = (this.max + "").length-padded.length;
     for (let i = 0; i < zeroes; i++) {
       padded = "0" + padded;
     }
