@@ -14,11 +14,14 @@ export class MinmaxSliderComponent implements AfterViewInit{
   @Input() sliderLabel:string = 'Slider label';
   @ViewChild('trackRef') trackElementRef!: ElementRef;
   @ViewChild('handleRef') handleElementRef!: ElementRef;
+  scaler:number = 100;
   width:number = 0;
   handleSize:number = 0;
+  step:number = 0;
   ngAfterViewInit() {
-    this.width = this.trackElementRef.nativeElement.offsetWidth;
-    this.handleSize = this.handleElementRef.nativeElement.height;
+    this.handleSize = this.handleElementRef.nativeElement.getBoundingClientRect().width;
+    this.width = this.trackElementRef.nativeElement.getBoundingClientRect().width-2;
+    this.step = 1/this.width;
   }
   lowHandle:Handle = {min:0, value:0.2, max:0.8};
   highHandle:Handle = {min:0.2,value:0.8, max:1};
@@ -34,10 +37,11 @@ export class MinmaxSliderComponent implements AfterViewInit{
     }
   }
   getLowValue(){
-    return this.lowHandle.value;
+    return (Math.round(this.lowHandle.value*this.step*this.scaler));
+    //return this.lowHandle.value;
   }
   getHighValue(){
-    return this.highHandle.value;
+    return (Math.round(this.highHandle.value*this.step*this.scaler));
   }
     move(event: MouseEvent): void {
       if (!this.dragged) return;
@@ -50,13 +54,21 @@ export class MinmaxSliderComponent implements AfterViewInit{
     const element = this.dragged as HTMLElement;
     // x on track
 
-    const viewValue = (this.dragged.getBoundingClientRect().x - trackRect.x)/trackRect.width;
-
+    let viewValue = (this.dragged.getBoundingClientRect().x+(this.handleSize/2)) - trackRect.x - (this.handleSize/2);
+    //viewValue =  Math.round(viewValue*this.step*this.scaler);
     if(element.id === "highHandle"){
-      this.highHandle.value = Math.round(viewValue*100)/100;
+      this.highHandle.value = viewValue;
     }
     else{
-      this.lowHandle.value = Math.round(viewValue);
+      this.lowHandle.value = viewValue;
     }
+  }
+  private pad(data:number | string):string{
+    let padded = data + "";
+    let zeroes = (this.scaler + "").length-padded.length;
+    for (let i = 0; i < zeroes; i++) {
+      padded = "0" + padded;
+    }
+    return padded;
   }
 }

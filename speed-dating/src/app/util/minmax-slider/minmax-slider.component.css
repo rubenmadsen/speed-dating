@@ -2,12 +2,15 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-
+  --handle-color: #e5e5e5;
+  --handle-border: #989898;
+  --track-color: rgba(14, 31, 91, 0.23);
+  --track-border: rgba(94, 94, 94, 0.85);
 }
 .minMaxSliderContainer{
     border: 1px solid red;
   /*background-color: #2F3061;*/
-  padding: 1rem;
+  /*padding: 1rem;*/
   /*height: 50px;*/
   border-radius: 1rem;
 }
@@ -15,35 +18,49 @@
   position: relative;
   display: flex;
   border: 1px solid #3c9417;
+  padding: 1rem;
+  padding-top: 0;
 }
 .track{
-  border: 1px solid #0059ff;
+  border: 1px solid var(--track-border);
+  background-color: var(--track-color);
   position: relative;
   flex: 1;
-  height: 2px;
-  margin-top:auto;
-  margin-bottom:auto;
-
+  /*height: 2px;*/
+  /*margin-top:auto;*/
+  /*margin-bottom:auto;*/
+  border-radius: 9999px;
+  padding: 0.65rem;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  box-shadow: rgba(0, 0, 0, 0.17) -10px -5px 12px 0px inset;
+}
+.lit{
+  /*background-color: #2F3061;*/
+  box-shadow: rgb(0, 0, 0) 0px -2px 3px 0px inset;
+  height: 1px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
 }
 .handles{
   position: absolute;
   width: 20px;
   height: 20px;
   border-radius:50%;
-  border: 1px solid black;
   transform: translateY(-50%);
-
-}
+  border: 2px solid var(--handle-border);
+  background-color:var(--handle-color);
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;}
 #highHandle{
-  background-color: #FFE66D;
-  right: 0px;
+  right: 5px;
 }
 #lowHandle{
-  background-color: #FFE66D;
 }
 .label{
   text-align: center;
+
 }
 .previews{
-
+  margin:auto;
 }
