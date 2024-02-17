@@ -38,6 +38,7 @@ import { MinmaxSliderComponent } from './util/minmax-slider/minmax-slider.compon
 
 import { ProfileCardComponent } from './profile/profile-card/profile-card.component';
 import { ErrorbarComponent } from './util/errorbar/errorbar.component';
+import { FloorplanComponent } from './event/floorplan/floorplan.component';
 
 
 
@@ -72,7 +73,8 @@ import { ErrorbarComponent } from './util/errorbar/errorbar.component';
     CreateEventComponent,
     ProfileCardComponent,
     MinmaxSliderComponent,
-    ErrorbarComponent
+    ErrorbarComponent,
+    FloorplanComponent
   ],
   imports: [
     BrowserModule,
