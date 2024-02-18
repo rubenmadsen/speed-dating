@@ -2,6 +2,7 @@ import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import {StatusMessageType} from '../../interfaces/StatusMessageType';
 import {StatusMessage} from "../../interfaces/statusMessage";
 import {GlobalService} from "../../services/global.service";
+import {Subject} from "rxjs";
 
 @Component({
   selector: 'app-errorbar',
@@ -18,14 +19,6 @@ export class ErrorbarComponent {
     [StatusMessageType.INFO]: ["#FFFFFFD8","#0E0E0ECC"],
     [StatusMessageType.SUCCESS]: ["#1EE110C6","#FFFFFFD8"]
   };
-  constructor(private globalService:GlobalService) {
-    globalService.getGlobalStatusSubject().subscribe({
-      next: (statusMessage) => this.addMessage(statusMessage),
-      error: (err) => console.error(err),
-      complete: () => console.log('Completed'),
-    });
-  }
-
   private running:boolean = false;
   private queue:StatusMessage[] = [];
   display:string = "";
@@ -33,18 +26,39 @@ export class ErrorbarComponent {
   private p:HTMLElement | null = null;
   private displayTime:number = 3000;
   private foldingTime:number = 500;
+  private subject:Subject<StatusMessage>;
+  constructor(private globalService:GlobalService) {
+      this.subject = globalService.getGlobalStatusSubject();
+      this.setSubject(this.subject)
+  }
   ngAfterViewInit() {
     this.container = this.containerElementRef.nativeElement;
     this.p = this.pElementRef.nativeElement;
   }
+  setSubject(subject:Subject<StatusMessage>){
+    // this.subject.unsubscribe();
+    this.subject = subject;
+    this.subject.subscribe({
+      next: (statusMessage) => this.addMessage(statusMessage),
+      error: (err) => console.error(err),
+      complete: () => console.log('Completed'),
+    });
+  }
+
+  /**
+   * Adds a message to the queue
+   * @param message The message
+   */
   addMessage(message:any){
     this.queue.push(message);
     if(!this.running){
       this.running = true;
-      this.setMessage()
+      this.start()
     }
   }
-  private setMessage(){
+
+
+  private start(){
     this.unfold(this.queue.shift()!);
     setTimeout(() => {
       this.fold();
@@ -73,7 +87,7 @@ export class ErrorbarComponent {
       this.running = false;
     else
       setTimeout(() => {
-        this.setMessage();
+        this.start();
       }, this.foldingTime);
   }
 }
