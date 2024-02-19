@@ -7,6 +7,10 @@ import {UserModel} from "../../models/userModel";
 import {Router} from "@angular/router";
 import {ActivityRatingModel} from "../../models/activityRatingModel";
 import {ActivitiesRatingComponent} from "../activities-rating/activities-rating.component";
+import {AuthService} from "../../services/auth.service";
+import {StatusMessage} from "../../interfaces/statusMessage";
+import {StatusMessageType} from "../../interfaces/StatusMessageType";
+import {GlobalService} from "../../services/global.service";
 
 @Component({
   selector: 'app-sign-up',
@@ -41,7 +45,7 @@ export class SignUpComponent {
     age: null,
   };
 
-  constructor(private backend: BackendService, private router: Router) {
+  constructor(private backend: BackendService, private router: Router, private authService: AuthService, private globalService: GlobalService) {
     this.cities = [];
   }
 
@@ -82,9 +86,15 @@ export class SignUpComponent {
         };
         this.backend.registerUser(user).subscribe({
           next: (userResponse) => {
+            const mess:StatusMessage = {
+              message:"Thanks for creating an account",
+              type:StatusMessageType.SUCCESS
+            };
+            this.globalService.setGlobalStatus(mess);
             this.isVisible = false;
             this.removeHideoutBackground.emit();
-            this.router.navigate(['profile']);
+            this.authService.loginSuccess();
+            setTimeout(() => this.router.navigate(['profile']),500);
           },
           error: (registerError) => console.error('Registration error', registerError)
         });

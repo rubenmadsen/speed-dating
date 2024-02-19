@@ -4,19 +4,19 @@ header {
   width: 100vw;
 }
 
-.top-container{
-  width:100%;
-  margin:auto;
-  height:2em;
+.top-container {
+  width: 100%;
+  margin: auto;
+  height: 2em;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding:0.8rem;
-  background-color: var(--white-clr) ;
+  padding: 0.8rem;
+  background-color: var(--white-clr);
 }
 
 img {
-  height:100%;
+  height: 100%;
   cursor: pointer;
 }
 
@@ -24,18 +24,16 @@ header nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  grid-gap:1em;
+  grid-gap: 1em;
   margin-right: 1rem;
 }
 
-
-.hide_out_background{
-  position:fixed;
+.hide_out_background {
+  position: fixed;
   background: black;
-  height:100vh;
-  width:100vw;
-  top:0;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
   opacity: 0.2;
-  cursor:pointer;
+  cursor: pointer;
 }
-

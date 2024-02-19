@@ -1,8 +1,7 @@
-import {BaseModel} from "./baseModel";
-import {ActivityModel} from "./activityModel";
+import { BaseModel } from './baseModel';
+import { ActivityModel } from './activityModel';
 
-
-export interface ActivityRatingModel{
-  activity:ActivityModel;
-  points:number;
+export interface ActivityRatingModel {
+  activity: ActivityModel;
+  points: number;
 }
