@@ -67,5 +67,6 @@ async function dolk (){
   // console.log(male.firstname + " & " + female.firstname + " match:" + result + " percent")
   const event = await Event.findOne({}).populate("participants")
   const matcher = new MatchingAlgorithm(event);
-  await matcher.pairAll();
+  await matcher.loadData();
+  // await matcher.pairAll();
 }

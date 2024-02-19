@@ -7,13 +7,27 @@ class MatchingAlgorithm {
     males = [];
     females = [];
     dates = [];
+    categories = {};
+
     constructor(event) {
         if (!event)
             console.log("event is null")
         this.males = event.participants.filter(participant => participant.gender === "male");
         this.females = event.participants.filter(participant => participant.gender === "female");
     }
+    async loadData(){
+        const cats = await Category.find({});
 
+        for (const cat of cats) {
+            this.categories[cat._id.toString()] = [];
+        }
+        const acts = await Activity.find({});
+        for (const act of acts) {
+            console.log("act",act)
+            this.categories[act.category._id.toString()].push(act._id.toString());
+        }
+        console.log("Cats",this.categories)
+    }
     // Assuming this method will be filled in later
     async pairAll() {
         for (const male of this.males) {
