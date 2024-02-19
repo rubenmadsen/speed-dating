@@ -5,6 +5,7 @@ import {StatusMessage} from "../../interfaces/statusMessage";
 import {GlobalService} from "../../services/global.service";
 import {StatusMessageType} from "../../interfaces/StatusMessageType";
 import {Router} from "@angular/router";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,7 @@ export class LoginComponent {
     password: ''
   };
 
-  constructor(private router:Router, private backend: BackendService, private globalService:GlobalService) {}
+  constructor(private router:Router, private backend: BackendService, private globalService:GlobalService, private authService: AuthService) {}
 
   private validateFields():boolean{
     if (this.form.email.length === 0 || this.form.password === 0){
@@ -38,13 +39,16 @@ export class LoginComponent {
     this.backend.login(this.form.email, this.form.password).subscribe({
       next: (response) => {
         this.isVisible = false;
+        this.authService.loginSuccess();
+
         const mess:StatusMessage = {
           message:"You are logged in!",
           type:StatusMessageType.SUCCESS
         };
         this.globalService.setGlobalStatus(mess);
         setTimeout(() => this.router.navigate(['event']),500);
-        ;
+
+
       },
       error: (error) => {
         this.errorMessage = 'Login failed. Please try again.';

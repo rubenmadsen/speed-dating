@@ -66,11 +66,11 @@ export class ErrorbarComponent {
   }
   private unfold(message: StatusMessage) {
     this.display = message.message
-    console.log("unfolding")
-    console.log("message",message)
-    console.log("type",message.type)
-    console.log("cols",this.colors)
-    console.log("colsType",this.colors[message.type])
+    // console.log("unfolding")
+    // console.log("message",message)
+    // console.log("type",message.type)
+    // console.log("cols",this.colors)
+    // console.log("colsType",this.colors[message.type])
     if (this.container) {
       this.container.classList.toggle("open",true);
       this.container.style.backgroundColor = this.colors[message.type][0];
