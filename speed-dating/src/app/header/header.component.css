@@ -1,4 +1,10 @@
 header {
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+}
+
+.top-container{
   width:100%;
   margin:auto;
   height:2em;
@@ -6,8 +12,6 @@ header {
   align-items: center;
   justify-content: space-between;
   padding:0.8rem;
-  position: fixed;
-  z-index: 1;
   background-color: var(--white-clr) ;
 }
 

@@ -2,6 +2,7 @@ import { Component, ElementRef, HostListener, Renderer2 } from '@angular/core';
 import {StatusMessageType} from "../interfaces/StatusMessageType";
 import {AuthService} from "../services/auth.service";
 import {Observable} from "rxjs";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -15,11 +16,18 @@ export class HeaderComponent {
   protected showSignUpPopup: Boolean = false;
   isLoggedIn$: Observable<boolean> | undefined;
 
-  constructor(private eRef: ElementRef, private renderer: Renderer2, private authService: AuthService) {
-  }
+  constructor(private eRef: ElementRef, private renderer: Renderer2, private authService: AuthService, private router: Router) {}
 
   logout(){
     this.authService.logout();
+  }
+
+  home(){
+    setTimeout(() => this.router.navigate(['overview']),500);
+  }
+  profile(){
+    setTimeout(() => this.router.navigate(['profile']),500);
+
   }
 
   async ngOnInit(){

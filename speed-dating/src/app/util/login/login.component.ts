@@ -46,7 +46,7 @@ export class LoginComponent {
           type:StatusMessageType.SUCCESS
         };
         this.globalService.setGlobalStatus(mess);
-        setTimeout(() => this.router.navigate(['event']),500);
+        setTimeout(() => this.router.navigate(['overview']),500);
 
 
       },
