@@ -17,6 +17,9 @@ export class EventPageComponent implements OnInit, OnDestroy {
 
   constructor(private eventService: EventService) { }
 
+  /**
+   * Load an event
+   */
   ngOnInit() {
     this.subscription = this.eventService.currentEvent.subscribe(event => {
       this.event = event;
