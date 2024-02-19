@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CdkDragDrop, CdkDragEnter, CdkDragStart, copyArrayItem, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { transferArrayItem } from '@angular/cdk/drag-drop';
 import {faInfo} from "@fortawesome/free-solid-svg-icons/faInfo";
 
 
@@ -40,12 +40,9 @@ export class DateComponent {
    * @param event The participant being moved 
    */
   drop(event: any) {
-    console.log("Dropped i date " + this.tableNumber);
-    console.log(event.previousContainer.data);
-    console.log(event.container.id);
-    
-    
-    if (event.previousIndex === 0) {
+    if (event.previousIndex === 0 && event.previousContainer.id !== 'list') {
+      console.log("we hit?");
+      
       this.moveTable(event);
       return
     }
