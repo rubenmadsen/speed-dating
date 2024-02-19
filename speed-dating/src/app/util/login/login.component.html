@@ -5,6 +5,7 @@
   <form class="login_form"
         name="form"
         (ngSubmit)="login()"
+        (keyup.enter)="login()"
         #f="ngForm"
         novalidate
   >

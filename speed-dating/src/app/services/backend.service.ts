@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {firstValueFrom, Observable} from "rxjs";
+import {catchError, firstValueFrom, map, Observable, of, tap} from "rxjs";
 import {UserModel} from "../models/userModel";
 import {EventModel} from "../models/eventModel";
 import {CityModel} from "../models/cityModel";
@@ -21,6 +21,7 @@ export class BackendService {
   private readonly cityURL: string = this.backendURL + "city/";
   private readonly categoryURL: string = this.backendURL + "categories/";
   private readonly activityURL: string = this.backendURL + "activity/";
+
 
   headerDict = {
     'Content-Type': 'application/json',
@@ -46,7 +47,7 @@ export class BackendService {
     return this.http.post<any>(this.userURL + "login", {email, password},this.requestOptions);
   }
   logout():Observable<any>{
-    return this.http.post<any>(this.userURL + "logout", this.requestOptions);
+    return this.http.post<any>(this.userURL + "logout", {} ,this.requestOptions);
   }
 
   /**
@@ -56,7 +57,7 @@ export class BackendService {
    * @param email The god-damn email address
    */
   checkAvailability(email:string):Observable<any>{
-    return this.http.get<any>(this.userURL +  `/${email}`,this.requestOptions);
+    return this.http.get<any>(this.userURL +  `${email}`,this.requestOptions);
   }
 
   /**
@@ -119,17 +120,20 @@ export class BackendService {
   // EventFeedback
 
   // City
-  getAllCities():Observable<CityModel[]>{
-    return this.http.get<CityModel[]>(this.cityURL, this.requestOptions);
+  getAllCities():Promise<CityModel[]>{
+    const responseObservable = this.http.get<CityModel[]>(this.cityURL);
+    return firstValueFrom(responseObservable);
   }
   // Category
-  getAllCategories():Observable<CategoryModel[]>{
-    return this.http.get<CategoryModel[]>(this.categoryURL, this.requestOptions);
+  getAllCategories():Promise<CategoryModel[]>{
+    const responseObservable = this.http.get<CategoryModel[]>(this.categoryURL, this.requestOptions);
+    return firstValueFrom(responseObservable);
   }
 
   // Activity
-  getAllActivities():Observable<ActivityModel[]>{
-    return this.http.get<ActivityModel[]>(this.activityURL, this.requestOptions);
+  getAllActivities():Promise<ActivityModel[]>{
+    const responseObservable = this.http.get<ActivityModel[]>(this.activityURL, this.requestOptions);
+    return firstValueFrom(responseObservable);
   }
 
   // Preference

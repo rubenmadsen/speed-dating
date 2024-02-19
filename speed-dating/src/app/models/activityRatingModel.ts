@@ -2,7 +2,7 @@ import {BaseModel} from "./baseModel";
 import {ActivityModel} from "./activityModel";
 
 
-export interface ActivityRatingModel extends BaseModel{
+export interface ActivityRatingModel{
   activity:ActivityModel;
   points:number;
 }

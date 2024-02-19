@@ -1,0 +1,102 @@
+* {
+  box-sizing: border-box;
+}
+
+.signup-form-container {
+  background: var(--white-clr);
+  border-radius: 10px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: auto;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+.signup-form {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2rem;
+  width: 100%;
+}
+
+/* Style for the input fields to match the login form */
+.signup-form .input {
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 80%;
+  margin-top: 1rem;
+}
+
+.city {
+  margin-right: 0.2rem;
+}
+
+.signup-form-header .x_close_form {
+  cursor: pointer;
+  padding: 1rem;
+  margin-left: auto;
+}
+
+.signup-form .error-message {
+  font-size: 0.7rem;
+  color: red;
+  padding: 0.2rem;
+  text-align: left;
+}
+
+.signup-form .description-container {
+  width: 100%;
+}
+
+.description-container .description {
+  width: 100%;
+  margin-right: 0.2rem;
+  resize: none;
+}
+.middle-container, .description-container, .select-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.signup-form .input-error, .signup-form select.input-error, .description-container .description.input-error {
+  border: 1px solid red;
+}
+
+.left-container {
+  width: 40%;
+}
+
+.right-container {
+  width: 60%;
+}
+
+.button-container{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.button-container.one {
+  justify-content: center;
+}
+
+.x_close_form {
+  cursor:pointer;
+  padding:1rem;
+}
+
+.signup-form-header {
+  display: flex;
+  justify-content: flex-end;
+  height:2rem;
+  margin-bottom: 0.5rem;
+}
+
+
+
