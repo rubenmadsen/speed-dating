@@ -34,6 +34,7 @@ export class AuthService {
   logout() {
     this.backendService.logout().subscribe({
       next: (response) => {
+        console.log(response)
         this.isLoggedInSubject.next(false);
       },
       error: (error) => {

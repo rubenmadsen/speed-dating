@@ -77,8 +77,6 @@ router.post('/user/login',async function (req, res) {
         const user = await User.login(req.body.email, req.body.password)
         const token = createToken(user._id);
         res.cookie("jwt", token, {httpOnly: true, maxAge: DAY(3) * 1000, sameSite: 'none', secure: true})
-        res.cookie("test", token, {httpOnly: true, maxAge: DAY(3) * 1000, sameSite: 'none', secure: true})
-        res.cookie("email", email, {httpOnly: true, maxAge: DAY(3) * 1000, sameSite: 'none', secure: true})
         res.status(200).send(user._id);
     } catch (err) {
         const errors = handleErrors(err);
@@ -88,15 +86,8 @@ router.post('/user/login',async function (req, res) {
 
 router.post('/user/logout',async function (req, res) {
     try {
-        const token = createToken("");
-        res.cookie("jwt", token, {httpOnly: true, maxAge: DAY(3) * 1000, sameSite: 'none', secure: false})
-        res.cookie("email", token, {httpOnly: true, maxAge: DAY(3) * 1000, sameSite: 'none', secure: false})
-        res.cookie("test", token, {httpOnly: true, maxAge: DAY(3) * 1000, sameSite: 'none', secure: false})
-
-        res.clearCookie("jwt", { path: '/', sameSite: 'none', secure: false });
-        //res.clearCookie("email", { path: '/', sameSite: 'none', secure: false });
-
-        res.status(200).send();
+        res.clearCookie("jwt");
+        res.status(200).send({ message: "Logged out successfully" });
     } catch (err) {
         const errors = handleErrors(err);
         res.status(400).send(errors)

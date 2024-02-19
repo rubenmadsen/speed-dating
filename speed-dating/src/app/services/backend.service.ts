@@ -47,18 +47,8 @@ export class BackendService {
     return this.http.post<any>(this.userURL + "login", {email, password},this.requestOptions);
   }
   logout():Observable<any>{
-    return this.http.post<any>(this.userURL + "logout", this.requestOptions);
+    return this.http.post<any>(this.userURL + "logout", {} ,this.requestOptions);
   }
-
-  validateToken() {
-    return this.http.get<{valid: boolean, user: any}>(this.backendURL + 'api/validate-token', { withCredentials: true })
-      .pipe(
-        map(response => ({ isValid: true, user: response.user })),
-        catchError(error => of({ isValid: false, user: null }))
-      );
-  }
-
-
 
   /**
    * 200 available
