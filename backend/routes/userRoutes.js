@@ -87,6 +87,14 @@ router.post('/user/login',async function (req, res) {
 });
 
 /**
+ *
+ */
+router.get('/user/logout', (req, res) => {
+    res.cookie("jwt", '', {expires: new Date(0), httpOnly: true, sameSite: 'none', secure: true});
+    res.status(200).send('User logged out successfully');
+    res.redirect('/');
+});
+/**
  * Register new user
  * 201 OK
  * 500 Internal server error

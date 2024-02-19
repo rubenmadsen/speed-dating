@@ -30,7 +30,7 @@ const eventSchema = new Schema({
     },
     city:{
       type:Schema.Types.ObjectId,
-        ref:'CityModel',
+        ref:'city',
       required:[true, "An event must have a city"]
     },
     description:{
@@ -48,7 +48,7 @@ const eventSchema = new Schema({
     },
     participants:{
         type:[Schema.Types.ObjectId],
-        ref:'UserModel',
+        ref:'user',
         default:[]
     },
     eventFeedback:{
