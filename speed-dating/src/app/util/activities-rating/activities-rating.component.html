@@ -7,11 +7,12 @@
           <div class="activity-name"> {{ activity.name }}</div>
           <div class="star-rating">
             <fa-icon *ngFor="let i of [1, 2, 3, 4, 5]"
-                     [ngClass]="{'filled': isStarFilled(activity._id, i), 'hovered': hoverState[activity._id] >= i}"
+                     [ngClass]="{'filled': activity._id ? isStarFilled(activity._id, i) : false, 'hovered': activity._id ? hoverState[activity._id] >= i : false}"
                      [icon]="faStar"
-                     (click)="setRatingForActivity(activity._id, i)"
-                     (mouseenter)="handleMouseEnter(activity._id, i)"
-                     (mouseleave)="handleMouseLeave(activity._id)"></fa-icon>
+                     (click)="activity._id ? setRatingForActivity(activity._id, i) : null"
+                     (mouseenter)="activity._id ? handleMouseEnter(activity._id, i) : null"
+                     (mouseleave)="activity._id ? handleMouseLeave(activity._id) : null"
+            ></fa-icon>
           </div>
         </div>
       </ng-container>

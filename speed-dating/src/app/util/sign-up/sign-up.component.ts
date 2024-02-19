@@ -16,13 +16,14 @@ import {ActivitiesRatingComponent} from "../activities-rating/activities-rating.
 export class SignUpComponent {
 
   @ViewChild('f') signupForm!: NgForm;
+  protected readonly faX = faX;
 
   isVisible: boolean = true;
   isOrganizer: boolean = false;
   nextIsPressed: boolean = false;
+  emailAvailable: boolean = true;
   cities: CityModel[];
   @ViewChild(ActivitiesRatingComponent) activitiesRatingComponent!: ActivitiesRatingComponent;
-
 
   form: any = {
     option: 'B',
@@ -38,8 +39,6 @@ export class SignUpComponent {
     age: null,
   };
 
-  protected readonly faX = faX;
-
   constructor(private backend: BackendService, private router: Router) {
     this.cities = [];
   }
@@ -48,17 +47,13 @@ export class SignUpComponent {
     await this.backend.getAllCities().then(cities => this.cities = cities.sort(( a , b ) => a.name > b.name ? 1 : - 1));
   }
 
-
+  /**
+   * Register the user. First checks if form is valid, if Email is available register the user and relocate to the Profile page.
+   */
   register() {
-    if (!this.signupForm.valid) {
-      Object.keys(this.signupForm.controls).forEach(field => {
-        const control = this.signupForm.controls[field];
-        control.markAsTouched({onlySelf: true});
-        return;
-      })
+    if(!this.checkFormValidation()){
+      return
     }
-
-
     this.backend.checkAvailability(this.form.email).subscribe({
     next: (response) => {
       let ratings : ActivityRatingModel[]= [];
@@ -92,21 +87,35 @@ export class SignUpComponent {
         });
       }
     },
-      error: (error) => console.log(error)
+      error: (error) => {
+        this.emailAvailable = !this.emailAvailable
+      }
     });
   }
 
   next(event: Event) {
     event.stopPropagation();
-    if (!this.nextIsPressed && !this.signupForm.valid) {
-      // return;
+    if (this.checkFormValidation()){
+      this.nextIsPressed = !this.nextIsPressed;
     }
-    this.nextIsPressed = !this.nextIsPressed;
+  }
+
+  checkFormValidation() : Boolean{
+    if(this.signupForm.valid){
+      return true
+    } else {
+      Object.keys(this.signupForm.controls).forEach(field => {
+        const control = this.signupForm.controls[field];
+        control.markAsTouched({onlySelf: true});
+      });
+      return false
+    }
   }
 
   passwordsMatch(): boolean {
     return this.form.password === this.form.confirmPassword;
   }
+
 
   passwordValidation():boolean {
     const isLongEnough = this.form.password.length >= 6;

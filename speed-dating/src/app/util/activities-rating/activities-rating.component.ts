@@ -12,54 +12,63 @@ import {faStar} from "@fortawesome/free-solid-svg-icons";
 })
 export class ActivitiesRatingComponent {
 
+  protected readonly faStar = faStar
+
   categories: CategoryModel[] = [];
   activities: ActivityModel[] = [];
-  public activityRatings: ActivityRatingModel[] = [];
-
-
-  protected readonly faStar = faStar
   hoverState: Record<string, number> = {};
 
+  // Public to allow Signup component to reach the list
+  public activityRatings: ActivityRatingModel[] = [];
 
   constructor(private backend: BackendService) {}
 
   async ngOnInit(){
     await this.backend.getAllCategories().then(categories => this.categories = categories.sort((a , b) => a.name > b.name ? 1 : -1));
     await this.backend.getAllActivities().then(activities => this.activities = activities.sort((a , b) => a.name > b.name ? 1 : -1));
-
     this.activityRatings = this.activities.map(activity => ({
       activity: activity,
       points: 0,
     }));
   }
 
+  /**
+   * Method to find the ActivityModel
+   * @param id the id of the activity
+   */
   getActivity(id: String) : ActivityModel{
     return <ActivityModel>this.activities.find(a => a._id === id);
   }
 
-  findRatingModel(activityId: string): ActivityRatingModel {
-    // Try to find the existing rating model
-    const ratingModel = this.activityRatings.find(rating => rating.activity === this.getActivity(activityId));
-
-    // If found, return it
+  /**
+   * Method to find the ActvityRatingModel depending on the ActivityModel
+   * @param id the id of the activity
+   */
+  findRatingModel(id: string): ActivityRatingModel {
+    const ratingModel = this.activityRatings.find(rating => rating.activity === this.getActivity(id));
     if (ratingModel) {
       return ratingModel;
     }
     const newRatingModel: ActivityRatingModel = {
-      activity: this.getActivity(activityId),
+      activity: this.getActivity(id),
       points: 0,
     };
     this.activityRatings.push(newRatingModel);
-
     return newRatingModel;
   }
 
-  setRatingForActivity(activityId: string, points: number): void {
-    const ratingModel = this.findRatingModel(activityId);
+  /**
+   * Metod push the new rating of the ActivityRatingModel
+   * @param id the ActivityRatingModel
+   * @param points the new points
+   */
+  setRatingForActivity(id: string, points: number): void {
+    const ratingModel = this.findRatingModel(id);
     ratingModel.points = points;
   }
 
 
+  // Methods for star effect
   handleMouseEnter(activityId: string, rate: number): void {
     this.hoverState[activityId] = rate;
   }

@@ -28,6 +28,9 @@
 
           <input type="email" class="input email" [placeholder]="email.invalid && email.touched ? 'E-mail is required' : 'E-Mail'" name="email" required [(ngModel)]="form.email" #email="ngModel"
                  [class.input-error]="email.invalid && email.touched">
+          <div *ngIf="!emailAvailable" class="error-message">
+            Email is not available.
+          </div>
 
           <input type="password" class="input password" placeholder="Password" name="password" required [(ngModel)]="form.password" #password="ngModel"
                  [class.input-error]="password.invalid && password.touched ||  password.touched && !passwordValidation()">
