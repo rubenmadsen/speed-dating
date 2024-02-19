@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {faX} from "@fortawesome/free-solid-svg-icons/faX";
 import {BackendService} from "../../services/backend.service";
 import {StatusMessage} from "../../interfaces/statusMessage";
@@ -20,6 +20,8 @@ export class LoginComponent {
     email: '',
     password: ''
   };
+
+  @Output() removeHideoutBackground = new EventEmitter<void>();
 
   constructor(private router:Router, private backend: BackendService, private globalService:GlobalService, private authService: AuthService) {}
 
@@ -46,9 +48,8 @@ export class LoginComponent {
           type:StatusMessageType.SUCCESS
         };
         this.globalService.setGlobalStatus(mess);
+        this.removeHideoutBackground.emit()
         setTimeout(() => this.router.navigate(['overview']),500);
-
-
       },
       error: (error) => {
         this.errorMessage = 'Login failed. Please try again.';

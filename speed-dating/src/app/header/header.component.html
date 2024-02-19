@@ -17,5 +17,5 @@
 <div class="hide_out_background" *ngIf="showLoginPopup" (click)="toggleLoginPopup()"></div>
 <div class="hide_out_background" *ngIf="showSignUpPopup" (click)="toggleSignUpPopup()"></div>
 
-<app-sign-up *ngIf="showSignUpPopup"></app-sign-up>
-<app-login *ngIf="showLoginPopup"></app-login>
+<app-sign-up (removeHideoutBackground)="closeBackground()" *ngIf="showSignUpPopup"></app-sign-up>
+<app-login (removeHideoutBackground)="closeBackground()" *ngIf="showLoginPopup"></app-login>

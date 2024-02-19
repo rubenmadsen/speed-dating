@@ -22,6 +22,11 @@ export class HeaderComponent {
     this.authService.logout();
   }
 
+  closeBackground(){
+    this.showLoginPopup = false;
+    this.showSignUpPopup = false;
+  }
+
   home(){
     setTimeout(() => this.router.navigate(['overview']),500);
   }
