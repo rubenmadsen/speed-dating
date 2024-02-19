@@ -6,7 +6,8 @@
 
 .button:hover{
   cursor: pointer;
-
+  animation: pop 0.3s ease-out;
+  text-decoration: underline;
 }
 
 .clr-primary{
@@ -68,4 +69,16 @@
 
 .clr-white {
   color:var(--white-clr)
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
 }

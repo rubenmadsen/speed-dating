@@ -10,10 +10,13 @@
          (mouseup)="drag($event,false)"
          >
     </div>
-      <div class="handles" id="highHandle"
-           (mousedown)="drag($event,true)"
-           (mouseup)="drag($event,false)"
-           >
+    <div class="lit">
+
+    </div>
+    <div class="handles" id="highHandle"
+         (mousedown)="drag($event,true)"
+         (mouseup)="drag($event,false)"
+         >
     </div>
   </div>
   <p class="previews">{{getHighValue()}}</p>
