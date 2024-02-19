@@ -81,7 +81,7 @@ export class SignUpComponent {
         this.backend.registerUser(user).subscribe({
           next: (userResponse) => {
             this.isVisible = false;
-            this.router.navigate(['profile']);
+            this.router.navigate(['profile'],{queryParams:user});
           },
           error: (registerError) => console.error('Registration error', registerError)
         });

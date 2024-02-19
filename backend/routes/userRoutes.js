@@ -70,6 +70,25 @@ router.get('/user/:email', function (req,res){
 });
 
 /**
+ * Gets a specific user
+ */
+router.get('/user/user/:id', function (req, res){
+    console.log( req);
+    User.findOne({_id: req.params.id}).then(user=>{
+        if (user){
+            console.log(user)
+            res.status(200).send(user)
+        }
+        else {
+            res.status(505).json({message: "No user found"})
+        }
+    }).catch(err=>{
+        console.error(err)
+    });
+
+});
+
+/**
  *
  */
 router.post('/user/login',async function (req, res) {
