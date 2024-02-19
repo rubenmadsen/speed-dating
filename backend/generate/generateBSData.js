@@ -30,11 +30,17 @@ function clearCollection(Model){
 
 function generateDatabase() {
     return clearDatabase().then(async () => {
+        console.log("Generateing Categories and Activities");
         await generateCatAct();
+        console.log("Generateing City");
         await generateCities();
+        console.log("Generateing participants");
         await generateNRandomUsers(30,false); // Participants
+        console.log("Generateing Organizers");
         await generateNRandomUsers(2,true); // Organizers
+        console.log("Generateing Events");
         await generateNRandomEvents(15);
+        console.log("Generateing Dummies");
         await User.create(await generateDummyParticipant());
         await User.create(await generateDummyOrganizer());
         const events = await Event.find({});
@@ -98,22 +104,32 @@ async function generateRandomUser(isOrganizer) {
     newUser.description = getRandomDescription();
     await Activity.find({}).then(activities => {
         for (const activity of activities) {
-
             newUser.activityData.push({activity:activity._id, points:(Math.random() * 4) + 1});
         }
     });
     return newUser;
 }
 
-function generateRandomEvent(){
+async function generateRandomEvent() {
     const newEvent = Event();
     newEvent.startDate = getRandomDate();
-    newEvent.location = getRandomVenue()
-    newEvent.city = getRandomCity();
+    newEvent.location = getRandomVenue();
+    const city = await getRandomCity()
+    //console.log("CITY", city)
+    newEvent.city = city._id;
     newEvent.address = getRandomAddress();
     newEvent.description = getRandomVenueDescription();
     return newEvent;
 }
+async function generateNRandomEvents(N) {
+    let promises = [];
+    for (let i = 0; i < N; i++) {
+        const eventPromise = generateRandomEvent().then(newEvent => Event.create(newEvent));
+        promises.push(eventPromise);
+    }
+    return Promise.all(promises);
+}
+
 
 /********************************************************************/
 function generateCities(){
@@ -155,17 +171,6 @@ async function generateNRandomUsers(N, isOrganizer) {
     return Promise.all(promises);
 }
 
-
-function generateNRandomEvents(N){
-    let promises = [];
-    for (let i = 0; i < N; i++) {
-        const newEvent = generateRandomEvent();
-        promises.push(Event.create(newEvent));
-    }
-    return Promise.all(promises);
-}
-
-
 //
 function getRandomFromList(list){
     return list[Math.floor(Math.random() * list.length)]
@@ -206,9 +211,11 @@ function getRandomVenue(){
 function getRandomAddress(){
     return getRandomFromList(streetAddresses);
 }
-function getRandomCity(){
-    return getRandomFromList(cities);
+function getRandomCity() {
+    const city = getRandomFromList(cities);
+    return City.findOne({name: city});
 }
+
 function getRandomDate() {
     return new global.Date(new global.Date().getTime() + Math.random() + Math.floor(Math.random() * 70) + 18);
 }
