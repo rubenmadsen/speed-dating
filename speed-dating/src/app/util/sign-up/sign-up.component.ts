@@ -1,4 +1,4 @@
-import { Component , ViewChild} from '@angular/core';
+import {Component, EventEmitter, Output, ViewChild} from '@angular/core';
 import {faX} from "@fortawesome/free-solid-svg-icons/faX";
 import {BackendService} from "../../services/backend.service";
 import { NgForm } from '@angular/forms';
@@ -17,6 +17,8 @@ export class SignUpComponent {
 
   @ViewChild('f') signupForm!: NgForm;
   protected readonly faX = faX;
+
+  @Output() removeHideoutBackground = new EventEmitter<void>();
 
   isVisible: boolean = true;
   isOrganizer: boolean = false;
@@ -81,6 +83,7 @@ export class SignUpComponent {
         this.backend.registerUser(user).subscribe({
           next: (userResponse) => {
             this.isVisible = false;
+            this.removeHideoutBackground.emit();
             this.router.navigate(['profile']);
           },
           error: (registerError) => console.error('Registration error', registerError)
