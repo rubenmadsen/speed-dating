@@ -1,4 +1,3 @@
-
 // Check if user is owns resource
 const validateOwnership = (req, res, next) => {
   const ownership = req.cookies.jwt;

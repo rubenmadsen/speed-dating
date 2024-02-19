@@ -98,23 +98,28 @@ router.post("/user/login", async function (req, res) {
   }
 });
 
-router.post('/user/logout',async function (req, res) {
-    try {
-        res.clearCookie("jwt");
-        res.status(200).send({ message: "Logged out successfully" });
-    } catch (err) {
-        const errors = handleErrors(err);
-        res.status(400).send(errors)
-    }
+router.post("/user/logout", async function (req, res) {
+  try {
+    res.clearCookie("jwt");
+    res.status(200).send({ message: "Logged out successfully" });
+  } catch (err) {
+    const errors = handleErrors(err);
+    res.status(400).send(errors);
+  }
 });
 
 /**
  *
  */
-router.get('/user/logout', (req, res) => {
-    res.cookie("jwt", '', {expires: new Date(0), httpOnly: true, sameSite: 'none', secure: true});
-    res.status(200).send('User logged out successfully');
-    res.redirect('/');
+router.get("/user/logout", (req, res) => {
+  res.cookie("jwt", "", {
+    expires: new Date(0),
+    httpOnly: true,
+    sameSite: "none",
+    secure: true,
+  });
+  res.status(200).send("User logged out successfully");
+  res.redirect("/");
 });
 
 /**

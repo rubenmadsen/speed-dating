@@ -41,12 +41,11 @@ app.use(generationRoutes);
 app.use(cityRoutes);
 app.use(activityRoutes);
 
-
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.get('/api/validate-token', authorizeUser, (req, res) => {
+app.get("/api/validate-token", authorizeUser, (req, res) => {
   res.status(200).send({ valid: true, user: req.user });
 });
 

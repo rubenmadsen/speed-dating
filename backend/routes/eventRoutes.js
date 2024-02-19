@@ -10,11 +10,15 @@ const router = Router();
 /**
  * Get all events
  */
-router.get('/event', function (req,res){
-    Event.find({}).populate('city').populate('participants').then(result => {
-        res.status(200).send(result);
-    }).catch(err => {
-        console.log(err);
+router.get("/event", function (req, res) {
+  Event.find({})
+    .populate("city")
+    .populate("participants")
+    .then((result) => {
+      res.status(200).send(result);
+    })
+    .catch((err) => {
+      console.log(err);
     });
 });
 
