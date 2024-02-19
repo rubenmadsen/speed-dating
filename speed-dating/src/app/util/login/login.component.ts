@@ -1,10 +1,11 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {faX} from "@fortawesome/free-solid-svg-icons/faX";
 import {BackendService} from "../../services/backend.service";
 import {StatusMessage} from "../../interfaces/statusMessage";
 import {GlobalService} from "../../services/global.service";
 import {StatusMessageType} from "../../interfaces/StatusMessageType";
 import {Router} from "@angular/router";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,10 @@ export class LoginComponent {
     password: ''
   };
 
-  constructor(private router:Router, private backend: BackendService, private globalService:GlobalService) {}
+  @Output() removeHideoutBackground = new EventEmitter<void>();
+  @Output() registerClick = new EventEmitter<void>();
+
+  constructor(private router:Router, private backend: BackendService, private globalService:GlobalService, private authService: AuthService) {}
 
   private validateFields():boolean{
     if (this.form.email.length === 0 || this.form.password === 0){
@@ -38,13 +42,15 @@ export class LoginComponent {
     this.backend.login(this.form.email, this.form.password).subscribe({
       next: (response) => {
         this.isVisible = false;
+        this.authService.loginSuccess();
+
         const mess:StatusMessage = {
           message:"You are logged in!",
           type:StatusMessageType.SUCCESS
         };
         this.globalService.setGlobalStatus(mess);
-        setTimeout(() => this.router.navigate(['event']),500);
-        ;
+        this.removeHideoutBackground.emit()
+        setTimeout(() => this.router.navigate(['overview']),500);
       },
       error: (error) => {
         this.errorMessage = 'Login failed. Please try again.';
@@ -57,6 +63,10 @@ export class LoginComponent {
   }
   closeForm() {
     this.isVisible = false;
+  }
+  openRegister(event: Event){
+    event.stopPropagation()
+    this.registerClick.emit();
   }
 }
 

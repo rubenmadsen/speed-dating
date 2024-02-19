@@ -26,6 +26,6 @@
     <p *ngIf="errorMessage" class="login-error-message">{{ errorMessage }}</p>
 
     <app-button [buttonClass]="'accent clr-white'" [buttonText]="'Log in'" (appClick)="login()"></app-button>
-    <p>Register</p>
+    <p (click)="openRegister($event)">Register</p>
   </form>
 </div>

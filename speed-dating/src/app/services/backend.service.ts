@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {firstValueFrom, Observable} from "rxjs";
+import {catchError, firstValueFrom, map, Observable, of, tap} from "rxjs";
 import {UserModel} from "../models/userModel";
 import {EventModel} from "../models/eventModel";
 import {CityModel} from "../models/cityModel";
@@ -21,6 +21,7 @@ export class BackendService {
   private readonly cityURL: string = this.backendURL + "city/";
   private readonly categoryURL: string = this.backendURL + "categories/";
   private readonly activityURL: string = this.backendURL + "activity/";
+
 
   headerDict = {
     'Content-Type': 'application/json',
@@ -46,7 +47,7 @@ export class BackendService {
     return this.http.post<any>(this.userURL + "login", {email, password},this.requestOptions);
   }
   logout():Observable<any>{
-    return this.http.post<any>(this.userURL + "logout", this.requestOptions);
+    return this.http.post<any>(this.userURL + "logout", {} ,this.requestOptions);
   }
 
   /**
@@ -66,7 +67,7 @@ export class BackendService {
    * @param user
    */
   registerUser(user:UserModel):Observable<UserModel>{
-    return this.http.post<UserModel>(this.userURL ,user);
+    return this.http.post<UserModel>(this.userURL ,user, this.requestOptions);
   }
   /**
    * NOT IMPLEMENTED
@@ -97,6 +98,11 @@ export class BackendService {
     const responseObservable = this.http.get<EventModel[]>(endPoint);
     return firstValueFrom(responseObservable);
   }
+
+  /**
+   * NOT IMPLEMENTED
+   * @param sender
+   */
   getEventsByLocation(sender:CityModel | UserModel){
     const id = (sender as UserModel).city._id !== undefined ? (sender as CityModel)._id : (sender as UserModel).city._id;
     this.http.get(this.eventURL + ":id",this.requestOptions);

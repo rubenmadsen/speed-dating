@@ -1,4 +1,4 @@
-import { Component , ViewChild} from '@angular/core';
+import {Component, EventEmitter, Output, ViewChild} from '@angular/core';
 import {faX} from "@fortawesome/free-solid-svg-icons/faX";
 import {BackendService} from "../../services/backend.service";
 import { NgForm } from '@angular/forms';
@@ -7,6 +7,10 @@ import {UserModel} from "../../models/userModel";
 import {Router} from "@angular/router";
 import {ActivityRatingModel} from "../../models/activityRatingModel";
 import {ActivitiesRatingComponent} from "../activities-rating/activities-rating.component";
+import {AuthService} from "../../services/auth.service";
+import {StatusMessage} from "../../interfaces/statusMessage";
+import {StatusMessageType} from "../../interfaces/StatusMessageType";
+import {GlobalService} from "../../services/global.service";
 
 @Component({
   selector: 'app-sign-up',
@@ -17,6 +21,8 @@ export class SignUpComponent {
 
   @ViewChild('f') signupForm!: NgForm;
   protected readonly faX = faX;
+
+  @Output() removeHideoutBackground = new EventEmitter<void>();
 
   isVisible: boolean = true;
   isOrganizer: boolean = false;
@@ -39,7 +45,7 @@ export class SignUpComponent {
     age: null,
   };
 
-  constructor(private backend: BackendService, private router: Router) {
+  constructor(private backend: BackendService, private router: Router, private authService: AuthService, private globalService: GlobalService) {
     this.cities = [];
   }
 
@@ -80,8 +86,15 @@ export class SignUpComponent {
         };
         this.backend.registerUser(user).subscribe({
           next: (userResponse) => {
+            const mess:StatusMessage = {
+              message:"Thanks for creating an account",
+              type:StatusMessageType.SUCCESS
+            };
+            this.globalService.setGlobalStatus(mess);
             this.isVisible = false;
-            this.router.navigate(['profile'],{queryParams:user});
+            this.removeHideoutBackground.emit();
+            this.authService.loginSuccess();
+            setTimeout(() => this.router.navigate(['profile'],{queryParams:user}),500);
           },
           error: (registerError) => console.error('Registration error', registerError)
         });
