@@ -40,7 +40,8 @@ const eventSchema = new Schema({
         maxLength:64
     },
     city:{
-      type:String,
+      type:Schema.Types.ObjectId,
+        ref:'CityModel',
       required:[true, "An event must have a city"]
     },
     longitude:{
