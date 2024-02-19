@@ -1,6 +1,6 @@
-export enum StatusMessageType{
+export enum StatusMessageType {
   ALERT,
   WARNING,
   INFO,
-  SUCCESS
+  SUCCESS,
 }
