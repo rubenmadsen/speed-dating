@@ -10,7 +10,7 @@ const router = Router();
 /**
  * Get all categories and activities
  */
-router.get("/categories", function (req, res) {
+router.get("/category", function (req, res) {
   Category.find({})
     .then((result) => {
       res.status(200).send(result);

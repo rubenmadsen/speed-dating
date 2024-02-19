@@ -54,6 +54,10 @@ const eventSchema = new Schema({
     ref: "user",
     default: [],
   },
+    dates:{
+        type:[],
+        default:[]
+    },
   eventFeedback: {
     type: [Schema.Types.ObjectId],
     ref: "EventFeedbackModel",
