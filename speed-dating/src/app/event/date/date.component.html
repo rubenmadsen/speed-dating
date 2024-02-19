@@ -1,4 +1,14 @@
-<div cdkDropList class="participantList" id="table" [cdkDropListData]="tableUsers" (cdkDropListDropped)="drop($event)">
-  <p>Table {{tableNumber}}</p>
-  <div class="participant" cdkDrag *ngFor="let user of tableUsers, let i = index" [cdkDragDisabled]="i == 0" [ngStyle]="{'cursor': i == 0 ? 'not-allowed' : 'grab'}">{{user}}</div>
+<div
+  cdkDropList
+  class="participantList"
+  id="table"
+  [cdkDropListData]="tableUsers"
+  (cdkDropListDropped)="drop($event)">
+  <p>Table {{ tableNumber }}</p>
+  <div
+    class="participant"
+    cdkDrag
+    *ngFor="let user of tableUsers; let i = index"
+    [cdkDragDisabled]="i == 0"
+    [ngStyle]="{ cursor: i == 0 ? 'not-allowed' : 'grab' }">{{ user }}</div>
 </div>
