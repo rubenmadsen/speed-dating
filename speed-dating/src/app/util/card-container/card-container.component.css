@@ -1,8 +1,10 @@
-.card-container{
+.card-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  grid-gap:1em;
+  gap: 1em;
+  padding-top: 1em;
+  padding-bottom: 2em;
   flex-wrap: wrap;
 }
 
@@ -10,6 +12,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 2em;
+  margin-bottom: 1em;
   flex-direction: column;
+}
+
+@media only screen and (max-width: 1000px) {
+  .card-container {
+    width: 100vw;
+    overflow-x: scroll;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    scroll-behavior: smooth;
+  }
 }

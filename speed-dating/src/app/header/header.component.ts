@@ -50,10 +50,12 @@ export class HeaderComponent {
 
   protected toggleLoginPopup() {
     this.showLoginPopup = !this.showLoginPopup;
+    this.showSignUpPopup = false;
   }
 
   protected toggleSignUpPopup() {
     this.showSignUpPopup = !this.showSignUpPopup;
+    this.showLoginPopup = false;
   }
 
   @HostListener('document:click', ['$event'])
