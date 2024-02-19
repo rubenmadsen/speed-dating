@@ -1,8 +1,9 @@
-.card-container{
+.card-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  grid-gap:1em;
+  gap: 1em;
+  padding: 1em;
   flex-wrap: wrap;
 }
 
@@ -10,6 +11,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 2em;
+  margin-bottom: 1em;
   flex-direction: column;
+}
+
+@media only screen and (max-width: 1000px) {
+  .card-container {
+    width: 95vw;
+    overflow-x: scroll;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    scroll-behavior: smooth;
+    padding-left: 3em;
+    padding-right: 3em;
+  }
 }
