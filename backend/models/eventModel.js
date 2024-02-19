@@ -1,6 +1,9 @@
+/**
+ * Model for events
+ */
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
 
+const Schema = mongoose.Schema;
 const eventSchema = new Schema({
     startDate:{
         type:Date,
@@ -58,6 +61,5 @@ const eventSchema = new Schema({
     }
 });
 
-
-const EventModel = mongoose.model("event",eventSchema,"EVENTS");
+const EventModel = mongoose.model("event", eventSchema, "EVENTS");
 module.exports = EventModel;
