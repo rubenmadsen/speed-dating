@@ -1,22 +1,17 @@
 header {
-  position: fixed;
-  z-index: 1;
-  width: 100vw;
-}
-
-.top-container {
-  width: 100%;
-  margin: auto;
-  height: 2em;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.8rem;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
   background-color: var(--white-clr);
 }
 
+.top-container {
+  display: flex;
+  justify-content: space-between;
+  height: 5rem;
+}
+
 img {
-  height: 100%;
   cursor: pointer;
 }
 
