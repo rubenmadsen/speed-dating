@@ -6,24 +6,13 @@ const eventSchema = new Schema({
         type:Date,
         required:[true, "An event must have a start date"]
     },
-    // endDate:{
-    //     type:Date,
-    //     required:[false, "An event must have an end date"]
-    // },
     hasEnded:{
         type:Boolean,
         default:false
     },
     floorPlan:{
-        type:[{
-            x:{
-
-            },
-            y:{
-
-            }
-        }],
-        default:[]
+        type:String,
+        default:""
     },
     round:{
         type:Number,
@@ -40,18 +29,9 @@ const eventSchema = new Schema({
         maxLength:64
     },
     city:{
-      type:String,
+      type:Schema.Types.ObjectId,
+        ref:'CityModel',
       required:[true, "An event must have a city"]
-    },
-    longitude:{
-        type:String,
-        default:"50.0365° N",
-        maxLength:32
-    },
-    latitude:{
-        type:String,
-        default:"19.1758° E",
-        maxLength:32
     },
     description:{
         type:String,
