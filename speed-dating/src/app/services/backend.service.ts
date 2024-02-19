@@ -67,7 +67,7 @@ export class BackendService {
    * @param user
    */
   registerUser(user:UserModel):Observable<UserModel>{
-    return this.http.post<UserModel>(this.userURL ,user);
+    return this.http.post<UserModel>(this.userURL ,user, this.requestOptions);
   }
   /**
    * NOT IMPLEMENTED
