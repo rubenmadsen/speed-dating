@@ -16,7 +16,8 @@ const activityRoutes = require('./routes/activitityRoute')
 require('dotenv').config();
 const app = express();
 const port = 3000;
-const path = require('path')
+const path = require('path');
+const { authorizeUser } = require('./authorization/authorize');
 
 app.use(cors({origin:["http://localhost:4200"],credentials:true}));
 app.use(express.json());
@@ -35,6 +36,10 @@ app.use(activityRoutes);
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
+});
+
+app.get('/api/validate-token', authorizeUser, (req, res) => {
+  res.status(200).send({ valid: true, user: req.user });
 });
 
 mongoose.connect(process.env.DB_SERVER).then(result => {
