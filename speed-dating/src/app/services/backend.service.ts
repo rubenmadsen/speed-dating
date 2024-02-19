@@ -136,6 +136,18 @@ export class BackendService {
     return firstValueFrom(responseObservable);
   }
 
+  //gets all users
+  getAllUsers():Promise<UserModel[]>{
+    const response = this.http.get<UserModel[]>(this.userURL)
+    return firstValueFrom(response);
+  }
+
+  //gets a specific user by passing the id
+  getSpecificUser(id:string):Promise<UserModel>{
+    const responseObservable = this.http.get<UserModel>(this.userURL+"/user/:"+id)
+    return firstValueFrom(responseObservable);
+  }
+
   // Preference
 
 
