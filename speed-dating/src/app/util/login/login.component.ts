@@ -22,6 +22,7 @@ export class LoginComponent {
   };
 
   @Output() removeHideoutBackground = new EventEmitter<void>();
+  @Output() registerClick = new EventEmitter<void>();
 
   constructor(private router:Router, private backend: BackendService, private globalService:GlobalService, private authService: AuthService) {}
 
@@ -62,6 +63,10 @@ export class LoginComponent {
   }
   closeForm() {
     this.isVisible = false;
+  }
+  openRegister(event: Event){
+    event.stopPropagation()
+    this.registerClick.emit();
   }
 }
 
