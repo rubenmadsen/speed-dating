@@ -32,23 +32,8 @@ html {
 
 body {
   margin: 0 auto;
-  /* display: flex; */
-  /* flex-direction: column; */
-  /* min-height: 100vh; */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-ol, ul {
-  list-style: none;
-}
-blockquote, q {
-  quotes: none;
-}
-blockquote:before, blockquote:after,
-q:before, q:after {
-  content: '';
-  content: none;
-}
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
