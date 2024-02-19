@@ -60,6 +60,10 @@ export class BackendService {
     return this.http.get<any>(this.userURL +  `${email}`,this.requestOptions);
   }
 
+  getMe():Observable<any>{
+    return this.http.get<any>(this.userURL + "user/me",this.requestOptions);
+  }
+
   /**
    * 201 ok
    * 500 registration error
@@ -90,6 +94,8 @@ export class BackendService {
   getUserMatchingData(user:UserModel):Observable<any>{
     return this.http.get<any>(this.userURL + `/${user._id}/matchdata`,this.requestOptions);
   }
+
+
 
 
   // Event

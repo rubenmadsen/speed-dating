@@ -178,6 +178,23 @@ router.get("/user/:id/preferences", function (req, res) {
 });
 
 /**
+ * Get logged in user profile
+ */
+router.get("/user/user/me", authorizeUser, async function(req,res) {
+  try {
+    console.log(req.user);
+    const user = await User.findById(req.user.id); 
+    console.log(req)
+    console.log(user)
+    if (!user) return res.status(404).send('User not found');
+    res.json(user); 
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal server error');
+  }
+});
+
+/**
  * Get the interests of a user
  */
 router.get("/user/:id/interests", function (req, res) {
