@@ -127,15 +127,23 @@ router.get("/user/logout", (req, res) => {
  * 201 OK
  * 500 Internal server error
  */
-router.post("/user", function (req, res) {
-  User.create(req.body)
-    .then((result) => {
-      res.status(201).send(result);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).send({ message: "Registration error" });
+router.post("/user", async (req, res) => {
+  try {
+    const result = await User.create(req.body);
+    const user = await User.login(req.body.email, req.body.password);
+    const token = createToken(user._id);
+    res.cookie("jwt", token, {
+      httpOnly: true,
+      maxAge: DAY(3),
+      sameSite: "none",
+      secure: true,
     });
+
+    res.status(201).send(result);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ message: "Registration error" });
+  }
 });
 
 /**
