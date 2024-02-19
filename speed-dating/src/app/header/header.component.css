@@ -1,11 +1,18 @@
 header {
-  width:80%;
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+}
+
+.top-container{
+  width:100%;
   margin:auto;
   height:2em;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding:0.5rem;
+  padding:0.8rem;
+  background-color: var(--white-clr) ;
 }
 
 img {
@@ -18,7 +25,9 @@ header nav {
   align-items: center;
   justify-content: space-between;
   grid-gap:1em;
+  margin-right: 1rem;
 }
+
 
 .hide_out_background{
   position:fixed;
