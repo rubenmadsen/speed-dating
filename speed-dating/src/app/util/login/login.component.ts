@@ -42,7 +42,7 @@ export class LoginComponent {
     this.backend.login(this.form.email, this.form.password).subscribe({
       next: (response) => {
         this.isVisible = false;
-        this.authService.loginSuccess();
+        this.authService.checkSession();
 
         const mess:StatusMessage = {
           message:"You are logged in!",
