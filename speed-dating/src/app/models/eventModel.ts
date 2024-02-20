@@ -8,10 +8,7 @@ export interface EventModel extends BaseModel {
   hasEnded: boolean;
   round: number;
   location: string;
-  address: string;
   city: CityModel;
-  latitude: string;
-  longitude: string;
   description: string;
   totalParticipants: number;
   currentParticipants: number;

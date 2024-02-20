@@ -118,6 +118,7 @@ router.post("/user/login", async function (req, res) {
   }
 });
 
+
 router.post("/user/logout", async function (req, res) {
   try {
     res.clearCookie("jwt");
@@ -174,6 +175,7 @@ router.get("/user/:id/preferences", function (req, res) {
       res.status(500);
     });
 });
+
 
 /**
  * Get logged in user profile, based on jwt token.

@@ -3,9 +3,27 @@
     <fa-icon [icon]="faX" class="x_close_form" (click)="closePopup()"></fa-icon>
   </div>
   <form class="new-event-form" name="form" #f="ngForm">
-    <input type="text" class="input text" [placeholder]="venue.invalid && venue.touched ? 'City is required' : 'Firstname'" name="firstname" required [(ngModel)]="form.firstname" #firstname="ngModel"
-           [class.input-error]="firstname.invalid && firstname.touched">
+    <select class="input city" name="city" required [(ngModel)]="form.city" #city="ngModel"
+            [class.input-error]="city.invalid && city.touched">
+      <option value="" disabled selected>Select your city</option>
+      <option *ngFor="let city of cities" [value]="city._id">{{ city.name }}</option>
+    </select>
+    <input type="text" class="input text" [placeholder]="venue.invalid && venue.touched ? 'Venue is required' : 'Venue'" name="Venue" required [(ngModel)]="form.venue" #venue="ngModel"
+           [class.input-error]="venue.invalid && venue.touched">
 
+    <input type="date" class="input date" [placeholder]="date.invalid && date.touched ? 'Date is required' : 'Date'" name="Date" required [(ngModel)]="form.date" #date="ngModel"
+           [class.input-error]="date.invalid && date.touched">
+
+    <input type="time" class="input text" [placeholder]="time.invalid && time.touched ? 'Time is required' : 'Time'" name="Time" required [(ngModel)]="form.time" #time="ngModel"
+           [class.input-error]="time.invalid && time.touched">
+
+    <div class="description-container">
+            <textarea class="input description" required name="description" [(ngModel)]="form.description" #description="ngModel"
+                      [class.input-error]="description.invalid && description.touched" rows="11" maxlength="500"
+                      [placeholder]="description.invalid && description.touched ? 'Description is required and max 500 characters' : 'Personal description (max 500 characters)'"></textarea>
+    </div>
+    <div class="button-container one">
+      <app-button [buttonClass]="'accent clr-white'" [buttonText]="'Create Event'" (click)="createEvent()"></app-button>
+    </div>
   </form>
-
 </div>

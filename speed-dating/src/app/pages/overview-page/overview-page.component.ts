@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, ElementRef, HostListener} from '@angular/core';
 import {EventModel} from "../../models/eventModel";
 import {UserModel} from "../../models/userModel";
 import {BackendService} from "../../services/backend.service";
@@ -17,8 +17,11 @@ export class OverviewPageComponent {
   protected completedEvents: EventModel[];
   protected contacts: UserModel[] = []
 
-  constructor(private backend: BackendService) {
+  showNewEventPopup: Boolean = false;
+
+  constructor(private backend: BackendService,private eRef: ElementRef) {
     this.yourEvents = [];
+
     this.recommendedEvents = [];
     this.completedEvents = [];
   }
@@ -32,5 +35,16 @@ export class OverviewPageComponent {
       this.contacts = r.sharedContacts;
       this.yourEvents = r.events;
     });
+  }
+
+  openEventPopup(){
+    this.showNewEventPopup = !this.showNewEventPopup
+  }
+
+  @HostListener('document:click', ['$event'])
+  clickout(event: MouseEvent) {
+    if (!this.eRef.nativeElement.contains(event.target) && (this.showNewEventPopup)) {
+      this.showNewEventPopup = false;
+    }
   }
 }

@@ -1,0 +1,52 @@
+
+
+.new-event-popup-container {
+  background: var(--white-clr);
+  border-radius: 10px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: auto;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.new-event-form {
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%; /* Adjust if you want a specific width */
+}
+input, select {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.input {
+  font-size: 1.2rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.x_close_form {
+  position: absolute;
+  top: 0.8rem;
+  right: 0.8rem;
+  cursor: pointer;
+}
+
+
+.description-container textarea {
+  resize: none;
+}
+
+.new-event-form .input-error, .new-event-form select.input-error, .description-container .description.input-error {
+  border: 1px solid red;
+}
+
+.button-container {
+  margin-top: 1rem;
+  width: 50%;
+}
