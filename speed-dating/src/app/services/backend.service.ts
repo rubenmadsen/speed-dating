@@ -6,6 +6,7 @@ import {EventModel} from "../models/eventModel";
 import {CityModel} from "../models/cityModel";
 import {CategoryModel} from "../models/categoryModel";
 import {ActivityModel} from "../models/activityModel";
+import {DateModel} from "../models/dateModel";
 
 
 @Injectable({
@@ -116,7 +117,9 @@ export class BackendService {
   createNewEvent(event:EventModel): Observable<EventModel>{
     return this.http.post<EventModel>(this.eventURL,event,this.requestOptions);
   }
-
+  getNextRoundOfDatesForEvent(event:EventModel):Observable<DateModel[]>{
+    return this.http.get<DateModel[]>(this.eventURL + event._id + "/next",this.requestOptions);
+  }
   // Date
 
 
