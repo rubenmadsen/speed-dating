@@ -1,62 +1,67 @@
-#profile-page{
-  background-color: var(--accent-clr);
-}
-#profile-container{
-  /*border: 1px springgreen solid;*/
+.page-container {
+  margin: 0 auto;
+  margin-bottom: 1rem;
+  width: 80%;
+  max-width: 680px;
   display: flex;
-  border-bottom: darkgoldenrod 4px solid;
-
+  flex-direction: column;
 }
 
-#profile-container #name{
+.profile-container {
+  margin-top: 1rem;
+  background-color: aliceblue;
+  display: flex;
+  align-items: center;
+  border-radius: 1rem;
+}
+
+img,
+.personal-info-container,
+.bio-container {
+  padding: 1rem;
+}
+
+.your-profile {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: bold;
+}
+
+h1 {
   font-size: 2rem;
-  font-weight: bold;
 }
-#profile-container img{
-  margin: 1rem 0 1rem 1rem;
-  width: 40%;
-  height: 80%;
+
+h2 {
+  font-size: 1.2rem;
+}
+
+ul {
+  margin-top: 1rem;
+  list-style-position: inside;
+}
+
+p {
+  margin-top: 1rem;
+}
+
+img {
+  width: auto;
+  height: auto;
   max-width: 10rem;
-  aspect-ratio: 1;
   border-radius: 50%;
-  border: 2px goldenrod solid;
 }
 
-#personal-info{
-  margin-top: 3rem;
-  /*margin-left: 2rem;*/
-  display: inline-block;
-  justify-content: space-between;
-  padding: 1rem;
-}
+@media (max-width: 680px) {
+  .profile-container {
+    flex-direction: column;
+  }
 
-#personal-info ul{
-  margin-top: 3rem;
-
-  list-style: disc outside none;
-}
-#personal-info ul li{
-  margin-top: 0.5rem;
-}
-#bio-container{
-    border-top: goldenrod 2px solid;
-}
-
-
-#bio-container h2{
-  font-size: 1.2rem;
-  padding: 1rem 1rem 0 1rem;
-  font-weight: bold;
-}
-
-#bio-container p{
-  max-width: 30rem;
-  /*
-  border: springgreen 2px solid;
-  */
-  font-size: 1.2rem;
-  word-spacing: 0.3rem;
-  padding: 1rem;
-  line-height: 1.3rem;
-
+  .bio-container {
+    border-top: var(--accent-clr) 0.1rem solid;
+  }
 }
