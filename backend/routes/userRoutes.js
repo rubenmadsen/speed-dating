@@ -63,7 +63,8 @@ router.get("/user", function (req, res) {
  * 200 Available
  * 409 Taken
  */
-router.get("/user/:email", function (req, res) {
+router.get("/validate/:email", function (req, res) {
+  console.log(req.params);
   User.findOne({ email: req.params.email })
     .then((user) => {
       if (user) {
@@ -79,7 +80,10 @@ router.get("/user/:email", function (req, res) {
 
 /**
  * Gets a specific user
+ * This route cant be used right now, blocks /user/user/me. 
+ * Maybe use /user/:id ?
  */
+
 //router.get('/user/user/:id', function (req, res){
   //  console.log("Vad är detta för skit");
     //User.findOne({_id: req.params.id}).then(user=>{
@@ -185,7 +189,7 @@ router.get("/user/:id/preferences", function (req, res) {
 /**
  * Get logged in user profile
  */
-router.get("/user/user/me", authorizeUser, async function(req,res) {
+router.get("/user/profile/me", authorizeUser, async function(req,res) {
   try {
     const user = await User.findById(req.user.id).populate('city');
     if (!user) {

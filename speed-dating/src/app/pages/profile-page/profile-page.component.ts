@@ -10,14 +10,21 @@ import {BackendService} from "../../services/backend.service";
 })
 export class ProfilePageComponent implements OnInit, OnDestroy{
 
-
+  user?: UserModel;
   private sub: any
 
   constructor(private route : ActivatedRoute, private backendService: BackendService) {}
 
+  /**
+   * Params should be used when an organizer tries to enter a participant profile, but getMe should be used when a user goes
+   * to its own profile.
+   */
   async ngOnInit(){
     // this.sub = this.route.queryParams.subscribe(params =>{
-    //   this.user= params as UserModel;
+    //   console.log(params)
+    //   // this.user= params as UserModel;
+    //   console.log(this.route.queryParams)
+    //   console.log(params)
     //   // console.log(this.user.city)
     //   // console.log(this.user.email)
     //   // console.log(this.user.imagePath)
@@ -25,7 +32,6 @@ export class ProfilePageComponent implements OnInit, OnDestroy{
     await this.backendService.getMe().subscribe({
       next: (response) => {
         this.user = response.user
-        console.log(this.user)
       }, error: (error) => {
         console.log(error)
       }
