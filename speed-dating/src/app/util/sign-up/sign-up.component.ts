@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Output, ViewChild} from '@angular/core';
 import {faX} from "@fortawesome/free-solid-svg-icons/faX";
 import {BackendService} from "../../services/backend.service";
 import { NgForm } from '@angular/forms';
@@ -20,6 +20,8 @@ import {GlobalService} from "../../services/global.service";
 export class SignUpComponent {
 
   @ViewChild('f') signupForm!: NgForm;
+  @ViewChild('fileInput') fileInput!: ElementRef;
+  @ViewChild('userImage') userImage!: ElementRef;
   protected readonly faX = faX;
 
   @Output() removeHideoutBackground = new EventEmitter<void>();
@@ -30,7 +32,7 @@ export class SignUpComponent {
   emailAvailable: boolean = true;
   cities: CityModel[];
   @ViewChild(ActivitiesRatingComponent) activitiesRatingComponent!: ActivitiesRatingComponent;
-
+  profilePicture = ""
   form: any = {
     option: 'B',
     firstname: '',
@@ -51,8 +53,25 @@ export class SignUpComponent {
 
   async ngOnInit(){
     await this.backend.getAllCities().then(cities => this.cities = cities.sort(( a , b ) => a.name > b.name ? 1 : - 1));
-  }
 
+  }
+  onFileSelected(event:any){
+    const file = event.target.files[0];
+    if (file) {
+      this.backend.uploadProfilePicture(file).subscribe({
+        next: (newFile) => {
+            console.log("File:", newFile["filename"]);
+            this.profilePicture = newFile["filename"];
+            const imageUrl = "http://localhost:3000/" + this.profilePicture
+          this.userImage.nativeElement.style.backgroundImage = `url(${imageUrl})`;
+        },
+        error:(error) => {
+          console.log("err",error)
+        }
+      });
+      // Process the file as needed (e.g., upload to server)
+    }
+  }
   /**
    * Register the user. First checks if form is valid, if Email is available register the user and relocate to the Profile page.
    */
@@ -82,7 +101,7 @@ export class SignUpComponent {
           events: [],
           sharedContacts: [],
           preferences: [],
-          imagePath: "ononoeope",
+          imagePath: this.profilePicture !== "" ? this.profilePicture : this.form.gender === "male" ? "MaleProfilePlaceholder.png":"MaleProfilePlaceholder.png",
         };
         this.backend.registerUser(user).subscribe({
           next: (userResponse) => {

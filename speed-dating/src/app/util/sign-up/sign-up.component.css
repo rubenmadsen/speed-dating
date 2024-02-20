@@ -98,5 +98,15 @@
   margin-bottom: 0.5rem;
 }
 
-
+.userImage{
+  border: 2px solid var(--attention-color);
+  border-radius: 99999px;
+  aspect-ratio: 1;
+  width: 80%;
+  background-size: cover;
+  background-position: center;
+  /*width: 100px;*/
+  /*height: 100px;*/
+  cursor: pointer;
+}
 

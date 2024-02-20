@@ -5,7 +5,9 @@ const { Router, response } = require("express");
 const { authorizeUser } = require("../authorization/authorize");
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
-
+const Generate = require("../classes/Generate");
+const multer = require('multer')
+const express = require("express");
 const router = Router();
 
 // Converts seconds to days

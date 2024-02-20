@@ -20,6 +20,7 @@ const categoryRoutes = require("./routes/categoryRoutes");
 const generationRoutes = require("./routes/generationRoutes");
 const cityRoutes = require("./routes/cityRoutes");
 const activityRoutes = require("./routes/activitityRoute");
+const uploadRoutes = require("./routes/uploadRoute");
 const MatchingAlgorithm = require('./classes/MatchingAlgorithm');
 
 // Environment
@@ -29,8 +30,8 @@ const app = express();
 const port = 3000;
 
 app.use(cors({ origin: ["http://localhost:4200"], credentials: true }));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '5mb' }));
+app.use(express.urlencoded({ limit: '5mb', extended: true }));
 app.use(express.static("public"));
 app.use(cookieParser());
 
@@ -41,6 +42,7 @@ app.use(categoryRoutes);
 app.use(generationRoutes);
 app.use(cityRoutes);
 app.use(activityRoutes);
+app.use(uploadRoutes);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");

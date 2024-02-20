@@ -17,6 +17,10 @@
 
       <div class="middle-container">
         <div class="left-container">
+          <div class="userImage" #userImage (click)="fileInput.click()" style="cursor: pointer; border: 1px solid #000; padding: 10px; display: inline-block;">
+
+          </div>
+          <input type="file" #fileInput style="display: none;" (change)="onFileSelected($event)" />
           <input type="text" class="input text" [placeholder]="firstname.invalid && firstname.touched ? 'Firstname is required' : 'Firstname'" name="firstname" required [(ngModel)]="form.firstname" #firstname="ngModel"
                  [class.input-error]="firstname.invalid && firstname.touched">
 

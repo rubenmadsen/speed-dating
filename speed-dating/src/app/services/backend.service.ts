@@ -8,7 +8,6 @@ import {CategoryModel} from "../models/categoryModel";
 import {ActivityModel} from "../models/activityModel";
 import {DateModel} from "../models/dateModel";
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -34,6 +33,13 @@ export class BackendService {
     headers: new HttpHeaders(this.headerDict),
     withCredentials:true
   };
+  uploadImageOptions = {
+    headers: {
+      'Access-Control-Allow-Headers': 'Content-Type',
+      'Access-Control-Allow-Origin': 'Content-Type'
+    },
+    withCredentials: true
+  }
   constructor(private http:HttpClient) {
 
   }
@@ -96,7 +102,15 @@ export class BackendService {
     return this.http.get<any>(this.userURL + `/${user._id}/matchdata`,this.requestOptions);
   }
 
-
+  /**
+   * Uploads a profile picture and return the new name
+   * @param file A god-damn file
+   */
+  uploadProfilePicture(file:File):Observable<any>{
+    const formData = new FormData();
+    formData.append('file',file,file.name);
+    return this.http.post<any>(this.backendURL + "upload/image",formData,this.uploadImageOptions);
+  }
 
 
   // Event
