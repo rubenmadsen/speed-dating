@@ -1,10 +1,9 @@
-<div class="event_info_container">
-  <img src="assets/img/card/card_placeholder.png">
-  <div class="event_info_container">
-    <p class="event_info_container_date"> {{ event!.startDate }}</p>
-    <p class="event_info_container_location"> {{event!.location}}</p>
-    <p class="event_info_container_information"> {{event!.description}}
-    </p>
-    <p class="event_info_container_registered"> {{event!.participants.length}}/20 Registered</p>
+<div class="event-info-container">
+  <img src="assets/img/card/card_placeholder.png" />
+  <div class="event-text-container">
+    <p class="date">{{ event!.startDate }}</p>
+    <p class="location">{{ event!.location }}</p>
+    <p class="information">{{ event!.description }}</p>
+    <p class="registered">{{ event!.participants.length }}/20 Registered</p>
   </div>
 </div>

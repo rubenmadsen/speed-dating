@@ -1,34 +1,39 @@
-const { Router, response}    = require('express');
-const { authorizeUser } = require('../authorization/authorize')
-const Event = require("../models/eventModel")
-const City = require("../models/cityModel")
-const router = Router()
+/**
+ * Routes for events
+ */
+const { Router, response } = require("express");
+const { authorizeUser } = require("../authorization/authorize");
+const Event = require("../models/eventModel");
+const MatchingAlgorithm = require("../classes/MatchingAlgorithm");
+
+const router = Router();
 
 /**
  * Get all events
  */
-router.get('/event', function (req,res){
-    Event.find({}).then(result => {
-        res.status(200).send(result);
-    }).catch(err => {
-        console.log(err);
+router.get("/event", function (req, res) {
+  Event.find({})
+    .populate("city")
+    .populate("participants")
+    .then((result) => {
+      res.status(200).send(result);
+    })
+    .catch((err) => {
+      console.log(err);
     });
 });
 
-// 65cf16aa20e795caa778d7be
-router.get('/event/city/:cityID',function (req,res){
-    City.findById(req.params.cityID).then(city => {
-        console.log("City",city);
-        Event.find({city: req.params.cityID}).then(result => {
-            console.log("params",req.params)
-            res.send(result);
-        }).catch(err => {
-            console.log(err);
-            res.status(500);
-        })
-    }).catch(err => {
-        console.log("When finding city by id", err);
-    })
-
+router.get("/event/:eventId/next", function (req, res) {
+    console.log("event id", req.params.eventId)
+    Event.findById(req.params.eventId).then(async event => {
+        const matcher = new MatchingAlgorithm();
+        console.log("Event",event)
+        await matcher.loadDataForEvent(event).then();
+        matcher.pairAll().then(dates => {
+            console.log("Generated dates for next round")
+            res.status(200).send(dates);
+        });
+    });
 });
+
 module.exports = router;

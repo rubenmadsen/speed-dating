@@ -1,38 +1,17 @@
-.date_container{
-  width:250px;
-  height:100px;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr 1fr;
+.table {
+  background-color: #f7f4f4f8;
+  border-radius: 0.3rem;
+  text-align: center;
+  padding: 0.5rem;
 }
-
-
-.date_person{
-  width:80%;
-  padding:1rem;
-  margin:auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: var(--secondary-clr);
-}
-
 
 .participant {
-  cursor: grab;
-  height: 30px;
-  background-color: red;
-  border: 1px solid black;
-  margin-top: 2px;
-  background: var(--secondary-clr);
+  background: var(--accent-clr);
+  border-radius: 0.3rem;
+  margin: 0.5rem;
+  padding: 0.5rem;
 }
 
 .participant:nth-child(odd) {
-  background-color: white;
-}
-
-.participantList {
-  border: 1px solid black;
-  width: 500px;
-  margin-bottom: 15px;
+  background-color: var(--secondary-clr);
 }

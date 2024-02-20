@@ -1,1 +1,21 @@
-<p>profile-page works!</p>
+<div id="profile-page">
+  <div id="profile-container">
+    <img src="http://localhost:3000/MaleProfilePlaceholder.png">
+    <div id="personal-info">
+      <h1 id="name"> {{ user?.firstname}} {{user?.lastname}}</h1>
+      <ul>
+        <li>Age: {{user?.age}} years</li>
+        <li>City: {{user?.city?.name}}</li>
+      </ul>
+
+    </div>
+
+  </div>
+
+  <div id="bio-container">
+    <h2>Biography</h2>
+    <p> {{user?.description}}</p>
+  </div>
+
+</div>
+

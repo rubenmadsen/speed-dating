@@ -1,12 +1,21 @@
 <header>
-
-  <img src="./assets/img/logo/header_logo.png" alt="logo" routerLink="/">
-  <nav>
-    <app-button [buttonClass]="'trans clr-accent border-accent'" [buttonText]="'Sign up'"> </app-button>
-    <app-button [buttonClass]="'accent border-accent clr-white '" [buttonText]="'Login'" (click)="toggleLoginPopup()"> </app-button>
-  </nav>
+  <div class="top-container">
+    <img src="./assets/img/logo/header_logo.png" alt="logo" routerLink="/">
+    <nav *ngIf="!(isLoggedIn$ | async)">
+      <app-button [buttonClass]="'trans clr-accent border-accent'" [buttonText]="'Sign up'" (click)="toggleSignUpPopup()"> </app-button>
+      <app-button [buttonClass]="'accent border-accent clr-white '" [buttonText]="'Login'" (click)="toggleLoginPopup()"> </app-button>
+    </nav>
+    <nav *ngIf="(isLoggedIn$ | async)">
+      <app-button [buttonClass]="'trans clr-accent border-accent'" [buttonText]="'Home'" (click)="home()"></app-button>
+      <app-button [buttonClass]="'trans clr-accent border-accent'" [buttonText]="'Profile'" (click)="profile()"> </app-button>
+      <app-button [buttonClass]="'accent border-accent clr-white '" [buttonText]="'Logout'" (click)="logout()"> </app-button>
+    </nav>
+  </div>
+  <app-errorbar></app-errorbar>
 </header>
-<app-errorbar></app-errorbar>
-<div class="hide_out_background" *ngIf="showLoginPopup" (click)="toggleLoginPopup()">
-</div>
-<app-login *ngIf="showLoginPopup"></app-login>
+
+<div class="hide_out_background" *ngIf="showLoginPopup" (click)="toggleLoginPopup()"></div>
+<div class="hide_out_background" *ngIf="showSignUpPopup" (click)="toggleSignUpPopup()"></div>
+
+<app-sign-up (removeHideoutBackground)="closeBackground()"  *ngIf="showSignUpPopup"></app-sign-up>
+<app-login (removeHideoutBackground)="closeBackground()"(registerClick)="toggleSignUpPopup()" *ngIf="showLoginPopup"></app-login>

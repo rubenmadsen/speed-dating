@@ -1,20 +1,20 @@
-.event_card_container{
+.event_card_container {
   width: 350px;
   height: 150px;
   display: flex;
   flex-direction: column;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); /* Adds shadow */
   border-radius: 10px;
-  cursor:pointer;
+  cursor: pointer;
   transition: box-shadow 250ms ease-in-out; /* Smooth transition for shadow */
   transition: scale 150ms ease-in-out;
 }
 
-.event_card_container:hover{
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.25), 0 12px 40px 0 rgba(0, 0, 0, 0.30); /* More pronounced shadow on hover */
+.event_card_container:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.25), 0 12px 40px 0 rgba(0, 0, 0, 0.3); /* More pronounced shadow on hover */
   scale: 105%;
 }
-.event_card_image{
+.event_card_image {
   height: 70%;
   background: url("src/assets/img/card/card_placeholder.png") center;
   background-size: cover;
@@ -26,58 +26,56 @@
   border-radius: 10px 10px 0 0;
 }
 
-.event_card_image div{
+.event_card_image div {
   display: flex;
   grid-gap: 0.5rem;
 }
-.event_card_image div{
+.event_card_image div {
   display: flex;
-  grid-gap:0.5rem;
+  grid-gap: 0.5rem;
 }
 
-.event_card_information{
+.event_card_information {
   background-color: hsla(100, 100%, 100%, 0.7);
-  height:1rem;
-  padding:0.5rem 1rem;
-  border-radius:20px;
+  height: fit-content;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
 }
 
-.event_card_footer{
-  height:30%;
+.event_card_footer {
+  height: 30%;
   display: flex;
   align-items: center;
-  grid-gap:1rem;
-  padding:0 1rem;
-  font-size:0.75rem;
+  grid-gap: 1rem;
+  padding: 0 1rem;
+  font-size: 0.75rem;
 }
 
 .event_card_footer i {
-  font-size:2rem;
+  font-size: 2rem;
 }
 
 .event_card_footer p {
-  font-size:1.1rem;
+  font-size: 1.1rem;
 }
 
 .event_card_buttons {
   display: flex;
-  grid-gap:0.25rem;
+  grid-gap: 0.25rem;
 }
 
-
-#event_card_footer_clock{
-  font-size:1rem;
+#event_card_footer_clock {
+  font-size: 1rem;
 }
 
-#event_card_information_map{
-  cursor:pointer;
+#event_card_information_map {
+  cursor: pointer;
   background: var(--secondary-clr);
   padding: 0.5rem;
-  color:var(--black-clr);
+  color: var(--black-clr);
   transition: scale 150ms ease-out;
-
 }
 
-#event_card_information_map:hover{
+#event_card_information_map:hover {
   scale: 111%;
 }

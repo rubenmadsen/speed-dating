@@ -12,9 +12,8 @@ export class ButtonComponent {
   @Input() buttonText: string = "";
   @Input() buttonClass: string = '';
 
-  @Output() appClick = new EventEmitter<void>();
-
-  onClick() {
-    this.appClick.emit();
+  @Output() appClick = new EventEmitter<Event>();
+  onClick(event: Event) {
+    this.appClick.emit(event);
   }
 }

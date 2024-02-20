@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {firstValueFrom, Observable} from "rxjs";
+import {catchError, firstValueFrom, map, Observable, of, tap} from "rxjs";
 import {UserModel} from "../models/userModel";
 import {EventModel} from "../models/eventModel";
 import {CityModel} from "../models/cityModel";
@@ -21,6 +21,7 @@ export class BackendService {
   private readonly cityURL: string = this.backendURL + "city/";
   private readonly categoryURL: string = this.backendURL + "categories/";
   private readonly activityURL: string = this.backendURL + "activity/";
+
 
   headerDict = {
     'Content-Type': 'application/json',
@@ -46,7 +47,7 @@ export class BackendService {
     return this.http.post<any>(this.userURL + "login", {email, password},this.requestOptions);
   }
   logout():Observable<any>{
-    return this.http.post<any>(this.userURL + "logout", this.requestOptions);
+    return this.http.post<any>(this.userURL + "logout", {} ,this.requestOptions);
   }
 
   /**
@@ -56,7 +57,11 @@ export class BackendService {
    * @param email The god-damn email address
    */
   checkAvailability(email:string):Observable<any>{
-    return this.http.get<any>(this.userURL +  `/${email}`,this.requestOptions);
+    return this.http.get<any>(this.backendURL +'validate/' +   `${email}`,this.requestOptions);
+  }
+
+  getMe():Observable<any>{
+    return this.http.get<any>(this.userURL + "profile/me",this.requestOptions);
   }
 
   /**
@@ -66,7 +71,7 @@ export class BackendService {
    * @param user
    */
   registerUser(user:UserModel):Observable<UserModel>{
-    return this.http.post<UserModel>(this.userURL ,user);
+    return this.http.post<UserModel>(this.userURL ,user, this.requestOptions);
   }
   /**
    * NOT IMPLEMENTED
@@ -91,12 +96,19 @@ export class BackendService {
   }
 
 
+
+
   // Event
   getAllEvents(): Promise<EventModel[]>{
     const endPoint = this.backendURL + 'event';
     const responseObservable = this.http.get<EventModel[]>(endPoint);
     return firstValueFrom(responseObservable);
   }
+
+  /**
+   * NOT IMPLEMENTED
+   * @param sender
+   */
   getEventsByLocation(sender:CityModel | UserModel){
     const id = (sender as UserModel).city._id !== undefined ? (sender as CityModel)._id : (sender as UserModel).city._id;
     this.http.get(this.eventURL + ":id",this.requestOptions);
@@ -114,17 +126,32 @@ export class BackendService {
   // EventFeedback
 
   // City
-  getAllCities():Observable<CityModel[]>{
-    return this.http.get<CityModel[]>(this.cityURL, this.requestOptions);
+  getAllCities():Promise<CityModel[]>{
+    const responseObservable = this.http.get<CityModel[]>(this.cityURL);
+    return firstValueFrom(responseObservable);
   }
   // Category
-  getAllCategories():Observable<CategoryModel[]>{
-    return this.http.get<CategoryModel[]>(this.categoryURL, this.requestOptions);
+  getAllCategories():Promise<CategoryModel[]>{
+    const responseObservable = this.http.get<CategoryModel[]>(this.categoryURL, this.requestOptions);
+    return firstValueFrom(responseObservable);
   }
 
   // Activity
-  getAllActivities():Observable<ActivityModel[]>{
-    return this.http.get<ActivityModel[]>(this.activityURL, this.requestOptions);
+  getAllActivities():Promise<ActivityModel[]>{
+    const responseObservable = this.http.get<ActivityModel[]>(this.activityURL, this.requestOptions);
+    return firstValueFrom(responseObservable);
+  }
+
+  //gets all users
+  getAllUsers():Promise<UserModel[]>{
+    const response = this.http.get<UserModel[]>(this.userURL)
+    return firstValueFrom(response);
+  }
+
+  //gets a specific user by passing the id
+  getSpecificUser(id:string):Promise<UserModel>{
+    const responseObservable = this.http.get<UserModel>(this.userURL+"/user/:"+id)
+    return firstValueFrom(responseObservable);
   }
 
   // Preference
