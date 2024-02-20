@@ -10,6 +10,10 @@
   transition: scale 150ms ease-in-out;
 }
 
+.event_card_larger {
+  height: 250px;
+}
+
 .event_card_container:hover {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.25), 0 12px 40px 0 rgba(0, 0, 0, 0.3); /* More pronounced shadow on hover */
   scale: 105%;
@@ -37,7 +41,10 @@
 
 .event_card_information {
   background-color: hsla(100, 100%, 100%, 0.7);
-  height: fit-content;
+  height: 1rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
   padding: 0.5rem 1rem;
   border-radius: 20px;
 }
