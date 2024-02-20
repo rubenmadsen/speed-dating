@@ -2,7 +2,7 @@
   <h1 class="your-profile">Your Profile</h1>
   <div class="profile-container">
     <div class="personal-info-container">
-      <img src="http://localhost:3000/MaleProfilePlaceholder.png" />
+      <img src="http://localhost:3000/{{user?.imagePath}}"  />
       <h2>{{ user?.firstname }} {{ user?.lastname }}</h2>
       <ul>
         <li>Age: {{ user?.age }} years</li>
