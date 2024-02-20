@@ -1,6 +1,6 @@
-import {StatusMessageType} from "./StatusMessageType";
+import { StatusMessageType } from './StatusMessageType';
 
-export interface StatusMessage{
-  message:string;
-  type:StatusMessageType;
+export interface StatusMessage {
+  message: string;
+  type: StatusMessageType;
 }

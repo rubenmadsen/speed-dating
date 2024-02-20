@@ -57,7 +57,11 @@ export class BackendService {
    * @param email The god-damn email address
    */
   checkAvailability(email:string):Observable<any>{
-    return this.http.get<any>(this.userURL +  `${email}`,this.requestOptions);
+    return this.http.get<any>(this.backendURL +'validate/' +   `${email}`,this.requestOptions);
+  }
+
+  getMe():Observable<any>{
+    return this.http.get<any>(this.userURL + "profile/me",this.requestOptions);
   }
 
   /**
@@ -67,7 +71,7 @@ export class BackendService {
    * @param user
    */
   registerUser(user:UserModel):Observable<UserModel>{
-    return this.http.post<UserModel>(this.userURL ,user);
+    return this.http.post<UserModel>(this.userURL ,user, this.requestOptions);
   }
   /**
    * NOT IMPLEMENTED
@@ -92,12 +96,19 @@ export class BackendService {
   }
 
 
+
+
   // Event
   getAllEvents(): Promise<EventModel[]>{
     const endPoint = this.backendURL + 'event';
     const responseObservable = this.http.get<EventModel[]>(endPoint);
     return firstValueFrom(responseObservable);
   }
+
+  /**
+   * NOT IMPLEMENTED
+   * @param sender
+   */
   getEventsByLocation(sender:CityModel | UserModel){
     const id = (sender as UserModel).city._id !== undefined ? (sender as CityModel)._id : (sender as UserModel).city._id;
     this.http.get(this.eventURL + ":id",this.requestOptions);
@@ -128,6 +139,18 @@ export class BackendService {
   // Activity
   getAllActivities():Promise<ActivityModel[]>{
     const responseObservable = this.http.get<ActivityModel[]>(this.activityURL, this.requestOptions);
+    return firstValueFrom(responseObservable);
+  }
+
+  //gets all users
+  getAllUsers():Promise<UserModel[]>{
+    const response = this.http.get<UserModel[]>(this.userURL)
+    return firstValueFrom(response);
+  }
+
+  //gets a specific user by passing the id
+  getSpecificUser(id:string):Promise<UserModel>{
+    const responseObservable = this.http.get<UserModel>(this.userURL+"/user/:"+id)
     return firstValueFrom(responseObservable);
   }
 

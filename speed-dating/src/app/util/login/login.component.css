@@ -38,3 +38,6 @@ input {
   font-size:0.7rem;
   color: red;
 }
+p {
+  cursor: pointer;
+}

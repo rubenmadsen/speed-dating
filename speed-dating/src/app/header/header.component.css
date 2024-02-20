@@ -1,18 +1,17 @@
 header {
-  width:100%;
-  margin:auto;
-  height:2em;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  background-color: var(--white-clr);
+}
+
+.top-container {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding:0.8rem;
-  position: fixed;
-  z-index: 1;
-  background-color: var(--white-clr) ;
+  height: 5rem;
 }
 
 img {
-  height:100%;
   cursor: pointer;
 }
 
@@ -20,18 +19,16 @@ header nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  grid-gap:1em;
+  grid-gap: 1em;
   margin-right: 1rem;
 }
 
-
-.hide_out_background{
-  position:fixed;
+.hide_out_background {
+  position: fixed;
   background: black;
-  height:100vh;
-  width:100vw;
-  top:0;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
   opacity: 0.2;
-  cursor:pointer;
+  cursor: pointer;
 }
-

@@ -1,0 +1,62 @@
+#profile-page{
+  background-color: var(--accent-clr);
+}
+#profile-container{
+  /*border: 1px springgreen solid;*/
+  display: flex;
+  border-bottom: darkgoldenrod 4px solid;
+
+}
+
+#profile-container #name{
+  font-size: 2rem;
+  font-weight: bold;
+}
+#profile-container img{
+  margin: 1rem 0 1rem 1rem;
+  width: 40%;
+  height: 80%;
+  max-width: 10rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 2px goldenrod solid;
+}
+
+#personal-info{
+  margin-top: 3rem;
+  /*margin-left: 2rem;*/
+  display: inline-block;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+#personal-info ul{
+  margin-top: 3rem;
+
+  list-style: disc outside none;
+}
+#personal-info ul li{
+  margin-top: 0.5rem;
+}
+#bio-container{
+    border-top: goldenrod 2px solid;
+}
+
+
+#bio-container h2{
+  font-size: 1.2rem;
+  padding: 1rem 1rem 0 1rem;
+  font-weight: bold;
+}
+
+#bio-container p{
+  max-width: 30rem;
+  /*
+  border: springgreen 2px solid;
+  */
+  font-size: 1.2rem;
+  word-spacing: 0.3rem;
+  padding: 1rem;
+  line-height: 1.3rem;
+
+}

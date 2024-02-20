@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {BackendService} from "../../services/backend.service";
 import {EventModel} from "../../models/eventModel"
+import {CityModel} from "../../models/cityModel";
 
 @Component({
   selector: 'app-card-container',
@@ -8,29 +9,18 @@ import {EventModel} from "../../models/eventModel"
   styleUrls: ['./card-container.component.css']
 })
 export class CardContainerComponent implements OnInit{
-  events: EventModel[]
+
   public filteredEvents: EventModel[] = [];
 
+  @Input() events: EventModel[] = [];
 
   async ngOnInit(){
-    await this.backend.getAllEvents().then(events => this.events = events.sort((a,b) => a.startDate > b.startDate ? 1 : -1))
-    await this.loadEvents()
-  }
-
-  constructor(private backend: BackendService) {
-    this.events = [];
-  }
-
-  async loadEvents() {
-    // Logic to load events, then store them in `filteredEvents`
-    await this.backend.getAllEvents().then(events => {
-      this.filteredEvents = events.sort((a,b) => a.startDate > b.startDate ? 1 : -1);
-    });
+    this.filteredEvents = this.events;
   }
 
   protected filterEvents(selectedCity: string | null) {
     if (selectedCity !== null) {
-      this.filteredEvents = this.events.filter(event => event.city === selectedCity)
+      this.filteredEvents = this.events.filter(event => event.city.name === selectedCity)
     } else {
       this.filteredEvents = this.events
     }

@@ -1,7 +1,7 @@
-import {BaseModel} from "./baseModel";
-import {EventModel} from "./eventModel";
-import {ActivityModel} from "./activityModel";
-import {CityModel} from "./cityModel";
+import { BaseModel } from './baseModel';
+import { EventModel } from './eventModel';
+import { ActivityModel } from './activityModel';
+import { CityModel } from './cityModel';
 
 export interface UserModel extends BaseModel {
   imagePath: string;
@@ -9,10 +9,10 @@ export interface UserModel extends BaseModel {
   firstname: string;
   lastname: string;
   age: number;
-  isOrganizer:boolean;
-  password:string;
+  isOrganizer: boolean;
+  password: string;
   gender: 'male' | 'female';
-  city:CityModel;
+  city: CityModel;
   description: string;
   events: EventModel[];
   sharedContacts: UserModel[];
@@ -22,7 +22,7 @@ export interface UserModel extends BaseModel {
     max: number;
   }[];
   activityData: {
-    activity:ActivityModel,
-    points:number
+    activity: ActivityModel;
+    points: number;
   }[];
 }

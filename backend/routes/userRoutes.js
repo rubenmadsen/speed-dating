@@ -63,7 +63,8 @@ router.get("/user", function (req, res) {
  * 200 Available
  * 409 Taken
  */
-router.get("/user/:email", function (req, res) {
+router.get("/validate/:email", function (req, res) {
+  console.log(req.params);
   User.findOne({ email: req.params.email })
     .then((user) => {
       if (user) {
@@ -75,6 +76,25 @@ router.get("/user/:email", function (req, res) {
     .catch((err) => {
       console.error(err);
     });
+});
+
+/**
+ * Gets a specific user
+ */
+router.get('/user/user/:id',authorizeUser, async function (req, res){
+    console.log("Vad är detta för skit");
+    User.findOne({_id: req.params.id}).then(user=>{
+        if (user){
+            console.log(user)
+            res.status(200).send(user)
+        }
+        else {
+            res.status(505).json({message: "No user found"})
+        }
+    }).catch(err=>{
+        console.error(err)
+    });
+
 });
 
 /**
@@ -109,33 +129,27 @@ router.post("/user/logout", async function (req, res) {
 });
 
 /**
- *
- */
-router.get("/user/logout", (req, res) => {
-  res.cookie("jwt", "", {
-    expires: new Date(0),
-    httpOnly: true,
-    sameSite: "none",
-    secure: true,
-  });
-  res.status(200).send("User logged out successfully");
-  res.redirect("/");
-});
-
-/**
  * Register new user
  * 201 OK
  * 500 Internal server error
  */
-router.post("/user", function (req, res) {
-  User.create(req.body)
-    .then((result) => {
-      res.status(201).send(result);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).send({ message: "Registration error" });
+router.post("/user", async (req, res) => {
+  try {
+    const result = await User.create(req.body);
+    const user = await User.login(req.body.email, req.body.password);
+    const token = createToken(user._id);
+    res.cookie("jwt", token, {
+      httpOnly: true,
+      maxAge: DAY(3),
+      sameSite: "none",
+      secure: true,
     });
+
+    res.status(201).send(result);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ message: "Registration error" });
+  }
 });
 
 /**
@@ -167,6 +181,21 @@ router.get("/user/:id/preferences", function (req, res) {
       console.log(err);
       res.status(500);
     });
+});
+
+/**
+ * Get logged in user profile, based on jwt token.
+ */
+router.get("/user/profile/me", authorizeUser, async function(req,res) {
+  try {
+    const user = await User.findById(req.user.id).populate('city');
+    if (!user) {
+      return res.status(404).send({ message: "User not found." });
+    }
+    res.status(200).send({ valid: true, user: user });  
+  } catch (err) {
+    res.status(500).send('Internal server error');
+  }
 });
 
 /**
