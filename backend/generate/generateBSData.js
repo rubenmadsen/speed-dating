@@ -1,7 +1,8 @@
 /**
  * Generates data for the database
  */
-
+const fs = require('fs');
+const path = require('path');
 const User = require("../models/userModel");
 const Event = require("../models/eventModel");
 const EventFeedback = require("../models/eventFeedbackModel");
@@ -99,10 +100,10 @@ async function generateRandomUser(isOrganizer) {
   const newUser = User();
   newUser.gender = getRandomGender();
   newUser.isOrganizer = isOrganizer;
-  newUser.imagePath =
-    newUser.gender === "male"
-      ? "MaleProfilePlaceholder.png"
-      : "FemaleProfilePlaceholder.png";
+  newUser.imagePath = getRandomProfilePicture(newUser.gender)
+    // newUser.gender === "male"
+    //   ? "MaleProfilePlaceholder.png"
+    //   : "FemaleProfilePlaceholder.png";
   newUser.password = 1234;
   const random_city_name = cities.at(Math.random() * cities.length);
   const aCity = await City.findOne({ name: random_city_name });
@@ -246,6 +247,21 @@ function getRandomDate() {
       Math.floor(Math.random() * 70) +
       18
   );
+}
+
+function getRandomProfilePicture(gender){
+  const prefix = gender === "male" ? "XMale" : "XFemale"
+  let files = null;
+  const directoryPath = path.join(__dirname, '../public');
+  try {
+    // Read directory synchronously
+    files = fs.readdirSync(directoryPath);
+
+    const genderBased = files.filter(filename => filename.startsWith(prefix))
+    return getRandomFromList(genderBased);
+  } catch (err) {
+    console.log('Unable to scan directory: ' + err);
+  }
 }
 const femaleNames = [
   "Emma",
@@ -875,6 +891,7 @@ module.exports.generateRandomUser = generateRandomUser;
 module.exports.generateRandomEvent = generateRandomEvent;
 module.exports.generateNRandomUsers = generateNRandomUsers;
 module.exports.generateNRandomEvents = generateNRandomEvents;
+module.exports.getRandomProfilePicture = getRandomProfilePicture;
 
 module.exports.clearCollection = clearCollection;
 module.exports.generateDatabase = generateDatabase;
