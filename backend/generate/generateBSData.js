@@ -46,11 +46,11 @@ function generateDatabase() {
       await generateNRandomUsers(30, false); // Participants
       console.log("Generateing Organizers");
       await generateNRandomUsers(2, true); // Organizers
-      console.log("Generateing Events");
-      await generateNRandomEvents(15);
       console.log("Generateing Dummies");
       await User.create(await generateDummyParticipant());
       await User.create(await generateDummyOrganizer());
+      console.log("Generateing Events");
+      await generateNRandomEvents(15);
       const events = await Event.find({});
       for (const event of events) {
         const men = await User.aggregate([
@@ -139,6 +139,9 @@ async function generateRandomEvent() {
   newEvent.city = city._id;
   newEvent.address = getRandomAddress();
   newEvent.description = getRandomVenueDescription();
+  const organizer = await User.findOne({email:"o@o.o"});
+  // console.log("Organ",organizer)
+  newEvent.organizer = organizer._id;
   return newEvent;
 }
 async function generateNRandomEvents(N) {
