@@ -31,11 +31,11 @@ export class ProfilePageComponent implements OnInit{
     // });
     await this.backendService.getMe().subscribe({
       next: (response) => {
-        this.user = response.user
+        this.user = response
       }, error: (error) => {
         console.log(error)
       }
     });
   }
-  
+
 }
