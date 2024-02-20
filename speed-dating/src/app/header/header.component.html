@@ -6,7 +6,7 @@
       <app-button [buttonClass]="'accent border-accent clr-white '" [buttonText]="'Login'" (click)="toggleLoginPopup()"> </app-button>
     </nav>
     <nav *ngIf="(isLoggedIn$ | async)">
-      <app-button [buttonClass]="'trans clr-accent border-accent'" [buttonText]="'Home'" (click)="home()"></app-button>
+      <app-button [buttonClass]="'trans clr-accent border-accent'" [buttonText]="'My Page'" (click)="home()"></app-button>
       <app-button [buttonClass]="'trans clr-accent border-accent'" [buttonText]="'Profile'" (click)="profile()"> </app-button>
       <app-button [buttonClass]="'accent border-accent clr-white '" [buttonText]="'Logout'" (click)="logout()"> </app-button>
     </nav>
