@@ -16,6 +16,7 @@ class MatchingAlgorithm {
     }
     async loadDataForEvent(event){
         this.event = await Event.findById(event._id)
+            .populate('dates')
             .populate({
                 path: 'participants', // This matches the participants field in your EventModel
                 populate: {
@@ -37,11 +38,30 @@ class MatchingAlgorithm {
         //console.log("Cats",this.categories)
     }
 
+    removePrevious(){
+
+    }
     async pairAll() {
         const dates = [];
         for (const male of this.males) {
-            console.log("MATCHING: " + male.firstname);
-            for (const female of this.females) {
+            let exclusionList = [];
+            if (this.event.round === 2){
+                const previousDates = this.event.dates.filter((date) => {
+                    return date.dateRound === 1 && date.personOne.toString() === male._id.toString() || date.personTwo.toString() === male._id.toString()
+                })
+                exclusionList = exclusionList.concat(previousDates)
+            }
+            if (this.event.round === 3){
+                const previousDates = this.event.dates.filter((date) => {
+                    return date.dateRound === 2 && date.personOne.toString() === male._id.toString() || date.personTwo.toString() === male._id.toString()
+                })
+                exclusionList = exclusionList.concat(previousDates)
+            }
+            const females = this.females.filter(skank => {
+                return !exclusionList.includes(skank);
+            });
+
+            for (const female of females) {
 
                 const date = await this.calculateActivityScores(male, female);
                 //console.log(male.firstname + " & " + female.firstname + " match:\t" + result + " percent")
