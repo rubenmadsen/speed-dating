@@ -3,6 +3,8 @@ import {EventModel} from "../../models/eventModel";
 import {UserModel} from "../../models/userModel";
 import {BackendService} from "../../services/backend.service";
 
+
+
 @Component({
   selector: 'app-overview-page',
   templateUrl: './overview-page.component.html',
