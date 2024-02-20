@@ -4,10 +4,8 @@
   <ng-container *ngIf="(isOrganizer$ | async)">
     <app-participant-list #participantList></app-participant-list>
 
-    <div class="button-container">
       <app-button [buttonClass]="'trans clr-accent border-accent'" [buttonText]="'Clear matches'"></app-button>
       <app-button [buttonClass]="'accent border-accent clr-white'" [buttonText]="'Automatic matching'"></app-button>
-    </div>
 
     <ng-container *ngFor="let item of [].constructor(10); let i = index">
       <app-date
@@ -17,10 +15,8 @@
       ></app-date>
     </ng-container>
 
-    <div class="button-container">
       <app-button [buttonClass]="'trans clr-accent border-accent'" [buttonText]="'Cancel'"></app-button>
       <app-button [buttonClass]="'accent border-accent clr-white'" [buttonText]="'Start date'"></app-button>
-    </div>
 
   </ng-container>
 </div>
