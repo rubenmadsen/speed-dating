@@ -78,6 +78,25 @@ router.get("/user/:email", function (req, res) {
 });
 
 /**
+ * Gets a specific user
+ */
+//router.get('/user/user/:id', function (req, res){
+  //  console.log("Vad är detta för skit");
+    //User.findOne({_id: req.params.id}).then(user=>{
+      //  if (user){
+        //    console.log(user)
+          //  res.status(200).send(user)
+       // }
+        //else {
+          //  res.status(505).json({message: "No user found"})
+       // }
+    //}).catch(err=>{
+      //  console.error(err)
+    //});
+//
+//});
+
+/**
  * Log in as user
  */
 router.post("/user/login", async function (req, res) {
@@ -106,20 +125,6 @@ router.post("/user/logout", async function (req, res) {
     const errors = handleErrors(err);
     res.status(400).send(errors);
   }
-});
-
-/**
- *
- */
-router.get("/user/logout", (req, res) => {
-  res.cookie("jwt", "", {
-    expires: new Date(0),
-    httpOnly: true,
-    sameSite: "none",
-    secure: true,
-  });
-  res.status(200).send("User logged out successfully");
-  res.redirect("/");
 });
 
 /**
@@ -182,14 +187,12 @@ router.get("/user/:id/preferences", function (req, res) {
  */
 router.get("/user/user/me", authorizeUser, async function(req,res) {
   try {
-    console.log(req.user);
-    const user = await User.findById(req.user.id); 
-    console.log(req)
-    console.log(user)
-    if (!user) return res.status(404).send('User not found');
-    res.json(user); 
+    const user = await User.findById(req.user.id).populate('city');
+    if (!user) {
+      return res.status(404).send({ message: "User not found." });
+    }
+    res.status(200).send({ valid: true, user: user });  
   } catch (err) {
-    console.error(err);
     res.status(500).send('Internal server error');
   }
 });

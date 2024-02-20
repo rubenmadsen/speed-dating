@@ -94,7 +94,7 @@ export class SignUpComponent {
             this.isVisible = false;
             this.removeHideoutBackground.emit();
             this.authService.loginSuccess();
-            setTimeout(() => this.router.navigate(['profile']),500);
+            setTimeout(() => this.router.navigate(['profile'],{queryParams:user}),500);
           },
           error: (registerError) => console.error('Registration error', registerError)
         });
