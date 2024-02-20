@@ -16,6 +16,7 @@ class MatchingAlgorithm {
     }
     async loadDataForEvent(event){
         this.event = await Event.findById(event._id)
+            .populate('dates')
             .populate({
                 path: 'participants', // This matches the participants field in your EventModel
                 populate: {
@@ -40,19 +41,37 @@ class MatchingAlgorithm {
     async pairAll() {
         const dates = [];
         for (const male of this.males) {
-            console.log("MATCHING: " + male.firstname);
-            for (const female of this.females) {
-
-                const date = await this.calculateActivityScores(male, female);
-                //console.log(male.firstname + " & " + female.firstname + " match:\t" + result + " percent")
-                //console.log(result);
-                //console.log("")
-                dates.push(date);
+            let exclusionList = [];
+            if (this.event.round === 2){
+                const previousDates = this.event.dates.filter((date) => {
+                    return date.dateRound === 1 && date.personOne.toString() === male._id.toString() || date.personTwo.toString() === male._id.toString()
+                })
+                exclusionList = exclusionList.concat(previousDates)
             }
-            //console.log("")
+            if (this.event.round === 3){
+                const previousDates = this.event.dates.filter((date) => {
+                    return date.dateRound === 2 && date.personOne.toString() === male._id.toString() || date.personTwo.toString() === male._id.toString()
+                })
+                exclusionList = exclusionList.concat(previousDates)
+            }
+
+            const females = this.females.filter(skank => {
+                return !exclusionList.includes(skank);
+            });
+            let counter = 1;
+            for (const female of females) {
+                const date = await this.calculateActivityScores(male, female);
+                date.tableNumber = counter;
+                dates.push(date);
+                counter++;
+            }
         }
         const selected = this.selectDates(dates)
+        this.event.dates.push(...selected);
+        this.event.round++;
+        this.event.save();
         console.log("Selected len:" + selected.length)
+        return selected;
     }
     selectDates(dates){
         let selected = [];
@@ -65,7 +84,7 @@ class MatchingAlgorithm {
                 return !(date.personOne.toString() === last.personOne.toString() || date.personTwo.toString() === last.personTwo.toString())
             });
         }
-        console.log("Dates:",selected)
+        //console.log("Dates:",selected)
         return selected;
     }
     async calculateActivityScores(guy, girl) {
@@ -109,7 +128,7 @@ class MatchingAlgorithm {
         const date = new Date();
         date.event = this.event;
         date.tableNumber = 0;
-        date.dateRound = 0;
+        date.dateRound = this.event.round + 1;
         date.percentage = totalScore;
         date.personOne = guy;
         date.personTwo = girl;

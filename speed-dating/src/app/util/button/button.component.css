@@ -1,7 +1,5 @@
 .button {
   padding: 0.5rem 1.5rem;
-  border-radius: 10px;
-  border:none;
 }
 
 .button:hover {
@@ -19,9 +17,8 @@
   animation: pop 0.2s ease-out;
 }
 
-
-.clr-primary{
-  color:var(--primary-clr);
+.clr-primary {
+  color: var(--primary-clr);
 }
 
 .clr-secondary {
@@ -29,7 +26,7 @@
 }
 
 .clr-accent {
-  color:var(--accent-clr);
+  color: var(--accent-clr);
 }
 
 .clr-black {
@@ -49,26 +46,26 @@
 }
 
 .secondary {
-  background:var(--accent-clr);
-}
-
-.secondary:hover{
   background: var(--accent-clr);
 }
 
-.alternative{
+.secondary:hover {
+  background: var(--accent-clr);
+}
+
+.alternative {
   background: var(--secondary-clr);
 }
 
-.border-primary{
+.border-primary {
   border: 1px solid var(--primary-clr);
 }
 
-.border-secondary{
+.border-secondary {
   border: 1px solid var(--secondary-clr);
 }
 
-.border-accent{
+.border-accent {
   border: 1px solid var(--accent-clr);
 }
 
@@ -78,7 +75,7 @@
 }
 
 .clr-white {
-  color:var(--white-clr)
+  color: var(--white-clr);
 }
 
 @keyframes pop {

@@ -46,8 +46,9 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.get("/api/validate-token", authorizeUser, (req, res) => {
-  res.status(200).send({ valid: true, user: req.user });
+app.get("/api/validate-token", authorizeUser, async function (req, res) {
+  const user = await User.findById(req.user.id);
+  res.status(200).send({ valid: true, user: req.user , isOrganizer: user.isOrganizer});
 });
 
 
@@ -58,7 +59,7 @@ mongoose.connect(process.env.DB_SERVER).then((result) => {
     console.log(`Backend listening in port ${port} ...`);
   });
 });
-dolk();
+//dolk();
 async function dolk (){
   const event = await Event.findOne({}).populate("participants")
   const matcher = new MatchingAlgorithm(event);
