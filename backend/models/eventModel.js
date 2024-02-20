@@ -9,6 +9,11 @@ const eventSchema = new Schema({
     type: Date,
     required: [true, "An event must have a start date"],
   },
+  organizer: {
+    type: Schema.Types.ObjectId,
+    ref: "organizer",
+    required:[true, "An event must have a organizer"],
+  },
   hasEnded: {
     type: Boolean,
     default: false,
@@ -24,11 +29,6 @@ const eventSchema = new Schema({
   location: {
     type: String,
     required: [true, "An event must have a location"],
-    maxLength: 64,
-  },
-  address: {
-    type: String,
-    required: [true, "An event must have an address"],
     maxLength: 64,
   },
   city: {
