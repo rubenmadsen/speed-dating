@@ -156,15 +156,7 @@ router.post("/user", async (req, res) => {
  * Get the matches for a user
  */
 router.get("/user/:id/contacts", function (req, res) {
-  User.findById(req.params.id)
-    .populate("sharedContacts")
-    .then((user) => {
-      res.status(200).send(user.sharedContacts);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500);
-    });
+  
 });
 
 /**
@@ -189,9 +181,13 @@ router.get("/user/:id/preferences", function (req, res) {
 router.get("/user/profile/me", authorizeUser, async function(req,res) {
   try {
     const user = await User.findById(req.user.id).populate('city');
+    
     if (!user) {
       return res.status(404).send({ message: "User not found." });
     }
+    user
+    .populate("sharedContacts")
+
     res.status(200).send({ valid: true, user: user });  
   } catch (err) {
     res.status(500).send('Internal server error');
