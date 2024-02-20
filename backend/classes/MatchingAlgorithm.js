@@ -1,4 +1,5 @@
 const Date = require('../models/dateModel'); // Ensure the variable name does not conflict with global Date
+const Event = require('../models/eventModel'); // Ensure the variable name does not conflict with global Date
 const User = require('../models/userModel');
 const Activity = require('../models/activityModel');
 const Category = require('../models/categoryModel');
@@ -10,17 +11,21 @@ class MatchingAlgorithm {
     dates = [];
     categories = {};
     event;
-    constructor(event) {
-        if (!event){
-            console.log("event is null")
-        }
-        this.event = event;
+    constructor() {
+
+    }
+    async loadDataForEvent(event){
+        this.event = await Event.findById(event._id)
+            .populate({
+                path: 'participants', // This matches the participants field in your EventModel
+                populate: {
+                    path: 'activityData.activity', // Nested population for activityData within User model
+                    model: 'activity' // Replace 'Activity' with the exact name used in mongoose.model() for ActivityModel
+                }
+            })
         this.males = this.event.participants.filter(participant => participant.gender === "male");
         this.females = this.event.participants.filter(participant => participant.gender === "female");
-    }
-    async loadData(){
         const cats = await Category.find({});
-
         for (const cat of cats) {
             this.categories[cat._id.toString()] = {score:-1};
         }
@@ -65,8 +70,8 @@ class MatchingAlgorithm {
     }
     async calculateActivityScores(guy, girl) {
         const activityResults = JSON.parse(JSON.stringify(this.categories));
-        const male = await User.findById(guy._id).populate('activityData.activity');
-        const female = await User.findById(girl._id).populate('activityData.activity');
+        const male = guy; // = await User.findById(guy._id).populate('activityData.activity');
+        const female = girl; // = await User.findById(girl._id).populate('activityData.activity');
 
         male.activityData.forEach((data) => {
             const categoryID = data.activity.category.toString();
