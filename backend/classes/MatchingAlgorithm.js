@@ -38,9 +38,6 @@ class MatchingAlgorithm {
         //console.log("Cats",this.categories)
     }
 
-    removePrevious(){
-
-    }
     async pairAll() {
         const dates = [];
         for (const male of this.males) {
@@ -57,21 +54,22 @@ class MatchingAlgorithm {
                 })
                 exclusionList = exclusionList.concat(previousDates)
             }
+
             const females = this.females.filter(skank => {
                 return !exclusionList.includes(skank);
             });
-
+            let counter = 1;
             for (const female of females) {
-
                 const date = await this.calculateActivityScores(male, female);
-                //console.log(male.firstname + " & " + female.firstname + " match:\t" + result + " percent")
-                //console.log(result);
-                //console.log("")
+                date.tableNumber = counter;
                 dates.push(date);
+                counter++;
             }
-            //console.log("")
         }
         const selected = this.selectDates(dates)
+        this.event.dates.push(...selected);
+        this.event.round++;
+        this.event.save();
         console.log("Selected len:" + selected.length)
     }
     selectDates(dates){
@@ -85,7 +83,7 @@ class MatchingAlgorithm {
                 return !(date.personOne.toString() === last.personOne.toString() || date.personTwo.toString() === last.personTwo.toString())
             });
         }
-        console.log("Dates:",selected)
+        //console.log("Dates:",selected)
         return selected;
     }
     async calculateActivityScores(guy, girl) {
@@ -129,7 +127,7 @@ class MatchingAlgorithm {
         const date = new Date();
         date.event = this.event;
         date.tableNumber = 0;
-        date.dateRound = 0;
+        date.dateRound = this.event.round + 1;
         date.percentage = totalScore;
         date.personOne = guy;
         date.personTwo = girl;
