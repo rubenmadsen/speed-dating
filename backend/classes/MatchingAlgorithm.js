@@ -71,6 +71,7 @@ class MatchingAlgorithm {
         this.event.round++;
         this.event.save();
         console.log("Selected len:" + selected.length)
+        return selected;
     }
     selectDates(dates){
         let selected = [];
