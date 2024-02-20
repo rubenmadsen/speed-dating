@@ -46,8 +46,9 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.get("/api/validate-token", authorizeUser, (req, res) => {
-  res.status(200).send({ valid: true, user: req.user });
+app.get("/api/validate-token", authorizeUser, async function (req, res) {
+  const user = await User.findById(req.user.id);
+  res.status(200).send({ valid: true, user: req.user , isOrganizer: user.isOrganizer});
 });
 
 

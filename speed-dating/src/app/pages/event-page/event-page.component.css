@@ -45,3 +45,8 @@ app-participant-list {
   grid-gap: 1rem;
   justify-content: flex-start;
 }
+.button-container {
+  border: 1px solid black;
+  display: flex;
+  align-content: space-between;
+}
