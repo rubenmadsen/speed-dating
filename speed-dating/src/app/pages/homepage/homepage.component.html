@@ -14,8 +14,7 @@
   <div class="homepage_events">
     <h3>Upcoming Events</h3>
 
-    <app-card-container></app-card-container>
-
+    <app-card-container *ngIf="done" [events]="events"></app-card-container>
 
   </div>
 </div>
