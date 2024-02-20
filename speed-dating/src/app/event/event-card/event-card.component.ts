@@ -14,6 +14,7 @@ export class EventCardComponent {
 
   protected readonly faClock = faClock;
   @Input() event!: EventModel;
+  @Input() eventCardClass: string = "";
 
   city!: CityModel;
 

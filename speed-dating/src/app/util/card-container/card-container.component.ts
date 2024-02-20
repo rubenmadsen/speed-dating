@@ -13,6 +13,7 @@ export class CardContainerComponent implements OnInit{
   public filteredEvents: EventModel[] = [];
 
   @Input() events: EventModel[] = [];
+  @Input() eventCardClass: string = "";
 
   async ngOnInit(){
     this.filteredEvents = this.events;
