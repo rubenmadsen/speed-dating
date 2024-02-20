@@ -1,3 +1,7 @@
+
+/* TODO Toggle färger för automatic matching */
+/* TODO Disable färg för cancel,start date knapparna */
+
 .page-container {
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -12,8 +16,21 @@
   justify-content: space-between;
 }
 
+.matching-button-container {
+  background-color: aliceblue; 
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 1rem 1rem 0 0;
+  display: flex;
+  justify-content: space-evenly;
+}
+
 app-event-info {
   width: 50%;
+}
+
+app-button {
+  padding: 0.2rem;
 }
 
 app-date {
@@ -21,7 +38,8 @@ app-date {
 }
 
 .date-container {
-  margin-top: 1rem;
+  background-color: aliceblue;
+  border-radius: 0 0 1rem 1rem;
   display: grid;
   grid-template-columns: repeat(3, auto);
 }
@@ -40,6 +58,11 @@ app-date {
   app-participant-list {
     margin-top: 1rem;
     width: 50%;
+  }
+
+  .matching-button-container {
+    flex-direction: column;
+    text-align: center;
   }
 
   .date-container {

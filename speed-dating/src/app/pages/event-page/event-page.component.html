@@ -1,30 +1,50 @@
+<!-- TODO fixa en back-knapp -->
+
 <div class="page-container" cdkDropListGroup>
-  <ng-container *ngIf="(isOrganizer$ | async)">
-  <div class="info-and-list-container">
-    <app-event-info [event]="event"></app-event-info>
-    <app-participant-list #participantList></app-participant-list>
-  </div>
-  <div class="date-container">
-      <app-button [buttonClass]="'trans clr-accent border-accent'" [buttonText]="'Clear'"></app-button>
-      <app-button [buttonClass]="'accent border-accent clr-white '" [buttonText]="'Automatic matching'"></app-button>
-
+  <ng-container *ngIf="isOrganizer$ | async">
+    <div class="info-and-list-container">
+      <app-event-info [event]="event"></app-event-info>
+      <app-participant-list #participantList></app-participant-list>
+    </div>
+    <div class="matching-button-container">
+      <app-button
+        [buttonClass]="'trans clr-accent border-accent'"
+        [buttonText]="'Cancel Event'"
+      ></app-button>
+      <app-button
+        [buttonClass]="'trans clr-accent border-accent'"
+        [buttonText]="'Clear Tables'"
+      ></app-button>
+      <app-button
+        [buttonClass]="'accent border-accent clr-white '"
+        [buttonText]="'Automatic matching'"
+      ></app-button>
+      <app-button
+        [buttonClass]="'accent border-accent clr-white '"
+        [buttonText]="'Start date'"
+      ></app-button>
+    </div>
+    <div class="date-container">
       <ng-container *ngFor="let item of [].constructor(10); let i = index">
-      <app-date
-        [tableNumber]="i"
-        male="MALE{{ i }}"
-        (returnUserToList)="participantList.recieveItem($event)"
-      ></app-date>
-    </ng-container>
-      <app-button [buttonClass]="'trans clr-accent border-accent'" [buttonText]="'Cancel'"></app-button>
-      <app-button [buttonClass]="'accent border-accent clr-white '" [buttonText]="'Start date'"></app-button>
-  </div>
+        <app-date
+          [tableNumber]="i"
+          male="MALE{{ i }}"
+          (returnUserToList)="participantList.recieveItem($event)"
+        ></app-date>
+      </ng-container>
+    </div>
   </ng-container>
-
   <ng-container *ngIf="!(isOrganizer$ | async)">
     <div class="info-and-list-container">
       <app-event-info [event]="event"></app-event-info>
     </div>
-    <app-button [buttonClass]="'trans clr-accent border-accent'" [buttonText]="'Cancel'"></app-button>
-    <app-button [buttonClass]="'accent border-accent clr-white '" [buttonText]="'Register'"></app-button>
+    <app-button
+      [buttonClass]="'trans clr-accent border-accent'"
+      [buttonText]="'Cancel'"
+    ></app-button>
+    <app-button
+      [buttonClass]="'accent border-accent clr-white '"
+      [buttonText]="'Register'"
+    ></app-button>
   </ng-container>
 </div>
