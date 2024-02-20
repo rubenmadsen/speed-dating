@@ -58,15 +58,10 @@ mongoose.connect(process.env.DB_SERVER).then((result) => {
     console.log(`Backend listening in port ${port} ...`);
   });
 });
-dolk();
+//dolk();
 async function dolk (){
-  // const male = await User.findOne({gender:"male"});
-  // const female = await User.findOne({gender:"female"});
-  // const m = new MatchingAlgorithm();
-  // const result = await m.calculateScoreForParticipant(male, female);
-  // console.log(male.firstname + " & " + female.firstname + " match:" + result + " percent")
   const event = await Event.findOne({}).populate("participants")
   const matcher = new MatchingAlgorithm(event);
   await matcher.loadData();
-  // await matcher.pairAll();
+  await matcher.pairAll();
 }

@@ -2,6 +2,7 @@ const DateModel = require('../models/dateModel'); // Ensure the variable name do
 const User = require('../models/userModel');
 const Activity = require('../models/activityModel');
 const Category = require('../models/categoryModel');
+const {compare} = require("bcrypt");
 
 class MatchingAlgorithm {
     males = [];
@@ -19,60 +20,80 @@ class MatchingAlgorithm {
         const cats = await Category.find({});
 
         for (const cat of cats) {
-            this.categories[cat._id.toString()] = [];
+            this.categories[cat._id.toString()] = {score:-1};
         }
         const acts = await Activity.find({});
         for (const act of acts) {
-            console.log("act",act)
-            this.categories[act.category._id.toString()].push(act._id.toString());
+            // this.categories[act.category._id.toString()] = {}
+            this.categories[act.category._id.toString()][act._id.toString()] = {malePoints:0, femalePoints:0, score:-2};
         }
-        console.log("Cats",this.categories)
+        //console.log("Cats",this.categories)
     }
-    // Assuming this method will be filled in later
+
     async pairAll() {
         for (const male of this.males) {
             console.log("MATCHING: " + male.firstname);
             for (const female of this.females) {
-                const result = await this.calculateScoreForParticipant(male, female);
+
+                const result = await this.calculateActivityScores(male, female);
                 console.log(male.firstname + " & " + female.firstname + " match:\t" + result + " percent")
+                console.log(result);
+                console.log("")
             }
             console.log("")
         }
     }
+    async calculateActivityScores(guy, girl) {
+        const activityResults = JSON.parse(JSON.stringify(this.categories));
+        const male = await User.findById(guy._id).populate('activityData.activity');
+        const female = await User.findById(girl._id).populate('activityData.activity');
 
-    async calculateScoreForParticipant(guy, girl) {
-        //console.log("participant",participant.activityData)
-        const cats = await Category.find({});
-        let catAct = {}; // Initialize as an array
-        cats.forEach(cat => {
-            catAct[cat._id.toString()] = [];
-
+        male.activityData.forEach((data) => {
+            const categoryID = data.activity.category.toString();
+            const activityID = data.activity._id.toString();
+            const points = data.points;
+            //console.log("cat:" + data.activity.category.toString())
+            //console.log("\tact:" + data.activity._id.toString())
+            //console.log("\t\tpoints:" + data.points)
+            activityResults[categoryID][activityID].malePoints = points;
+        })
+        female.activityData.forEach((data) => {
+            const categoryID = data.activity.category.toString();
+            const activityID = data.activity._id.toString();
+            const points = data.points;
+            //console.log("cat:" + data.activity.category.toString())
+            //console.log("\tact:" + data.activity._id.toString())
+            //console.log("\t\tpoints:" + data.points)
+            activityResults[categoryID][activityID].femalePoints = points;
+            activityResults[categoryID][activityID].score = this.#activityPoints(activityResults[categoryID][activityID].malePoints,activityResults[categoryID][activityID].femalePoints);
+        })
+        Object.keys(activityResults).map(key => {
+            const item = activityResults[key];
+            const scores = Object.keys(item).reduce((acc, nestedKey) => {
+                if (nestedKey !== 'score' && item[nestedKey].hasOwnProperty('score')) {
+                    acc.push(item[nestedKey].score);
+                }
+                return acc;
+            }, []);
+            activityResults[key].score = this.#aggregateCategory(scores)
+            //console.log("scores",scores)
         });
-        //console.log("cats",catAct);
-        for (const male_act of guy.activityData) {
-
-            let female_act = girl.activityData.find(activity => {
-                return activity.activity._id.toString() === male_act.activity._id.toString();
-            });
-            const result = 1 - ((male_act.points-female_act.points)/5);
-            const activityObj = await Activity.findById(male_act.activity._id);
-            // console.log("activityObj",activityObj.category._id)
-            catAct[activityObj.category._id.toString()].push(result);
-        }
-        //console.log("catact",catAct)
-        const results = [];
-        let total = 0;
-        Object.values(catAct).forEach((value) => {
-            total += this.#aggregateCategory(value);
-        });
-        total /= 5;
-        return total;
+        return activityResults;
     }
+
+
+    #activityPoints(malePoints, femalePoints){
+        return (1 - ((Math.abs(malePoints - femalePoints))/5));
+    }
+
     #aggregateCategory(valueArray){
         //console.log("keys",valueArray)
         const sum = valueArray.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
         const average = sum / valueArray.length;
-        return average; //* 100;
+        return average * 100;
+    }
+    #aggregateScore(){
+
     }
 }
 

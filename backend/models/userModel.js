@@ -90,7 +90,7 @@ const userSchema = new Schema({
       {
         activity: {
           type: Schema.Types.ObjectId,
-          ref: "activityModel",
+          ref: "activity",
         },
         points: {
           type: Number,

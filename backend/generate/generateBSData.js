@@ -123,7 +123,7 @@ async function generateRandomUser(isOrganizer) {
     for (const activity of activities) {
       newUser.activityData.push({
         activity: activity._id,
-        points: Math.random() * 4 + 1,
+        points: Math.floor(Math.random() * 6),
       });
     }
   });
