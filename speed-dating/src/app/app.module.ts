@@ -39,6 +39,7 @@ import { MinmaxSliderComponent } from './util/minmax-slider/minmax-slider.compon
 import { ProfileCardComponent } from './profile/profile-card/profile-card.component';
 import { ActivitiesRatingComponent } from './util/activities-rating/activities-rating.component';
 import { ErrorbarComponent } from './util/errorbar/errorbar.component';
+import { NewEventPopupComponent } from './event/new-event-popup/new-event-popup.component';
 
 
 
@@ -76,6 +77,7 @@ import { ErrorbarComponent } from './util/errorbar/errorbar.component';
     ActivitiesRatingComponent,
     MinmaxSliderComponent,
     ErrorbarComponent,
+    NewEventPopupComponent,
   ],
   imports: [
     BrowserModule,

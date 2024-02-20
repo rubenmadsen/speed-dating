@@ -1,0 +1,11 @@
+<div class="new-event-popup-container" *ngIf="isVisible">
+  <div class="new-event-popup-header">
+    <fa-icon [icon]="faX" class="x_close_form" (click)="closePopup()"></fa-icon>
+  </div>
+  <form class="new-event-form" name="form" #f="ngForm">
+    <input type="text" class="input text" [placeholder]="venue.invalid && venue.touched ? 'City is required' : 'Firstname'" name="firstname" required [(ngModel)]="form.firstname" #firstname="ngModel"
+           [class.input-error]="firstname.invalid && firstname.touched">
+
+  </form>
+
+</div>
