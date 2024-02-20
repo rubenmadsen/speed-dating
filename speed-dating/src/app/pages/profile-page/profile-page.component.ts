@@ -8,7 +8,7 @@ import {BackendService} from "../../services/backend.service";
   templateUrl: './profile-page.component.html',
   styleUrls: ['./profile-page.component.css']
 })
-export class ProfilePageComponent implements OnInit, OnDestroy{
+export class ProfilePageComponent implements OnInit{
 
   user?: UserModel;
   private sub: any
@@ -37,9 +37,5 @@ export class ProfilePageComponent implements OnInit, OnDestroy{
       }
     });
   }
-
-  ngOnDestroy(){
-    this.sub.unsubscribe();
-  }
-
+  
 }

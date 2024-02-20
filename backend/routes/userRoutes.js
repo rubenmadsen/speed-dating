@@ -80,25 +80,22 @@ router.get("/validate/:email", function (req, res) {
 
 /**
  * Gets a specific user
- * This route cant be used right now, blocks /user/user/me. 
- * Maybe use /user/:id ?
  */
+router.get('/user/user/:id',authorizeUser, async function (req, res){
+    console.log("Vad är detta för skit");
+    User.findOne({_id: req.params.id}).then(user=>{
+        if (user){
+            console.log(user)
+            res.status(200).send(user)
+        }
+        else {
+            res.status(505).json({message: "No user found"})
+        }
+    }).catch(err=>{
+        console.error(err)
+    });
 
-//router.get('/user/user/:id', function (req, res){
-  //  console.log("Vad är detta för skit");
-    //User.findOne({_id: req.params.id}).then(user=>{
-      //  if (user){
-        //    console.log(user)
-          //  res.status(200).send(user)
-       // }
-        //else {
-          //  res.status(505).json({message: "No user found"})
-       // }
-    //}).catch(err=>{
-      //  console.error(err)
-    //});
-//
-//});
+});
 
 /**
  * Log in as user
@@ -187,7 +184,7 @@ router.get("/user/:id/preferences", function (req, res) {
 });
 
 /**
- * Get logged in user profile
+ * Get logged in user profile, based on jwt token.
  */
 router.get("/user/profile/me", authorizeUser, async function(req,res) {
   try {
