@@ -1,5 +1,5 @@
 <div class="overviewpage_container">
-  <app-button [buttonClass]="'primary clr-white'" [buttonText]="'Find new event'"></app-button>
+  <app-button [buttonClass]="'primary clr-white'" (click)="openEventPopup()" [buttonText]="'Find new event'"></app-button>
 
   <h2>Shared Contacts</h2>
   <div class="overview_shared_contacts overview-card-container">
@@ -25,4 +25,5 @@
       <app-event-card [event]="event"></app-event-card>
     </ng-container>
   </div>
+  <app-new-event-popup *ngIf="showNewEventPopup"></app-new-event-popup>
 </div>

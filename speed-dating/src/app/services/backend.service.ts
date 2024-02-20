@@ -128,6 +128,7 @@ export class BackendService {
     const id = (sender as UserModel).city._id !== undefined ? (sender as CityModel)._id : (sender as UserModel).city._id;
     this.http.get(this.eventURL + ":id",this.requestOptions);
   }
+
   createNewEvent(event:EventModel): Observable<EventModel>{
     return this.http.post<EventModel>(this.eventURL,event,this.requestOptions);
   }
