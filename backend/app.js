@@ -59,10 +59,10 @@ mongoose.connect(process.env.DB_SERVER).then((result) => {
     console.log(`Backend listening in port ${port} ...`);
   });
 });
-//dolk();
+dolk();
 async function dolk (){
   const event = await Event.findOne({}).populate("participants")
   const matcher = new MatchingAlgorithm(event);
-  await matcher.loadData();
+  await matcher.loadDataForEvent(event);
   await matcher.pairAll();
 }

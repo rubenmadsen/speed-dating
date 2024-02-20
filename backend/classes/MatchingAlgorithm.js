@@ -1,4 +1,5 @@
-const DateModel = require('../models/dateModel'); // Ensure the variable name does not conflict with global Date
+const Date = require('../models/dateModel'); // Ensure the variable name does not conflict with global Date
+const Event = require('../models/eventModel'); // Ensure the variable name does not conflict with global Date
 const User = require('../models/userModel');
 const Activity = require('../models/activityModel');
 const Category = require('../models/categoryModel');
@@ -9,16 +10,22 @@ class MatchingAlgorithm {
     females = [];
     dates = [];
     categories = {};
+    event;
+    constructor() {
 
-    constructor(event) {
-        if (!event)
-            console.log("event is null")
-        this.males = event.participants.filter(participant => participant.gender === "male");
-        this.females = event.participants.filter(participant => participant.gender === "female");
     }
-    async loadData(){
+    async loadDataForEvent(event){
+        this.event = await Event.findById(event._id)
+            .populate({
+                path: 'participants', // This matches the participants field in your EventModel
+                populate: {
+                    path: 'activityData.activity', // Nested population for activityData within User model
+                    model: 'activity' // Replace 'Activity' with the exact name used in mongoose.model() for ActivityModel
+                }
+            })
+        this.males = this.event.participants.filter(participant => participant.gender === "male");
+        this.females = this.event.participants.filter(participant => participant.gender === "female");
         const cats = await Category.find({});
-
         for (const cat of cats) {
             this.categories[cat._id.toString()] = {score:-1};
         }
@@ -31,22 +38,40 @@ class MatchingAlgorithm {
     }
 
     async pairAll() {
+        const dates = [];
         for (const male of this.males) {
             console.log("MATCHING: " + male.firstname);
             for (const female of this.females) {
 
-                const result = await this.calculateActivityScores(male, female);
-                console.log(male.firstname + " & " + female.firstname + " match:\t" + result + " percent")
-                console.log(result);
-                console.log("")
+                const date = await this.calculateActivityScores(male, female);
+                //console.log(male.firstname + " & " + female.firstname + " match:\t" + result + " percent")
+                //console.log(result);
+                //console.log("")
+                dates.push(date);
             }
-            console.log("")
+            //console.log("")
         }
+        const selected = this.selectDates(dates)
+        console.log("Selected len:" + selected.length)
+    }
+    selectDates(dates){
+        let selected = [];
+        let last;
+        let sorted = dates.sort((a,b) => b.percentage - a.percentage);
+        while(sorted.length !== 0){
+            last = sorted.shift();
+            selected.push(last);
+            sorted = sorted.filter(date => {
+                return !(date.personOne.toString() === last.personOne.toString() || date.personTwo.toString() === last.personTwo.toString())
+            });
+        }
+        console.log("Dates:",selected)
+        return selected;
     }
     async calculateActivityScores(guy, girl) {
         const activityResults = JSON.parse(JSON.stringify(this.categories));
-        const male = await User.findById(guy._id).populate('activityData.activity');
-        const female = await User.findById(girl._id).populate('activityData.activity');
+        const male = guy; // = await User.findById(guy._id).populate('activityData.activity');
+        const female = girl; // = await User.findById(girl._id).populate('activityData.activity');
 
         male.activityData.forEach((data) => {
             const categoryID = data.activity.category.toString();
@@ -67,6 +92,7 @@ class MatchingAlgorithm {
             activityResults[categoryID][activityID].femalePoints = points;
             activityResults[categoryID][activityID].score = this.#activityPoints(activityResults[categoryID][activityID].malePoints,activityResults[categoryID][activityID].femalePoints);
         })
+        let totalScore = 0;
         Object.keys(activityResults).map(key => {
             const item = activityResults[key];
             const scores = Object.keys(item).reduce((acc, nestedKey) => {
@@ -76,9 +102,20 @@ class MatchingAlgorithm {
                 return acc;
             }, []);
             activityResults[key].score = this.#aggregateCategory(scores)
+            totalScore += activityResults[key].score;
             //console.log("scores",scores)
         });
-        return activityResults;
+        totalScore = Math.floor(totalScore/5);
+        const date = new Date();
+        date.event = this.event;
+        date.tableNumber = 0;
+        date.dateRound = 0;
+        date.percentage = totalScore;
+        date.personOne = guy;
+        date.personTwo = girl;
+
+        //return activityResults;
+        return date;
     }
 
 
