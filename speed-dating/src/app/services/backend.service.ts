@@ -60,7 +60,7 @@ export class BackendService {
     return this.http.get<any>(this.backendURL +'validate/' +   `${email}`,this.requestOptions);
   }
 
-  getMe():Observable<any>{
+  getMe():Observable<UserModel>{
     return this.http.get<any>(this.userURL + "profile/me",this.requestOptions);
   }
 

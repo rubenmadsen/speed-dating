@@ -4,11 +4,22 @@
   border:none;
 }
 
-.button:hover{
+.button:hover {
   cursor: pointer;
-  animation: pop 0.3s ease-out;
+  animation: grow 0.1s ease-out;
   text-decoration: underline;
+  transform: scale(1.1);
 }
+
+.button:not(:hover) {
+  animation: shrink 0.1s ease-out;
+  transform: scale(1);
+}
+
+.button:active {
+  animation: pop 0.2s ease-out;
+}
+
 
 .clr-primary{
   color:var(--primary-clr);
@@ -73,9 +84,27 @@
 
 @keyframes pop {
   0% {
-    transform: scale(1);
+    transform: scale(1.1);
   }
   50% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes grow {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes shrink {
+  0% {
     transform: scale(1.1);
   }
   100% {

@@ -20,6 +20,7 @@ const categoryRoutes = require("./routes/categoryRoutes");
 const generationRoutes = require("./routes/generationRoutes");
 const cityRoutes = require("./routes/cityRoutes");
 const activityRoutes = require("./routes/activitityRoute");
+const MatchingAlgorithm = require('./classes/MatchingAlgorithm');
 
 // Environment
 require("dotenv").config();
@@ -49,9 +50,18 @@ app.get("/api/validate-token", authorizeUser, (req, res) => {
   res.status(200).send({ valid: true, user: req.user });
 });
 
+
+
 mongoose.connect(process.env.DB_SERVER).then((result) => {
   app.listen(port, function () {
     console.log("Connected to mongo.");
     console.log(`Backend listening in port ${port} ...`);
   });
 });
+dolk();
+async function dolk (){
+  const event = await Event.findOne({}).populate("participants")
+  const matcher = new MatchingAlgorithm(event);
+  await matcher.loadDataForEvent(event);
+  await matcher.pairAll();
+}
