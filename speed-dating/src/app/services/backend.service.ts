@@ -57,7 +57,11 @@ export class BackendService {
    * @param email The god-damn email address
    */
   checkAvailability(email:string):Observable<any>{
-    return this.http.get<any>(this.userURL +  `${email}`,this.requestOptions);
+    return this.http.get<any>(this.backendURL +'validate/' +   `${email}`,this.requestOptions);
+  }
+
+  getMe():Observable<any>{
+    return this.http.get<any>(this.userURL + "profile/me",this.requestOptions);
   }
 
   /**
@@ -90,6 +94,8 @@ export class BackendService {
   getUserMatchingData(user:UserModel):Observable<any>{
     return this.http.get<any>(this.userURL + `/${user._id}/matchdata`,this.requestOptions);
   }
+
+
 
 
   // Event

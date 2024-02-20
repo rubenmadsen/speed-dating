@@ -11,6 +11,7 @@ const authorizeUser = (req,res,next) =>{
                 res.redirect("/");
             }else{
                 console.log(decodedToken);
+                req.user = decodedToken;
                 next();
             }
         });

@@ -63,7 +63,8 @@ router.get("/user", function (req, res) {
  * 200 Available
  * 409 Taken
  */
-router.get("/user/:email", function (req, res) {
+router.get("/validate/:email", function (req, res) {
+  console.log(req.params);
   User.findOne({ email: req.params.email })
     .then((user) => {
       if (user) {
@@ -80,8 +81,8 @@ router.get("/user/:email", function (req, res) {
 /**
  * Gets a specific user
  */
-router.get('/user/user/:id', function (req, res){
-    console.log( req);
+router.get('/user/user/:id',authorizeUser, async function (req, res){
+    console.log("Vad är detta för skit");
     User.findOne({_id: req.params.id}).then(user=>{
         if (user){
             console.log(user)
@@ -180,6 +181,21 @@ router.get("/user/:id/preferences", function (req, res) {
       console.log(err);
       res.status(500);
     });
+});
+
+/**
+ * Get logged in user profile, based on jwt token.
+ */
+router.get("/user/profile/me", authorizeUser, async function(req,res) {
+  try {
+    const user = await User.findById(req.user.id).populate('city');
+    if (!user) {
+      return res.status(404).send({ message: "User not found." });
+    }
+    res.status(200).send({ valid: true, user: user });  
+  } catch (err) {
+    res.status(500).send('Internal server error');
+  }
 });
 
 /**
