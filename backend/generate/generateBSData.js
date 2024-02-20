@@ -44,7 +44,7 @@ function generateDatabase() {
       console.log("Generateing City");
       await generateCities();
       console.log("Generateing participants");
-      await generateNRandomUsers(30, false); // Participants
+      await generateNRandomUsers(50, false); // Participants
       console.log("Generateing Organizers");
       await generateNRandomUsers(2, true); // Organizers
       console.log("Generateing Dummies");
@@ -77,6 +77,9 @@ function generateDatabase() {
         await (await event).save();
         console.log("Event updated successfully with participants.");
       }
+      console.log("Match making...")
+        await generateMatches()
+      console.log("Done.")
     })
     .catch((err) => console.log(err))
     .then(() => {});
@@ -247,6 +250,42 @@ function getRandomDate() {
       Math.floor(Math.random() * 70) +
       18
   );
+}
+const savingDocuments = new Map();
+
+async function generateMatches() {
+  const users = await User.find({isOrganizer: false});
+  for (const user of users) {
+    const matches = [];
+    for (let j = 0; j < Math.floor(Math.random() * 10); j++) {
+      const match = getRandomFromList(users);
+      if (match._id.toString() === user._id.toString() ||user.sharedContacts.includes(match)) continue; // Skip if it's the same user
+      matches.push(match);
+    }
+    const matchPromises = matches.map(match => matchUsers(user, match));
+    await Promise.all(matchPromises);
+    await saveDocument(user);
+  }
+}
+
+async function matchUsers(a, b) {
+  a.sharedContacts.push(b);
+  b.sharedContacts.push(a);
+  await saveDocument(b);
+}
+
+async function saveDocument(doc) {
+  const docId = doc._id.toString();
+  if (savingDocuments.has(docId)) {
+    await savingDocuments.get(docId); // Wait for the previous save to finish
+  }
+  const savePromise = doc.save();
+  savingDocuments.set(docId, savePromise);
+  try {
+    await savePromise; // Wait for the current save to finish
+  } finally {
+    savingDocuments.delete(docId); // Remove from the map once the save is complete
+  }
 }
 
 function getRandomProfilePicture(gender){
