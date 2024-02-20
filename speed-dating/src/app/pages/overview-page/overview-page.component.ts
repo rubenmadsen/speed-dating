@@ -26,6 +26,9 @@ export class OverviewPageComponent {
       this.yourEvents =  r})
     await this.backend.getAllEvents().then(r => {this.recommendedEvents = r})
     await this.backend.getAllEvents().then(r => {this. completedEvents = r})
-    await this.backend.getMe().forEach(r => {this.contacts = r.sharedContacts});
+    await this.backend.getMe().forEach(r => {
+      this.contacts = r.sharedContacts;
+      this.yourEvents = r.events;
+    });
   }
 }
