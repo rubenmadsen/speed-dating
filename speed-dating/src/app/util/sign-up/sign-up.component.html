@@ -7,7 +7,6 @@
       <div class="user-type-container">
         <label>
           <input
-            class="user-type"
             type="radio"
             name="option"
             [(ngModel)]="form.option"
@@ -19,7 +18,6 @@
         </label>
         <label>
           <input
-            class="user-type"
             type="radio"
             name="option"
             [(ngModel)]="form.option"
@@ -30,169 +28,174 @@
           Participant
         </label>
       </div>
-      <div class="user-image" #userImage (click)="fileInput.click()"></div>
-      <input
-        class="user-info"
-        type="file"
-        #fileInput
-        style="display: none"
-        (change)="onFileSelected($event)"
-      />
-      <input
-        class="user-info"
-        type="text"
-        [placeholder]="
-          firstname.invalid && firstname.touched
-            ? 'Firstname is required'
-            : 'Firstname'
-        "
-        name="firstname"
-        required
-        [(ngModel)]="form.firstname"
-        #firstname="ngModel"
-        [class.input-error]="firstname.invalid && firstname.touched"
-      />
-      <input
-        class="user-info"
-        type="text"
-        [placeholder]="
-          lastname.invalid && lastname.touched
-            ? 'Lastname is required'
-            : 'Lastname'
-        "
-        name="lastname"
-        required
-        [(ngModel)]="form.lastname"
-        #lastname="ngModel"
-        [class.input-error]="lastname.invalid && lastname.touched"
-      />
-      <input
-        class="user-info"
-        type="number"
-        [placeholder]="age.invalid && age.touched ? 'Age is required' : 'Age'"
-        required
-        name="age"
-        [(ngModel)]="form.age"
-        #age="ngModel"
-        [class.input-error]="age.invalid && age.touched"
-        min="0"
-      />
-      <input
-        class="user-info"
-        type="email"
-        [placeholder]="
-          email.invalid && email.touched ? 'E-mail is required' : 'E-Mail'
-        "
-        name="email"
-        required
-        [(ngModel)]="form.email"
-        #email="ngModel"
-        [class.input-error]="email.invalid && email.touched"
-      />
-      <div *ngIf="!emailAvailable" class="signup-error">
-        Email is not available.
-      </div>
-      <input
-        class="user-info"
-        type="password"
-        placeholder="Password"
-        name="password"
-        required
-        [(ngModel)]="form.password"
-        #password="ngModel"
-        [class.input-error]="
-          (password.invalid && password.touched) ||
-          (password.touched && !passwordValidation())
-        "
-      />
-      <div
-        *ngIf="password.touched && !passwordValidation()"
-        class="signup-error"
-      >
-        Password needs to be at least 6 characters long with one number.
-      </div>
-      <input
-        class="user-info"
-        type="password"
-        placeholder="Confirm Password"
-        name="confirmPassword"
-        required
-        [(ngModel)]="form.confirmPassword"
-        #confirmPassword="ngModel"
-        [class.input-error]="!passwordsMatch()"
-      />
-      <div
-        *ngIf="confirmPassword.touched && !passwordsMatch()"
-        class="signup-error"
-      >
-        Passwords do not match.
-      </div>
-      <div class="select-container">
-        <select
-          class="user-info"
-          name="city"
-          required
-          [(ngModel)]="form.city"
-          #city="ngModel"
-          [class.input-error]="city.invalid && city.touched"
-        >
-          <option value="" disabled selected>Select your city</option>
-          <option *ngFor="let city of cities" [value]="city._id">
-            {{ city.name }}
-          </option>
-        </select>
-        <select
-          class="user-info"
-          name="gender"
-          required
-          [(ngModel)]="form.gender"
-          #gender="ngModel"
-          [class.input-error]="gender.invalid && gender.touched"
-        >
-          <option value="" disabled>Select gender</option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-        </select>
-      </div>
-      <div class="description-container">
-        <textarea
-          class="input description"
-          required
-          name="description"
-          [(ngModel)]="form.description"
-          #description="ngModel"
-          [class.input-error]="description.invalid && description.touched"
-          rows="11"
-          maxlength="500"
-          [placeholder]="
-            description.invalid && description.touched
-              ? 'Description is required and max 500 characters'
-              : 'Personal description (max 500 characters)'
-          "
-        ></textarea>
-      </div>
+      <div class="signup-inputs">
+        <div class="signup-inputs-left">
+          <div class="user-image" #userImage (click)="fileInput.click()"></div>
+          <p>Your Picture</p>
+          <input
+            class="user-info"
+            type="file"
+            #fileInput
+            style="display: none"
+            (change)="onFileSelected($event)"
+          />
+          <input
+            class="user-info"
+            type="text"
+            [placeholder]="
+              firstname.invalid && firstname.touched
+                ? 'Firstname is required'
+                : 'Firstname'
+            "
+            name="firstname"
+            required
+            [(ngModel)]="form.firstname"
+            #firstname="ngModel"
+            [class.input-error]="firstname.invalid && firstname.touched"
+          />
+          <input
+            class="user-info"
+            type="text"
+            [placeholder]="
+              lastname.invalid && lastname.touched
+                ? 'Lastname is required'
+                : 'Lastname'
+            "
+            name="lastname"
+            required
+            [(ngModel)]="form.lastname"
+            #lastname="ngModel"
+            [class.input-error]="lastname.invalid && lastname.touched"
+          />
+          <input
+            class="user-info"
+            type="number"
+            [placeholder]="
+              age.invalid && age.touched ? 'Age is required' : 'Age'
+            "
+            required
+            name="age"
+            [(ngModel)]="form.age"
+            #age="ngModel"
+            [class.input-error]="age.invalid && age.touched"
+            min="0"
+          />
+          <input
+            class="user-info"
+            type="email"
+            [placeholder]="
+              email.invalid && email.touched ? 'E-mail is required' : 'E-Mail'
+            "
+            name="email"
+            required
+            [(ngModel)]="form.email"
+            #email="ngModel"
+            [class.input-error]="email.invalid && email.touched"
+          />
+          <p *ngIf="!emailAvailable" class="signup-error">
+            Email is not available.
+          </p>
+          <input
+            class="user-info"
+            type="password"
+            placeholder="Password"
+            name="password"
+            required
+            [(ngModel)]="form.password"
+            #password="ngModel"
+            [class.input-error]="
+              (password.invalid && password.touched) ||
+              (password.touched && !passwordValidation())
+            "
+          />
+          <p
+            *ngIf="password.touched && !passwordValidation()"
+            class="signup-error"
+          >
+            Should be at least of 6 characters with one number.
+          </p>
+          <input
+            class="user-info"
+            type="password"
+            placeholder="Confirm Password"
+            name="confirmPassword"
+            required
+            [(ngModel)]="form.confirmPassword"
+            #confirmPassword="ngModel"
+            [class.input-error]="!passwordsMatch()"
+          />
+          <div
+            *ngIf="confirmPassword.touched && !passwordsMatch()"
+            class="signup-error"
+          >
+            Passwords do not match.
+          </div>
+        </div>
 
-      <div class="button-container-one">
-        <app-button
-          *ngIf="isOrganizer"
-          [buttonClass]="'accent clr-white'"
-          [buttonText]="'Register'"
-          (appClick)="register()"
-        ></app-button>
-        <app-button
-          *ngIf="!isOrganizer && !nextIsPressed"
-          [buttonClass]="'accent clr-white'"
-          [buttonText]="'Next'"
-          (appClick)="next($event)"
-        ></app-button>
+        <div class="signup-inputs-right">
+          <select
+            class="user-info"
+            name="city"
+            required
+            [(ngModel)]="form.city"
+            #city="ngModel"
+            [class.input-error]="city.invalid && city.touched"
+          >
+            <option value="" disabled selected>Select your city</option>
+            <option *ngFor="let city of cities" [value]="city._id">
+              {{ city.name }}
+            </option>
+          </select>
+          <select
+            class="user-info"
+            name="gender"
+            required
+            [(ngModel)]="form.gender"
+            #gender="ngModel"
+            [class.input-error]="gender.invalid && gender.touched"
+          >
+            <option value="" disabled>Select gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+          <textarea
+            class="input description"
+            required
+            name="description"
+            [(ngModel)]="form.description"
+            #description="ngModel"
+            [class.input-error]="description.invalid && description.touched"
+            rows="11"
+            maxlength="500"
+            [placeholder]="
+              description.invalid && description.touched
+                ? 'Description is required and max 500 characters'
+                : 'Personal description (max 500 characters)'
+            "
+          ></textarea>
+        </div>
       </div>
+    </div>
+
+    <div class="button-container-one">
+      <app-button
+        *ngIf="isOrganizer"
+        [buttonClass]="'accent clr-white'"
+        [buttonText]="'Register'"
+        (appClick)="register()"
+      ></app-button>
+      <app-button
+        *ngIf="!isOrganizer && !nextIsPressed"
+        [buttonClass]="'accent clr-white'"
+        [buttonText]="'Next'"
+        (appClick)="next($event)"
+      ></app-button>
     </div>
 
     <div class="signup-form" *ngIf="nextIsPressed">
       <div class="interests-form">
         <app-activities-rating></app-activities-rating>
       </div>
-
       <div class="button-container-two">
         <app-button
           *ngIf="nextIsPressed"

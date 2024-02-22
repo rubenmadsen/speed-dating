@@ -2,12 +2,13 @@
   background: var(--white-clr);
   display: flex;
   flex-direction: column;
-  width: 40vh;
+  width: 60vh;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 0.5rem;
+  padding: 0.5rem;
 }
 
 .signup-header {
@@ -21,16 +22,20 @@
 }
 
 .user-type-container {
-  /* align-items: center; */
-  /* justify-content: center; */
+  display: flex;
+  justify-content: center;
+}
+
+.user-type-container label {
+  padding: 1rem;
 }
 
 .user-image {
-  margin-top: 1rem;
+  margin-bottom: 0.5rem;
   border: 1px solid #ccc;
-  border-radius: 99999px;
+  border-radius: 50%;
   aspect-ratio: 1;
-  width: 80%;
+  width: 40%;
   background-size: cover;
   background-position: center;
   cursor: pointer;
@@ -39,17 +44,28 @@
 .signup-form {
   display: flex;
   flex-direction: column;
+}
+
+.signup-inputs {
+  display: flex;
+  margin-top: 1rem;
+  justify-content: space-evenly;
+}
+
+.signup-inputs-left,
+.signup-inputs-right {
+  display: flex;
+  flex-direction: column;
+}
+
+.signup-inputs-left {
   align-items: center;
-  justify-content: center;
-  /* margin-top: 1rem; */
+}
+
+.signup-inputs-right {
 }
 
 .interests-form {
-  
-}
-
-.user-type {
-  /* TODO centrera ordentligt */
 }
 
 .user-info {
@@ -59,10 +75,23 @@
   border: 1px solid #ccc;
 }
 
+textarea {
+  margin-top: 1rem;
+  flex: 1;
+  border: 1px solid #ccc;
+  resize: none;
+}
+
+textarea:focus {
+  outline: none;
+}
+
 .button-container-one,
 .button-container-two {
   display: flex;
   justify-content: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .button-container-two {
