@@ -15,12 +15,12 @@
       <p>{{ user?.description }}</p>
     </div>
   </div>
-  <div *ngFor="let category of categories">
-    <p>{{category}}</p>
-      <ng-container *ngFor="let b of arm">
-        <p *ngIf="b.activity.category === category">
-          Category: {{b.activity.category.name}} name: {{ b.activity.name }} , rating: {{ b.points }}
-        </p>
-      </ng-container>
-  </div>
+<!--  <div *ngFor="let category of categories">-->
+<!--    <p>{{category}}</p>-->
+<!--      <ng-container *ngFor="let b of arm">-->
+<!--        <p *ngIf="b.activity.category === category">-->
+<!--          Category: {{b.activity.category.name}} name: {{ b.activity.name }} , rating: {{ b.points }}-->
+<!--        </p>-->
+<!--      </ng-container>-->
+<!--  </div>-->
 </div>
