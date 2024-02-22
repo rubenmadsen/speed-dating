@@ -68,5 +68,19 @@ router.get("/event/:eventId", function (req, res) {
   });
 });
 
-
+router.post("/event/stream", function (req, res) {
+    let pingpong = req.body;
+    Event.find({})
+        .populate("city")
+        .populate("participants")
+        .skip(pingpong.retrieved)
+        .limit(pingpong.amount)
+        .then((result) => {
+            pingpong.items = result;
+            res.status(200).send(pingpong);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+});
 module.exports = router;
