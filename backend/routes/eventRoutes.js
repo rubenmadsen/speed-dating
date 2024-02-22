@@ -38,6 +38,16 @@ router.post("/event", authorizeUser, async (req, res) => {
     res.status(500).send({ message: "Registration error" });
   }
 });
+router.get("/event/:eventId",authorizeUser,function (req,res){
+    console.log("Incoming event id:" + req.params.eventId)
+    Event.findById(req.params.eventId).populate("dates").then(result => {
+        //console.log("event",result)
+        res.send(result);
+    }).catch(err => {
+        res.status(404).send();
+        console.log(err);
+    });
+});
 router.get("/event/:eventId/next", function (req, res) {
     console.log("event id", req.params.eventId)
     Event.findById(req.params.eventId).then(async event => {
