@@ -30,11 +30,11 @@ export class ParticipantListComponent {
    * Allows drag and drop within the same list or to tables.
    * @param event
    */
-  drop(event: any) {
+  drop(event: any) {    
     if (event.container === event.previousContainer) { // Drag and drop within same container
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex)
-    } else if (event.previousIndex !== 0 && event.previousContainer.data[event.previousIndex] !== "TBD" && event.previousContainer[event.previousIndex] !== undefined) {
-      transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, 1)
+    } else if (event.previousIndex !== 0 && event.previousContainer.data.users[event.previousIndex].firstname !== "TBD" && event.previousContainer.data.users[event.previousIndex].firstname !== undefined) {
+      transferArrayItem(event.previousContainer.data.users, event.container.data, event.previousIndex, 1)
     }
   }
 
@@ -48,7 +48,7 @@ export class ParticipantListComponent {
    * @param item item to add to listUsers.
    */
   recieveItem(item: any) {
-    if (item !== "TBD" && item !== "" && item !== undefined) {
+    if (item.firstname !== "TBD" && item.firstname !== "" && item.firstname !== undefined) {
       this.listUsers?.push(item)
     }
   }
