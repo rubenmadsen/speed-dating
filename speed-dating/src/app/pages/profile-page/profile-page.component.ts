@@ -45,13 +45,7 @@ export class ProfilePageComponent implements OnInit {
         console.log(error);
       }
     });
-    // await this.backendService.getAllCategories().then(categories => this.categories = categories.sort((a , b) => a.name > b.name ? 1 : -1));
-    // console.log(this.categories)
-    // this.backendService.getAllCategories().then((result) => {
-    //   this.categories = result;
-    //   console.log(this.categories)
-    // }).catch((error) => {
-    //   console.log(error)
-    // });
+    await this.backendService.getAllCategories().then(categories => this.categories = categories.sort((a , b) => a.name > b.name ? 1 : -1));
+    console.log(this.categories)
   }
 }
