@@ -18,7 +18,7 @@ export class EventCardComponent {
 
   city!: CityModel;
 
-  constructor(private eventService: EventService, private router: Router) {}
+  constructor(private eventService: EventService, private router: Router) {  }
 
   onEventSelected() {
     this.eventService.changeEvent(this.event);

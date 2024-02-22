@@ -61,4 +61,12 @@ router.get("/event/:eventId/next", function (req, res) {
     });
 });
 
+router.get("/event/:eventId", function (req, res) {
+  console.log("event id", req.params.eventId)
+  Event.findById(req.params.eventId).then(async event => {
+      
+  });
+});
+
+
 module.exports = router;

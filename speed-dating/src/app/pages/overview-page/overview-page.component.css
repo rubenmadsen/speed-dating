@@ -1,7 +1,11 @@
-.overviewpage_container {
+.page-container {
   display: flex;
   flex-direction: column;
   padding:2rem;
+}
+
+.page-container * {
+  margin-bottom:1rem;
 }
 
 .overview-card-container {
@@ -10,7 +14,6 @@
   margin:1rem;
   padding:2rem;
 }
-
 
 app-event-card{
   margin-right:2rem;

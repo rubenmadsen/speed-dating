@@ -16,7 +16,8 @@ export class OverviewPageComponent {
   protected recommendedEvents: EventModel[];
   protected completedEvents: EventModel[];
   protected contacts: UserModel[] = []
-
+  protected isOrganizer: Boolean = false;
+  private me!: UserModel;
   showNewEventPopup: Boolean = false;
 
   constructor(private backend: BackendService,private eRef: ElementRef) {
@@ -27,14 +28,19 @@ export class OverviewPageComponent {
   }
 
   async ngOnInit(){
-    await this.backend.getAllEvents().then(r => {
-      this.yourEvents =  r})
-    await this.backend.getAllEvents().then(r => {this.recommendedEvents = r})
-    await this.backend.getAllEvents().then(r => {this. completedEvents = r})
-    await this.backend.getMe().forEach(r => {
-      this.contacts = r.sharedContacts;
-      this.yourEvents = r.events;
+    this.backend.getMe().subscribe(r => {
+      this.contacts = r.user.sharedContacts;
+      this.yourEvents = r.user.events;
+      this.isOrganizer = r.user.isOrganizer;
+      this.yourEvents = r.user.events;
+      this.backend.getEventsByLocation(r.user).subscribe(r => {
+        this.recommendedEvents = r;
+      })
     });
+
+
+
+
   }
 
   openEventPopup(){

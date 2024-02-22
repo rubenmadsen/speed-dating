@@ -15,3 +15,8 @@
 .participant:nth-child(odd) {
   background-color: var(--secondary-clr);
 }
+
+#matchBar {
+  display: flex;
+  justify-content: center;
+}
