@@ -11,9 +11,6 @@
   padding:2rem;
 }
 
-app-button {
-  width:fit-content;
-}
 
 app-event-card{
   margin-right:2rem;
