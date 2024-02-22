@@ -124,9 +124,9 @@ export class BackendService {
    * NOT IMPLEMENTED
    * @param sender
    */
-  getEventsByLocation(sender:CityModel | UserModel){
-    const id = (sender as UserModel).city._id !== undefined ? (sender as CityModel)._id : (sender as UserModel).city._id;
-    this.http.get(this.eventURL + ":id",this.requestOptions);
+  getEventsByLocation(sender:CityModel | UserModel):Observable<EventModel[]>{
+    const id = (sender as UserModel).city._id == undefined ? (sender as CityModel)._id : (sender as UserModel).city._id;
+    return this.http.get<EventModel[]>(this.cityURL + id + '/events',this.requestOptions);
   }
 
   createNewEvent(event:EventModel): Observable<EventModel>{

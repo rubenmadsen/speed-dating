@@ -54,9 +54,10 @@ function generateDatabase() {
       await generateNRandomEvents(15);
       const events = await Event.find({});
       for (const event of events) {
+        const r = Math.round(Math.random())
         const men = await User.aggregate([
           { $match: { gender: "male", isOrganizer: false } },
-          { $sample: { size: 10 } },
+          { $sample: { size: 9+r } },
         ]);
         const women = await User.aggregate([
           { $match: { gender: "female", isOrganizer: false } },
@@ -149,15 +150,27 @@ async function generateRandomEvent() {
   return newEvent;
 }
 async function generateNRandomEvents(N) {
-  let promises = [];
+  const promises = [];
+
   for (let i = 0; i < N; i++) {
-    const eventPromise = generateRandomEvent().then((newEvent) =>
-      Event.create(newEvent)
-    );
-    promises.push(eventPromise);
+    const promise = (async () => {
+      try {
+        const newEvent = await generateRandomEvent(); // Assuming generateRandomEvent is an async function
+        const ev = await Event.create(newEvent); // Create event document
+        const city = await City.findById(ev.city._id).populate("events"); // Find city and populate its events
+        city.events.push(ev); // Add the new event to the city's events array
+        await city.save(); // Save the updated city document
+      } catch (error) {
+        console.error('Error generating or saving an event:', error);
+        throw error; // Rethrow if you want to handle this in Promise.all
+      }
+    })();
+    promises.push(promise);
   }
+
   return Promise.all(promises);
 }
+
 
 /********************************************************************/
 function generateCities() {
