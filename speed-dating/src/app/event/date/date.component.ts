@@ -41,6 +41,8 @@ export class DateComponent {
    * @param event The participant being moved 
    */
   drop(event: any) {
+    console.log(event.previousContainer.data);
+    
     if (event.previousIndex === 0 && event.previousContainer.id !== 'list') {
       this.moveTable(event);
       return

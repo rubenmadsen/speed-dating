@@ -16,6 +16,7 @@
     cdkDrag
     *ngFor="let user of tableUsers; let i = index"
     [ngStyle]="{ cursor: user === 'TBD' ? 'not-allowed' : (i == 0 ? 'move' : 'grab') }"
+    [ngClass]="i == 0 ? 'male' : 'female'"
     [cdkDragDisabled]="user === 'TBD'"
   >
     {{ user }}
