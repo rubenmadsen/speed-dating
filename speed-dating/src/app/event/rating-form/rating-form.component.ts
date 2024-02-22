@@ -12,6 +12,9 @@ export class RatingFormComponent {
   question4: number = 0;
   question5: number = 0;
 
+  /**
+   * Ghetto fixes.
+   */
   changeValueQ1(value: number) {
     this.question1 = value;
   }

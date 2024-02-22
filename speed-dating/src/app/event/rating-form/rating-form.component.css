@@ -5,7 +5,8 @@ label {
 }
 
 .questions {
-    display: inline-block;
+    display: grid;
+    justify-content: center;
 }
 
 .form p {
