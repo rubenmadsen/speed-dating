@@ -1,8 +1,8 @@
 <div class="date-container">
-  <ng-container  *ngFor="let item of [].constructor(10); let i = index">
+  <ng-container  *ngFor="let male of listUsers let i = index">
     <app-date class="date"
       [tableNumber]="i"
-      male="MALE{{ i }}"
+      male="{{male.firstname}}"
       (returnUserToList)="participantList.recieveItem($event)"
     ></app-date>
   </ng-container>

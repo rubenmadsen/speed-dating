@@ -5,6 +5,7 @@ import {EventService} from "../../services/event.service";
 import {EventModel} from "../../models/eventModel";
 import {ActivatedRoute} from "@angular/router";
 import {AuthService} from "../../services/auth.service";
+import {UserModel} from "../../models/userModel";
 
 @Component({
   selector: 'app-event-page',
@@ -15,7 +16,9 @@ export class EventPageComponent implements OnInit, OnDestroy {
 
   protected readonly faGripVertical = faGripVertical;
   event: EventModel | null = null;
+
   subscription!: Subscription;
+  participants?: UserModel[];
 
   private sub: any
 
@@ -32,6 +35,7 @@ export class EventPageComponent implements OnInit, OnDestroy {
     });
     // await this.authService.checkSession();
     this.isOrganizer$ = this.authService.isOrganizer;
+    this.participants = this.event?.participants;
   }
 
   ngOnDestroy() {

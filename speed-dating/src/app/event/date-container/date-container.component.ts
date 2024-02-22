@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {ParticipantListComponent} from "../participant-list/participant-list.component";
+import {UserModel} from "../../models/userModel";
 
 @Component({
   selector: 'app-date-container',
@@ -8,6 +9,10 @@ import {ParticipantListComponent} from "../participant-list/participant-list.com
 })
 export class DateContainerComponent {
 
-
   @Input() participantList!: ParticipantListComponent;
+  listUsers?: UserModel[];
+
+  ngOnInit(){
+    this.listUsers = this.participantList.participantsList?.filter(user => user.gender === "male");
+  }
 }

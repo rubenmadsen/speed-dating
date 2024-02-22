@@ -1,5 +1,6 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {UserModel} from "../../models/userModel";
 
 @Component({
   selector: 'app-participant-list',
@@ -7,7 +8,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./participant-list.component.css']
 })
 export class ParticipantListComponent {
-  listUsers: Array<string> = []
+
+  @Input() participantsList?: UserModel[];
+  listUsers: string[] = [];
 
   ngOnInit() {
     this.populateList();
@@ -16,8 +19,9 @@ export class ParticipantListComponent {
   /**
    * Populate user list.
    */
-  populateList() { //TODO: Populate the list and retrieve patricipants from backend
-    this.listUsers = ["Qwerty Larsson", "Greta Larsson", "Stina Persson", "Lennart Adolfsson", "ASD KJHJ"]
+  populateList() {
+    const females = this.participantsList?.filter(user => user.gender == "female");
+    this.listUsers = females?.map(user => user.firstname) || [];
   }
 
   /**
@@ -39,7 +43,7 @@ export class ParticipantListComponent {
    */
   recieveItem(item: any) {
     if (item !== "TBD") {
-      this.listUsers.push(item)
+      this.listUsers?.push(item)
     }
   }
 }
