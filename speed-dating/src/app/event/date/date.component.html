@@ -6,11 +6,17 @@
   (cdkDropListDropped)="drop($event)"
 >
   <p>Table {{ tableNumber }}</p>
+  <app-match-precentage-bar
+    id="matchBar" 
+    matchValue="{{ matchVal }}"
+    >
+  </app-match-precentage-bar>
   <div
     class="participant"
     cdkDrag
     *ngFor="let user of tableUsers; let i = index"
-    [ngStyle]="{ cursor: i == 0 || user == 'TBD' ? 'not-allowed' : 'grab' }"
+    [ngStyle]="{ cursor: user === 'TBD' ? 'not-allowed' : (i == 0 ? 'move' : 'grab') }"
+    [ngClass]="i == 0 ? 'male' : 'female'"
     [cdkDragDisabled]="user === 'TBD'"
   >
     {{ user }}

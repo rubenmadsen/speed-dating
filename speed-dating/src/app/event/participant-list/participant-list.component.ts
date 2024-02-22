@@ -29,10 +29,9 @@ export class ParticipantListComponent {
    * @param event
    */
   drop(event: any) {
-    console.log("To: " + event.container.id + " in part ts");
     if (event.container === event.previousContainer) { // Drag and drop within same container
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex)
-    } else if (event.previousIndex !== 0 && event.previousContainer.data[event.previousIndex] !== "TBD") {
+    } else if (event.previousIndex !== 0 && event.previousContainer.data[event.previousIndex] !== "TBD" && event.previousContainer[event.previousIndex] !== undefined) {
       transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, 1)
     }
   }
@@ -42,7 +41,7 @@ export class ParticipantListComponent {
    * @param item item to add to listUsers.
    */
   recieveItem(item: any) {
-    if (item !== "TBD") {
+    if (item !== "TBD" && item !== "" && item !== undefined) {
       this.listUsers?.push(item)
     }
   }

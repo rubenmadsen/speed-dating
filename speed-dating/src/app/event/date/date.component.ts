@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDragStart, transferArrayItem } from '@angular/cdk/drag-drop';
 import {faInfo} from "@fortawesome/free-solid-svg-icons/faInfo";
 
 
@@ -18,6 +18,7 @@ export class DateComponent {
   @Input() female: string = '';
   @Output() returnUserToList = new EventEmitter<String>();
   previewUsers: Array<String> = []
+  matchVal: number = 0;
 
   /**
    * Pushes male and female participant to the table
@@ -40,9 +41,9 @@ export class DateComponent {
    * @param event The participant being moved 
    */
   drop(event: any) {
+    console.log(event.previousContainer.data);
+    
     if (event.previousIndex === 0 && event.previousContainer.id !== 'list') {
-      console.log("we hit?");
-      
       this.moveTable(event);
       return
     }
@@ -65,9 +66,9 @@ export class DateComponent {
     const itemFromCurrentContainer = event.container.data[0]
     const itemFromCurrentContainer1 = event.container.data[1]
 
-    event.previousContainer.data[0] = itemFromCurrentContainer
-    event.previousContainer.data[1] = itemFromCurrentContainer1
-    event.container.data[0] = itemFromPrevContainer
-    event.container.data[1] = itemFromPrevContainer1
+    event.previousContainer.data[0] = itemFromCurrentContainer === undefined ? 'TBD' : itemFromCurrentContainer
+    event.previousContainer.data[1] = itemFromCurrentContainer1 === undefined ? 'TBD' : itemFromCurrentContainer1
+    event.container.data[0] = itemFromPrevContainer === undefined ? 'TBD' : itemFromPrevContainer
+    event.container.data[1] = itemFromPrevContainer1 === undefined ? 'TBD' : itemFromPrevContainer1
   }
 }

@@ -7,9 +7,8 @@ const User = require("../models/userModel");
 const ActivityModel = require("../models/activityModel")
 const Category = require("../models/categoryModel")
 const jwt = require("jsonwebtoken");
-const Generate = require("../classes/Generate");
-const multer = require('multer')
-const express = require("express");
+const EventModel = require("../models/eventModel");
+
 const router = Router();
 
 // Converts seconds to days
@@ -52,7 +51,7 @@ const handleErrors = (err) => {
  */
 router.get("/user", function (req, res) {
   User.find({})
-    .populate("city")
+    .populate('city')
     .then((result) => {
       res.status(200).send(result);
     })
@@ -122,7 +121,6 @@ router.post("/user/login", async function (req, res) {
   }
 });
 
-
 router.post("/user/logout", async function (req, res) {
   try {
     res.clearCookie("jwt");
@@ -180,7 +178,6 @@ router.get("/user/:id/preferences", function (req, res) {
     });
 });
 
-
 /**
  * Get logged in user profile, based on jwt token.
  */
@@ -205,9 +202,9 @@ router.get("/user/profile/me", authorizeUser, async function(req,res) {
     }
     user
     .populate("sharedContacts")
-
     res.status(200).send({ valid: true, user: user });
   } catch (err) {
+    console.log(err)
     res.status(500).send('Internal server error');
   }
 });
