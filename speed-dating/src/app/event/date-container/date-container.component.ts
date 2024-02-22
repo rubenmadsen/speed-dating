@@ -3,6 +3,7 @@ import {ParticipantListComponent} from "../participant-list/participant-list.com
 import {UserModel} from "../../models/userModel";
 import {BehaviorSubject, Subscription} from "rxjs";
 import {DateModel} from "../../models/dateModel";
+import {EventStateService} from "../../services/event-state.service";
 
 @Component({
   selector: 'app-date-container',
@@ -11,34 +12,48 @@ import {DateModel} from "../../models/dateModel";
 })
 export class DateContainerComponent {
 
-  @Input() participantList!: ParticipantListComponent;
-  listUsers?: UserModel[];
   @Input() datesList!: DateModel[];
+  @Input() participantList!: ParticipantListComponent;
+
+  listUsers?: UserModel[];
   hasDates: boolean = false;
+
+  constructor(private eventStateService: EventStateService) {
+  }
 
   ngOnInit() {
     this.filterParticipants();
+    this.subscribeToDates();
   }
 
-  private filterParticipants() {
+   private filterParticipants() {
+    this.listUsers = this.participantList.participantsList?.filter(user => user.gender === "male");
+
+    this.listUsers?.forEach(i => {
+      console.log(typeof i)
+    })
+   }
+
+
+  subscribeToDates() {
+    this.eventStateService.dates$.subscribe(dates => {
+      if(dates.length != 0){
+        this.datesList = dates;
+        this.hasDates = true;
+      }
+    });
+  }
+
+  /**
+   * Used for parent component to filter again
+   */
+  filterAgain(){
+    this.hasDates = false
     this.listUsers = this.participantList.participantsList?.filter(user => user.gender === "male");
   }
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['datesList'] && this.datesList !== undefined) {
-        this.hasDates = true;
 
-        this.datesList.forEach(date => {
-          const personOneFull = this.participantList.participantsList?.find(participant => participant._id === date.personOne);
-          const personTwoFull = this.participantList.participantsList?.find(participant => participant._id === date.personTwo);
+  handleEvent(eventData: { tableUsers: UserModel[], tableNumber: number }) {
+    console.log(eventData)
 
-          return {
-            ...date,
-            personOne: personOneFull ? { ...personOneFull } : date.personOne, // Replace personOne ID with full object
-            personTwo: personTwoFull ? { ...personTwoFull } : date.personTwo, // Replace personTwo ID with full object
-          } as any;
-        })
-      console.log(this.datesList)
-    }
   }
-
 }

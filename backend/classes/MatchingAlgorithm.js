@@ -70,7 +70,7 @@ class MatchingAlgorithm {
         this.event.dates.push(...selected);
         this.event.round++;
         this.event.save();
-        console.log("Selected len:" + selected.length)
+        // console.log("Selected len:" + selected.length)
         return selected;
     }
     selectDates(dates){
@@ -125,13 +125,14 @@ class MatchingAlgorithm {
             //console.log("scores",scores)
         });
         totalScore = Math.floor(totalScore/5);
-        const date = new Date();
-        date.event = this.event;
-        date.tableNumber = 0;
-        date.dateRound = this.event.round + 1;
-        date.percentage = totalScore;
-        date.personOne = guy;
-        date.personTwo = girl;
+        const date = {
+            event: this.event._id, // Assuming you only need the event ID here
+            tableNumber: 0, // Your logic for tableNumber
+            dateRound: this.event.round + 1,
+            percentage: totalScore,
+            personOne: guy, // Full user object
+            personTwo: girl, // Full user object
+        };
 
         //return activityResults;
         return date;

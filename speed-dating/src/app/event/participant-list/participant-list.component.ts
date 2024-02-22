@@ -1,6 +1,7 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {Component, EventEmitter, Input, Output, SimpleChanges} from '@angular/core';
 import {UserModel} from "../../models/userModel";
+import {DateModel} from "../../models/dateModel";
 
 @Component({
   selector: 'app-participant-list',
@@ -11,6 +12,7 @@ export class ParticipantListComponent {
 
   @Input() participantsList?: UserModel[];
   listUsers: string[] = [];
+  @Input() datesList!: DateModel[];
 
   ngOnInit() {
     this.populateList();
@@ -36,6 +38,11 @@ export class ParticipantListComponent {
       transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, 1)
     }
   }
+
+  clearList(){
+    this.listUsers = []
+  }
+
 
   /**
    * Recieves item from a date table if.

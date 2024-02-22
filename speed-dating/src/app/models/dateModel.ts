@@ -5,9 +5,10 @@ import { DateFeedbackModel } from './dateFeedbackModel';
 
 export interface DateModel extends BaseModel {
   event: EventModel;
+  tableNumber: number;
   dateRound: number;
   percentage: number;
-  personOne: string;
-  personTwo: string;
+  personOne: UserModel;
+  personTwo: UserModel;
   feedback: DateFeedbackModel[];
 }

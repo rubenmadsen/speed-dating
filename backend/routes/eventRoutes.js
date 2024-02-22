@@ -43,10 +43,10 @@ router.get("/event/:eventId/next", function (req, res) {
     console.log("event id", req.params.eventId)
     Event.findById(req.params.eventId).then(async event => {
         const matcher = new MatchingAlgorithm();
-        console.log("Event",event)
+        //console.log("Event",event)
         await matcher.loadDataForEvent(event).then();
         matcher.pairAll().then(dates => {
-            console.log("Generated dates for next round")
+            // console.log("Generated dates for next round")
             res.status(200).send(dates);
         });
     });
