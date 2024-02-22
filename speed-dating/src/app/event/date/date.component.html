@@ -6,7 +6,11 @@
   (cdkDropListDropped)="drop($event)"
 >
   <p>Table {{ tableNumber }}</p>
-  <app-match-precentage-bar id="matchBar" matchValue="{{matchVal}}"></app-match-precentage-bar>
+  <app-match-precentage-bar
+    id="matchBar" 
+    matchValue="{{ matchVal }}"
+    >
+  </app-match-precentage-bar>
   <div
     class="participant"
     cdkDrag
