@@ -43,6 +43,7 @@ app-button {
   header nav {
     flex-direction: column;
     margin-right: 0;
+    justify-content: space-evenly;
   }
 
   img {
