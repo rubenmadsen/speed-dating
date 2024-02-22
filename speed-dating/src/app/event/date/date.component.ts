@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {Component, EventEmitter, Input, Output, SimpleChanges} from '@angular/core';
 import { CdkDragStart, transferArrayItem } from '@angular/cdk/drag-drop';
 import {faInfo} from "@fortawesome/free-solid-svg-icons/faInfo";
 import {DateModel} from "../../models/dateModel";
@@ -21,11 +21,12 @@ export class DateComponent {
 
   @Output() returnUserToList = new EventEmitter<UserModel>();
   previewUsers: Array<String> = []
+
   @Input() matchVal: number = 0;
 
   tableUsers: UserModel[] = [];
+  tableData: { users: UserModel[], matchVal: number } = { users: [], matchVal: 0 };
 
-  isFemaleTBD = true;
   @Output() changeDetected = new EventEmitter<{ tableUsers: UserModel[], tableNumber: number }>();
 
 
@@ -36,11 +37,13 @@ export class DateComponent {
     if (this.male) {
       this.tableUsers.push(this.male);
     }
-    if (this.female && this.female.firstname !== "TBD") {
-      this.tableUsers.push(this.female);
-      this.isFemaleTBD = false;
-    }
+    this.tableUsers.push(this.female || { firstname: 'TBD' as any });
+    this.tableData = {
+      users: this.tableUsers,
+      matchVal: this.matchVal,
+    };
   }
+
 
   /**
    * Moves the participant from one container to another container
@@ -49,12 +52,13 @@ export class DateComponent {
    */
   drop(event: any) {
     if (event.previousIndex === 0 && event.previousContainer.id !== 'list') {
-      console.log("we hit?");
       this.moveTable(event);
       return
     }
 
-    transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, 1)
+    console.log(event.previousContainer.data)
+    // transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, 1)
+
     if (this.tableUsers.length > 2) {
       for (let i = 2; i < this.tableUsers.length; i++) {
         this.returnUserToList.emit(this.tableUsers[i]);
@@ -68,14 +72,22 @@ export class DateComponent {
    * Move participants from entire table to another table.
    */
   moveTable(event: any) {
-    const itemFromPrevContainer = event.previousContainer.data[0]
-    const itemFromPrevContainer1 = event.previousContainer.data[1]
-    const itemFromCurrentContainer = event.container.data[0]
-    const itemFromCurrentContainer1 = event.container.data[1]
+    const itemFromPrevContainer = event.previousContainer.data.users[0]
+    const itemFromPrevContainer1 = event.previousContainer.data.users[1]
+    const itemFromPrevContainer2 = event.previousContainer.data.matchVal
 
-    event.previousContainer.data[0] = itemFromCurrentContainer === undefined ? 'TBD' : itemFromCurrentContainer
-    event.previousContainer.data[1] = itemFromCurrentContainer1 === undefined ? 'TBD' : itemFromCurrentContainer1
-    event.container.data[0] = itemFromPrevContainer === undefined ? 'TBD' : itemFromPrevContainer
-    event.container.data[1] = itemFromPrevContainer1 === undefined ? 'TBD' : itemFromPrevContainer1
+    const itemFromCurrentContainer = event.container.data.users[0]
+    const itemFromCurrentContainer1 = event.container.data.users[1]
+    const itemFromCurrentContainer2 = event.container.data.matchVal
+
+    event.container.data.matchVal = itemFromPrevContainer2
+    event.previousContainer.data.matchVal = itemFromCurrentContainer2
+    this.tableData['matchVal'] = itemFromPrevContainer2
+
+    event.previousContainer.data.users[0] = itemFromCurrentContainer === undefined ? 'TBD' : itemFromCurrentContainer
+    event.previousContainer.data.users[1] = itemFromCurrentContainer1 === undefined ? 'TBD' : itemFromCurrentContainer1
+    event.container.data.users[0] = itemFromPrevContainer === undefined ? 'TBD' : itemFromPrevContainer
+    event.container.data.users[1] = itemFromPrevContainer1 === undefined ? 'TBD' : itemFromPrevContainer1
+
   }
 }

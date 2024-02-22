@@ -2,27 +2,27 @@
   cdkDropList
   class="table"
   id="table-{{ tableNumber }}"
-  [cdkDropListData]="tableUsers"
+  [cdkDropListData]="tableData"
   (cdkDropListDropped)="drop($event)"
 >
   <p>Table {{ tableNumber }}</p>
   <app-match-precentage-bar
     id="matchBar"
-    matchValue="{{ matchVal }}"
+    matchValue="{{tableData['matchVal']}}"
     >
   </app-match-precentage-bar>
   <div
     class="participant"
     cdkDrag
     *ngFor="let user of tableUsers; let i = index"
-
+    [ngClass]="i == 0 ? 'male' : 'female'"
   >
     {{ user.firstname }}
 
     <ng-container *ngIf="i == 0">
       <div *cdkDragPreview>
-        <div class="participant">{{ tableUsers[0] }}</div>
-        <div class="participant">{{ tableUsers[1] }}</div>
+        <div class="participant">{{ tableUsers[0].firstname}}</div>
+        <div class="participant">{{ tableUsers[1].firstname }}</div>
       </div>
     </ng-container>
   </div>

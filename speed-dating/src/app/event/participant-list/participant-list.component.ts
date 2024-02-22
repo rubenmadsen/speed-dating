@@ -11,7 +11,7 @@ import {DateModel} from "../../models/dateModel";
 export class ParticipantListComponent {
 
   @Input() participantsList?: UserModel[];
-  listUsers: string[] = [];
+  listUsers?: UserModel[] = [];
   @Input() datesList!: DateModel[];
 
   ngOnInit() {
@@ -22,8 +22,8 @@ export class ParticipantListComponent {
    * Populate user list.
    */
   populateList() {
-    const females = this.participantsList?.filter(user => user.gender == "female");
-    this.listUsers = females?.map(user => user.firstname) || [];
+    this.listUsers = this.participantsList?.filter(user => user.gender == "female");
+    // this.listUsers = females?.map(user => user.firstname) || [];
   }
 
   /**

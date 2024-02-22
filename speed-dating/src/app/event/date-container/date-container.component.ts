@@ -53,7 +53,5 @@ export class DateContainerComponent {
   }
 
   handleEvent(eventData: { tableUsers: UserModel[], tableNumber: number }) {
-    console.log(eventData)
-
   }
 }
