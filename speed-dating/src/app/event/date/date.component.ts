@@ -18,6 +18,7 @@ export class DateComponent {
   @Input() female: string = '';
   @Output() returnUserToList = new EventEmitter<String>();
   previewUsers: Array<String> = []
+  matchVal: number = 0;
 
   /**
    * Pushes male and female participant to the table
