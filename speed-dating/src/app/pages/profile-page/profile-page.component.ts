@@ -1,19 +1,26 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UserModel} from "../../models/userModel";
+import {ActivityRatingModel} from "../../models/activityRatingModel"
 import { ActivatedRoute } from '@angular/router'
 import {BackendService} from "../../services/backend.service";
+import {CategoryModel} from "../../models/categoryModel";
 
 @Component({
   selector: 'app-profile-page',
   templateUrl: './profile-page.component.html',
   styleUrls: ['./profile-page.component.css']
 })
-export class ProfilePageComponent implements OnInit{
+export class ProfilePageComponent implements OnInit {
 
   user?: UserModel;
   private sub: any
+  arm: ActivityRatingModel[];
+  categories: CategoryModel[];
 
-  constructor(private route : ActivatedRoute, private backendService: BackendService) {}
+  constructor(private route : ActivatedRoute, private backendService: BackendService) {
+    this.arm = []
+    this.categories = [];
+  }
 
   /**
    * Params should be used when an organizer tries to enter a participant profile, but getMe should be used when a user goes
@@ -29,14 +36,17 @@ export class ProfilePageComponent implements OnInit{
     //   // console.log(this.user.email)
     //   // console.log(this.user.imagePath)
     // });
-    await this.backendService.getMe().subscribe({
+    this.backendService.getMe().subscribe({
       next: (response) => {
-        this.user = response.user
+        this.user = response.user;
+        this.arm = response.user.activityData;
+
       }, error: (error) => {
-        console.log(error)
+        console.log(error);
       }
     });
+    this.backendService.getAllCategories().then(result => {
+      this.categories = result;
+    })
   }
-
 }
-
