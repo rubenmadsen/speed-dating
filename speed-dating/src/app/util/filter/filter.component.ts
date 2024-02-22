@@ -1,5 +1,4 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {BackendService} from "../../services/backend.service";
 import {EventModel} from "../../models/eventModel"
 
 @Component({
@@ -9,9 +8,22 @@ import {EventModel} from "../../models/eventModel"
 })
 export class FilterComponent {
 
+  private _events: EventModel[] = [];
   selectedCity: string | null;
 
-  @Input() events: any = []
+  @Input() set events(value: EventModel[]) {
+    const uniqueCities = new Set();
+    this._events = value
+      .filter(event => {
+        const isDuplicate = uniqueCities.has(event.city.name);
+        uniqueCities.add(event.city.name);
+        return !isDuplicate;
+      })
+      .sort((a, b) => a.city.name.localeCompare(String(b.city.name)));
+  }
+  get events(): EventModel[] {
+    return this._events;
+  }
   @Output() citySelected: EventEmitter<string | null> = new EventEmitter<string | null>();
 
   constructor() {

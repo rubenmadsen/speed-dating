@@ -27,15 +27,6 @@ export class ProfilePageComponent implements OnInit {
    * to its own profile.
    */
   async ngOnInit(){
-    // this.sub = this.route.queryParams.subscribe(params =>{
-    //   console.log(params)
-    //   // this.user= params as UserModel;
-    //   console.log(this.route.queryParams)
-    //   console.log(params)
-    //   // console.log(this.user.city)
-    //   // console.log(this.user.email)
-    //   // console.log(this.user.imagePath)
-    // });
     this.backendService.getMe().subscribe({
       next: (response) => {
         this.user = response.user;
