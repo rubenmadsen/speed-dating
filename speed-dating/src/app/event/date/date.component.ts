@@ -56,8 +56,7 @@ export class DateComponent {
       return
     }
 
-    console.log(event.previousContainer.data)
-    // transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, 1)
+    transferArrayItem(event.previousContainer.data, event.container.data.users, event.previousIndex, 1)
 
     if (this.tableUsers.length > 2) {
       for (let i = 2; i < this.tableUsers.length; i++) {
