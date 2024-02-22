@@ -17,7 +17,7 @@
 }
 
 .matching-button-container {
-  background-color: aliceblue; 
+  background-color: aliceblue;
   margin-top: 1rem;
   padding: 1rem;
   border-radius: 1rem 1rem 0 0;
@@ -35,13 +35,6 @@ app-button {
 
 app-date {
   padding: 0.5rem;
-}
-
-.date-container {
-  background-color: aliceblue;
-  border-radius: 0 0 1rem 1rem;
-  display: grid;
-  grid-template-columns: repeat(3, auto);
 }
 
 @media (max-width: 960px) {

@@ -24,16 +24,11 @@
         [buttonText]="'Start date'"
       ></app-button>
     </div>
-    <div class="date-container">
-      <ng-container *ngFor="let item of [].constructor(10); let i = index">
-        <app-date
-          [tableNumber]="i"
-          male="MALE{{ i }}"
-          (returnUserToList)="participantList.recieveItem($event)"
-        ></app-date>
-      </ng-container>
-    </div>
+
+    <app-date-container class="date-container" [participantList]="participantList" ></app-date-container>
+
   </ng-container>
+
   <ng-container *ngIf="!(isOrganizer$ | async)">
     <div class="info-and-list-container">
       <app-event-info [event]="event"></app-event-info>

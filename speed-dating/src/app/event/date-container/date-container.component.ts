@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {ParticipantListComponent} from "../participant-list/participant-list.component";
 
 @Component({
   selector: 'app-date-container',
@@ -7,4 +8,6 @@ import { Component } from '@angular/core';
 })
 export class DateContainerComponent {
 
+
+  @Input() participantList!: ParticipantListComponent;
 }

@@ -1,0 +1,9 @@
+.date-container {
+  background-color: aliceblue;
+  border-radius: 0 0 1rem 1rem;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+}
+.date {
+  margin: 1rem;
+}
