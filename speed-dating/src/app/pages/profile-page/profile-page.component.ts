@@ -46,6 +46,5 @@ export class ProfilePageComponent implements OnInit {
       }
     });
     await this.backendService.getAllCategories().then(categories => this.categories = categories.sort((a , b) => a.name > b.name ? 1 : -1));
-    console.log(this.categories)
   }
 }
