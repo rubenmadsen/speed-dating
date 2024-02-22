@@ -3,8 +3,6 @@ const jwt = require("jsonwebtoken");
 
 // Check if user is logged in
 const authorizeUser = (req,res,next) =>{
-    console.log("Log")
-    console.log("Token",req.cookies.jwt);
     const token = req.cookies.jwt;
     if(token){
         jwt.verify(token,"Äldre damer brinner bäst",(err,decodedToken) => {
@@ -13,6 +11,7 @@ const authorizeUser = (req,res,next) =>{
                 res.redirect("/");
             }else{
                 console.log(decodedToken);
+                req.user = decodedToken;
                 next();
             }
         });

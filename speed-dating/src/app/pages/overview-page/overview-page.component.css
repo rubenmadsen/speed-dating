@@ -1,0 +1,43 @@
+.page-container {
+  display: flex;
+  flex-direction: column;
+  padding:2rem;
+}
+
+.page-container * {
+  margin-bottom:1rem;
+}
+
+.overview-card-container {
+  display: flex;
+  overflow-x: scroll;
+  margin:1rem;
+  padding:2rem;
+}
+
+app-event-card{
+  margin-right:2rem;
+}
+
+h2 {
+  font-size: 1.2rem;
+}
+
+
+.overview-card-container::-webkit-scrollbar {
+  width: 10px; /* Scrollbar width */
+}
+
+.overview-card-container::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Track color */
+  border-radius: 10px;
+}
+
+.overview-card-container::-webkit-scrollbar-thumb {
+  background: #888; /* Handle color */
+  border-radius: 10px;
+}
+
+.overview-card-container::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Handle color on hover */
+}

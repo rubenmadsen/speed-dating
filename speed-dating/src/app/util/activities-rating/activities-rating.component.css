@@ -1,0 +1,62 @@
+.activities-rating-container {
+  margin: 1rem auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.category-row {
+  border: 1px solid black;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.category {
+  font-size: 1rem;
+  background-color: #f0f0f0;
+  padding: 0.5rem;
+  flex-basis: 100%;
+  text-align: center;
+}
+
+.activity-container {
+  flex-grow: 1;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.activity {
+  font-size: 0.9rem;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  background-color: #ffffff;
+  flex: 1;
+}
+
+.star-rating {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 0;
+
+}
+.activity-name {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  align-content: center;
+  padding: 0.2rem;
+}
+.star-rating fa-icon {
+  color: #d0d0d0;
+  cursor: pointer;
+}
+
+.star-rating fa-icon.filled {
+  color: #f5d442;
+}

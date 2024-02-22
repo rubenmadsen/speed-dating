@@ -1,1 +1,18 @@
-<p>profile-page works!</p>
+<div class="page-container">
+  <h1 class="your-profile">Your Profile</h1>
+  <div class="profile-container">
+    <div class="personal-info-container">
+      <img src="http://localhost:3000/{{user?.imagePath}}"  />
+      <h2>{{ user?.firstname }} {{ user?.lastname }}</h2>
+      <ul>
+        <li>Age: {{ user?.age }} years</li>
+        <li>City: {{ user?.city?.name }}</li>
+      </ul>
+    </div>
+
+    <div class="bio-container">
+      <h3>Biography</h3>
+      <p>{{ user?.description }}</p>
+    </div>
+  </div>
+</div>

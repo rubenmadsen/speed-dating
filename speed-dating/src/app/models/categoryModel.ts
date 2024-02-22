@@ -1,6 +1,5 @@
-import {BaseModel} from "./baseModel";
+import { BaseModel } from './baseModel';
 
-export interface CategoryModel extends BaseModel{
-  name:String;
-  activities:String[];
+export interface CategoryModel extends BaseModel {
+  name: String;
 }

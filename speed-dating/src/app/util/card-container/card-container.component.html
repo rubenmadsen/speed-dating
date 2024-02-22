@@ -1,5 +1,8 @@
+<div class="filter-container">
+  <app-filter (citySelected)="filterEvents($event)" [events]="events"></app-filter>
+</div>
 <div class="card-container">
-  <ng-container *ngFor="let event of events">
-    <app-event-card [event]="event"></app-event-card>
+  <ng-container *ngFor="let event of filteredEvents">
+    <app-event-card [eventCardClass]="eventCardClass" [event]="event"></app-event-card>
   </ng-container>
 </div>

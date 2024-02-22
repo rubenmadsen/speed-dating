@@ -1,1 +1,9 @@
-<p>date-container works!</p>
+<div class="date-container">
+  <ng-container  *ngFor="let male of listUsers let i = index">
+    <app-date class="date"
+      [tableNumber]="i"
+      male="{{male.firstname}}"
+      (returnUserToList)="participantList.recieveItem($event)"
+    ></app-date>
+  </ng-container>
+</div>

@@ -1,16 +1,16 @@
-<div class="event_card_container" (click)="onEventSelected()">
+<div class="event_card_container" [ngClass]="eventCardClass" (click)="onEventSelected()">
   <div class="event_card_image">
     <div class="event_card_location">
       <p class="event_card_information unselectable">
-        {{event.city}}
+        {{ event.city.name}}
       </p>
       <p class="event_card_information unselectable">
-        {{event.location}}
+        {{ event.location }}
       </p>
     </div>
   </div>
   <div class="event_card_footer">
     <fa-icon [icon]="faClock" id="event_card_footer_clock"></fa-icon>
-    <p>{{ event.startDate | date:'dd/MM HH:mm' }}</p>
+    <p>{{ event.startDate | date : "dd/MM HH:mm" }}</p>
   </div>
 </div>

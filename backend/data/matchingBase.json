@@ -1,0 +1,52 @@
+[
+  {
+    "name": "Outdoor Adventures",
+    "activities": [
+      "Camping",
+      "Hiking",
+      "Rock Climbing",
+      "Kayaking/Canoeing",
+      "Mountain Biking"
+    ]
+  },
+  {
+    "name": "Culinary Experiences",
+    "activities": [
+      "Cooking Classes",
+      "Wine Tasting",
+      "Food Festivals",
+      "Gourmet Cooking",
+      "Brewery Tours"
+    ]
+  },
+  {
+    "name": "Cultural and Intellectual Pursuits",
+    "activities": [
+      "Museum Visits",
+      "Book Clubs",
+      "Theater Performances",
+      "Language Learning",
+      "Trivia Nights"
+    ]
+  },
+  {
+    "name": "Sports and Fitness",
+    "activities": [
+      "Gym Workouts",
+      "Yoga/Pilates",
+      "Running/Jogging",
+      "Team Sports",
+      "Cycling"
+    ]
+  },
+  {
+    "name": "Creative and Artistic Activities",
+    "activities": [
+      "Painting/Drawing Classes",
+      "Photography",
+      "Music",
+      "DIY Projects",
+      "Dance Classes"
+    ]
+  }
+]

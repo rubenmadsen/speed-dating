@@ -1,43 +1,64 @@
-.event_page_container{
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  grid-gap:2rem;
-  width:60%;
-  min-width:1366px;
-  margin:auto;
-  padding:1rem;
-}
 
-app-event-info{
-  grid-column: 1;
-  grid-row: 1;
-}
+/* TODO Toggle färger för automatic matching */
+/* TODO Disable färg för cancel,start date knapparna */
 
-.person_placeholder {
-  padding:0.75rem;
-  font-weight:bold;
+.page-container {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  margin: 0 auto;
+  width: 80%;
   display: flex;
-  align-items: center;
-  grid-gap:0.5rem;
-  cursor:pointer;
+  flex-direction: column;
 }
 
-.person_placeholder:nth-child(odd) {
-  background: var(--secondary-clr);
-}
-
-.list_placeholder{
-  border:1px solid black;
-  overflow-y: scroll;
-}
-
-.date_container_placeholder {
-  margin:auto;
-  grid-row:2;
-  grid-column-start:1;
-  grid-column-end: 4;
+.info-and-list-container {
   display: flex;
-  flex-wrap: wrap-reverse;
-  grid-gap:1rem;
-  justify-content: flex-start;
+  justify-content: space-between;
+}
+
+.matching-button-container {
+  background-color: aliceblue;
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 1rem 1rem 0 0;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+app-event-info {
+  width: 50%;
+}
+
+app-button {
+  padding: 0.2rem;
+}
+
+app-date {
+  padding: 0.5rem;
+}
+
+@media (max-width: 960px) {
+  .info-and-list-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  app-event-info {
+    width: 100%;
+    text-align: center;
+  }
+
+  app-participant-list {
+    margin-top: 1rem;
+    width: 50%;
+  }
+
+  .matching-button-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .date-container {
+    grid-template-columns: repeat(2, auto);
+  }
 }

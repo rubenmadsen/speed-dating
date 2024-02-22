@@ -1,18 +1,22 @@
-.participantList {
-    border: 2px solid black;
-    width: 500px;
-    margin-bottom: 15px;
+.participant-list {
+  background-color: aliceblue;
+  border-radius: 0.3rem;
+  text-align: center;
+  padding: 0.5rem;
 }
 
 .participant {
-    cursor: grab;
-    height: 30px;
-}
-
-p {
-    text-align: center;
+  cursor: grab;
+  background: var(--accent-clr);
+  border-radius: 0.3rem;
+  margin: 0.5rem;
+  padding: 0.5rem;
 }
 
 .participant:nth-child(odd) {
-    background: var(--secondary-clr);
+  background: var(--secondary-clr);
+}
+
+p {
+  font-weight: bold;
 }

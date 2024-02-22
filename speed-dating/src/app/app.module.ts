@@ -32,11 +32,14 @@ import { CreateEventComponent } from './util/create-event/create-event.component
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BackendService } from './services/backend.service';
 import {HttpClientModule} from "@angular/common/http";
-import {DragDropModule} from '@angular/cdk/drag-drop'; 
+import {DragDropModule} from '@angular/cdk/drag-drop';
 import { FormsModule } from '@angular/forms';
 import { MinmaxSliderComponent } from './util/minmax-slider/minmax-slider.component';
 
 import { ProfileCardComponent } from './profile/profile-card/profile-card.component';
+import { ActivitiesRatingComponent } from './util/activities-rating/activities-rating.component';
+import { ErrorbarComponent } from './util/errorbar/errorbar.component';
+import { NewEventPopupComponent } from './event/new-event-popup/new-event-popup.component';
 
 
 
@@ -70,7 +73,11 @@ import { ProfileCardComponent } from './profile/profile-card/profile-card.compon
     HomepageComponent,
     CreateEventComponent,
     ProfileCardComponent,
-    MinmaxSliderComponent
+    MinmaxSliderComponent,
+    ActivitiesRatingComponent,
+    MinmaxSliderComponent,
+    ErrorbarComponent,
+    NewEventPopupComponent,
   ],
   imports: [
     BrowserModule,
