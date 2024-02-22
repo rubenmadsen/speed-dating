@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDragStart, transferArrayItem } from '@angular/cdk/drag-drop';
 import {faInfo} from "@fortawesome/free-solid-svg-icons/faInfo";
 import {DateModel} from "../../models/dateModel";
 import {UserModel} from "../../models/userModel";
@@ -18,8 +18,10 @@ export class DateComponent {
   @Input() tableNumber = 1;
   @Input() male?: UserModel;
   @Input() female!: UserModel;
+
   @Output() returnUserToList = new EventEmitter<UserModel>();
   previewUsers: Array<String> = []
+  @Input() matchVal: number = 0;
 
   tableUsers: UserModel[] = [];
 
@@ -71,9 +73,9 @@ export class DateComponent {
     const itemFromCurrentContainer = event.container.data[0]
     const itemFromCurrentContainer1 = event.container.data[1]
 
-    event.previousContainer.data[0] = itemFromCurrentContainer
-    event.previousContainer.data[1] = itemFromCurrentContainer1
-    event.container.data[0] = itemFromPrevContainer
-    event.container.data[1] = itemFromPrevContainer1
+    event.previousContainer.data[0] = itemFromCurrentContainer === undefined ? 'TBD' : itemFromCurrentContainer
+    event.previousContainer.data[1] = itemFromCurrentContainer1 === undefined ? 'TBD' : itemFromCurrentContainer1
+    event.container.data[0] = itemFromPrevContainer === undefined ? 'TBD' : itemFromPrevContainer
+    event.container.data[1] = itemFromPrevContainer1 === undefined ? 'TBD' : itemFromPrevContainer1
   }
 }
