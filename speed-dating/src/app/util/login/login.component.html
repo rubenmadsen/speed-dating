@@ -1,31 +1,38 @@
-<div class="login_form_container" *ngIf="isVisible">
-  <div class="login_form_header">
-    <fa-icon [icon]="faX" class="x_close_form" (click)="closeForm()"></fa-icon>
+<div class="login-container" *ngIf="isVisible">
+  <div class="login-header">
+    <fa-icon [icon]="faX" class="close" (click)="closeForm()"></fa-icon>
   </div>
-  <form class="login_form"
-        name="form"
-        (ngSubmit)="login()"
-        (keyup.enter)="login()"
-        #f="ngForm"
-        novalidate
+  <form
+    class="login-form"
+    name="form"
+    (ngSubmit)="login()"
+    (keyup.enter)="login()"
+    #f="ngForm"
+    novalidate
   >
-    <input type="email"
-           class="input email"
-           placeholder="E-Mail"
-           name="email"
-           [(ngModel)]="form.email"
-           #email = "ngModel"
-    >
-    <input type="password"
-           class="input password"
-           placeholder="Password"
-           name="password"
-           [(ngModel)]="form.password"
-           #password="ngModel"
-    >
-    <p *ngIf="errorMessage" class="login-error-message">{{ errorMessage }}</p>
+    <input
+      type="email"
+      class="input email"
+      placeholder="E-Mail"
+      name="email"
+      [(ngModel)]="form.email"
+      #email="ngModel"
+    />
+    <input
+      type="password"
+      class="input password"
+      placeholder="Password"
+      name="password"
+      [(ngModel)]="form.password"
+      #password="ngModel"
+    />
+    <p *ngIf="errorMessage" class="login-error">{{ errorMessage }}</p>
 
-    <app-button [buttonClass]="'accent clr-white'" [buttonText]="'Log in'" (appClick)="login()"></app-button>
-    <p (click)="openRegister($event)">Register</p>
+    <app-button
+      [buttonClass]="'accent clr-white'"
+      [buttonText]="'Log in'"
+      (appClick)="login()"
+    ></app-button>
+    <p class="register" (click)="openRegister($event)">Register</p>
   </form>
 </div>
