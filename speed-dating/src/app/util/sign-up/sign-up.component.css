@@ -69,6 +69,7 @@
 }
 
 .user-info {
+  width: 90%;
   margin-top: 0.5rem;
   font-size: 1.2rem;
   padding: 0.5rem;
@@ -76,8 +77,9 @@
 }
 
 textarea {
-  margin-top: 1rem;
   flex: 1;
+  width: 90%;
+  margin-top: 1rem;
   border: 1px solid #ccc;
   resize: none;
 }
@@ -106,4 +108,35 @@ textarea:focus {
 
 .input-error {
   border: 1px solid red;
+}
+
+@media (max-width: 820px) {
+  .signup-container {
+    width: 100%;
+    position: auto;
+    top: auto;
+    left: auto;
+    transform: none;
+    border-radius: 0;
+  }
+
+  .user-type-container label {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .close {
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-right: 2rem;
+  }
+
+  .signup-inputs-left {
+    align-items: center;
+    width: 40%;
+  }
+
+  .user-info {
+    padding: 0.2rem;
+  }
 }
