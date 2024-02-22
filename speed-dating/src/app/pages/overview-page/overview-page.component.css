@@ -2,18 +2,21 @@
   display: flex;
   flex-direction: column;
   padding:2rem;
-  grid-gap:1rem;
 }
 
 .overview-card-container {
   display: flex;
   overflow-x: scroll;
-  grid-gap:2rem;
+  margin:1rem;
   padding:2rem;
 }
 
 app-button {
   width:fit-content;
+}
+
+app-event-card{
+  margin-right:2rem;
 }
 
 h2 {
