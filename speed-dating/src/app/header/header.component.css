@@ -8,7 +8,6 @@ header {
 .top-container {
   display: flex;
   justify-content: space-between;
-  /* height: 5rem; */
 }
 
 img {
@@ -44,10 +43,11 @@ app-button {
   header nav {
     flex-direction: column;
     margin-right: 0;
+    justify-content: space-evenly;
   }
 
   img {
-    max-height: 7rem;
+    max-height: 6rem;
   }
 
   app-button {
