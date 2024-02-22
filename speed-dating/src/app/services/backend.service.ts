@@ -19,7 +19,7 @@ export class BackendService {
   private readonly userURL: string = this.backendURL + "user/";
   private readonly eventURL: string = this.backendURL + "event/";
   private readonly cityURL: string = this.backendURL + "city/";
-  private readonly categoryURL: string = this.backendURL + "categories/";
+  private readonly categoryURL: string = this.backendURL + "category/";
   private readonly activityURL: string = this.backendURL + "activity/";
 
 

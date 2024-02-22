@@ -7,7 +7,7 @@ export interface DateModel extends BaseModel {
   event: EventModel;
   dateRound: number;
   percentage: number;
-  personOne: UserModel;
-  personTwo: UserModel;
+  personOne: string;
+  personTwo: string;
   feedback: DateFeedbackModel[];
 }
