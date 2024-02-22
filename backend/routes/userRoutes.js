@@ -185,6 +185,7 @@ router.get("/user/profile/me", authorizeUser, async function(req,res) {
   try {
     const user = await User.findById(req.user.id)
         .populate('city')
+        .populate("sharedContacts")
         .populate({
           path: 'activityData', // Populating activityData
           populate: {
@@ -201,7 +202,6 @@ router.get("/user/profile/me", authorizeUser, async function(req,res) {
       return res.status(404).send({ message: "User not found." });
     }
     user
-    .populate("sharedContacts")
     res.status(200).send({ valid: true, user: user });
   } catch (err) {
     console.log(err)
