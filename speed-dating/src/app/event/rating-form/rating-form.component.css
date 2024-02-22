@@ -7,8 +7,32 @@ label {
 .questions {
     display: grid;
     justify-content: center;
+    justify-items: center;
+}
+
+.radioButtons {
+    display: flex;
+    justify-items: center;
+    justify-content: center;
 }
 
 .form p {
+    margin: auto;
     margin-top: 3em;
+}
+
+#shareContacts {
+    display: flex;
+    padding-top: 1em;
+}
+
+#shareText {
+    margin: auto;
+    padding-right: 1em;
+}
+
+#continueBtn {
+    display: flex;
+    justify-content: center;
+    padding-top: 1em;
 }
