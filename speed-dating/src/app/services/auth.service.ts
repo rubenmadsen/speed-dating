@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject, Observable, firstValueFrom} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {BackendService} from "./backend.service";
 
@@ -51,5 +51,14 @@ export class AuthService {
     });
 
   }
+
+  loggedIn(): Promise<boolean> {
+    return firstValueFrom(this.http.get<any>(this.backendURL + 'api/validate-token', { withCredentials: true })).then(response => {
+      return response.valid;
+    }).catch(error => {
+      return false;
+    });
+  }
+
 
 }
