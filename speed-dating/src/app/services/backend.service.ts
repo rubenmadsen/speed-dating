@@ -7,6 +7,7 @@ import {CityModel} from "../models/cityModel";
 import {CategoryModel} from "../models/categoryModel";
 import {ActivityModel} from "../models/activityModel";
 import {DateModel} from "../models/dateModel";
+import {PingPong} from "../interfaces/PingPong";
 
 @Injectable({
   providedIn: 'root'
@@ -118,6 +119,9 @@ export class BackendService {
     const endPoint = this.backendURL + 'event';
     const responseObservable = this.http.get<EventModel[]>(endPoint);
     return firstValueFrom(responseObservable);
+  }
+  getAlleventsStream(pingpong:PingPong<EventModel>):Observable<PingPong<EventModel>>{
+    return this.http.post<PingPong<EventModel>>(this.eventURL + "stream", pingpong, this.requestOptions);
   }
 
   /**
