@@ -1,7 +1,7 @@
 /**
  * Routes for events
  */
-const { Router, response } = require("express");
+const { Router, response, length} = require("express");
 const { authorizeUser } = require("../authorization/authorize");
 const Event = require("../models/eventModel");
 const User = require("../models/userModel");
@@ -70,6 +70,8 @@ router.get("/event/:eventId", function (req, res) {
 
 router.post("/event/stream", function (req, res) {
     let pingpong = req.body;
+    pingpong.items = [];
+    console.log("ping",pingpong);
     Event.find({})
         .populate("city")
         .populate("participants")
@@ -77,6 +79,8 @@ router.post("/event/stream", function (req, res) {
         .limit(pingpong.amount)
         .then((result) => {
             pingpong.items = result;
+            pingpong.retrieved += result.length;
+            console.log("pong",pingpong)
             res.status(200).send(pingpong);
         })
         .catch((err) => {
