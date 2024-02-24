@@ -48,6 +48,14 @@ router.post("/event", authorizeUser, async (req, res) => {
     res.status(500).send({ message: "Registration error" });
   }
 });
+/**
+ * Delete an Event
+ */
+router.delete("/event/:eventId",authorizeUser,function (req,res){
+    Event.deleteOne({_id:req.params.eventId}).then(result =>{
+       res.send()
+    }).catch(err => console.log(err));
+});
 router.get("/event/:eventId",authorizeUser,function (req,res){
     console.log("Incoming event id:" + req.params.eventId)
     Event.findById(req.params.eventId).populate("dates").then(result => {

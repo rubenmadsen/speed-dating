@@ -124,7 +124,9 @@ export class BackendService {
   getAlleventsStream(pingpong:PingPong<EventModel>):Observable<PingPong<EventModel>>{
     return this.http.post<PingPong<EventModel>>(this.eventURL + "stream", pingpong, this.requestOptions);
   }
-
+  deleteEvent(event:EventModel):Observable<EventModel>{
+    return this.http.delete<EventModel>(this.eventURL + event._id,this.requestOptions);
+  }
   /**
    * NOT IMPLEMENTED
    * @param sender
