@@ -96,7 +96,6 @@ export class SignUpComponent {
       }
       if (this.signupForm.valid) {
         const user: UserModel = {
-          _id: null,
           email: this.form.email,
           activityData: ratings,
           isOrganizer: this.isOrganizer,

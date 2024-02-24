@@ -25,13 +25,24 @@ router.get("/event", function (req, res) {
     });
 });
 
+/**
+ * New event
+ */
 router.post("/event", authorizeUser, async (req, res) => {
+
+    console.log("req.body",req.body)
   try {
     const user = await User.findById(req.user.id);
     if(user.isOrganizer){
       req.body.organizer = user;
-      const result = await Event.create(req.body);
-      res.status(201).send(result);
+
+      const unpopulatedResult = await Event.create(req.body);
+      const populatedResult = await Event.findById(unpopulatedResult._id).populate('city');
+
+      user.events.push(populatedResult._id);
+      console.log("pop",populatedResult)
+      await user.save();
+      res.status(201).send(populatedResult);
     }
   } catch (err) {
     console.log(err);
