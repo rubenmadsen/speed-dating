@@ -23,6 +23,7 @@ export class BackendService {
   private readonly cityURL: string = this.backendURL + "city/";
   private readonly categoryURL: string = this.backendURL + "category/";
   private readonly activityURL: string = this.backendURL + "activity/";
+  private readonly dateURL: string = this.backendURL + "date/";
 
 
   headerDict = {
@@ -143,8 +144,18 @@ export class BackendService {
     return this.http.get<DateModel[]>(this.eventURL + event._id + "/next",this.requestOptions);
   }
   // Date
-
-
+  /**
+   * Swap tables
+   */
+  swapTables(t1:DateModel, t2:DateModel):Observable<DateModel[]>{
+    return this.http.get<DateModel[]>(this.dateURL + "swaptables/" +t1._id + "/" + t2._id);
+  }
+  /**
+   * Swap tables
+   */
+  swapSkanks(t1:DateModel, t2:DateModel):Observable<DateModel[]>{
+    return this.http.get<DateModel[]>(this.dateURL + "swapskanks/" +t1._id + "/" + t2._id);
+  }
   // DateFeedback
 
 

@@ -25,12 +25,12 @@ const dateSchema = new Schema({
   },
   personOne: {
     type: Schema.Types.ObjectId,
-    ref: "UserModel",
+    ref: "user",
     required: [true, "A date must contain two participants"],
   },
   personTwo: {
     type: Schema.Types.ObjectId,
-    ref: "UserModel",
+    ref: "user",
     required: [true, "A date must contain two participants"],
   },
   feedbackOne: {
