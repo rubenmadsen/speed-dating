@@ -40,7 +40,6 @@ router.post("/event", authorizeUser, async (req, res) => {
       const populatedResult = await Event.findById(unpopulatedResult._id).populate('city');
 
       user.events.push(populatedResult._id);
-      console.log("pop",populatedResult)
       await user.save();
       res.status(201).send(populatedResult);
     }
