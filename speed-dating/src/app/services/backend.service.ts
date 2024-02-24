@@ -8,6 +8,7 @@ import {CategoryModel} from "../models/categoryModel";
 import {ActivityModel} from "../models/activityModel";
 import {DateModel} from "../models/dateModel";
 import {PingPong} from "../interfaces/PingPong";
+import {FileResponse} from "../interfaces/FileResponse";
 
 @Injectable({
   providedIn: 'root'
@@ -107,10 +108,10 @@ export class BackendService {
    * Uploads a profile picture and return the new name
    * @param file A god-damn file
    */
-  uploadProfilePicture(file:File):Observable<any>{
+  uploadProfilePicture(file:File):Observable<FileResponse>{
     const formData = new FormData();
     formData.append('file',file,file.name);
-    return this.http.post<any>(this.backendURL + "upload/image",formData,this.uploadImageOptions);
+    return this.http.post<FileResponse>(this.backendURL + "upload/image",formData,this.uploadImageOptions);
   }
 
 

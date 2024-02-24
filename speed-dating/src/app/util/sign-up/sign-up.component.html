@@ -30,7 +30,7 @@
       </div>
       <div class="signup-inputs">
         <div class="signup-inputs-left">
-          <div class="user-image" #userImage (click)="fileInput.click()"></div>
+          <div class="user-image" #userImage (click)="fileInput.click()" [style.background-image]="imageUrl"></div>
           <p>Your Picture</p>
           <input
             class="user-info"
@@ -38,6 +38,7 @@
             #fileInput
             style="display: none"
             (change)="onFileSelected($event)"
+            accept="image/png"
           />
           <input
             class="user-info"
@@ -152,6 +153,7 @@
             required
             [(ngModel)]="form.gender"
             #gender="ngModel"
+            (change)="onGenderChange($event)"
             [class.input-error]="gender.invalid && gender.touched"
           >
             <option value="" disabled>Select gender</option>
