@@ -15,6 +15,7 @@ class MatchingAlgorithm {
 
     }
     async loadDataForEvent(event){
+        console.log("Loading data for event")
         this.event = await Event.findById(event._id)
             .populate('dates')
             .populate({
@@ -39,6 +40,7 @@ class MatchingAlgorithm {
     }
 
     async pairAll() {
+        console.log("Pairing")
         const dates = [];
         for (const male of this.males) {
             let exclusionList = [];
@@ -69,11 +71,12 @@ class MatchingAlgorithm {
         const selected = this.selectDates(dates)
         this.event.dates.push(...selected);
         this.event.round++;
-        this.event.save();
+        await this.event.save();
         console.log("Selected len:" + selected.length)
         return selected;
     }
     selectDates(dates){
+        console.log("Select best dates")
         let selected = [];
         let last;
         let sorted = dates.sort((a,b) => b.percentage - a.percentage);
@@ -88,6 +91,7 @@ class MatchingAlgorithm {
         return selected;
     }
     async calculateActivityScores(guy, girl) {
+        console.log("Calculate score")
         const activityResults = JSON.parse(JSON.stringify(this.categories));
         const male = guy; // = await User.findById(guy._id).populate('activityData.activity');
         const female = girl; // = await User.findById(girl._id).populate('activityData.activity');
@@ -147,9 +151,6 @@ class MatchingAlgorithm {
         const sum = valueArray.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
         const average = sum / valueArray.length;
         return average * 100;
-    }
-    #aggregateScore(){
-
     }
 }
 

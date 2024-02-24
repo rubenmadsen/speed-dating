@@ -5,6 +5,8 @@ const { Router, response, length} = require("express");
 const { authorizeUser } = require("../authorization/authorize");
 const Event = require("../models/eventModel");
 const User = require("../models/userModel");
+const DateFeedBack = require("../models/dateFeedbackModel");
+const Date = require("../models/dateModel");
 
 const MatchingAlgorithm = require("../classes/MatchingAlgorithm");
 
@@ -71,10 +73,18 @@ router.get("/event/:eventId/next", function (req, res) {
     Event.findById(req.params.eventId).then(async event => {
         const matcher = new MatchingAlgorithm();
         console.log("Event",event)
-        await matcher.loadDataForEvent(event).then();
-        matcher.pairAll().then(dates => {
-            console.log("Generated dates for next round")
-            res.status(200).send(dates);
+        matcher.loadDataForEvent(event).then(() => {
+            matcher.pairAll().then(async dates => {
+                console.log("Generated dates for next round")
+                for (const d of dates) {
+                    await d.save();
+                }
+                Event.findById(req.params.eventId).populate("dates").then(upDates => {
+
+                    console.log(upDates)
+                    res.status(200).send(upDates.dates);
+                });
+            });
         });
     });
 });
@@ -104,5 +114,28 @@ router.post("/event/stream", function (req, res) {
         .catch((err) => {
             console.log(err);
         });
+});
+
+router.get("/event/:eventId/simulatedates",async function (req, res) {
+    const event = await Event.findById(req.params.eventId).populate("dates")
+    console.log("event",event)
+    if (event.round === 0)
+        res.send({message:"There is no dates to match"})
+    for (let i = 0; i < event.dates.length; i++) {
+        let date = event.dates[i];
+        const fbOne = new DateFeedBack();
+        fbOne.author = date.personOne;
+        fbOne.date = date;
+        fbOne.question = [Math.floor(Math.random() * 6),Math.floor(Math.random() * 6),Math.floor(Math.random() * 6)]
+
+        const fbTwo = new DateFeedBack();
+        fbTwo.author = date.personTwo;
+        fbTwo.date = date;
+        fbTwo.question = [Math.floor(Math.random() * 6),Math.floor(Math.random() * 6),Math.floor(Math.random() * 6)]
+        date.feedbackOne = fbOne;
+        date.feedbackTwo = fbTwo;
+    }
+    await event.save()
+    res.send(event);
 });
 module.exports = router;

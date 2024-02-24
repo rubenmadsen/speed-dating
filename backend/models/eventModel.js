@@ -58,10 +58,11 @@ const eventSchema = new Schema({
     ref: "user",
     default: [],
   },
-    dates:{
-        type:[],
-        default:[]
-    },
+  dates:{
+    type:[Schema.Types.ObjectId],
+    ref:"date",
+    default:[]
+  },
   eventFeedback: {
     type: [Schema.Types.ObjectId],
     ref: "EventFeedbackModel",

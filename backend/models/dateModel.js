@@ -7,8 +7,9 @@ const Schema = mongoose.Schema;
 const dateSchema = new Schema({
   event: {
     type: Schema.Types.ObjectId,
-    ref: "EventModel",
+    ref: "event",
     required: [true, "A date must belong to an event"],
+    select:false
   },
   tableNumber: {
     type: Number,
@@ -32,10 +33,16 @@ const dateSchema = new Schema({
     ref: "UserModel",
     required: [true, "A date must contain two participants"],
   },
-  feedback: {
-    type: [Schema.Types.ObjectId],
-    ref: "DateFeedbackModel",
+  feedbackOne: {
+    type: Schema.Types.ObjectId,
+    ref: "datefeedback",
+    default:null
   },
+  feedbackTwo:{
+    type:Schema.Types.ObjectId,
+    ref:"datefeedback",
+    default:null
+  }
 });
 
 const DateModel = mongoose.model("date", dateSchema, "DATES");

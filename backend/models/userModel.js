@@ -59,7 +59,7 @@ const userSchema = new Schema({
   },
   events: {
     type: [Schema.Types.ObjectId],
-    ref: "EventModel",
+    ref: "event",
     default: [],
   },
   sharedContacts: {

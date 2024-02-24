@@ -15,11 +15,10 @@ const dateFeedbackSchema = new Schema({
     ref: "DateModel",
     required: [true, "Date feedback must specify a date"],
   },
-  feedback: {
-    type: String,
-    required: [true, "Say somethin"],
-    maxLength: 256,
-  },
+  question:{
+    type:[Number],
+    default:[]
+  }
 });
 
 const DateFeedbackModel = mongoose.model(
