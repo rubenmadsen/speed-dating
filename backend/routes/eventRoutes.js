@@ -9,6 +9,7 @@ const DateFeedBack = require("../models/dateFeedbackModel");
 const Date = require("../models/dateModel");
 
 const MatchingAlgorithm = require("../classes/MatchingAlgorithm");
+const events = require("events");
 
 const router = Router();
 
@@ -94,6 +95,53 @@ router.get("/event/:eventId", function (req, res) {
   Event.findById(req.params.eventId).then(async event => {
       
   });
+});
+/**
+ * Join an event
+ */
+router.get("/event/:eventId/join", authorizeUser, async function (req, res) {
+    const me = await User.findById(req.user.id);
+
+    Event.findById(req.params.eventId).populate("participants").then( event => {
+        if (event.participants.filter(participant => participant.gender === me.gender).length < 10 && !event.participants.includes(me) && me.isOrganizer === false){
+            event.participants.push(me)
+            event.currentParticipants++;
+            event.save().then(() => {
+                me.events.push(event)
+                me.save().then(() => {
+                    res.send();
+                });
+            });
+        }
+        else{
+            res.status(401).send();
+        }
+    });
+});
+/**
+ * Leave an event
+ */
+router.get("/event/:eventId/leave", authorizeUser, async function (req, res) {
+    try {
+        const userId = req.user.id; // Assuming this is correctly populated
+        const eventId = req.params.eventId;
+        const eventUpdateResult = await Event.updateOne(
+            { _id: eventId },
+            { $pull: { participants: userId } }
+        );
+        const userUpdateResult = await User.updateOne(
+            { _id: userId },
+            { $pull: { eventsAttended: eventId } } // Assuming the field is named eventsAttended
+        );
+        if (eventUpdateResult.modifiedCount === 0 || userUpdateResult.modifiedCount === 0) {
+            // Handle the case where the updates didn't modify any documents
+            return res.status(404).send({ message: "Not found or nothing to remove" });
+        }
+        res.send({ message: "Successfully left the event" });
+    } catch (error) {
+        console.error('Error leaving event', error);
+        res.status(500).send({ message: "Error leaving the event" });
+    }
 });
 
 router.post("/event/stream", function (req, res) {

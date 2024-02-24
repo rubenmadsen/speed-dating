@@ -143,6 +143,20 @@ export class BackendService {
   getNextRoundOfDatesForEvent(event:EventModel):Observable<DateModel[]>{
     return this.http.get<DateModel[]>(this.eventURL + event._id + "/next",this.requestOptions);
   }
+
+  /**
+   * Join an event
+   */
+  joinEvent(event:EventModel):Observable<EventModel>{
+    return this.http.get<EventModel>(this.eventURL + event._id + "/join",this.requestOptions);
+  }
+  /**
+   * Leave an event
+   */
+  leaveEvent(event:EventModel):Observable<EventModel>{
+    return this.http.get<EventModel>(this.eventURL + event._id + "/leave",this.requestOptions);
+  }
+
   // Date
   /**
    * Swap tables
