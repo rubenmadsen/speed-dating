@@ -5,6 +5,7 @@ import {CityModel} from "./cityModel";
 
 export interface EventModel extends BaseModel {
   startDate: Date;
+  imagePath: string;
   hasEnded: boolean;
   round: number;
   location: string;

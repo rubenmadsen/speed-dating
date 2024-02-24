@@ -1,5 +1,5 @@
 <div class="event-info-container">
-  <img src="assets/img/card/card_placeholder.png" />
+  <img [src]="'http://localhost:3000/' + event?.imagePath"/>
   <div class="event-text-container">
     <p class="date">{{ event!.startDate }}</p>
     <p class="location">{{ event!.location }}</p>

@@ -20,8 +20,9 @@
 }
 .event_card_image {
   height: 70%;
-  background: url("src/assets/img/card/card_placeholder.png") center;
+  /*background: url("src/assets/img/card/card_placeholder.png") center;*/
   background-size: cover;
+  background-position: center;
   display: flex;
   padding: 0.5rem;
   flex-wrap: wrap;

@@ -50,6 +50,7 @@ export class NewEventPopupComponent {
     const event: EventModel = {
       _id: null,
       startDate: startdate,
+      imagePath: "",
       hasEnded: false,
       round: 0,
       location: this.form.venue,

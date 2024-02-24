@@ -138,6 +138,7 @@ async function generateRandomUser(isOrganizer) {
 async function generateRandomEvent() {
   const newEvent = Event();
   newEvent.startDate = getRandomDate();
+  newEvent.imagePath = getRandomVenuePicture();
   newEvent.location = getRandomVenue();
   const city = await getRandomCity();
   //console.log("CITY", city)
@@ -300,7 +301,18 @@ async function saveDocument(doc) {
     savingDocuments.delete(docId); // Remove from the map once the save is complete
   }
 }
+function getRandomVenuePicture(gender){
+  let files = null;
+  const directoryPath = path.join(__dirname, '../public/venues');
+  try {
+    // Read directory synchronously
+    files = fs.readdirSync(directoryPath);
 
+    return "venues/" + getRandomFromList(files);
+  } catch (err) {
+    console.log('Unable to scan directory: ' + err);
+  }
+}
 function getRandomProfilePicture(gender){
   const prefix = gender === "male" ? "XMale" : "XFemale"
   let files = null;

@@ -9,6 +9,10 @@ const eventSchema = new Schema({
     type: Date,
     required: [true, "An event must have a start date"],
   },
+  imagePath:{
+    type:String,
+    default: ""
+  },
   organizer: {
     type: Schema.Types.ObjectId,
     ref: "organizer",

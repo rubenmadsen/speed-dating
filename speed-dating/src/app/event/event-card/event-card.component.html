@@ -1,5 +1,5 @@
 <div class="event_card_container" [ngClass]="eventCardClass" (click)="onEventSelected()">
-  <div class="event_card_image">
+  <div class="event_card_image" [style.background-image]="imageUrl">
     <div class="event_card_location">
       <p class="event_card_information unselectable">
         {{ event.city.name}}
