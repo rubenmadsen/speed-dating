@@ -16,6 +16,7 @@ router.get("/date/:user1Id/:user2Id/match", authorizeUser, async function(req,re
         {_id:req.params.user1Id},
         { $push: { sharedContacts: { _id:req.user2Id } } }
     )
+    res.send()
 })
 
 /**
@@ -26,6 +27,7 @@ router.get("/date/:user1Id/:user2Id/unmatch", authorizeUser, async function(req,
         {_id:req.params.user1Id},
         { pull: { sharedContacts: { _id:req.user2Id } } }
     )
+    res.send()
 })
 
 /**
