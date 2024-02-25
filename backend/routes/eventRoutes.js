@@ -59,6 +59,9 @@ router.delete("/event/:eventId",authorizeUser,function (req,res){
        res.send()
     }).catch(err => console.log(err));
 });
+/**
+ * Retrieve a specific event
+ */
 router.get("/event/:eventId",authorizeUser,function (req,res){
     console.log("Incoming event id:" + req.params.eventId)
     Event.findById(req.params.eventId).populate("dates").then(result => {
@@ -69,7 +72,10 @@ router.get("/event/:eventId",authorizeUser,function (req,res){
         console.log(err);
     });
 });
-router.get("/event/:eventId/next", function (req, res) {
+/**
+ * Generates the next date round
+ */
+router.get("/event/:eventId/next",authorizeUser, function (req, res) {
     console.log("event id", req.params.eventId)
     Event.findById(req.params.eventId).then(async event => {
         const matcher = new MatchingAlgorithm();
@@ -90,12 +96,19 @@ router.get("/event/:eventId/next", function (req, res) {
     });
 });
 
-router.get("/event/:eventId", function (req, res) {
-  console.log("event id", req.params.eventId)
-  Event.findById(req.params.eventId).then(async event => {
-      
-  });
+/**
+ * Clears the last generated automatch
+ */
+router.get("/event/:eventId/clear",authorizeUser,function(req,res){
+
 });
+
+// router.get("/event/:eventId", function (req, res) {
+//   console.log("event id", req.params.eventId)
+//   Event.findById(req.params.eventId).then(async event => {
+//
+//   });
+// });
 /**
  * Join an event
  */
