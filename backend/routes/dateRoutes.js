@@ -4,8 +4,29 @@
 const { Router, response } = require("express");
 const { authorizeUser } = require("../authorization/authorize");
 const Date = require("../models/dateModel");
+const User = require("../models/userModel");
 
 const router = Router();
+
+/**
+ * Match user1 with user2
+ */
+router.get("/date/:user1Id/:user2Id/match", authorizeUser, async function(req,res){
+    const updatedUser = await User.updateOne(
+        {_id:req.params.user1Id},
+        { $push: { sharedContacts: { _id:req.user2Id } } }
+    )
+})
+
+/**
+ * Unmatch user1 with user2
+ */
+router.get("/date/:user1Id/:user2Id/unmatch", authorizeUser, async function(req,res){
+    const updatedUser = await User.updateOne(
+        {_id:req.params.user1Id},
+        { pull: { sharedContacts: { _id:req.user2Id } } }
+    )
+})
 
 /**
  * Swap tables
