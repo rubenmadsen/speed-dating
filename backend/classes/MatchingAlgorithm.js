@@ -67,7 +67,11 @@ class MatchingAlgorithm {
             }
         }
         const selected = this.selectDates(dates)
-        this.event.dates.push(...selected);
+        for (const d of selected) {
+            const createdDate = await Date.create(d);
+            this.event.dates.push(createdDate)
+        }
+        //this.event.dates.push(...selected);
         this.event.round++;
         this.event.save();
         // console.log("Selected len:" + selected.length)
