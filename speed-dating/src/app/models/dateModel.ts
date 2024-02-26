@@ -9,6 +9,6 @@ export interface DateModel extends BaseModel {
   dateRound: number;
   percentage: number;
   personOne: UserModel;
-  personTwo: UserModel;
+  personTwo: UserModel | null;
   feedback: DateFeedbackModel[];
 }
