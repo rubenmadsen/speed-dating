@@ -7,7 +7,8 @@
   ></app-button>
 
   <h2>Shared Contacts</h2>
-    <p *ngIf="contacts.length <= 0"> You have no contacts </p>
+    <p *ngIf="!isLoadingContacts && contacts.length <= 0"> You have no contacts </p>
+    <div *ngIf="isLoadingContacts" class="loader"></div>
   <div class="overview_shared_contacts overview-card-container"  *ngIf="contacts.length > 0">
     <ng-container *ngFor="let contact of contacts">
         <app-profile-card [profile]="contact"></app-profile-card>
@@ -15,7 +16,8 @@
   </div>
 
   <h2>Your Upcoming Events</h2>
-  <p *ngIf="yourEvents.length <= 0"> You have no upcoming events </p>
+  <p *ngIf="!isLoadingYourEvents && yourEvents.length <= 0"> You have no upcoming events </p>
+  <div *ngIf="isLoadingYourEvents" class="loader"></div>
   <div class="overview_your_events overview-card-container" *ngIf="yourEvents.length > 0">
     <ng-container *ngFor="let event of yourEvents">
       <app-event-card [event]="event"></app-event-card>
@@ -23,15 +25,18 @@
   </div>
 
   <h2>Events near you</h2>
-  <p *ngIf="recommendedEvents.length <= 0"> We can't find any unregistered events near you </p>
+  <p *ngIf="!isLoadingRecommendedEvents && recommendedEvents.length <= 0"> We can't find any unregistered events near you </p>
+  <div *ngIf="isLoadingRecommendedEvents" class="loader"></div>
   <div class="overview_recommended_events overview-card-container" *ngIf="recommendedEvents.length > 0">
+
     <ng-container *ngFor="let event of recommendedEvents">
       <app-event-card [event]="event"></app-event-card>
     </ng-container>
   </div>
 
   <h2>Completed Events</h2>
-  <p *ngIf="completedEvents.length <= 0"> You have no completed events </p>
+  <p *ngIf="!isLoadingCompletedEvents && completedEvents.length <= 0"> You have no completed events </p>
+  <div *ngIf="isLoadingCompletedEvents" class="loader"></div>
   <div class="overview_finished_events overview-card-container"  *ngIf="completedEvents.length > 0">
     <ng-container *ngFor="let event of completedEvents">
       <app-event-card [event]="event"></app-event-card>
