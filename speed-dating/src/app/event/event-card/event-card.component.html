@@ -1,18 +1,22 @@
-<div class="event_card_container" [ngClass]="eventCardClass" (click)="onEventSelected()">
-  <div class="event_card_image" [style.background-image]="imageUrl">
-    <div class="event_card_location">
-      <p class="event_card_information unselectable">
-        {{ event.city.name}}
+<div
+  class="event-card-container"
+  [ngClass]="eventCardClass"
+  (click)="onEventSelected()"
+>
+  <div class="event-card-image" [style.background-image]="imageUrl">
+    <div class="event-card-location-container">
+      <p class="event-card-information city unselectable">
+        {{ event.city.name }}
       </p>
-      <p class="event_card_information unselectable">
+      <p class="event-card-information venue unselectable">
         {{ event.location }}
       </p>
     </div>
   </div>
-  <div class="event_card_footer">
-    <fa-icon [icon]="faClock" id="event_card_footer_clock"></fa-icon>
-    <p>{{ event.startDate | date : "dd/MM HH:mm" }}</p>
-    <p *ngIf="!event!.hasEnded" class="spotsLeft" #spotsRef>{{ status }}</p>
-    <p *ngIf="event!.hasEnded" class ="spotsLeft" #spotsRef> Event ended </p>
+  <div class="event-card-footer">
+    <fa-icon [icon]="faClock" class="clock-icon"></fa-icon>
+    <p class="event-date">{{ event.startDate | date : "dd/MM HH:mm" }}</p>
+    <p #spotsRef *ngIf="!event!.hasEnded" class="slots-info">{{ status }}</p>
+    <p #spotsRef *ngIf="event!.hasEnded" class ="slots-info"> Event ended </p>
   </div>
 </div>

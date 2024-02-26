@@ -1,21 +1,19 @@
-.Profile-card-container{
+.Profile-card-container {
   cursor: pointer;
   background-color: #f3f3f3;
-  border: darkgray 1px solid;
-  width: 170px;
-  height: 200px;
-  display: inline-block;
-  text-align: center;
-}
-img{
-  width: 8rem;
-  border-radius: 50%;
-  margin: 1rem;
+  border: 1px #ccc solid;
+  padding-bottom: 0.5rem;
+  margin: 0.2rem;
 }
 
-p{
-  margin: auto;
-  padding-bottom: 5px;
-  width: fit-content;
+img {
+  width: auto;
+  height: auto;
+  max-width: 10rem;
+  border-radius: 50%;
+  padding: 1rem;
+}
+
+p {
   text-align: center;
 }

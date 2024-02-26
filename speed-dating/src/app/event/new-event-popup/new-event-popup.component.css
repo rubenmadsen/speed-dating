@@ -1,21 +1,23 @@
 
 
 .new-event-popup-container {
-  background: var(--white-clr);
+  background-color: var(--white-clr);
+  border: 1px solid var(--accent-clr);
   border-radius: 10px;
   position: fixed;
   top: 50%;
   left: 50%;
+  width: 500px;
   transform: translate(-50%, -50%);
   height: auto;
   padding: 1rem;
   box-sizing: border-box;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 60px 40px -7px;;
 }
 
 .new-event-form {
   margin-left: auto;
   margin-right: auto;
-  width: 70%; /* Adjust if you want a specific width */
 }
 input, select {
   padding-top: 0.5rem;
@@ -28,12 +30,13 @@ input, select {
   border-radius: 4px;
   width: 100%;
   margin-top: 1rem;
+  margin-right: 3rem;
 }
 
 .x_close_form {
   position: absolute;
-  top: 0.8rem;
-  right: 0.8rem;
+  top: 0.4rem;
+  right: 0.4rem;
   cursor: pointer;
 }
 
@@ -48,5 +51,5 @@ input, select {
 
 .button-container {
   margin-top: 1rem;
-  width: 50%;
+  /*width: 50%;*/
 }
