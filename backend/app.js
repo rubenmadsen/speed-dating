@@ -50,7 +50,11 @@ app.get("/", (req, res) => {
 
 app.get("/api/validate-token", authorizeUser, async function (req, res) {
   const user = await User.findById(req.user.id);
-  res.status(200).send({ valid: true, user: req.user , isOrganizer: user.isOrganizer});
+  if (user) {
+    res.status(200).send({ valid: true, user: req.user , isOrganizer: user.isOrganizer});
+  } else {
+    res.status(404).send({ valid: false, message: "User not found" });
+  }
 });
 
 

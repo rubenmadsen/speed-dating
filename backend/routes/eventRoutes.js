@@ -86,11 +86,16 @@ router.get("/event/:eventId/next",authorizeUser, function (req, res) {
         matcher.loadDataForEvent(event).then(() => {
             matcher.pairAll().then(async dates => {
                 console.log("Generated dates for next round")
-                console.log(dates);
-                for (const d of dates) {
-                    await d.save();
-                }
-                Event.findById(req.params.eventId).populate("dates").then(upDates => {
+                // for (const d of dates) {
+                //     await d.save();
+                // }
+                Event.findById(req.params.eventId).populate({
+                    path: 'dates', // Populate the 'dates' field
+                    populate: [
+                        { path: 'personOne' }, // Within each 'date', populate 'personOne'
+                        { path: 'personTwo' }  // And 'personTwo'
+                    ]
+                }).then(upDates => {
 
                     console.log(upDates)
                     res.status(200).send(upDates.dates);

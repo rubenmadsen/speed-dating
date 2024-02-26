@@ -30,7 +30,7 @@ export class ParticipantListComponent {
    * Allows drag and drop within the same list or to tables.
    * @param event
    */
-  drop(event: any) {    
+  drop(event: any) {
     if (event.container === event.previousContainer) { // Drag and drop within same container
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex)
     } else if (event.previousIndex !== 0 && event.previousContainer.data.users[event.previousIndex].firstname !== "TBD" && event.previousContainer.data.users[event.previousIndex].firstname !== undefined) {

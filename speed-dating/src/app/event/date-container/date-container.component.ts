@@ -27,7 +27,7 @@ export class DateContainerComponent {
   }
 
    private filterParticipants() {
-    this.listUsers = this.participantList.participantsList
+    this.listUsers = this.participantList.participantsList?.filter(p => p.gender == 'male')
    }
 
 
@@ -45,9 +45,10 @@ export class DateContainerComponent {
    */
   filterAgain(){
     this.hasDates = false
-    this.listUsers = this.participantList.participantsList
+    this.listUsers = this.participantList.participantsList?.filter(p => p.gender == 'male')
   }
 
   handleEvent(eventData: { tableUsers: UserModel[], tableNumber: number }) {
+    console.log(eventData)
   }
 }

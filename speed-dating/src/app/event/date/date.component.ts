@@ -58,26 +58,43 @@ export class DateComponent {
 
     if (event.previousContainer.id.includes("table") && event.container.id.includes("table")) { // Move between tables.
       transferArrayItem(event.previousContainer.data.users, event.container.data.users, event.previousIndex, 1);
+
     } else { // Move between table and list.
       transferArrayItem(event.previousContainer.data, event.container.data.users, event.previousIndex, 1)
     }
+
 
     if (this.tableUsers.length > 2) {
       for (let i = 2; i < this.tableUsers.length; i++) {
         if (event.previousContainer.id === 'list') {
           this.returnUserToList.emit(this.tableUsers[i]);
-        } else { //TODO: Ghetto shit, not sure why this is needed to move females between tables.
-          event.previousContainer.data.users[1] = this.tableUsers[2]
+          this.changeDetected.emit({tableUsers: this.tableUsers, tableNumber: this.tableNumber})
+        } else {
+          //TODO: Ghetto shit, not sure why this is needed to move females between tables.
+          event.previousContainer.data.users[1] = event.container.data.users.pop()
+          this.emitUpdatedTables(event.previousContainer, event.container);
         }
       }
+
       this.tableUsers = [this.tableUsers[0], this.tableUsers[1]]
       this.tableData.users = this.tableUsers
     }
-    this.changeDetected.emit({ tableUsers: this.tableUsers, tableNumber: this.tableNumber });
-
   }
 
-  /**
+  emitUpdatedTables(previousContainer: any, currentContainer: any) {
+    this.changeDetected.emit({
+      tableUsers: previousContainer.data.users,
+      tableNumber: previousContainer.data.tableNumber, // Ensure you have tableNumber in your container's data
+    });
+
+    this.changeDetected.emit({
+      tableUsers: currentContainer.data.users,
+      tableNumber: currentContainer.data.tableNumber, // Ensure you have tableNumber in your container's data
+    });
+  }
+
+
+    /**
    * Move participants from entire table to another table.
    */
   moveTable(event: any) {
