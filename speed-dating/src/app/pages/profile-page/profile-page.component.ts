@@ -29,8 +29,8 @@ export class ProfilePageComponent implements OnInit {
   async ngOnInit(){
     this.backendService.getMe().subscribe({
       next: (response) => {
-        this.user = response.user;
-        this.arm = response.user.activityData;
+        this.user = response;
+        this.arm = response.activityData;
 
       }, error: (error) => {
         console.log(error);
