@@ -9,6 +9,15 @@ const User = require("../models/userModel");
 const router = Router();
 
 /**
+ * Get specific Date
+ */
+router.get("/date/:dateId",authorizeUser,function (req,res){
+   Date.findById(req.params.dateId).populate("personOne personTwo").then(date => {
+       res.send(date);
+   })
+});
+
+/**
  * Match user1 with user2
  */
 router.get("/date/:user1Id/:user2Id/match", authorizeUser, async function(req,res){
@@ -64,4 +73,12 @@ router.get("/date/swapskanks/:table1Id/:table2Id", authorizeUser, async function
         }).catch(err => console.log(err));
     }).catch(err => console.log(err));
 });
+
+/**
+ * Get Dates for even
+ */
+
+
+
+
 module.exports = router;

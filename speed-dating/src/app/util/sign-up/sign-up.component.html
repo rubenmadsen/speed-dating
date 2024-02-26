@@ -30,7 +30,12 @@
       </div>
       <div class="signup-inputs">
         <div class="signup-inputs-left">
-          <div class="user-image" #userImage (click)="fileInput.click()" [style.background-image]="imageUrl"></div>
+          <div
+            class="user-image"
+            #userImage
+            (click)="fileInput.click()"
+            [style.background-image]="imageUrl"
+          ></div>
           <p>Your Picture</p>
           <input
             class="user-info"
@@ -177,21 +182,20 @@
           ></textarea>
         </div>
       </div>
-    </div>
-
-    <div class="button-container-one">
-      <app-button
-        *ngIf="isOrganizer"
-        [buttonClass]="'accent clr-white'"
-        [buttonText]="'Register'"
-        (appClick)="register()"
-      ></app-button>
-      <app-button
-        *ngIf="!isOrganizer && !nextIsPressed"
-        [buttonClass]="'accent clr-white'"
-        [buttonText]="'Next'"
-        (appClick)="next($event)"
-      ></app-button>
+      <div class="button-container-one">
+        <app-button
+          *ngIf="isOrganizer"
+          [buttonClass]="'accent clr-white'"
+          [buttonText]="'Register'"
+          (appClick)="register()"
+        ></app-button>
+        <app-button
+          *ngIf="!isOrganizer && !nextIsPressed"
+          [buttonClass]="'accent clr-white'"
+          [buttonText]="'Next'"
+          (appClick)="next($event)"
+        ></app-button>
+      </div>
     </div>
 
     <div class="signup-form" *ngIf="nextIsPressed">

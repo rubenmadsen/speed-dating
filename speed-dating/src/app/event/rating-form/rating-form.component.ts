@@ -20,8 +20,8 @@ export class RatingFormComponent {
 
   ngOnInit() {
     this.backend.getMe().subscribe(me => {
-      this.answersBy = me.user.firstname + " " + me.user.lastname;
-    })    
+      this.answersBy = me.firstname + " " + me.lastname;
+    })
   }
 
   /**

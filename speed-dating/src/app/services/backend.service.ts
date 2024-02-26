@@ -70,8 +70,8 @@ export class BackendService {
     return this.http.get<any>(this.backendURL +'validate/' +   `${email}`,this.requestOptions);
   }
 
-  getMe():Observable<any>{
-    return this.http.get<any>(this.userURL + "profile/me",this.requestOptions);
+  getMe():Observable<UserModel>{
+    return this.http.get<UserModel>(this.userURL + "profile/me",this.requestOptions);
   }
 
   /**
@@ -129,7 +129,7 @@ export class BackendService {
     return this.http.delete<EventModel>(this.eventURL + event._id,this.requestOptions);
   }
   /**
-   * NOT IMPLEMENTED
+   * Gets all events based on a City or a User's City
    * @param sender
    */
   getEventsByLocation(sender:CityModel | UserModel):Observable<EventModel[]>{
@@ -156,17 +156,19 @@ export class BackendService {
   leaveEvent(event:EventModel):Observable<EventModel>{
     return this.http.get<EventModel>(this.eventURL + event._id + "/leave",this.requestOptions);
   }
-  /**
-   * Clear automatch
-   */
-  clearLatestAutomatch(event:EventModel):Observable<EventModel>{
-    return this.http.get<EventModel>(this.eventURL + event._id + "/clear",this.requestOptions);
-  }
+
 
 
 
 
   // Date
+  /**
+   * Get specific Date
+   */
+  getDate(date:DateModel):Observable<DateModel>{
+    return this.http.get<DateModel>(this.dateURL + date._id);
+  }
+
   /**
    * Swap tables
    */
@@ -194,7 +196,12 @@ export class BackendService {
   unmatchUserWithUser(user1:UserModel,user2:UserModel):Observable<UserModel>{
     return this.http.get<UserModel>(this.dateURL + user1._id + "/" + user2._id + "/unmatch",this.requestOptions);
   }
+
   // DateFeedback
+
+
+
+
 
 
   // EventFeedback
