@@ -4,14 +4,25 @@
     <div class="activity-container">
       <ng-container *ngFor="let activity of activities">
         <div *ngIf="activity.category._id === category._id" class="activity">
-          <div class="activity-name"> {{ activity.name }}</div>
+          <div class="activity-name">{{ activity.name }}</div>
           <div class="star-rating">
-            <fa-icon *ngFor="let i of [1, 2, 3, 4, 5]"
-                     [ngClass]="{'filled': activity._id ? isStarFilled(activity._id, i) : false, 'hovered': activity._id ? hoverState[activity._id] >= i : false}"
-                     [icon]="faStar"
-                     (click)="activity._id ? setRatingForActivity(activity._id, i) : null"
-                     (mouseenter)="activity._id ? handleMouseEnter(activity._id, i) : null"
-                     (mouseleave)="activity._id ? handleMouseLeave(activity._id) : null"
+            <fa-icon
+              class="star-button"
+              *ngFor="let i of [1, 2, 3, 4, 5]"
+              [ngClass]="{
+                filled: activity._id ? isStarFilled(activity._id, i) : false,
+                hovered: activity._id ? hoverState[activity._id] >= i : false
+              }"
+              [icon]="faStar"
+              (click)="
+                activity._id ? setRatingForActivity(activity._id, i) : null
+              "
+              (mouseenter)="
+                activity._id ? handleMouseEnter(activity._id, i) : null
+              "
+              (mouseleave)="
+                activity._id ? handleMouseLeave(activity._id) : null
+              "
             ></fa-icon>
           </div>
         </div>
