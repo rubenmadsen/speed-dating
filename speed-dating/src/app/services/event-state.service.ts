@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {DateModel} from "../models/dateModel";
 import {BehaviorSubject} from "rxjs";
+import {UserModel} from "../models/userModel";
 
 @Injectable({
   providedIn: 'root'
@@ -24,5 +25,11 @@ export class EventStateService {
     const currentDates = this.datesSubject.value;
     const updatedDates = [...currentDates, date];
     this.datesSubject.next(updatedDates);
+  }
+  removeDate(user: UserModel){
+    const currentDates = this.datesSubject.value;
+    const updatedDates = currentDates.filter(date => date.personOne !== user);
+    this.datesSubject.next(updatedDates);
+
   }
 }

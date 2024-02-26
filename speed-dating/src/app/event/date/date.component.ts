@@ -17,7 +17,7 @@ export class DateComponent {
 
   @Input() tableNumber = 1;
   @Input() male?: UserModel;
-  @Input() female!: UserModel;
+  @Input() female!: UserModel | null;
 
   @Output() returnUserToList = new EventEmitter<UserModel>();
   previewUsers: Array<String> = []
@@ -37,7 +37,7 @@ export class DateComponent {
     if (this.male) {
       this.tableUsers.push(this.male);
     }
-    this.tableUsers.push(this.female || { firstname: 'TBD' as any });
+    this.tableUsers.push(<UserModel>this.female || {firstname: 'TBD' as any});
     this.tableData = {
       users: this.tableUsers,
       matchVal: this.matchVal,
@@ -84,12 +84,12 @@ export class DateComponent {
   emitUpdatedTables(previousContainer: any, currentContainer: any) {
     this.changeDetected.emit({
       tableUsers: previousContainer.data.users,
-      tableNumber: previousContainer.data.tableNumber, // Ensure you have tableNumber in your container's data
+      tableNumber: previousContainer.id, // Ensure you have tableNumber in your container's data
     });
 
     this.changeDetected.emit({
       tableUsers: currentContainer.data.users,
-      tableNumber: currentContainer.data.tableNumber, // Ensure you have tableNumber in your container's data
+      tableNumber: currentContainer.id, // Ensure you have tableNumber in your container's data
     });
   }
 

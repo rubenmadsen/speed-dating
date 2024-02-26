@@ -30,8 +30,7 @@ export class EventPageComponent implements OnInit, OnDestroy {
 
   subscription!: Subscription;
   participantsList?: UserModel[];
-  datesList!: DateModel[];
-  participants?: UserModel[];
+  datesList: DateModel[] = [];
 
   me!: UserModel;
   isRegisted: Boolean = false;
@@ -53,20 +52,19 @@ export class EventPageComponent implements OnInit, OnDestroy {
    */
    async ngOnInit() {
     this.eventStateService.clearDates();
+    this.subscribeToDates()
+
     this.subscription = this.eventService.currentEvent.subscribe(event => {
       this.event = event;
     });
 
     this.backend.getMe().subscribe(r => {
       this.me = r
-
       if (this.event?.participants.some(participant => participant._id === r._id)) {
         this.isRegisted = true;
       } else {
       }
     });
-    this.subscribeToDates()
-
 
     const baseClass = 'trans clr-accent border-accent';
     const disabledClass = ' disabled';
@@ -75,10 +73,24 @@ export class EventPageComponent implements OnInit, OnDestroy {
     // await this.authService.checkSession();
     this.isOrganizer$ = this.authService.isOrganizer;
     this.participantsList = this.event?.participants;
-    this.participants = this.event?.participants;
 
 
-    if(this.participants && this.participants.length == this.event?.totalParticipants) {
+    this.participantsList?.forEach(participant => {
+      if (participant.gender == 'male'){
+        const date : DateModel = {
+          event: this.event!,
+          tableNumber: 0,
+          dateRound: 0,
+          personOne: participant,
+          personTwo: null,
+          percentage: 0,
+          feedback: [],
+        }
+        this.eventStateService.addEvent(date)
+      }
+    })
+
+    if(this.participantsList && this.participantsList.length == this.event?.totalParticipants) {
       this.clearTablesButtonClass = baseClass;
       this.automaticMatchingButtonClass = accentClass;
       this.startDateButtonClass = accentClass;
