@@ -7,6 +7,7 @@ import {ActivatedRoute} from "@angular/router";
 import {AuthService} from "../../services/auth.service";
 import {UserModel} from "../../models/userModel";
 import {BackendService} from "../../services/backend.service";
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-event-page',
@@ -33,7 +34,11 @@ export class EventPageComponent implements OnInit, OnDestroy {
 
   isOrganizer$: Observable<boolean> | undefined;
 
-  constructor(private eventService: EventService, private authService: AuthService, private backend: BackendService) { }
+  constructor(private eventService: EventService, private authService: AuthService, private backend: BackendService, private _location: Location) { }
+
+  backClicked() {
+    this._location.back();
+  }
 
   /**
    * Load an event
