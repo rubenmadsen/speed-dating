@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {DateModel} from "../../models/dateModel";
 
 @Component({
   selector: 'app-participant-answer',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./participant-answer.component.css']
 })
 export class ParticipantAnswerComponent {
+  @Input() date!: DateModel
 
+  constructor() {
+
+  }
 }
