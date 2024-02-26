@@ -8,8 +8,10 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 })
 export class ToggleComponent {
   @Output() toggleShareContacts = new EventEmitter
+  private checked: boolean = true;
 
   toggleShareContact():void{
-    this.toggleShareContacts.emit()
+    this.checked = !this.checked;
+    this.toggleShareContacts.emit(this.checked)
   }
 }

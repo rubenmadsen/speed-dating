@@ -1,7 +1,7 @@
 .page-container {
   margin: 0 auto 1rem;
   width: 80%;
-  max-width: 680px;
+  max-width: 960px;
   display: flex;
   flex-direction: column;
 }
@@ -11,13 +11,25 @@
   background-color: aliceblue;
   display: flex;
   align-items: center;
-  border-radius: 1rem;
+  border-radius: 1rem 1rem 0 0;
+  border-bottom: 1px #ccc solid;
 }
 
 .activity-container {
   display: flex;
-  margin-top: 1rem;
+  justify-content: space-evenly;
+  text-align: center;
   background-color: aliceblue;
+  border-radius: 0 0 1rem 1rem;
+  padding: 1rem;
+}
+
+.activity {
+  display: flex;
+  flex-direction: column;
+  justify-content: flexspace-evenly-start;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 img,
@@ -61,7 +73,12 @@ img {
   border-radius: 50%;
 }
 
-@media (max-width: 680px) {
+.star-rating fa-icon {
+  color: #f5d442;
+}
+
+
+@media (max-width: 800px) {
   .profile-container {
     flex-direction: column;
   }
@@ -69,4 +86,17 @@ img {
   .bio-container {
     border-top: var(--accent-clr) 0.1rem solid;
   }
+
+  .activity-container {
+    flex-direction: column;
+  }
+
+  .activity {
+    padding: 1rem;
+  }
+
+  p {
+    margin-top: 1rem;
+  }
+
 }
