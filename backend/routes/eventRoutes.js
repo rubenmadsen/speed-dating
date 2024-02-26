@@ -131,7 +131,7 @@ router.get("/event/:eventId/join", authorizeUser, async function (req, res) {
             event.save().then(() => {
                 me.events.push(event)
                 me.save().then(() => {
-                    res.send();
+                    res.send(event);
                 });
             });
         }
@@ -153,13 +153,15 @@ router.get("/event/:eventId/leave", authorizeUser, async function (req, res) {
         );
         const userUpdateResult = await User.updateOne(
             { _id: userId },
-            { $pull: { eventsAttended: eventId } } // Assuming the field is named eventsAttended
+            { $pull: { events: eventId } } // Assuming the field is named eventsAttended
         );
         if (eventUpdateResult.modifiedCount === 0 || userUpdateResult.modifiedCount === 0) {
             // Handle the case where the updates didn't modify any documents
             return res.status(404).send({ message: "Not found or nothing to remove" });
         }
-        res.send({ message: "Successfully left the event" });
+        Event.findById(eventId).then(event => {
+            res.send(event);
+        })
     } catch (error) {
         console.error('Error leaving event', error);
         res.status(500).send({ message: "Error leaving the event" });
