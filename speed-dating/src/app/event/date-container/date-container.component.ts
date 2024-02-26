@@ -52,6 +52,7 @@ export class DateContainerComponent {
   handleEvent(eventData: { tableUsers: UserModel[], tableNumber: number }) {
     if (eventData.tableUsers[1].firstname != 'TBD'){
       // tell backend to create date
+      
     }
   }
 }

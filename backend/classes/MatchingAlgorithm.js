@@ -15,6 +15,7 @@ class MatchingAlgorithm {
 
     }
     async loadDataForEvent(event){
+        console.log("Loading data for event")
         this.event = await Event.findById(event._id)
             .populate('dates')
             .populate({
@@ -39,6 +40,7 @@ class MatchingAlgorithm {
     }
 
     async pairAll() {
+        console.log("Pairing")
         const dates = [];
         for (const male of this.males) {
             let exclusionList = [];
@@ -69,15 +71,16 @@ class MatchingAlgorithm {
         const selected = this.selectDates(dates)
         for (const d of selected) {
             const createdDate = await Date.create(d);
-            this.event.dates.push(createdDate)
+            //this.event.dates.push(createdDate)
         }
         //this.event.dates.push(...selected);
-        this.event.round++;
-        this.event.save();
-        // console.log("Selected len:" + selected.length)
+        //this.event.round++;
+        await this.event.save();
+        console.log("Selected len:" + selected.length)
         return selected;
     }
     selectDates(dates){
+        console.log("Select best dates")
         let selected = [];
         let last;
         let sorted = dates.sort((a,b) => b.percentage - a.percentage);
@@ -92,6 +95,7 @@ class MatchingAlgorithm {
         return selected;
     }
     async calculateActivityScores(guy, girl) {
+        console.log("Calculate score")
         const activityResults = JSON.parse(JSON.stringify(this.categories));
         const male = guy; // = await User.findById(guy._id).populate('activityData.activity');
         const female = girl; // = await User.findById(girl._id).populate('activityData.activity');
@@ -129,14 +133,14 @@ class MatchingAlgorithm {
             //console.log("scores",scores)
         });
         totalScore = Math.floor(totalScore/5);
-    
+
         const date = {
-            event: this.event._id, 
-            tableNumber: 0, 
+            event: this.event._id,
+            tableNumber: 0,
             dateRound: this.event.round + 1,
             percentage: totalScore,
-            personOne: guy, 
-            personTwo: girl, 
+            personOne: guy,
+            personTwo: girl,
         };
 
         //return activityResults;
@@ -153,9 +157,6 @@ class MatchingAlgorithm {
         const sum = valueArray.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
         const average = sum / valueArray.length;
         return average * 100;
-    }
-    #aggregateScore(){
-
     }
 }
 

@@ -1,5 +1,4 @@
 <!-- TODO fixa en back-knapp -->
-
 <div class="page-container" cdkDropListGroup>
   <app-button
     [buttonClass]="'trans clr-accent border-accent'"
@@ -41,12 +40,23 @@
       <app-event-info [event]="event"></app-event-info>
     </div>
     <app-button
-      [buttonClass]="'trans clr-accent border-accent'"
-      [buttonText]="'Cancel'"
-    ></app-button>
-    <app-button
+      *ngIf="!isRegisted && (event!.participants.length < event!.totalParticipants)"
       [buttonClass]="'accent border-accent clr-white '"
       [buttonText]="'Register'"
+      (click)="registerAtEvent()"
+    ></app-button>
+
+    <app-button
+      *ngIf="isRegisted"
+      [buttonClass]="'accent border-accent clr-white '"
+      [buttonText]="'Unregister'"
+      (click)="unregister()"
+    ></app-button>
+
+    <app-button
+      *ngIf="!isRegisted && (event!.participants.length >= event!.totalParticipants)"
+      [buttonClass]="'accent border-accent clr-white disabled'"
+      [buttonText]="'Event full'"
     ></app-button>
   </ng-container>
 </div>

@@ -59,9 +59,10 @@ function generateDatabase() {
           { $match: { gender: "male", isOrganizer: false } },
           { $sample: { size: 9+r } },
         ]);
+        const r2 = Math.round(Math.random())
         const women = await User.aggregate([
           { $match: { gender: "female", isOrganizer: false } },
-          { $sample: { size: 10 } },
+          { $sample: { size: 9+r2 } },
         ]);
         // Assuming event's participants field is an array of user IDs
         for (const woman of women) {

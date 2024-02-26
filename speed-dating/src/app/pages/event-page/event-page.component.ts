@@ -33,6 +33,9 @@ export class EventPageComponent implements OnInit, OnDestroy {
   datesList!: DateModel[];
   participants?: UserModel[];
 
+  me!: UserModel;
+  isRegisted: Boolean = false;
+
   cancelEventButtonClass: string = 'trans clr-accent border-accent';
   clearTablesButtonClass: string = 'trans clr-accent border-accent disabled';
   automaticMatchingButtonClass: string = 'accent border-accent clr-white disabled';
@@ -50,9 +53,18 @@ export class EventPageComponent implements OnInit, OnDestroy {
    * Load an event
    */
    async ngOnInit() {
-     this.eventStateService.clearDates();
+    this.eventStateService.clearDates();
     this.subscription = this.eventService.currentEvent.subscribe(event => {
       this.event = event;
+    });
+
+    this.backend.getMe().subscribe(r => {
+      this.me = r
+
+      if (this.event?.participants.some(participant => participant._id === r._id)) {
+        this.isRegisted = true;
+      } else {
+      }
     });
     this.subscribeToDates()
 
@@ -80,6 +92,27 @@ export class EventPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  registerAtEvent() {
+     if(this.event == null){
+       return
+     }
+    this.backend.joinEvent(this.event).subscribe(r => {
+      this.eventService.changeEvent(r)
+      this.isRegisted = true;
+    });
+  }
+
+  unregister() {
+    if(this.event == null){
+      return
+    }
+    this.backend.leaveEvent(this.event).subscribe(r => {
+      console.log(r);
+      this.eventService.changeEvent(r)
+      this.isRegisted = false;
+    })
   }
   subscribeToDates() {
     this.eventStateService.dates$.subscribe(dates => {
