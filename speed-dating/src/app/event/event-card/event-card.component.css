@@ -5,7 +5,6 @@
   min-height: 15rem;
   max-width: 25rem;
   cursor: pointer;
-  border-radius: 1rem;
   border: 1px solid #ccc;
   transition: scale 100ms ease-in-out;
   margin: 0.2rem;
@@ -27,7 +26,6 @@
   background-position: center;
   font-weight: bold;
   padding: 0.5rem;
-  border-radius: 1rem 1rem 0 0;
 }
 
 .event-card-location-container {
@@ -43,7 +41,7 @@
 .event-card-information {
   padding: 0.5rem 1rem;
   margin: 0.2rem;
-  border-radius: 0.5rem;
+  border-radius: 0.2rem;
 }
 
 .city {

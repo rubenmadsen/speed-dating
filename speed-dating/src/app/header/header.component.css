@@ -47,7 +47,8 @@ app-button {
   }
 
   img {
-    max-height: 6rem;
+    max-height: 8.1rem;
+    max-width: 13rem;
   }
 
   app-button {
