@@ -6,6 +6,7 @@ import {EventModel} from "../../models/eventModel";
 import {ActivatedRoute} from "@angular/router";
 import {AuthService} from "../../services/auth.service";
 import {UserModel} from "../../models/userModel";
+import {BackendService} from "../../services/backend.service";
 
 @Component({
   selector: 'app-event-page',
@@ -20,11 +21,19 @@ export class EventPageComponent implements OnInit, OnDestroy {
   subscription!: Subscription;
   participants?: UserModel[];
 
+  me!: UserModel;
+  isRegisted: Boolean = false;
+
+  cancelEventButtonClass: string = 'trans clr-accent border-accent';
+  clearTablesButtonClass: string = 'trans clr-accent border-accent disabled';
+  automaticMatchingButtonClass: string = 'accent border-accent clr-white disabled';
+  startDateButtonClass: string = 'accent border-accent clr-white disabled';
+
   private sub: any
 
   isOrganizer$: Observable<boolean> | undefined;
 
-  constructor(private eventService: EventService, private authService: AuthService) { }
+  constructor(private eventService: EventService, private authService: AuthService, private backend: BackendService) { }
 
   /**
    * Load an event
@@ -33,12 +42,58 @@ export class EventPageComponent implements OnInit, OnDestroy {
     this.subscription = this.eventService.currentEvent.subscribe(event => {
       this.event = event;
     });
+
+    this.backend.getMe().subscribe(r => {
+      this.me = r
+      console.log(r);
+      if(this.event?.participants.includes(r.user._id)){
+        this.isRegisted = true;
+      }
+
+    });
+
+    const baseClass = 'trans clr-accent border-accent';
+    const disabledClass = ' disabled';
+    const accentClass = 'accent border-accent clr-white';
+
     // await this.authService.checkSession();
     this.isOrganizer$ = this.authService.isOrganizer;
     this.participants = this.event?.participants;
+
+
+    if(this.participants && this.participants.length == 20) {
+      this.clearTablesButtonClass = baseClass;
+      this.automaticMatchingButtonClass = accentClass;
+      this.startDateButtonClass = accentClass;
+    } else {
+      this.clearTablesButtonClass = baseClass + disabledClass;
+      this.automaticMatchingButtonClass = accentClass + disabledClass;
+      this.startDateButtonClass = accentClass + disabledClass;
+    }
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  registerAtEvent() {
+     if(this.event == null){
+       return
+     }
+    this.backend.joinEvent(this.event).subscribe(r => {
+      this.eventService.changeEvent(r)
+      this.isRegisted = true;
+    });
+  }
+
+  unregister() {
+    if(this.event == null){
+      return
+    }
+    this.backend.leaveEvent(this.event).subscribe(r => {
+      console.log(r);
+      this.eventService.changeEvent(r)
+      this.isRegisted = false;
+    })
   }
 }

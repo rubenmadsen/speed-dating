@@ -32,14 +32,17 @@ router.get("/event", function (req, res) {
  * New event
  */
 router.post("/event", authorizeUser, async (req, res) => {
-
     console.log("req.body",req.body)
   try {
     const user = await User.findById(req.user.id);
     if(user.isOrganizer){
       req.body.organizer = user;
 
-      const unpopulatedResult = await Event.create(req.body);
+      const newEvent = req.body;
+      const r = Math.floor(Math.random() * 12);
+
+      newEvent.imagePath = `venues/venue${r}.jpg`
+      const unpopulatedResult = await Event.create(newEvent);
       const populatedResult = await Event.findById(unpopulatedResult._id).populate('city');
 
       user.events.push(populatedResult._id);
@@ -83,10 +86,16 @@ router.get("/event/:eventId/next",authorizeUser, function (req, res) {
         matcher.loadDataForEvent(event).then(() => {
             matcher.pairAll().then(async dates => {
                 console.log("Generated dates for next round")
-                for (const d of dates) {
-                    await d.save();
-                }
-                Event.findById(req.params.eventId).populate("dates").then(upDates => {
+                // for (const d of dates) {
+                //     await d.save();
+                // }
+                Event.findById(req.params.eventId).populate({
+                    path: 'dates', // Populate the 'dates' field
+                    populate: [
+                        { path: 'personOne' }, // Within each 'date', populate 'personOne'
+                        { path: 'personTwo' }  // And 'personTwo'
+                    ]
+                }).then(upDates => {
 
                     console.log(upDates)
                     res.status(200).send(upDates.dates);
@@ -122,7 +131,7 @@ router.get("/event/:eventId/join", authorizeUser, async function (req, res) {
             event.save().then(() => {
                 me.events.push(event)
                 me.save().then(() => {
-                    res.send();
+                    res.send(event);
                 });
             });
         }
@@ -144,13 +153,15 @@ router.get("/event/:eventId/leave", authorizeUser, async function (req, res) {
         );
         const userUpdateResult = await User.updateOne(
             { _id: userId },
-            { $pull: { eventsAttended: eventId } } // Assuming the field is named eventsAttended
+            { $pull: { events: eventId } } // Assuming the field is named eventsAttended
         );
         if (eventUpdateResult.modifiedCount === 0 || userUpdateResult.modifiedCount === 0) {
             // Handle the case where the updates didn't modify any documents
             return res.status(404).send({ message: "Not found or nothing to remove" });
         }
-        res.send({ message: "Successfully left the event" });
+        Event.findById(eventId).then(event => {
+            res.send(event);
+        })
     } catch (error) {
         console.error('Error leaving event', error);
         res.status(500).send({ message: "Error leaving the event" });
