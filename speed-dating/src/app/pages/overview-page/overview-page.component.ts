@@ -29,11 +29,11 @@ export class OverviewPageComponent {
   async ngOnInit(){
     this.backend.getMe().subscribe(r => {
       console.log("R",r)
-      this.contacts = r.user.sharedContacts;
-      this.yourEvents = r.user.events;
-      this.isOrganizer = r.user.isOrganizer;
-      this.yourEvents = r.user.events;
-      this.backend.getEventsByLocation(r.user).subscribe(r => {
+      this.contacts = r.sharedContacts;
+      this.yourEvents = r.events;
+      this.isOrganizer = r.isOrganizer;
+      this.yourEvents = r.events;
+      this.backend.getEventsByLocation(r).subscribe(r => {
         this.recommendedEvents = r;
       })
     });

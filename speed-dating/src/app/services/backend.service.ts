@@ -70,8 +70,8 @@ export class BackendService {
     return this.http.get<any>(this.backendURL +'validate/' +   `${email}`,this.requestOptions);
   }
 
-  getMe():Observable<any>{
-    return this.http.get<any>(this.userURL + "profile/me",this.requestOptions);
+  getMe():Observable<UserModel>{
+    return this.http.get<UserModel>(this.userURL + "profile/me",this.requestOptions);
   }
 
   /**
@@ -194,8 +194,11 @@ export class BackendService {
   unmatchUserWithUser(user1:UserModel,user2:UserModel):Observable<UserModel>{
     return this.http.get<UserModel>(this.dateURL + user1._id + "/" + user2._id + "/unmatch",this.requestOptions);
   }
-  // DateFeedback
 
+  // DateFeedback
+  getDatesForEventByUser(event:EventModel, user:UserModel):Observable<DateModel[]>{
+    return this.http.get<DateModel[]>(this.dateURL);
+  }
 
   // EventFeedback
 
