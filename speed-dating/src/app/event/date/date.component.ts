@@ -29,7 +29,7 @@ export class DateComponent {
 
   @Output() changeDetected = new EventEmitter<{ tableUsers: UserModel[], tableNumber: number }>();
 
-
+  @Output() onUserClick = new EventEmitter<string>();
   /**
    * Pushes male and female participant to the table
    */
@@ -115,5 +115,10 @@ export class DateComponent {
     event.container.data.users[0] = itemFromPrevContainer === undefined ? 'TBD' : itemFromPrevContainer
     event.container.data.users[1] = itemFromPrevContainer1 === undefined ? 'TBD' : itemFromPrevContainer1
 
+  }
+
+  onParticipantClick(event:any){
+    console.log("EVENT",event.target.id);
+    this.onUserClick.emit(event.target.id)
   }
 }

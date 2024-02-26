@@ -31,8 +31,13 @@
       ></app-button>
     </div>
 
-    <app-date-container class="date-container" [datesList]="datesList" [participantList]="participantList" ></app-date-container>
-
+    <app-date-container
+      class="date-container"
+      [datesList]="datesList"
+      [participantList]="participantList"
+      (onParticipantClick)="getParticipant($event)"
+    ></app-date-container>
+    <app-date-review [user]="clickedParticipant" [isOpen]="participantIsClickedOn"> </app-date-review>
   </ng-container>
 
   <ng-container *ngIf="!(isOrganizer$ | async)">

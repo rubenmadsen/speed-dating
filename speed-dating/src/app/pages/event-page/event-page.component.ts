@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {faGripVertical} from "@fortawesome/free-solid-svg-icons/faGripVertical";
 import {BehaviorSubject, Observable, Subscription} from "rxjs";
 import {EventService} from "../../services/event.service";
@@ -27,6 +27,8 @@ export class EventPageComponent implements OnInit, OnDestroy {
   @ViewChild(ParticipantListComponent) childParticipantList!: ParticipantListComponent;
   @ViewChild(DateContainerComponent) childDateContainer!: DateContainerComponent;
 
+  clickedParticipant!:UserModel;
+  participantIsClickedOn: Boolean = false;
 
   subscription!: Subscription;
   participantsList?: UserModel[];
@@ -150,5 +152,12 @@ export class EventPageComponent implements OnInit, OnDestroy {
          console.log(error);
        }
      })
+  }
+  getParticipant(id :string){
+    this.backend.getSpecificUser(id).subscribe(user => {
+      this.clickedParticipant = user;
+      console.log(user.firstname)
+      this.participantIsClickedOn = true;
+    });
   }
 }

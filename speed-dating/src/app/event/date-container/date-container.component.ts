@@ -1,4 +1,4 @@
-import {Component, Input, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, Output, SimpleChanges} from '@angular/core';
 import {ParticipantListComponent} from "../participant-list/participant-list.component";
 import {UserModel} from "../../models/userModel";
 import {BehaviorSubject, Subscription} from "rxjs";
@@ -15,13 +15,12 @@ export class DateContainerComponent {
 
   @Input() datesList!: DateModel[];
   @Input() participantList!: ParticipantListComponent;
-
+  @Output() onParticipantClick = new EventEmitter<string>();
   listUsers?: UserModel[];
   hasDates: boolean = false;
 
   constructor(private eventStateService: EventStateService, private backendService: BackendService) {
   }
-
   ngOnInit() {
     this.filterParticipants();
     this.subscribeToDates();
@@ -67,4 +66,9 @@ export class DateContainerComponent {
       // tell backend to create date, then add date to EventStateService
     }
   }
+  onUserClick(id: string){
+    this.onParticipantClick.emit(id)
+    console.log("CONTAINER: ", id)
+  }
+
 }
