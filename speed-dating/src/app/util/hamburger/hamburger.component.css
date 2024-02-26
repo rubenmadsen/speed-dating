@@ -2,6 +2,7 @@
   width: 30px;
   height: 30px;
   border: 1px solid rgba(255, 20, 147, 0);
+  display: none;
 }
 fa-icon{
   font-size: 40px;
@@ -12,4 +13,10 @@ fa-icon svg{
   height: 40px;
   /*font-size: 100%;*/
 
+}
+
+@media (max-width: 680px) {
+  .hamburgerContainer {
+    display: inline;
+  }
 }

@@ -3,24 +3,20 @@
     <img src="./assets/img/logo/header_logo.png" alt="logo" routerLink="/">
 
     <nav>
+    <app-hamburger #hamRef></app-hamburger>
+      <ng-container *ngIf="hamRef.isOpen || !hamRef.isDisplayed()">
 
-      <ng-container *ngIf="!(isLoggedIn$ | async)">
-<!--        if small screen-->
+        <ng-container *ngIf="!(isLoggedIn$ | async)">
+          <app-button class="sign-up-button" [buttonClass]="'trans clr-accent border-accent'" [buttonText]="'Sign up'" (click)="toggleSignUpPopup()"> </app-button>
+          <app-button [buttonClass]="'accent border-accent clr-white '" [buttonText]="'Login'" (click)="toggleLoginPopup()"> </app-button>
+        </ng-container>
 
-<!--        else-->
-        <app-button class="sign-up-button" [buttonClass]="'trans clr-accent border-accent'" [buttonText]="'Sign up'" (click)="toggleSignUpPopup()"> </app-button>
-        <app-button [buttonClass]="'accent border-accent clr-white '" [buttonText]="'Login'" (click)="toggleLoginPopup()"> </app-button>
+        <ng-container *ngIf="(isLoggedIn$ | async)">
+          <app-button [buttonClass]="'trans clr-accent border-accent'" [buttonText]="'My Page'" (click)="home()"></app-button>
+          <app-button [buttonClass]="'trans clr-accent border-accent'" [buttonText]="'Profile'" (click)="profile()"> </app-button>
+          <app-button [buttonClass]="'accent border-accent clr-white '" [buttonText]="'Logout'" (click)="logout()"> </app-button>
+        </ng-container>
       </ng-container>
-
-    <ng-container *ngIf="(isLoggedIn$ | async)">
-<!--      if small screen-->
-
-<!--      else-->
-      <app-button [buttonClass]="'trans clr-accent border-accent'" [buttonText]="'My Page'" (click)="home()"></app-button>
-      <app-button [buttonClass]="'trans clr-accent border-accent'" [buttonText]="'Profile'" (click)="profile()"> </app-button>
-      <app-button [buttonClass]="'accent border-accent clr-white '" [buttonText]="'Logout'" (click)="logout()"> </app-button>
-    </ng-container>
-
     </nav>
   </div>
   <app-errorbar></app-errorbar>
