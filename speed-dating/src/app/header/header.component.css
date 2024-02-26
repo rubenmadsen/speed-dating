@@ -3,6 +3,7 @@ header {
   position: sticky;
   top: 0;
   background-color: var(--white-clr);
+  z-index: 1000;
 }
 
 .top-container {
