@@ -252,7 +252,7 @@ export class BackendService {
 
   //gets a specific user by passing the id
   getSpecificUser(id:string):Observable<UserModel>{
-      return this.http.get<UserModel>(this.userURL+"user/"+id)
+      return this.http.get<UserModel>(this.userURL+"user/"+id,this.requestOptions)
   }
 
   // Preference

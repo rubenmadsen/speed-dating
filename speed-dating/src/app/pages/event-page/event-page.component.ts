@@ -157,7 +157,7 @@ export class EventPageComponent implements OnInit, OnDestroy {
     this.backend.getSpecificUser(id).subscribe(user => {
       this.clickedParticipant = user;
       console.log(user.firstname)
-      this.participantIsClickedOn = true;
+      this.participantIsClickedOn = !this.participantIsClickedOn;
     });
   }
 }

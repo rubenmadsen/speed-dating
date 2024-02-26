@@ -118,7 +118,6 @@ export class DateComponent {
   }
 
   onParticipantClick(event:any){
-    console.log("EVENT",event.target.id);
     this.onUserClick.emit(event.target.id)
   }
 }

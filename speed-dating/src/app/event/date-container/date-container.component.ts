@@ -68,7 +68,6 @@ export class DateContainerComponent {
   }
   onUserClick(id: string){
     this.onParticipantClick.emit(id)
-    console.log("CONTAINER: ", id)
   }
 
 }

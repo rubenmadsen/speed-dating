@@ -42,7 +42,7 @@
       [participantList]="participantList"
       (onParticipantClick)="getParticipant($event)"
     ></app-date-container>
-    <app-date-review [user]="clickedParticipant" [isOpen]="participantIsClickedOn"> </app-date-review>
+    <app-date-review [user]="clickedParticipant" [event]="event" [isOpen]="participantIsClickedOn"> </app-date-review>
   </ng-container>
 
   <ng-container *ngIf="!(isOrganizer$ | async)">

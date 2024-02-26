@@ -18,8 +18,6 @@ export class DateReviewComponent {
   }
   ngOnInit(){
     this.user
-    this.event
-    console.log(this.event?.city.name)
   }
 
   togglePopUp(){
