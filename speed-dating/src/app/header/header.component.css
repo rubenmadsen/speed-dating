@@ -3,6 +3,7 @@ header {
   position: sticky;
   top: 0;
   background-color: var(--white-clr);
+  z-index: 1000;
 }
 
 .top-container {
@@ -47,7 +48,8 @@ app-button {
   }
 
   img {
-    max-height: 6rem;
+    max-height: 8.1rem;
+    max-width: 13rem;
   }
 
   app-button {

@@ -35,7 +35,7 @@ export class EventCardComponent {
         this.spotsRef.nativeElement.classList.toggle("full",true)
       else
         this.spotsRef.nativeElement.classList.toggle("available",true)
-      this.status = this.status === "1" ? this.status + " spot left" : this.status + " spots left";
+      this.status = this.status === "1" ? this.status + " Spot Available" : this.status + " Spots Available";
     }
   }
 
