@@ -23,7 +23,8 @@ export class HeaderComponent {
     private globalService: GlobalService
   ) {}
 
-  logout() {
+  logout(event:any) {
+    event.stopPropagation();
     this.authService.logout();
     const message = {
       message: "You successfully logged out!",
@@ -41,14 +42,16 @@ export class HeaderComponent {
   /**
    * Redirect the user to the "home/overview" page
    */
-  home() {
+  home(event:any) {
+    event.stopPropagation();
     setTimeout(() => this.router.navigate(['overview']), 500);
   }
 
   /**
    * Redirect the user to the profile page
    */
-  profile() {
+  profile(event:any) {
+    event.stopPropagation();
     setTimeout(() => this.router.navigate(['profile']), 500);
   }
 
@@ -56,12 +59,14 @@ export class HeaderComponent {
     this.isLoggedIn$ = await this.authService.isLoggedIn;
   }
 
-  protected toggleLoginPopup() {
+  protected toggleLoginPopup(event:any) {
+    event.stopPropagation();
     this.showLoginPopup = !this.showLoginPopup;
     this.showSignUpPopup = false;
   }
 
-  protected toggleSignUpPopup() {
+  protected toggleSignUpPopup(event:any) {
+    event.stopPropagation();
     this.showSignUpPopup = !this.showSignUpPopup;
     this.showLoginPopup = false;
   }

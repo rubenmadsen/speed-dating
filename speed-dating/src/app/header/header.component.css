@@ -19,10 +19,6 @@ header {
 
 img {
   cursor: pointer;
-  /*max-width: 100%;*/
-  /*max-height: 5rem;*/
-  /*height: 100%;*/
-  /*width: auto;*/
   height: auto;
 }
 
@@ -30,7 +26,6 @@ header nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /*margin-right: 1rem;*/
 }
 
 app-button {
@@ -57,7 +52,9 @@ app-button {
     justify-content: flex-start;
     align-items: flex-end;
   }
+  header nav app-button{
 
+  }
   img {
     max-height: 8.1rem;
     max-width: 13rem;
