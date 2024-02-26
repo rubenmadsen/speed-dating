@@ -1,6 +1,6 @@
 <div class="date-container" *ngIf="!hasDates">
   <ng-container  *ngFor="let male of listUsers let i = index">
-    <app-date class="date"
+    <app-date *ngIf="male.gender == 'male'" class="date"
       (changeDetected)="handleEvent($event)"
       [tableNumber]="i + 1"
       [male]="male"

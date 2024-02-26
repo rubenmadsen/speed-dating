@@ -55,7 +55,6 @@ export class EventPageComponent implements OnInit, OnDestroy {
   }
   subscribeToDates() {
     this.eventStateService.dates$.subscribe(dates => {
-      console.log(dates)
       if(dates.length != 0){
         this.datesList = dates;
       }

@@ -27,18 +27,14 @@ export class DateContainerComponent {
   }
 
    private filterParticipants() {
-    this.listUsers = this.participantList.participantsList?.filter(user => user.gender === "male");
-
-    this.listUsers?.forEach(i => {
-      console.log(typeof i)
-    })
+    this.listUsers = this.participantList.participantsList
    }
 
 
   subscribeToDates() {
     this.eventStateService.dates$.subscribe(dates => {
+      this.datesList = dates;
       if(dates.length != 0){
-        this.datesList = dates;
         this.hasDates = true;
       }
     });
@@ -49,7 +45,7 @@ export class DateContainerComponent {
    */
   filterAgain(){
     this.hasDates = false
-    this.listUsers = this.participantList.participantsList?.filter(user => user.gender === "male");
+    this.listUsers = this.participantList.participantsList
   }
 
   handleEvent(eventData: { tableUsers: UserModel[], tableNumber: number }) {

@@ -15,7 +15,6 @@ class MatchingAlgorithm {
 
     }
     async loadDataForEvent(event){
-        console.log("Loading data for event")
         this.event = await Event.findById(event._id)
             .populate('dates')
             .populate({
@@ -70,8 +69,8 @@ class MatchingAlgorithm {
         const selected = this.selectDates(dates)
         this.event.dates.push(...selected);
         this.event.round++;
-        await this.event.save();
-        console.log("Selected len:" + selected.length)
+        this.event.save();
+        // console.log("Selected len:" + selected.length)
         return selected;
     }
     selectDates(dates){
@@ -126,13 +125,14 @@ class MatchingAlgorithm {
             //console.log("scores",scores)
         });
         totalScore = Math.floor(totalScore/5);
+    
         const date = {
-            event: this.event._id, // Assuming you only need the event ID here
-            tableNumber: 0, // Your logic for tableNumber
+            event: this.event._id, 
+            tableNumber: 0, 
             dateRound: this.event.round + 1,
             percentage: totalScore,
-            personOne: guy, // Full user object
-            personTwo: girl, // Full user object
+            personOne: guy, 
+            personTwo: girl, 
         };
 
         //return activityResults;
@@ -149,6 +149,9 @@ class MatchingAlgorithm {
         const sum = valueArray.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
         const average = sum / valueArray.length;
         return average * 100;
+    }
+    #aggregateScore(){
+
     }
 }
 

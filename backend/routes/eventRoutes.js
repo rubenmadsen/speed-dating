@@ -86,6 +86,7 @@ router.get("/event/:eventId/next",authorizeUser, function (req, res) {
         matcher.loadDataForEvent(event).then(() => {
             matcher.pairAll().then(async dates => {
                 console.log("Generated dates for next round")
+                console.log(dates);
                 for (const d of dates) {
                     await d.save();
                 }

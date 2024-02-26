@@ -69,12 +69,12 @@ export class DateComponent {
         } else { //TODO: Ghetto shit, not sure why this is needed to move females between tables.
           event.previousContainer.data.users[1] = this.tableUsers[2]
         }
-      }   
+      }
       this.tableUsers = [this.tableUsers[0], this.tableUsers[1]]
       this.tableData.users = this.tableUsers
     }
     this.changeDetected.emit({ tableUsers: this.tableUsers, tableNumber: this.tableNumber });
-    
+
   }
 
   /**
