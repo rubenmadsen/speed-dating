@@ -87,3 +87,10 @@
 #event_card_information_map:hover {
   scale: 111%;
 }
+
+.available{
+  color: #3c9417;
+}
+.full{
+  color: brown;
+}

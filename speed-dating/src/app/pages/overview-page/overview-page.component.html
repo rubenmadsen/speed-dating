@@ -23,7 +23,7 @@
   </div>
 
   <h2>Recommended Events</h2>
-  <p *ngIf="recommendedEvents.length <= 0"> Can't Find any recommendations based on your location </p>
+  <p *ngIf="recommendedEvents.length <= 0"> We can't find personal any recommendations for you </p>
   <div class="overview_recommended_events overview-card-container" *ngIf="recommendedEvents.length > 0">
     <ng-container *ngFor="let event of recommendedEvents">
       <app-event-card [event]="event"></app-event-card>

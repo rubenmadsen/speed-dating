@@ -29,7 +29,7 @@ router.get("/city/:cityId/events", function (req, res) {
     populate: {
       path: 'city',
       model: 'city'
-    }
+    }   
     }).then(city => {
       console.log(city)
       city.events.city = city
