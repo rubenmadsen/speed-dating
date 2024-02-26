@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 @Component({
   selector: 'app-date-review',
@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./date-review.component.css']
 })
 export class DateReviewComponent {
+  @Input() isOpen: Boolean = false;
 
+  togglePopUp(){
+    this.isOpen = !this.isOpen;
+    console.log(this.isOpen)
+  }
 }
