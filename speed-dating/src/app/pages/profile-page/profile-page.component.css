@@ -78,7 +78,7 @@ img {
 }
 
 
-@media (max-width: 680px) {
+@media (max-width: 800px) {
   .profile-container {
     flex-direction: column;
   }
@@ -86,4 +86,17 @@ img {
   .bio-container {
     border-top: var(--accent-clr) 0.1rem solid;
   }
+
+  .activity-container {
+    flex-direction: column;
+  }
+
+  .activity {
+    padding: 1rem;
+  }
+
+  p {
+    margin-top: 1rem;
+  }
+
 }
