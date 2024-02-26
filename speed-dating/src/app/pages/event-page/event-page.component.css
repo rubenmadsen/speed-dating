@@ -13,6 +13,7 @@
 
 .info-and-list-container {
   display: flex;
+  margin-top: 1rem;
   justify-content: space-between;
 }
 
@@ -25,6 +26,9 @@
   justify-content: space-evenly;
 }
 
+.back-button {
+  margin-left: 1rem;
+}
 
 app-button {
   padding: 0.2rem;
@@ -32,6 +36,10 @@ app-button {
 
 app-date {
   padding: 0.5rem;
+}
+
+app-event-info {
+  width: 50%;
 }
 
 @media (max-width: 960px) {
