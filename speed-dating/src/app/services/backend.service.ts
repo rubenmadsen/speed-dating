@@ -129,7 +129,7 @@ export class BackendService {
     return this.http.delete<EventModel>(this.eventURL + event._id,this.requestOptions);
   }
   /**
-   * NOT IMPLEMENTED
+   * Gets all events based on a City or a User's City
    * @param sender
    */
   getEventsByLocation(sender:CityModel | UserModel):Observable<EventModel[]>{
@@ -156,17 +156,19 @@ export class BackendService {
   leaveEvent(event:EventModel):Observable<EventModel>{
     return this.http.get<EventModel>(this.eventURL + event._id + "/leave",this.requestOptions);
   }
-  /**
-   * Clear automatch
-   */
-  clearLatestAutomatch(event:EventModel):Observable<EventModel>{
-    return this.http.get<EventModel>(this.eventURL + event._id + "/clear",this.requestOptions);
-  }
+
 
 
 
 
   // Date
+  /**
+   * Get specific Date
+   */
+  getDate(date:DateModel):Observable<DateModel>{
+    return this.http.get<DateModel>(this.dateURL + date._id);
+  }
+
   /**
    * Swap tables
    */
@@ -196,9 +198,11 @@ export class BackendService {
   }
 
   // DateFeedback
-  getDatesForEventByUser(event:EventModel, user:UserModel):Observable<DateModel[]>{
-    return this.http.get<DateModel[]>(this.dateURL);
-  }
+
+
+
+
+
 
   // EventFeedback
 

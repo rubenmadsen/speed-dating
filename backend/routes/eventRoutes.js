@@ -106,12 +106,7 @@ router.get("/event/:eventId/next",authorizeUser, function (req, res) {
     });
 });
 
-/**
- * Clears the last generated automatch
- */
-router.get("/event/:eventId/clear",authorizeUser,function(req,res){
 
-});
 
 // router.get("/event/:eventId", function (req, res) {
 //   console.log("event id", req.params.eventId)
