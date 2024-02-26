@@ -76,4 +76,5 @@ export class HeaderComponent {
       this.showSignUpPopup = false;
     }
   }
+
 }

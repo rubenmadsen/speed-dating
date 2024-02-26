@@ -40,6 +40,7 @@ import { ProfileCardComponent } from './profile/profile-card/profile-card.compon
 import { ActivitiesRatingComponent } from './util/activities-rating/activities-rating.component';
 import { ErrorbarComponent } from './util/errorbar/errorbar.component';
 import { NewEventPopupComponent } from './event/new-event-popup/new-event-popup.component';
+import { HamburgerComponent } from './util/hamburger/hamburger.component';
 
 
 
@@ -78,6 +79,7 @@ import { NewEventPopupComponent } from './event/new-event-popup/new-event-popup.
     MinmaxSliderComponent,
     ErrorbarComponent,
     NewEventPopupComponent,
+    HamburgerComponent,
   ],
   imports: [
     BrowserModule,

@@ -7,15 +7,21 @@ header {
 }
 
 .top-container {
+  box-sizing: border-box;
+  padding: 0.5rem;
+  height: 70px;
+  transition: height 0.5s ease-in-out;
   display: flex;
   justify-content: space-between;
+  padding-right: 1rem;
 }
 
 img {
   cursor: pointer;
-  max-width: 100%;
-  max-height: 5rem;
-  width: auto;
+  /*max-width: 100%;*/
+  /*max-height: 5rem;*/
+  /*height: 100%;*/
+  /*width: auto;*/
   height: auto;
 }
 
@@ -23,7 +29,7 @@ header nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-right: 1rem;
+  /*margin-right: 1rem;*/
 }
 
 app-button {
@@ -41,6 +47,9 @@ app-button {
 }
 
 @media (max-width: 680px) {
+  .top-container{
+    height: 50px;
+  }
   header nav {
     flex-direction: column;
     margin-right: 0;
@@ -52,7 +61,7 @@ app-button {
     max-width: 13rem;
   }
 
-  app-button {
-    padding: 0rem;
-  }
+  /*app-button {*/
+  /*  padding: 0rem;*/
+  /*}*/
 }
