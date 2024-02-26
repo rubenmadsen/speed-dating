@@ -38,7 +38,7 @@
       <app-event-info [event]="event"></app-event-info>
     </div>
     <app-button
-      *ngIf="!isRegisted"
+      *ngIf="!isRegisted && (event!.participants.length < event!.totalParticipants)"
       [buttonClass]="'accent border-accent clr-white '"
       [buttonText]="'Register'"
       (click)="registerAtEvent()"
@@ -49,6 +49,12 @@
       [buttonClass]="'accent border-accent clr-white '"
       [buttonText]="'Unregister'"
       (click)="unregister()"
+    ></app-button>
+
+    <app-button
+      *ngIf="!isRegisted && (event!.participants.length >= event!.totalParticipants)"
+      [buttonClass]="'accent border-accent clr-white disabled'"
+      [buttonText]="'Event full'"
     ></app-button>
   </ng-container>
 </div>
