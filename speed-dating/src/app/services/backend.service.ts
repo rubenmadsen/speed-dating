@@ -209,7 +209,7 @@ export class BackendService {
    * Match user 1 with user two
    */
   matchUserWithUser(male:UserModel,female:UserModel):Observable<DateModel>{
-    return this.http.get<DateModel>(this.dateURL + "match/" + male._id + "/" + female._id ,this.requestOptions);
+    return this.http.get<DateModel>(this.dateURL +"match/" + male._id + "/" + female._id ,this.requestOptions);
   }
   /**
    * Unmatch user 1 with user two

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {ChangeDetectorRef, Component, Input, SimpleChanges} from '@angular/core';
 
 @Component({
   selector: 'app-match-precentage-bar',
@@ -9,7 +9,9 @@ export class MatchPrecentageBarComponent {
   @Input() matchValue = "50";
   @Input() width = "5";
   @Input() height = "1";
-  
+
+
+
   ngOnInit() {
     this.width = this.width + 'rem';
     this.height = this.height + 'rem';
@@ -29,4 +31,5 @@ export class MatchPrecentageBarComponent {
       return "green"
     }
   }
+
 }

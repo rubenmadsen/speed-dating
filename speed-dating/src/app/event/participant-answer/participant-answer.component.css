@@ -1,0 +1,21 @@
+.participant-answer-container{
+  height: 100%;
+  width: 30%;
+}
+#date-info-container{
+  font-weight: bold;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.answer-container{
+  height: 50%;
+  width: 100%;
+  background-color: white;
+  margin-bottom: 1rem;
+}
+.answer-container p{
+  padding: 3px;
+}
+.nameP{
+  font-weight: bold;
+}

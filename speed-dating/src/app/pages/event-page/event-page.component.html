@@ -8,7 +8,7 @@
   <ng-container *ngIf="isOrganizer$ | async">
     <div class="info-and-list-container">
       <app-event-info [event]="event"></app-event-info>
-      <app-participant-list #participantList [participantsList]="participants"></app-participant-list>
+      <app-participant-list #participantList [datesList]="datesList" [participantsList]="participantsList"></app-participant-list>
     </div>
     <div class="matching-button-container">
       <app-button
@@ -18,10 +18,12 @@
       <app-button
         [buttonClass]="clearTablesButtonClass"
         buttonText="Clear Tables"
+        (click)="clearTables()"
       ></app-button>
       <app-button
         [buttonClass]="automaticMatchingButtonClass"
         buttonText="Automatic matching"
+        (click)="automaticMatching()"
       ></app-button>
       <app-button
         [buttonClass]="startDateButtonClass"
@@ -29,7 +31,7 @@
       ></app-button>
     </div>
 
-    <app-date-container class="date-container" [participantList]="participantList" ></app-date-container>
+    <app-date-container class="date-container" [datesList]="datesList" [participantList]="participantList" ></app-date-container>
 
   </ng-container>
 

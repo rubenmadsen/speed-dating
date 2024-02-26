@@ -43,6 +43,7 @@ router.get("/date/:user1Id/:user2Id/unmatch", authorizeUser, async function(req,
  * Match users for date
  */
 router.get("/date/match/:user1Id/:user2Id", authorizeUser, async function (req, res) {
+    console.log(req.params.user1Id)
     const u1 = await User.findById(req.params.user1Id).populate("activityData.activity");
     const u2 = await User.findById(req.params.user2Id).populate("activityData.activity");
 
@@ -51,6 +52,7 @@ router.get("/date/match/:user1Id/:user2Id", authorizeUser, async function (req, 
     const matcher = new MatchingAlgorithm();
     await matcher.loadCategoriesAndActivities();
         await matcher.calculateActivityScores(u1,u2).then(date => {
+            console.log(date);
             res.send(date)
     });
 });
