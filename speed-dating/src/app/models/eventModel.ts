@@ -2,6 +2,7 @@ import { BaseModel } from './baseModel';
 import { UserModel } from './userModel';
 import { EventFeedbackModel } from './eventFeedbackModel';
 import {CityModel} from "./cityModel";
+import {DateModel} from "./dateModel";
 
 export interface EventModel extends BaseModel {
   startDate: Date;
@@ -10,6 +11,7 @@ export interface EventModel extends BaseModel {
   round: number;
   location: string;
   city: CityModel;
+  dates: DateModel[];
   description: string;
   totalParticipants: number;
   currentParticipants: number;

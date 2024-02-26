@@ -58,6 +58,7 @@ export class NewEventPopupComponent {
       totalParticipants: 20,
       currentParticipants: 0,
       participants: [],
+      dates: [],
       eventFeedback: [],
 
     }
