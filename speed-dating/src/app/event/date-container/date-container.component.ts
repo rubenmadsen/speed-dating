@@ -49,10 +49,13 @@ export class DateContainerComponent {
     this.listUsers = this.participantList.participantsList?.filter(p => p.gender == 'male')
   }
 
+  /**
+   * Method to handle drag and dropped participants
+   * @param eventData the new date pair
+   */
   handleEvent(eventData: { tableUsers: UserModel[], tableNumber: number }) {
     if (eventData.tableUsers[1].firstname != 'TBD'){
-      // tell backend to create date
-      
+      // tell backend to create date, then add date to EventStateService
     }
   }
 }

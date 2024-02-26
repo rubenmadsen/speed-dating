@@ -41,7 +41,6 @@ export class EventPageComponent implements OnInit, OnDestroy {
   automaticMatchingButtonClass: string = 'accent border-accent clr-white disabled';
   startDateButtonClass: string = 'accent border-accent clr-white disabled';
 
-  private sub: any
 
   isOrganizer$: Observable<boolean> | undefined;
 
@@ -114,6 +113,7 @@ export class EventPageComponent implements OnInit, OnDestroy {
       this.isRegisted = false;
     })
   }
+
   subscribeToDates() {
     this.eventStateService.dates$.subscribe(dates => {
       if(dates.length != 0){
@@ -133,7 +133,7 @@ export class EventPageComponent implements OnInit, OnDestroy {
   }
 
 
-    /**
+  /**
    * Method to automatically match the dates
    */
   automaticMatching(){
