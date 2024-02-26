@@ -6,6 +6,7 @@ import {EventModel} from "../../models/eventModel";
 import {ActivatedRoute} from "@angular/router";
 import {AuthService} from "../../services/auth.service";
 import {UserModel} from "../../models/userModel";
+import {BackendService} from "../../services/backend.service";
 
 @Component({
   selector: 'app-event-page',
@@ -20,6 +21,9 @@ export class EventPageComponent implements OnInit, OnDestroy {
   subscription!: Subscription;
   participants?: UserModel[];
 
+  me!: UserModel;
+  isRegisted: Boolean = false;
+
   cancelEventButtonClass: string = 'trans clr-accent border-accent';
   clearTablesButtonClass: string = 'trans clr-accent border-accent disabled';
   automaticMatchingButtonClass: string = 'accent border-accent clr-white disabled';
@@ -29,7 +33,7 @@ export class EventPageComponent implements OnInit, OnDestroy {
 
   isOrganizer$: Observable<boolean> | undefined;
 
-  constructor(private eventService: EventService, private authService: AuthService) { }
+  constructor(private eventService: EventService, private authService: AuthService, private backend: BackendService) { }
 
   /**
    * Load an event
@@ -37,6 +41,15 @@ export class EventPageComponent implements OnInit, OnDestroy {
    async ngOnInit() {
     this.subscription = this.eventService.currentEvent.subscribe(event => {
       this.event = event;
+    });
+
+    this.backend.getMe().subscribe(r => {
+      this.me = r
+      console.log(r);
+      if(this.event?.participants.includes(r.user._id)){
+        this.isRegisted = true;
+      }
+
     });
 
     const baseClass = 'trans clr-accent border-accent';
@@ -61,5 +74,26 @@ export class EventPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  registerAtEvent() {
+     if(this.event == null){
+       return
+     }
+    this.backend.joinEvent(this.event).subscribe(r => {
+      this.eventService.changeEvent(r)
+      this.isRegisted = true;
+    });
+  }
+
+  unregister() {
+    if(this.event == null){
+      return
+    }
+    this.backend.leaveEvent(this.event).subscribe(r => {
+      console.log(r);
+      this.eventService.changeEvent(r)
+      this.isRegisted = false;
+    })
   }
 }

@@ -39,12 +39,17 @@
       <app-event-info [event]="event"></app-event-info>
     </div>
     <app-button
-      [buttonClass]="'trans clr-accent border-accent'"
-      [buttonText]="'Cancel'"
-    ></app-button>
-    <app-button
+      *ngIf="!isRegisted"
       [buttonClass]="'accent border-accent clr-white '"
       [buttonText]="'Register'"
+      (click)="registerAtEvent()"
+    ></app-button>
+
+    <app-button
+      *ngIf="isRegisted"
+      [buttonClass]="'accent border-accent clr-white '"
+      [buttonText]="'Unregister'"
+      (click)="unregister()"
     ></app-button>
   </ng-container>
 </div>

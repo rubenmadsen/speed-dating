@@ -147,7 +147,7 @@ export class BackendService {
   /**
    * Join an event
    */
-  joinEvent(event:EventModel):Observable<EventModel>{
+  joinEvent(event: EventModel):Observable<EventModel>{
     return this.http.get<EventModel>(this.eventURL + event._id + "/join",this.requestOptions);
   }
   /**
