@@ -3,6 +3,7 @@ import { StatusMessageType } from '../interfaces/StatusMessageType';
 import { AuthService } from '../services/auth.service';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { GlobalService } from '../services/global.service';
 
 @Component({
   selector: 'app-header',
@@ -18,11 +19,17 @@ export class HeaderComponent {
     private eRef: ElementRef,
     private renderer: Renderer2,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private globalService: GlobalService
   ) {}
 
   logout() {
     this.authService.logout();
+    const message = {
+      message: "You successfully logged out!",
+      type: StatusMessageType.SUCCESS
+    }
+    this.globalService.setGlobalStatus(message)
     this.router.navigate([''])
   }
 

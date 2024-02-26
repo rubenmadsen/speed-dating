@@ -25,7 +25,12 @@ export class HomepageComponent {
   }
   getMoreEvents(){
     this.backend.getAlleventsStream(this.pingpong).subscribe(pp => {
-      this.events.push(...pp.items);
+      const finishedFilter = pp.items.filter(event => !event.hasEnded);
+
+      finishedFilter.forEach(event => {
+        this.events.push(event)
+      })
+
       //this.events = this.events.sort((a,b) => a.startDate > b.startDate ? 1 : -1);
       this.pingpong = pp;
       this.done = true

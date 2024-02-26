@@ -41,15 +41,19 @@ export class EventPageComponent implements OnInit, OnDestroy {
    async ngOnInit() {
     this.subscription = this.eventService.currentEvent.subscribe(event => {
       this.event = event;
+      console.log(event);
     });
 
     this.backend.getMe().subscribe(r => {
       this.me = r
       console.log(r);
-      if(this.event?.participants.includes(r)){
-        this.isRegisted = true;
-      }
 
+      if (this.event?.participants.some(participant => participant._id === r._id)) {
+        this.isRegisted = true;
+      } else {
+        console.log(r._id);
+        console.log("NONOONO", this.event);
+      }
     });
 
     const baseClass = 'trans clr-accent border-accent';
