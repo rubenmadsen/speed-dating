@@ -31,7 +31,7 @@
   </div>
 
   <h2>Completed Events</h2>
-  <p *ngIf="completedEvents.length <= 0"> You haven't been to any events </p>
+  <p *ngIf="completedEvents.length <= 0"> You have no completed events </p>
   <div class="overview_finished_events overview-card-container"  *ngIf="completedEvents.length > 0">
     <ng-container *ngFor="let event of completedEvents">
       <app-event-card [event]="event"></app-event-card>
