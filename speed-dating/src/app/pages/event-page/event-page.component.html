@@ -1,6 +1,7 @@
 <!-- TODO fixa en back-knapp -->
 <div class="page-container" cdkDropListGroup>
   <app-button
+    class="back-button"
     [buttonClass]="'trans clr-accent border-accent'"
     [buttonText]="'Back'"
     (click)="backClicked()"
@@ -8,7 +9,11 @@
   <ng-container *ngIf="isOrganizer$ | async">
     <div class="info-and-list-container">
       <app-event-info [event]="event"></app-event-info>
-      <app-participant-list #participantList [datesList]="datesList" [participantsList]="participantsList"></app-participant-list>
+      <app-participant-list
+        #participantList
+        [datesList]="datesList"
+        [participantsList]="participantsList"
+      ></app-participant-list>
     </div>
     <div class="matching-button-container">
       <app-button
@@ -45,7 +50,11 @@
       <app-event-info [event]="event"></app-event-info>
     </div>
     <app-button
-      *ngIf="!isRegisted && (event!.participants.length < event!.totalParticipants) && !event?.hasEnded"
+      *ngIf="
+        !isRegisted &&
+        event!.participants.length < event!.totalParticipants &&
+        !event?.hasEnded
+      "
       [buttonClass]="'accent border-accent clr-white '"
       [buttonText]="'Register'"
       (click)="registerAtEvent()"
@@ -59,7 +68,11 @@
     ></app-button>
 
     <app-button
-      *ngIf="!isRegisted && (event!.participants.length >= event!.totalParticipants) && !event?.hasEnded"
+      *ngIf="
+        !isRegisted &&
+        event!.participants.length >= event!.totalParticipants &&
+        !event?.hasEnded
+      "
       [buttonClass]="'accent border-accent clr-white disabled'"
       [buttonText]="'Event full'"
     ></app-button>
@@ -69,6 +82,5 @@
       [buttonClass]="'accent border-accent clr-white disabled'"
       [buttonText]="'Event ended'"
     ></app-button>
-
   </ng-container>
 </div>
