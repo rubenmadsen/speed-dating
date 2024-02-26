@@ -38,23 +38,30 @@
       <app-event-info [event]="event"></app-event-info>
     </div>
     <app-button
-      *ngIf="!isRegisted && (event!.participants.length < event!.totalParticipants)"
+      *ngIf="!isRegisted && (event!.participants.length < event!.totalParticipants) && !event?.hasEnded"
       [buttonClass]="'accent border-accent clr-white '"
       [buttonText]="'Register'"
       (click)="registerAtEvent()"
     ></app-button>
 
     <app-button
-      *ngIf="isRegisted"
+      *ngIf="isRegisted && !event?.hasEnded"
       [buttonClass]="'accent border-accent clr-white '"
       [buttonText]="'Unregister'"
       (click)="unregister()"
     ></app-button>
 
     <app-button
-      *ngIf="!isRegisted && (event!.participants.length >= event!.totalParticipants)"
+      *ngIf="!isRegisted && (event!.participants.length >= event!.totalParticipants) && !event?.hasEnded"
       [buttonClass]="'accent border-accent clr-white disabled'"
       [buttonText]="'Event full'"
     ></app-button>
+
+    <app-button
+      *ngIf="event?.hasEnded"
+      [buttonClass]="'accent border-accent clr-white disabled'"
+      [buttonText]="'Event ended'"
+    ></app-button>
+
   </ng-container>
 </div>
