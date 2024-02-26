@@ -46,7 +46,7 @@ export class EventPageComponent implements OnInit, OnDestroy {
     this.backend.getMe().subscribe(r => {
       this.me = r
       console.log(r);
-      if(this.event?.participants.includes(r._id)){
+      if(this.event?.participants.includes(r)){
         this.isRegisted = true;
       }
 
