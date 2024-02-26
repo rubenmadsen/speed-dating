@@ -19,11 +19,9 @@ export class DateReviewComponent {
   ngOnInit(){
     this.user
     this.event
-    console.log(this.event?.city.name)
   }
 
   togglePopUp(){
     this.isOpen = !this.isOpen;
-    console.log(this.isOpen)
   }
 }
