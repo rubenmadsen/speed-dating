@@ -24,12 +24,9 @@
   align-items: flex-start;
   background-size: cover;
   background-position: center;
-  font-weight: bold;
-  padding: 0.5rem;
   flex-wrap: wrap;
   justify-content: space-between;
   font-weight: bold;
-  border-radius: 10px 10px 0 0;
 }
 
 .event-card-location-container {

@@ -35,7 +35,7 @@
   </div>
 
   <h2>Completed Events</h2>
-  <p class="placeholder-text" *ngIf=""!isLoadingCompletedEvents && completedEvents.length <= 0"> You haven't been to any events </p>
+  <p class="placeholder-text" *ngIf="!isLoadingCompletedEvents && completedEvents.length <= 0"> You haven't been to any events </p>
   <div *ngIf="isLoadingCompletedEvents" class="loader"></div>
   <div class="card-container"  *ngIf="completedEvents.length > 0">
     <ng-container *ngFor="let event of completedEvents">
