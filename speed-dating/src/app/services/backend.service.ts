@@ -7,6 +7,8 @@ import {CityModel} from "../models/cityModel";
 import {CategoryModel} from "../models/categoryModel";
 import {ActivityModel} from "../models/activityModel";
 import {DateModel} from "../models/dateModel";
+import {PingPong} from "../interfaces/PingPong";
+import {FileResponse} from "../interfaces/FileResponse";
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +23,7 @@ export class BackendService {
   private readonly cityURL: string = this.backendURL + "city/";
   private readonly categoryURL: string = this.backendURL + "category/";
   private readonly activityURL: string = this.backendURL + "activity/";
+  private readonly dateURL: string = this.backendURL + "date/";
 
 
   headerDict = {
@@ -106,10 +109,10 @@ export class BackendService {
    * Uploads a profile picture and return the new name
    * @param file A god-damn file
    */
-  uploadProfilePicture(file:File):Observable<any>{
+  uploadProfilePicture(file:File):Observable<FileResponse>{
     const formData = new FormData();
     formData.append('file',file,file.name);
-    return this.http.post<any>(this.backendURL + "upload/image",formData,this.uploadImageOptions);
+    return this.http.post<FileResponse>(this.backendURL + "upload/image",formData,this.uploadImageOptions);
   }
 
 
@@ -119,7 +122,12 @@ export class BackendService {
     const responseObservable = this.http.get<EventModel[]>(endPoint);
     return firstValueFrom(responseObservable);
   }
-
+  getAlleventsStream(pingpong:PingPong<EventModel>):Observable<PingPong<EventModel>>{
+    return this.http.post<PingPong<EventModel>>(this.eventURL + "stream", pingpong, this.requestOptions);
+  }
+  deleteEvent(event:EventModel):Observable<EventModel>{
+    return this.http.delete<EventModel>(this.eventURL + event._id,this.requestOptions);
+  }
   /**
    * NOT IMPLEMENTED
    * @param sender
@@ -135,9 +143,57 @@ export class BackendService {
   getNextRoundOfDatesForEvent(event:EventModel):Observable<DateModel[]>{
     return this.http.get<DateModel[]>(this.eventURL + event._id + "/next",this.requestOptions);
   }
+
+  /**
+   * Join an event
+   */
+  joinEvent(event:EventModel):Observable<EventModel>{
+    return this.http.get<EventModel>(this.eventURL + event._id + "/join",this.requestOptions);
+  }
+  /**
+   * Leave an event
+   */
+  leaveEvent(event:EventModel):Observable<EventModel>{
+    return this.http.get<EventModel>(this.eventURL + event._id + "/leave",this.requestOptions);
+  }
+  /**
+   * Clear automatch
+   */
+  clearLatestAutomatch(event:EventModel):Observable<EventModel>{
+    return this.http.get<EventModel>(this.eventURL + event._id + "/clear",this.requestOptions);
+  }
+
+
+
+
   // Date
+  /**
+   * Swap tables
+   */
+  swapTables(t1:DateModel, t2:DateModel):Observable<DateModel[]>{
+    return this.http.get<DateModel[]>(this.dateURL + "swaptables/" +t1._id + "/" + t2._id,this.requestOptions);
+  }
+  /**
+   * Swap tables
+   */
+  swapSkanks(t1:DateModel, t2:DateModel):Observable<DateModel[]>{
+    return this.http.get<DateModel[]>(this.dateURL + "swapskanks/" +t1._id + "/" + t2._id,this.requestOptions);
+  }
 
 
+
+  /**
+   * Match user 1 with user two
+   */
+  matchUserWithUser(user1:UserModel,user2:UserModel):Observable<UserModel>{
+    return this.http.get<UserModel>(this.dateURL + user1._id + "/" + user2._id + "/match",this.requestOptions);
+  }
+  /**
+   * Unmatch user 1 with user two
+   */
+  unmatchUserWithUser(user1:UserModel,user2:UserModel):Observable<UserModel>{
+    return this.http.get<UserModel>(this.dateURL + user1._id + "/" + user2._id + "/unmatch",this.requestOptions);
+  }
   // DateFeedback
 
 

@@ -2,6 +2,7 @@ import { BaseModel } from './baseModel';
 import { EventModel } from './eventModel';
 import { ActivityModel } from './activityModel';
 import { CityModel } from './cityModel';
+import {ActivityRatingModel} from "./activityRatingModel";
 
 export interface UserModel extends BaseModel {
   imagePath: string;
@@ -21,8 +22,5 @@ export interface UserModel extends BaseModel {
     min: number;
     max: number;
   }[];
-  activityData: {
-    activity: ActivityModel;
-    points: number;
-  }[];
+  activityData: ActivityRatingModel[];
 }

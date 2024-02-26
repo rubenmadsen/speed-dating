@@ -4,6 +4,8 @@
 const { Router, response } = require("express");
 const { authorizeUser } = require("../authorization/authorize");
 const User = require("../models/userModel");
+const ActivityModel = require("../models/activityModel")
+const Category = require("../models/categoryModel")
 const jwt = require("jsonwebtoken");
 const EventModel = require("../models/eventModel");
 
@@ -181,14 +183,27 @@ router.get("/user/:id/preferences", function (req, res) {
  */
 router.get("/user/profile/me", authorizeUser, async function(req,res) {
   try {
-    const user = await User.findById(req.user.id).populate('city')
+    const user = await User.findById(req.user.id)
+        .populate('city')
+        .populate("sharedContacts")
+        .populate("events")
+        .populate({
+          path: 'activityData', // Populating activityData
+          populate: {
+            path: 'activity', // Within each activityData, populate activity
+            model: 'activity', // Ensure this matches the name you've used in mongoose.model for your Activity model
+            populate: {
+              path: 'category', // Within each activity, now populate category
+              model: 'category' // Again, ensure this matches the name used in mongoose.model for your Category model
+            }
+          }
+        });
 
     if (!user) {
       return res.status(404).send({ message: "User not found." });
     }
     user
-    .populate("sharedContacts")
-    res.status(200).send({ valid: true, user: user });  
+    res.status(200).send({ valid: true, user: user });
   } catch (err) {
     console.log(err)
     res.status(500).send('Internal server error');

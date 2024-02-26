@@ -1,5 +1,5 @@
 <div (click)="onClick()" class="Profile-card-container">
   <img src="http://localhost:3000/{{profile?.imagePath}}"/>
-    <p class="firstname-field">{{profile?.firstname}}</p>
+    <p class="firstname-field">{{profile?.firstname + " " + profile?.lastname}}</p>
     <p [style.font-size]="getFontSize()" id="email-field" >{{ profile?.email }}</p>
 </div>

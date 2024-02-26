@@ -39,19 +39,19 @@ function clearCollection(Model) {
 function generateDatabase() {
   return clearDatabase()
     .then(async () => {
-      console.log("Generateing Categories and Activities");
+      console.log("Generating Categories and Activities");
       await generateCatAct();
-      console.log("Generateing City");
+      console.log("Generating City");
       await generateCities();
-      console.log("Generateing participants");
-      await generateNRandomUsers(100, false); // Participants
-      console.log("Generateing Organizers");
+      console.log("Generating participants");
+      await generateNRandomUsers(150, false); // Participants
+      console.log("Generating Organizers");
       await generateNRandomUsers(2, true); // Organizers
-      console.log("Generateing Dummies");
+      console.log("Generating Dummies");
       await User.create(await generateDummyParticipant());
       await User.create(await generateDummyOrganizer());
-      console.log("Generateing Events");
-      await generateNRandomEvents(100);
+      console.log("Generating Events");
+      await generateNRandomEvents(50);
       const events = await Event.find({});
       for (const event of events) {
         const r = Math.round(Math.random())
@@ -65,16 +65,14 @@ function generateDatabase() {
         ]);
         // Assuming event's participants field is an array of user IDs
         for (const woman of women) {
-          (await event).participants.push(woman._id);
-          (await woman).events.push(event);
+          await addUserToEvent(woman._id, event._id);
           (await event).currentParticipants++;
         }
         for (const man of men) {
-          (await event).participants.push(man._id);
+          (await event).participants.push(man);
           (await man).events.push(event);
           (await event).currentParticipants++;
         }
-
         await (await event).save();
         //console.log("Event updated successfully with participants.");
       }
@@ -87,6 +85,27 @@ function generateDatabase() {
 }
 
 /********************************************************************/
+async function addUserToEvent(userId, eventId) {
+  try {
+    const user = await User.findById(userId);
+    const event = await Event.findById(eventId);
+    if (!user || !event) {
+      throw new Error('User or Event not found');
+    }
+    if (!user.events.includes(eventId)) {
+      user.events.push(eventId);
+      await user.save();
+    }
+    if (!event.participants.includes(userId)) {
+      event.participants.push(userId);
+      await event.save();
+    }
+    console.log('User added to event successfully');
+  } catch (error) {
+    console.error('Error adding user to event:', error);
+  }
+}
+
 async function generateDummyParticipant() {
   const newDummy = await generateRandomUser(false);
   newDummy.email = "p@p.p";
@@ -138,6 +157,7 @@ async function generateRandomUser(isOrganizer) {
 async function generateRandomEvent() {
   const newEvent = Event();
   newEvent.startDate = getRandomDate();
+  newEvent.imagePath = getRandomVenuePicture();
   newEvent.location = getRandomVenue();
   const city = await getRandomCity();
   //console.log("CITY", city)
@@ -300,7 +320,18 @@ async function saveDocument(doc) {
     savingDocuments.delete(docId); // Remove from the map once the save is complete
   }
 }
+function getRandomVenuePicture(gender){
+  let files = null;
+  const directoryPath = path.join(__dirname, '../public/venues');
+  try {
+    // Read directory synchronously
+    files = fs.readdirSync(directoryPath);
 
+    return "venues/" + getRandomFromList(files);
+  } catch (err) {
+    console.log('Unable to scan directory: ' + err);
+  }
+}
 function getRandomProfilePicture(gender){
   const prefix = gender === "male" ? "XMale" : "XFemale"
   let files = null;
@@ -762,7 +793,7 @@ const venues = [
   "MuseMarina Marina",
   "HeartHike Hideout",
   "SweetSpire Spire",
-  "KissKaleidoscope Kaleidoscope",
+  "KissKaleidoscope",
   "PairPier Pier",
   "MingleMansion Mansion",
   "FlirtFalls Waterfall",

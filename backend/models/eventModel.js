@@ -9,6 +9,10 @@ const eventSchema = new Schema({
     type: Date,
     required: [true, "An event must have a start date"],
   },
+  imagePath:{
+    type:String,
+    default: ""
+  },
   organizer: {
     type: Schema.Types.ObjectId,
     ref: "organizer",
@@ -54,10 +58,11 @@ const eventSchema = new Schema({
     ref: "user",
     default: [],
   },
-    dates:{
-        type:[],
-        default:[]
-    },
+  dates:{
+    type:[Schema.Types.ObjectId],
+    ref:"date",
+    default:[]
+  },
   eventFeedback: {
     type: [Schema.Types.ObjectId],
     ref: "EventFeedbackModel",

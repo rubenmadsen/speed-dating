@@ -11,12 +11,16 @@ import {AuthService} from "../../services/auth.service";
 import {StatusMessage} from "../../interfaces/statusMessage";
 import {StatusMessageType} from "../../interfaces/StatusMessageType";
 import {GlobalService} from "../../services/global.service";
+import {firstValueFrom, Observable} from "rxjs";
+
+
 
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.css']
 })
+
 export class SignUpComponent {
 
   @ViewChild('f') signupForm!: NgForm;
@@ -30,6 +34,8 @@ export class SignUpComponent {
   isOrganizer: boolean = false;
   nextIsPressed: boolean = false;
   emailAvailable: boolean = true;
+  imageUrl: string | null = null;
+  file:File | undefined | null;
   cities: CityModel[];
   @ViewChild(ActivitiesRatingComponent) activitiesRatingComponent!: ActivitiesRatingComponent;
   profilePicture = ""
@@ -56,22 +62,25 @@ export class SignUpComponent {
 
   }
   onFileSelected(event:any){
-    const file = event.target.files[0];
-    if (file) {
-      this.backend.uploadProfilePicture(file).subscribe({
-        next: (newFile) => {
-            console.log("File:", newFile["filename"]);
-            this.profilePicture = newFile["filename"];
-            const imageUrl = "http://localhost:3000/" + this.profilePicture
-          this.userImage.nativeElement.style.backgroundImage = `url(${imageUrl})`;
-        },
-        error:(error) => {
-          console.log("err",error)
-        }
-      });
-      // Process the file as needed (e.g., upload to server)
+    this.file = event.target.files[0];
+    if (this.file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.imageUrl = `url(${e.target.result})`;
+      };
+      reader.readAsDataURL(this.file);
     }
   }
+  onGenderChange(event:any){
+    if (this.imageUrl !== "")
+      return;
+    const url = this.form.gender === "male" ? "http://localhost:3000/MaleProfilePlaceholder.png" : "http://localhost:3000/FemaleProfilePlaceholder.png";
+    this.imageUrl = `url(${url})`;
+  }
+  private  uploadImageAndGetFilename(file:File) {
+      return  this.backend.uploadProfilePicture(file)
+  }
+
   /**
    * Register the user. First checks if form is valid, if Email is available register the user and relocate to the Profile page.
    */
@@ -80,14 +89,13 @@ export class SignUpComponent {
       return
     }
     this.backend.checkAvailability(this.form.email).subscribe({
-    next: (response) => {
-      let ratings : ActivityRatingModel[]= [];
+    next: async (response) => {
+      let ratings: ActivityRatingModel[] = [];
       if (!this.isOrganizer) {
         ratings = this.activitiesRatingComponent.activityRatings;
       }
       if (this.signupForm.valid) {
         const user: UserModel = {
-          _id: null,
           email: this.form.email,
           activityData: ratings,
           isOrganizer: this.isOrganizer,
@@ -101,23 +109,33 @@ export class SignUpComponent {
           events: [],
           sharedContacts: [],
           preferences: [],
-          imagePath: this.profilePicture !== "" ? this.profilePicture : this.form.gender === "male" ? "MaleProfilePlaceholder.png":"MaleProfilePlaceholder.png",
+          imagePath: ""
         };
+        if (this.file) {
+          const fileResponse = await firstValueFrom(this.uploadImageAndGetFilename(this.file));
+              user.imagePath = fileResponse.filename;
+        }
+        else {
+          user.imagePath = this.form.gender === "male" ? "MaleProfilePlaceholder.png" : "MaleProfilePlaceholder.png";
+        }
+        //
         this.backend.registerUser(user).subscribe({
           next: (userResponse) => {
-            const mess:StatusMessage = {
-              message:"Thanks for creating an account",
-              type:StatusMessageType.SUCCESS
+            const mess: StatusMessage = {
+              message: "Thanks for creating an account",
+              type: StatusMessageType.SUCCESS
             };
             this.globalService.setGlobalStatus(mess);
             this.isVisible = false;
             this.removeHideoutBackground.emit();
             this.authService.loginSuccess();
             this.authService.checkSession()
-            setTimeout(() => this.router.navigate(['profile']),500);
+            setTimeout(() => this.router.navigate(['profile']), 500);
           },
           error: (registerError) => console.error('Registration error', registerError)
         });
+        //
+
       }
     },
       error: (error) => {

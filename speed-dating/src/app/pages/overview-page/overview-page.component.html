@@ -5,6 +5,7 @@
     (click)="openEventPopup()"
     [buttonText]="'Host new Event'"
   ></app-button>
+
   <h2>Shared Contacts</h2>
     <p *ngIf="contacts.length <= 0"> You have no contacts </p>
   <div class="overview_shared_contacts overview-card-container"  *ngIf="contacts.length > 0">
@@ -12,6 +13,7 @@
         <app-profile-card [profile]="contact"></app-profile-card>
     </ng-container>
   </div>
+
   <h2>Your Upcoming Events</h2>
   <p *ngIf="yourEvents.length <= 0"> You have no upcoming events </p>
   <div class="overview_your_events overview-card-container" *ngIf="yourEvents.length > 0">
@@ -19,6 +21,7 @@
       <app-event-card [event]="event"></app-event-card>
     </ng-container>
   </div>
+
   <h2>Recommended Events</h2>
   <p *ngIf="recommendedEvents.length <= 0"> Can't Find any recommendations based on your location </p>
   <div class="overview_recommended_events overview-card-container" *ngIf="recommendedEvents.length > 0">
@@ -26,6 +29,7 @@
       <app-event-card [event]="event"></app-event-card>
     </ng-container>
   </div>
+
   <h2>Completed Events</h2>
   <p *ngIf="completedEvents.length <= 0"> You haven't been to any events </p>
   <div class="overview_finished_events overview-card-container"  *ngIf="completedEvents.length > 0">
@@ -33,5 +37,5 @@
       <app-event-card [event]="event"></app-event-card>
     </ng-container>
   </div>
-  <app-new-event-popup *ngIf="showNewEventPopup"></app-new-event-popup>
+  <app-new-event-popup *ngIf="showNewEventPopup" [callback]="addEvent.bind(this)" ></app-new-event-popup>
 </div>

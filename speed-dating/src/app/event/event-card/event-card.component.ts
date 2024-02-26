@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, AfterViewInit} from '@angular/core';
 import { faClock } from '@fortawesome/free-regular-svg-icons';
 import { EventModel } from 'src/app/models/eventModel';
 import { EventService } from '../../services/event.service';
@@ -17,8 +17,12 @@ export class EventCardComponent {
   @Input() eventCardClass: string = "";
 
   city!: CityModel;
-
+  imageUrl:string | undefined = undefined;
   constructor(private eventService: EventService, private router: Router) {  }
+
+  ngOnInit(){
+    this.imageUrl = `url(http://localhost:3000/${this.event.imagePath})`;
+  }
 
   onEventSelected() {
     this.eventService.changeEvent(this.event);

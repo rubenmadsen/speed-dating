@@ -15,4 +15,14 @@
       <p>{{ user?.description }}</p>
     </div>
   </div>
+  <div class="activity-container">
+    <div class="category" *ngFor="let category of categories">
+      <h2>{{ category.name }}</h2>
+      <ng-container class="activity" *ngFor="let b of arm">
+          <p *ngIf="b.activity.category.name === category.name">
+            {{ b.activity.name }} {{ b.points }}
+          </p>
+        </ng-container>
+    </div>
+  </div>
 </div>

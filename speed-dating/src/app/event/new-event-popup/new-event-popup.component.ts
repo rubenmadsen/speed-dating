@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, Input, ViewChild} from '@angular/core';
 import {faX} from "@fortawesome/free-solid-svg-icons/faX";
 
 import {CityModel} from "../../models/cityModel";
@@ -16,7 +16,7 @@ import {GlobalService} from "../../services/global.service";
   styleUrls: ['./new-event-popup.component.css']
 })
 export class NewEventPopupComponent {
-
+  @Input() callback?: (newEvent: EventModel) => void;
   @ViewChild('f') signupForm!: NgForm;
 
   isVisible: Boolean = true;
@@ -48,8 +48,8 @@ export class NewEventPopupComponent {
     const startdate = new Date(combinedDateTimeString);
 
     const event: EventModel = {
-      _id: null,
       startDate: startdate,
+      imagePath: "MaleProfilePlaceholder",
       hasEnded: false,
       round: 0,
       location: this.form.venue,
@@ -69,6 +69,9 @@ export class NewEventPopupComponent {
           };
           this.globalService.setGlobalStatus(mess);
           this.isVisible = false;
+          console.log("response",response)
+          if (this.callback)
+            this.callback(response);
         },
         error: (err => {
           console.log(err);
