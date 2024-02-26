@@ -1,4 +1,4 @@
-.Profile-card-container{
+.Profile-card-container {
   cursor: pointer;
   background-color: #f3f3f3;
   border: darkgray 1px solid;
@@ -7,13 +7,13 @@
   display: inline-block;
   text-align: center;
 }
-img{
+img {
   width: 8rem;
   border-radius: 50%;
   margin: 1rem;
 }
 
-p{
+p {
   margin: auto;
   padding-bottom: 5px;
   width: fit-content;
