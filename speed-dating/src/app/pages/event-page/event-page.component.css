@@ -43,6 +43,11 @@ app-event-info {
 }
 
 @media (max-width: 960px) {
+
+  .page-container {
+    width: 100%;
+  }  
+
   .info-and-list-container {
     flex-direction: column;
     align-items: center;
@@ -60,10 +65,7 @@ app-event-info {
 
   .matching-button-container {
     flex-direction: column;
-    text-align: center;
+    align-items: center;
   }
 
-  .date-container {
-    grid-template-columns: repeat(2, auto);
-  }
 }
