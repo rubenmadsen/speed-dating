@@ -49,9 +49,14 @@ export class OverviewPageComponent {
 
       this.pingpong = pp
 
-      const yourEventsFilter = pp.items.filter(event =>
+      const yourEventsFilter = pp.items.filter(event => {
+        this.me.events.forEach(x => { // If organizer
+          if (x._id === event._id) {
+            this.yourEvents.push(event)
+          }
+        })
         event.participants.some(participant => participant._id === this.me._id)
-      );
+    });
       yourEventsFilter.forEach(event => {
         // console.log(this.yourEvents);
         if(event.hasEnded){
