@@ -186,6 +186,7 @@ router.get("/user/profile/me", authorizeUser, async function(req,res) {
     const user = await User.findById(req.user.id)
         .populate('city')
         .populate("sharedContacts")
+        .populate("events")
         .populate({
           path: 'activityData', // Populating activityData
           populate: {

@@ -25,8 +25,6 @@ export class EventCardComponent {
   }
 
   onEventSelected() {
-    console.log("Imagepathj",this.imageUrl)
-    console.log("Imagepathj",this.event)
     this.eventService.changeEvent(this.event);
     this.router.navigate(['event']);
   }
