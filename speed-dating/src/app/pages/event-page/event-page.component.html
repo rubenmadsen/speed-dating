@@ -1,6 +1,11 @@
 <!-- TODO fixa en back-knapp -->
 
 <div class="page-container" cdkDropListGroup>
+  <app-button
+    [buttonClass]="'trans clr-accent border-accent'"
+    [buttonText]="'Back'"
+    routerLink="/"
+  ></app-button>
   <ng-container *ngIf="isOrganizer$ | async">
     <div class="info-and-list-container">
       <app-event-info [event]="event"></app-event-info>
@@ -8,20 +13,20 @@
     </div>
     <div class="matching-button-container">
       <app-button
-        [buttonClass]="'trans clr-accent border-accent'"
-        [buttonText]="'Cancel Event'"
+        [buttonClass]="cancelEventButtonClass"
+        buttonText="Cancel Event"
       ></app-button>
       <app-button
-        [buttonClass]="'trans clr-accent border-accent'"
-        [buttonText]="'Clear Tables'"
+        [buttonClass]="clearTablesButtonClass"
+        buttonText="Clear Tables"
       ></app-button>
       <app-button
-        [buttonClass]="'accent border-accent clr-white '"
-        [buttonText]="'Automatic matching'"
+        [buttonClass]="automaticMatchingButtonClass"
+        buttonText="Automatic matching"
       ></app-button>
       <app-button
-        [buttonClass]="'accent border-accent clr-white '"
-        [buttonText]="'Start date'"
+        [buttonClass]="startDateButtonClass"
+        buttonText="Start date"
       ></app-button>
     </div>
 
