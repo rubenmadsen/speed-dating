@@ -85,6 +85,10 @@ router.get("/event/:eventId/next",authorizeUser, function (req, res) {
         console.log("Event",event)
         matcher.loadDataForEvent(event).then(() => {
             matcher.pairAll().then(async dates => {
+                for (const dateN in dates) {
+                    dates[dateN].personOne = await User.findById(dates[dateN].personOne._id);
+                    dates[dateN].personTwo = await User.findById(dates[dateN].personTwo._id);
+                }
                 res.send(dates)
                 console.log("Generated dates for next round")
                 // for (const d of dates) {
