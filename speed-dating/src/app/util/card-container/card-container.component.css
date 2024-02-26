@@ -1,27 +1,21 @@
 .card-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1em;
-  padding-top: 1em;
-  padding-bottom: 2em;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  margin-top: 1rem;
 }
 
 .filter-container {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1em;
   flex-direction: column;
 }
 
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 960px) {
   .card-container {
     width: 100vw;
-    overflow-x: scroll;
-    justify-content: flex-start;
+    display: flex;
     flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: scroll;
     scroll-behavior: smooth;
   }
 }
