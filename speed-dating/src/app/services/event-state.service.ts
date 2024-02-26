@@ -16,4 +16,13 @@ export class EventStateService {
   updateDates(dates: DateModel[]) {
     this.datesSubject.next(dates);
   }
+
+  clearDates(){
+    this.datesSubject.next([])
+  }
+  addEvent(date: DateModel){
+    const currentDates = this.datesSubject.value;
+    const updatedDates = [...currentDates, date];
+    this.datesSubject.next(updatedDates);
+  }
 }

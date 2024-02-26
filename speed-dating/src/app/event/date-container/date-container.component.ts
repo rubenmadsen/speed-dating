@@ -4,6 +4,7 @@ import {UserModel} from "../../models/userModel";
 import {BehaviorSubject, Subscription} from "rxjs";
 import {DateModel} from "../../models/dateModel";
 import {EventStateService} from "../../services/event-state.service";
+import {BackendService} from "../../services/backend.service";
 
 @Component({
   selector: 'app-date-container',
@@ -18,7 +19,7 @@ export class DateContainerComponent {
   listUsers?: UserModel[];
   hasDates: boolean = false;
 
-  constructor(private eventStateService: EventStateService) {
+  constructor(private eventStateService: EventStateService, private backendService: BackendService) {
   }
 
   ngOnInit() {
@@ -49,6 +50,8 @@ export class DateContainerComponent {
   }
 
   handleEvent(eventData: { tableUsers: UserModel[], tableNumber: number }) {
-    console.log(eventData)
+    if (eventData.tableUsers[1].firstname != 'TBD'){
+      // tell backend to create date
+    }
   }
 }

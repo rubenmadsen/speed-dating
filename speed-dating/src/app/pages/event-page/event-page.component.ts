@@ -50,9 +50,12 @@ export class EventPageComponent implements OnInit, OnDestroy {
    * Load an event
    */
    async ngOnInit() {
+     this.eventStateService.clearDates();
     this.subscription = this.eventService.currentEvent.subscribe(event => {
       this.event = event;
     });
+    this.subscribeToDates()
+
 
     const baseClass = 'trans clr-accent border-accent';
     const disabledClass = ' disabled';
@@ -61,7 +64,6 @@ export class EventPageComponent implements OnInit, OnDestroy {
     // await this.authService.checkSession();
     this.isOrganizer$ = this.authService.isOrganizer;
     this.participantsList = this.event?.participants;
-    this.subscribeToDates()
     this.participants = this.event?.participants;
 
 
@@ -104,6 +106,7 @@ export class EventPageComponent implements OnInit, OnDestroy {
   automaticMatching(){
      this.backend.getNextRoundOfDatesForEvent(this.event!).subscribe({
        next: (response) => {
+         console.log(response)
          this.childParticipantList.clearList();
          this.eventStateService.updateDates(response)
        },
