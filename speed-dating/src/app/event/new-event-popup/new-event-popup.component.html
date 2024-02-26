@@ -1,4 +1,4 @@
-<div class="new-event-popup-container" *ngIf="isVisible">
+<div #popupRef class="new-event-popup-container" *ngIf="isVisible">
   <div class="new-event-popup-header">
     <fa-icon [icon]="faX" class="x_close_form" (click)="closePopup()"></fa-icon>
   </div>

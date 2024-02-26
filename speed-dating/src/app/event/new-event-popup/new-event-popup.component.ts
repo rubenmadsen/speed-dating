@@ -1,4 +1,4 @@
-import {Component, Input, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, ViewChild} from '@angular/core';
 import {faX} from "@fortawesome/free-solid-svg-icons/faX";
 
 import {CityModel} from "../../models/cityModel";
@@ -18,7 +18,7 @@ import {GlobalService} from "../../services/global.service";
 export class NewEventPopupComponent {
   @Input() callback?: (newEvent: EventModel) => void;
   @ViewChild('f') signupForm!: NgForm;
-
+  @ViewChild('popupRef') popupRef!:ElementRef
   isVisible: Boolean = true;
   protected readonly faX = faX;
 
@@ -35,7 +35,7 @@ export class NewEventPopupComponent {
 
   async ngOnInit(){
     await this.backend.getAllCities().then(cities => this.cities = cities.sort(( a , b ) => a.name > b.name ? 1 : - 1));
-
+    this.popupRef.nativeElement.classList.toggle("show")
   }
 
   createEvent(){

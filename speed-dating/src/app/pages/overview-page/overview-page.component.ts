@@ -1,4 +1,4 @@
-import {Component, ElementRef, HostListener} from '@angular/core';
+import {Component, ElementRef, HostListener, ViewChild} from '@angular/core';
 import {EventModel} from "../../models/eventModel";
 import {UserModel} from "../../models/userModel";
 import {BackendService} from "../../services/backend.service";
@@ -11,7 +11,6 @@ import {PingPong} from "../../interfaces/PingPong";
   styleUrls: ['./overview-page.component.css']
 })
 export class OverviewPageComponent {
-
   protected yourEvents: EventModel[];
   protected recommendedEvents: EventModel[];
   protected completedEvents: EventModel[];
@@ -39,6 +38,7 @@ export class OverviewPageComponent {
       this.me = me;
       this.getMoreEvents()
       this.isLoadingContacts = false;
+
     });
 
 

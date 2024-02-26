@@ -42,5 +42,5 @@
       <app-event-card [event]="event"></app-event-card>
     </ng-container>
   </div>
-  <app-new-event-popup *ngIf="showNewEventPopup" [callback]="addEvent.bind(this)" ></app-new-event-popup>
+  <app-new-event-popup #popupRef *ngIf="showNewEventPopup" [callback]="addEvent.bind(this)" ></app-new-event-popup>
 </div>
