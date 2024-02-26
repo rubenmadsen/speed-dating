@@ -1,4 +1,7 @@
 import {Component, Input} from '@angular/core';
+import {UserModel} from "../../models/userModel";
+import {EventModel} from "../../models/eventModel";
+import {BackendService} from "../../services/backend.service";
 
 @Component({
   selector: 'app-date-review',
@@ -7,6 +10,17 @@ import {Component, Input} from '@angular/core';
 })
 export class DateReviewComponent {
   @Input() isOpen: Boolean = false;
+  @Input() user : UserModel | undefined;
+  @Input()event!: EventModel |null;
+
+  constructor(private backend: BackendService) {
+
+  }
+  ngOnInit(){
+    this.user
+    this.event
+    console.log(this.event?.city.name)
+  }
 
   togglePopUp(){
     this.isOpen = !this.isOpen;
