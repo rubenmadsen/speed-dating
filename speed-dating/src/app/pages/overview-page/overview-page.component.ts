@@ -1,9 +1,8 @@
-import {Component, ElementRef, HostListener} from '@angular/core';
+import {Component, ElementRef, HostListener, ViewChild} from '@angular/core';
 import {EventModel} from "../../models/eventModel";
 import {UserModel} from "../../models/userModel";
 import {BackendService} from "../../services/backend.service";
 import {PingPong} from "../../interfaces/PingPong";
-
 
 
 @Component({
@@ -12,7 +11,6 @@ import {PingPong} from "../../interfaces/PingPong";
   styleUrls: ['./overview-page.component.css']
 })
 export class OverviewPageComponent {
-
   protected yourEvents: EventModel[];
   protected recommendedEvents: EventModel[];
   protected completedEvents: EventModel[];
@@ -21,7 +19,10 @@ export class OverviewPageComponent {
   protected me!: UserModel;
   showNewEventPopup: Boolean = false;
 
+  protected isLoadingContacts: Boolean = true;
+  protected isLoadingYourEvents: Boolean = true;
   protected isLoadingRecommendedEvents: Boolean = true;
+  protected isLoadingCompletedEvents: Boolean = true;
 
   pingpong:PingPong<EventModel> = {amount:10,itemType:'EventModel',items:[], retrieved:0};
   constructor(private backend: BackendService,private eRef: ElementRef) {
@@ -36,6 +37,8 @@ export class OverviewPageComponent {
       this.isOrganizer = me.isOrganizer;
       this.me = me;
       this.getMoreEvents()
+      this.isLoadingContacts = false;
+
     });
 
 
@@ -46,15 +49,22 @@ export class OverviewPageComponent {
 
       this.pingpong = pp
 
-      const yourEventsFilter = pp.items.filter(event =>
+      const yourEventsFilter = pp.items.filter(event => {
+        this.me.events.forEach(x => { // If organizer
+          if (x._id === event._id) {
+            this.yourEvents.push(event)
+          }
+        })
         event.participants.some(participant => participant._id === this.me._id)
-      );
+    });
       yourEventsFilter.forEach(event => {
         // console.log(this.yourEvents);
         if(event.hasEnded){
           this.completedEvents.push(event)
+          this.isLoadingYourEvents = false;
         } else {
           this.yourEvents.push(event)
+          this.isLoadingCompletedEvents = false;
         }
       })
 
@@ -63,11 +73,18 @@ export class OverviewPageComponent {
       cityFilter.forEach(event => {
         console.log(event)
         this.recommendedEvents.push(event)
+
+        this.isLoadingRecommendedEvents = false;
       });
 
       if(pp.items.length !== 0){
         this.getMoreEvents()
       }
+
+      this.isLoadingYourEvents = false;
+      this.isLoadingContacts = false;
+      this.isLoadingRecommendedEvents = false;
+      this.isLoadingCompletedEvents = false;
     })
   }
 
