@@ -5,6 +5,7 @@
       [tableNumber]="i + 1"
       [male]="male"
       (returnUserToList)="participantList.recieveItem($event)"
+              (onUserClick)="onUserClick($event)"
     ></app-date>
   </ng-container>
 </div>
@@ -18,6 +19,7 @@
               [male]="date.personOne"
               [female]="date.personTwo"
               (returnUserToList)="participantList.recieveItem($event)"
+              (onUserClick)="onUserClick($event)"
     ></app-date>
   </ng-container>
 </div>
