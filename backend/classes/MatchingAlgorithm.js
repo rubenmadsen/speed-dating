@@ -27,6 +27,10 @@ class MatchingAlgorithm {
             })
         this.males = this.event.participants.filter(participant => participant.gender === "male");
         this.females = this.event.participants.filter(participant => participant.gender === "female");
+        await this.loadCategoriesAndActivities()
+        //console.log("Cats",this.categories)
+    }
+    async loadCategoriesAndActivities(){
         const cats = await Category.find({});
         for (const cat of cats) {
             this.categories[cat._id.toString()] = {score:-1};
@@ -36,9 +40,7 @@ class MatchingAlgorithm {
             // this.categories[act.category._id.toString()] = {}
             this.categories[act.category._id.toString()][act._id.toString()] = {malePoints:0, femalePoints:0, score:-2};
         }
-        //console.log("Cats",this.categories)
     }
-
     async pairAll() {
         console.log("Pairing")
         const dates = [];
@@ -69,13 +71,13 @@ class MatchingAlgorithm {
             }
         }
         const selected = this.selectDates(dates)
-        for (const d of selected) {
-            const createdDate = await Date.create(d);
-            //this.event.dates.push(createdDate)
-        }
+        // for (const d of selected) {
+        //     const createdDate = await Date.create(d);
+        //     //this.event.dates.push(createdDate)
+        // }
         //this.event.dates.push(...selected);
         //this.event.round++;
-        await this.event.save();
+        //await this.event.save();
         console.log("Selected len:" + selected.length)
         return selected;
     }
@@ -99,10 +101,9 @@ class MatchingAlgorithm {
         const activityResults = JSON.parse(JSON.stringify(this.categories));
         const male = guy; // = await User.findById(guy._id).populate('activityData.activity');
         const female = girl; // = await User.findById(girl._id).populate('activityData.activity');
-
         male.activityData.forEach((data) => {
-            const categoryID = data.activity.category.toString();
-            const activityID = data.activity._id.toString();
+            const categoryID = data.activity.category;
+            const activityID = data.activity._id;
             const points = data.points;
             //console.log("cat:" + data.activity.category.toString())
             //console.log("\tact:" + data.activity._id.toString())
@@ -110,8 +111,9 @@ class MatchingAlgorithm {
             activityResults[categoryID][activityID].malePoints = points;
         })
         female.activityData.forEach((data) => {
-            const categoryID = data.activity.category.toString();
-            const activityID = data.activity._id.toString();
+
+            const categoryID = data.activity.category;
+            const activityID = data.activity._id;
             const points = data.points;
             //console.log("cat:" + data.activity.category.toString())
             //console.log("\tact:" + data.activity._id.toString())
@@ -133,15 +135,13 @@ class MatchingAlgorithm {
             //console.log("scores",scores)
         });
         totalScore = Math.floor(totalScore/5);
-
-        const date = {
-            event: this.event._id,
-            tableNumber: 0,
-            dateRound: this.event.round + 1,
-            percentage: totalScore,
-            personOne: guy,
-            personTwo: girl,
-        };
+        const date = new Date();
+        date.event = this.event;
+        date.tableNumber = 0;
+        //date.dateRound = this.event.round + 1;
+        date.percentage = totalScore;
+        date.personOne = guy;
+        date.personTwo = girl;
 
         //return activityResults;
         return date;

@@ -55,6 +55,15 @@ export class DateContainerComponent {
    */
   handleEvent(eventData: { tableUsers: UserModel[], tableNumber: number }) {
     if (eventData.tableUsers[1].firstname != 'TBD'){
+      console.log(eventData.tableNumber)
+      this.backendService.matchUserWithUser(eventData.tableUsers[0], eventData.tableUsers[1]).subscribe({
+        next: (response) => {
+          this.eventStateService.addEvent(response)
+        },
+        error: (error) => {
+          console.log(error)
+        }
+      })
       // tell backend to create date, then add date to EventStateService
     }
   }
