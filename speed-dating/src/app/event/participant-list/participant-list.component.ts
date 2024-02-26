@@ -1,6 +1,7 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {Component, EventEmitter, Input, Output, SimpleChanges} from '@angular/core';
 import {UserModel} from "../../models/userModel";
+import {DateModel} from "../../models/dateModel";
 
 @Component({
   selector: 'app-participant-list',
@@ -10,7 +11,8 @@ import {UserModel} from "../../models/userModel";
 export class ParticipantListComponent {
 
   @Input() participantsList?: UserModel[];
-  listUsers: string[] = [];
+  listUsers?: UserModel[] = [];
+  @Input() datesList!: DateModel[];
 
   ngOnInit() {
     this.populateList();
@@ -20,8 +22,8 @@ export class ParticipantListComponent {
    * Populate user list.
    */
   populateList() {
-    const females = this.participantsList?.filter(user => user.gender == "female");
-    this.listUsers = females?.map(user => user.firstname) || [];
+    this.listUsers = this.participantsList?.filter(user => user.gender == "female");
+    // this.listUsers = females?.map(user => user.firstname) || [];
   }
 
   /**
@@ -31,17 +33,23 @@ export class ParticipantListComponent {
   drop(event: any) {
     if (event.container === event.previousContainer) { // Drag and drop within same container
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex)
-    } else if (event.previousIndex !== 0 && event.previousContainer.data[event.previousIndex] !== "TBD" && event.previousContainer[event.previousIndex] !== undefined) {
-      transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, 1)
+    } else if (event.previousIndex !== 0 && event.previousContainer.data.users[event.previousIndex].firstname !== "TBD" && event.previousContainer.data.users[event.previousIndex].firstname !== undefined) { 
+      transferArrayItem(event.previousContainer.data.users, event.container.data, event.previousIndex, 1)
+      event.previousContainer.data.users[1] = { firstname: 'TBD' };
     }
   }
+
+  clearList(){
+    this.listUsers = []
+  }
+
 
   /**
    * Recieves item from a date table if.
    * @param item item to add to listUsers.
    */
   recieveItem(item: any) {
-    if (item !== "TBD" && item !== "" && item !== undefined) {
+    if (item.firstname !== "TBD" && item.firstname !== "" && item.firstname !== undefined) {
       this.listUsers?.push(item)
     }
   }

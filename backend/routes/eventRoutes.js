@@ -85,6 +85,10 @@ router.get("/event/:eventId/next",authorizeUser, function (req, res) {
         console.log("Event",event)
         matcher.loadDataForEvent(event).then(() => {
             matcher.pairAll().then(async dates => {
+                for (const dateN in dates) {
+                    dates[dateN].personOne = await User.findById(dates[dateN].personOne._id);
+                    dates[dateN].personTwo = await User.findById(dates[dateN].personTwo._id);
+                }
                 res.send(dates)
                 console.log("Generated dates for next round")
                 // for (const d of dates) {
@@ -107,9 +111,10 @@ router.get("/event/:eventId/next",authorizeUser, function (req, res) {
 });
 
 /**
- * Clears the last generated automatch
+ * Sets the next round of date for the event
  */
-router.get("/event/:eventId/clear",authorizeUser,function(req,res){
+router.post("/event/:eventId/setnext",authorizeUser, async function (req, res) {
+    const event = await Event.findById(req.params.eventId);
 
 });
 
@@ -119,6 +124,8 @@ router.get("/event/:eventId/clear",authorizeUser,function(req,res){
 //
 //   });
 // });
+
+
 /**
  * Join an event
  */

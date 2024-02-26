@@ -5,8 +5,18 @@ const { Router, response } = require("express");
 const { authorizeUser } = require("../authorization/authorize");
 const Date = require("../models/dateModel");
 const User = require("../models/userModel");
+const MatchingAlgorithm = require("../classes/MatchingAlgorithm");
 
 const router = Router();
+
+/**
+ * Get specific Date
+ */
+router.get("/date/:dateId",authorizeUser,function (req,res){
+   Date.findById(req.params.dateId).populate("personOne personTwo").then(date => {
+       res.send(date);
+   })
+});
 
 /**
  * Match user1 with user2
@@ -29,6 +39,23 @@ router.get("/date/:user1Id/:user2Id/unmatch", authorizeUser, async function(req,
     )
     res.send()
 })
+/**
+ * Match users for date
+ */
+router.get("/date/match/:user1Id/:user2Id", authorizeUser, async function (req, res) {
+    console.log(req.params.user1Id)
+    const u1 = await User.findById(req.params.user1Id).populate("activityData.activity");
+    const u2 = await User.findById(req.params.user2Id).populate("activityData.activity");
+
+    //res.send(u1);
+
+    const matcher = new MatchingAlgorithm();
+    await matcher.loadCategoriesAndActivities();
+        await matcher.calculateActivityScores(u1,u2).then(date => {
+            console.log(date);
+            res.send(date)
+    });
+});
 
 /**
  * Swap tables
@@ -64,4 +91,12 @@ router.get("/date/swapskanks/:table1Id/:table2Id", authorizeUser, async function
         }).catch(err => console.log(err));
     }).catch(err => console.log(err));
 });
+
+/**
+ * Get Dates for even
+ */
+
+
+
+
 module.exports = router;

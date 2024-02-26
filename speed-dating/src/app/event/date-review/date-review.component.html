@@ -1,1 +1,24 @@
-<p>date-review works!</p>
+<div *ngIf="isOpen" class="date-review-popup">
+  <button (click)="togglePopUp()">X</button>
+  <div class="date-review-content">
+    <div id="profile-info-container">
+<!--      <h1>{{user?.firstname}} {{user?.lastname}}</h1>
+      <p>Age: {{user?.age}}</p>
+      <p>Sex: {{user?.gender}}</p>
+      <p>Interests {{user?.description}}</p>
+      <p>Preferences {{user?.preferences}}</p>-->
+      <h1>Dolk Lundgren</h1>
+      <p>Age: 35</p>
+      <p>Sex: 2 times/day</p>
+      <p>Interests: C and blonde chicks</p>
+      <p>Preferences: Blonde, Blue Eyes, Big Tits</p>
+    </div>
+    <div id="date-review-container">
+        <app-participant-answer></app-participant-answer>
+
+    </div>
+
+
+  </div>
+
+</div>

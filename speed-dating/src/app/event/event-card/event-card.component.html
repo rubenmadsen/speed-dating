@@ -16,6 +16,7 @@
   <div class="event-card-footer">
     <fa-icon [icon]="faClock" class="clock-icon"></fa-icon>
     <p class="event-date">{{ event.startDate | date : "dd/MM HH:mm" }}</p>
-    <p #spotsRef class="spotsRef slots-info">{{ status }}</p>
+    <p #spotsRef *ngIf="!event!.hasEnded" class="slots-info">{{ status }}</p>
+    <p #spotsRef *ngIf="event!.hasEnded" class ="slots-info"> Event ended </p>
   </div>
 </div>

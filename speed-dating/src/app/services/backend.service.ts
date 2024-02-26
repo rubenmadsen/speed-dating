@@ -128,8 +128,10 @@ export class BackendService {
   deleteEvent(event:EventModel):Observable<EventModel>{
     return this.http.delete<EventModel>(this.eventURL + event._id,this.requestOptions);
   }
+
+
   /**
-   * NOT IMPLEMENTED
+   * Gets all events based on a City or a User's City
    * @param sender
    */
   getEventsByLocation(sender:CityModel | UserModel):Observable<EventModel[]>{
@@ -137,13 +139,29 @@ export class BackendService {
     return this.http.get<EventModel[]>(this.cityURL + id + '/events',this.requestOptions);
   }
 
+  /**
+   * Create a new event
+   * @param event
+   */
   createNewEvent(event:EventModel): Observable<EventModel>{
     return this.http.post<EventModel>(this.eventURL,event,this.requestOptions);
   }
+
+  /**
+   * Calculates the date and matches for a new generation of Dates
+   * @param event
+   */
   getNextRoundOfDatesForEvent(event:EventModel):Observable<DateModel[]>{
     return this.http.get<DateModel[]>(this.eventURL + event._id + "/next",this.requestOptions);
   }
-
+  /**
+   * Inserts the datesfor a new round of the event
+   * @param event
+   * @param dates
+   */
+  setNextRoundOfDatesForEvent(event:EventModel, dates:DateModel[]):Observable<DateModel[]>{
+    return this.http.post<DateModel[]>(this.eventURL + event._id + "/setnext",dates,this.requestOptions);
+  }
   /**
    * Join an event
    */
@@ -156,17 +174,19 @@ export class BackendService {
   leaveEvent(event:EventModel):Observable<EventModel>{
     return this.http.get<EventModel>(this.eventURL + event._id + "/leave",this.requestOptions);
   }
-  /**
-   * Clear automatch
-   */
-  clearLatestAutomatch(event:EventModel):Observable<EventModel>{
-    return this.http.get<EventModel>(this.eventURL + event._id + "/clear",this.requestOptions);
-  }
+
 
 
 
 
   // Date
+  /**
+   * Get specific Date
+   */
+  getDate(date:DateModel):Observable<DateModel>{
+    return this.http.get<DateModel>(this.dateURL + date._id);
+  }
+
   /**
    * Swap tables
    */
@@ -180,13 +200,16 @@ export class BackendService {
     return this.http.get<DateModel[]>(this.dateURL + "swapskanks/" +t1._id + "/" + t2._id,this.requestOptions);
   }
 
+  matchUsers(user1:UserModel, user2:UserModel):Observable<DateModel>{
+    return this.http.get<DateModel>(this.dateURL + "match/" + user1._id + "/" + user2._id);
+  }
 
 
   /**
    * Match user 1 with user two
    */
-  matchUserWithUser(user1:UserModel,user2:UserModel):Observable<UserModel>{
-    return this.http.get<UserModel>(this.dateURL + user1._id + "/" + user2._id + "/match",this.requestOptions);
+  matchUserWithUser(male:UserModel,female:UserModel):Observable<DateModel>{
+    return this.http.get<DateModel>(this.dateURL +"match/" + male._id + "/" + female._id ,this.requestOptions);
   }
   /**
    * Unmatch user 1 with user two
@@ -196,9 +219,11 @@ export class BackendService {
   }
 
   // DateFeedback
-  getDatesForEventByUser(event:EventModel, user:UserModel):Observable<DateModel[]>{
-    return this.http.get<DateModel[]>(this.dateURL);
-  }
+
+
+
+
+
 
   // EventFeedback
 
