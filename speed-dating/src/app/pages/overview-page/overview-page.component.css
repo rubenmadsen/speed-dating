@@ -41,3 +41,18 @@ h2 {
 .overview-card-container::-webkit-scrollbar-thumb:hover {
   background: #555; /* Handle color on hover */
 }
+
+.loader {
+  border: 0.25rem solid var(--black-clr);
+  border-top: 0.25rem solid white;
+  border-radius: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
+  animation: spin 1s linear infinite;
+  margin: auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
