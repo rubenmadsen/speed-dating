@@ -88,6 +88,9 @@
   scale: 111%;
 }
 
+#spotsLeft{
+  margin-left: auto;
+}
 .available{
   color: #3c9417;
 }

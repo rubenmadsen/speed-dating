@@ -12,6 +12,6 @@
   <div class="event_card_footer">
     <fa-icon [icon]="faClock" id="event_card_footer_clock"></fa-icon>
     <p>{{ event.startDate | date : "dd/MM HH:mm" }}</p>
-    <p #spotsRef>{{ status }}</p>
+    <p id="spotsLeft" #spotsRef>{{ status }}</p>
   </div>
 </div>

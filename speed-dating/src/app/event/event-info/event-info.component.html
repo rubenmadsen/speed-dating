@@ -4,6 +4,6 @@
     <p class="date">{{ event!.startDate }}</p>
     <p class="location">{{ event!.location }}</p>
     <p class="information">{{ event!.description }}</p>
-    <p class="registered">{{ event!.participants.length }}/{{event!.totalParticipants}} Registered</p>
+    <p *ngIf="!event?.hasEnded" class="registered">{{ event!.participants.length }}/{{event!.totalParticipants}} Registered</p>
   </div>
 </div>
