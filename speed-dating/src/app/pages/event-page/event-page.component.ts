@@ -48,10 +48,10 @@ export class EventPageComponent implements OnInit, OnDestroy {
       this.me = r
       console.log(r);
 
-      if (this.event?.participants.some(participant => participant._id === r.user._id)) {
+      if (this.event?.participants.some(participant => participant._id === r._id)) {
         this.isRegisted = true;
       } else {
-        console.log(r.user._id);
+        console.log(r._id);
         console.log("NONOONO", this.event);
       }
     });
