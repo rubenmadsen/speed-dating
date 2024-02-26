@@ -106,7 +106,13 @@ router.get("/event/:eventId/next",authorizeUser, function (req, res) {
     });
 });
 
+/**
+ * Sets the next round of date for the event
+ */
+router.post("/event/:eventId/setnext",authorizeUser, async function (req, res) {
+    const event = await Event.findById(req.params.eventId);
 
+});
 
 // router.get("/event/:eventId", function (req, res) {
 //   console.log("event id", req.params.eventId)
@@ -114,6 +120,8 @@ router.get("/event/:eventId/next",authorizeUser, function (req, res) {
 //
 //   });
 // });
+
+
 /**
  * Join an event
  */
