@@ -12,7 +12,7 @@ import {DateModel} from "../../models/dateModel";
 import {ParticipantListComponent} from '../../event/participant-list/participant-list.component';
 import {DateContainerComponent} from '../../event/date-container/date-container.component';
 import {EventStateService} from "../../services/event-state.service";
-
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-event-page',
@@ -46,8 +46,11 @@ export class EventPageComponent implements OnInit, OnDestroy {
 
   constructor(private eventService: EventService, private authService: AuthService,
               private backend: BackendService,
-              private eventStateService: EventStateService) { }
-
+              private eventStateService: EventStateService,
+              private _location: Location) { }
+  backClicked() {
+    this._location.back();
+  }
   /**
    * Load an event
    */
