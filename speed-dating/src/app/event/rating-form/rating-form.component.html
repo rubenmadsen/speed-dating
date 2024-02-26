@@ -47,7 +47,7 @@
         
         <div id="shareContacts">
             <p id="shareText">Share contacts</p>
-            <app-toggle id="toggleBtn"></app-toggle>
+            <app-toggle id="toggleBtn" (toggleShareContacts)="toggle($event)" ></app-toggle>
         </div>
       <app-button buttonText="Continue" buttonClass="secondary" id="continueBtn"></app-button>
     </div>

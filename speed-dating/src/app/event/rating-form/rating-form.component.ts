@@ -11,6 +11,7 @@ export class RatingFormComponent {
   question3: number = 0;
   question4: number = 0;
   question5: number = 0;
+  checked: boolean = true;
 
   /**
    * Ghetto fixes.
@@ -33,6 +34,12 @@ export class RatingFormComponent {
 
   changeValueQ5(value: number) {
     this.question5 = value;
+  }
+
+  toggle(event: boolean) {
+    this.checked = event;
+    console.log(this.checked);
+    
   }
 
 }
