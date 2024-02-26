@@ -2,27 +2,33 @@
   <h1 class="your-profile">Your Profile</h1>
   <div class="profile-container">
     <div class="personal-info-container">
-      <img src="http://localhost:3000/{{user?.imagePath}}"  />
+      <img src="http://localhost:3000/{{ user?.imagePath }}" />
       <h2>{{ user?.firstname }} {{ user?.lastname }}</h2>
       <ul>
         <li>Age: {{ user?.age }} years</li>
         <li>City: {{ user?.city?.name }}</li>
       </ul>
     </div>
-
     <div class="bio-container">
       <h3>Biography</h3>
       <p>{{ user?.description }}</p>
     </div>
   </div>
   <div class="activity-container">
-    <div class="category" *ngFor="let category of categories">
+    <div class="activity" *ngFor="let category of categories">
       <h2>{{ category.name }}</h2>
-      <ng-container class="activity" *ngFor="let b of arm">
-          <p *ngIf="b.activity.category.name === category.name">
-            {{ b.activity.name }} {{ b.points }}
-          </p>
-        </ng-container>
+      <ng-container *ngFor="let b of arm">
+        <div *ngIf="b.activity.category.name === category.name && b.points !== 0">
+          <p>{{ b.activity.name }}</p>
+          <div class="star-rating">
+            <fa-icon
+              *ngFor="let _ of [].constructor(b.points); let i = index"
+              class="star-button"
+              [icon]="faStar"
+            ></fa-icon>
+          </div>
+        </div>
+      </ng-container>
     </div>
   </div>
 </div>
