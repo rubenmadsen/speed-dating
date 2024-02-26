@@ -3,7 +3,7 @@
   <app-button
     [buttonClass]="'trans clr-accent border-accent'"
     [buttonText]="'Back'"
-    routerLink="/"
+    (click)="backClicked()"
   ></app-button>
   <ng-container *ngIf="isOrganizer$ | async">
     <div class="info-and-list-container">
