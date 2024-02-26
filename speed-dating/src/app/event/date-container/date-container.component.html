@@ -1,23 +1,15 @@
-<div class="date-container" *ngIf="!hasDates">
-  <ng-container  *ngFor="let male of listUsers let i = index">
-    <app-date *ngIf="male.gender == 'male'" class="date"
-      (changeDetected)="handleEvent($event)"
-      [tableNumber]="i + 1"
-      [male]="male"
-      (returnUserToList)="participantList.recieveItem($event)"
-    ></app-date>
-  </ng-container>
-</div>
 <div class="date-container" *ngIf="hasDates">
   <ng-container  *ngFor="let date of datesList let i = index">
     <app-date
               (changeDetected)="handleEvent($event)"
+              (tableSwapDetected)="handleTableSwap($event)"
               class="date"
-              [tableNumber]="i + 1"
+              [tableNumber]="date.tableNumber"
               [matchVal]="date.percentage"
               [male]="date.personOne"
               [female]="date.personTwo"
               (returnUserToList)="participantList.recieveItem($event)"
+              (onUserClick)="onUserClick($event)"
     ></app-date>
   </ng-container>
 </div>

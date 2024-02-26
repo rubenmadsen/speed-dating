@@ -4,6 +4,15 @@
   display: grid;
   grid-template-columns: repeat(3, auto);
 }
+
 .date {
   margin: 1rem;
+}
+
+@media (max-width: 960px) {
+  
+  .date-container {
+    grid-template-columns: repeat(2, auto);
+  }
+
 }

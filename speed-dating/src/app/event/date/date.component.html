@@ -4,6 +4,7 @@
   id="table-{{ tableNumber }}"
   [cdkDropListData]="tableData"
   (cdkDropListDropped)="drop($event)"
+  (click)="onParticipantClick($event)"
 >
   <p>Table {{ tableNumber }}</p>
   <app-match-precentage-bar
@@ -18,6 +19,7 @@
     [ngClass]="i == 0 ? 'male' : 'female'"
     [ngStyle]="{ cursor: user.firstname === 'TBD' ? 'not-allowed' : (i == 0 ? 'move' : 'grab') }"
     [cdkDragDisabled]="user.firstname === 'TBD'"
+    id="{{user._id}}"
   >
     {{ user.firstname }}
 

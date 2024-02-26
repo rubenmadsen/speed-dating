@@ -7,9 +7,8 @@ import {StatusMessage} from "../interfaces/statusMessage";
 })
 export class GlobalService {
   private subject:Subject<StatusMessage> = new Subject<StatusMessage>();
-  constructor() {
 
-  }
+  constructor() {}
 
   setGlobalStatus(message:StatusMessage){
     this.subject.next(message);

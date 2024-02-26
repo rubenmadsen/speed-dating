@@ -16,10 +16,22 @@
       ></app-participant-list>
     </div>
     <div class="matching-button-container">
-      <app-button
+      <app-button *ngIf="!removedIsPressed"
         [buttonClass]="cancelEventButtonClass"
         buttonText="Cancel Event"
+        (click)="removeEvent()"
       ></app-button>
+      <app-button *ngIf="removedIsPressed"
+                  [buttonClass]="automaticMatchingButtonClass"
+                  buttonText="Back"
+                  (click)="back()"
+      ></app-button>
+      <app-button *ngIf="removedIsPressed"
+                  [buttonClass]="automaticMatchingButtonClass"
+                  buttonText="Confirm Cancellation"
+                  (click)="removeEvent()"
+      ></app-button>
+
       <app-button
         [buttonClass]="clearTablesButtonClass"
         buttonText="Clear Tables"
@@ -33,6 +45,7 @@
       <app-button
         [buttonClass]="startDateButtonClass"
         buttonText="Start date"
+        (click) = startDates()
       ></app-button>
     </div>
 
@@ -40,7 +53,9 @@
       class="date-container"
       [datesList]="datesList"
       [participantList]="participantList"
+      (onParticipantClick)="getParticipant($event)"
     ></app-date-container>
+    <app-date-review [user]="clickedParticipant" [event]="event" [isOpen]="participantIsClickedOn"> </app-date-review>
   </ng-container>
 
   <ng-container *ngIf="!(isOrganizer$ | async)">

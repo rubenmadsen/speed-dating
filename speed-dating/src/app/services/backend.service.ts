@@ -90,19 +90,19 @@ export class BackendService {
     return this.http.put<UserModel>(this.userURL,user,this.requestOptions);
   }
   getUserSharedContacts(user:UserModel):Observable<UserModel[]>{
-    return this.http.get<UserModel[]>(this.userURL + `/${user._id}/contacts`,this.requestOptions);
+    return this.http.get<UserModel[]>(this.userURL + `${user._id}/contacts`,this.requestOptions);
   }
 
   getUserPreferences(user:UserModel):Observable<any>{
-    return this.http.get<any>(this.userURL + `/${user._id}/preferences`,this.requestOptions);
+    return this.http.get<any>(this.userURL + `${user._id}/preferences`,this.requestOptions);
   }
 
   getUserInterests(user:UserModel):Observable<any>{
-    return this.http.get<any>(this.userURL + `/${user._id}/interests`,this.requestOptions);
+    return this.http.get<any>(this.userURL + `${user._id}/interests`,this.requestOptions);
   }
 
   getUserMatchingData(user:UserModel):Observable<any>{
-    return this.http.get<any>(this.userURL + `/${user._id}/matchdata`,this.requestOptions);
+    return this.http.get<any>(this.userURL + `${user._id}/matchdata`,this.requestOptions);
   }
 
   /**
@@ -251,9 +251,8 @@ export class BackendService {
   }
 
   //gets a specific user by passing the id
-  getSpecificUser(id:string):Promise<UserModel>{
-    const responseObservable = this.http.get<UserModel>(this.userURL+"/user/:"+id)
-    return firstValueFrom(responseObservable);
+  getSpecificUser(id:string):Observable<UserModel>{
+      return this.http.get<UserModel>(this.userURL+"user/"+id,this.requestOptions)
   }
 
   // Preference

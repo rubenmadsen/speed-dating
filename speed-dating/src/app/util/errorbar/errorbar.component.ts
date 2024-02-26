@@ -31,10 +31,13 @@ export class ErrorbarComponent {
       this.subject = globalService.getGlobalStatusSubject();
       this.setSubject(this.subject)
   }
+
   ngAfterViewInit() {
     this.container = this.containerElementRef.nativeElement;
     this.p = this.pElementRef.nativeElement;
+    this.p!.style.userSelect = 'none';
   }
+
   setSubject(subject:Subject<StatusMessage>){
     // this.subject.unsubscribe();
     this.subject = subject;
@@ -59,18 +62,17 @@ export class ErrorbarComponent {
 
 
   private start(){
-    this.unfold(this.queue.shift()!);
+    const mes = this.queue.shift()!
+    this.unfold(mes);
+    const ms = mes.ms != undefined ? mes.ms : this.displayTime;
+
     setTimeout(() => {
       this.fold();
-    }, this.displayTime);
+    },
+      ms);
   }
   private unfold(message: StatusMessage) {
     this.display = message.message
-    // console.log("unfolding")
-    // console.log("message",message)
-    // console.log("type",message.type)
-    // console.log("cols",this.colors)
-    // console.log("colsType",this.colors[message.type])
     if (this.container) {
       this.container.classList.toggle("open",true);
       this.container.style.backgroundColor = this.colors[message.type][0];
@@ -80,7 +82,6 @@ export class ErrorbarComponent {
   }
 
   private fold(){
-    console.log("folding")
     if (this.container)
       this.container.classList.toggle("open",false);
     if(this.queue.length === 0)
