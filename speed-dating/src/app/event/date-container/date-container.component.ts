@@ -1,7 +1,7 @@
 import {Component, Input, SimpleChanges} from '@angular/core';
 import {ParticipantListComponent} from "../participant-list/participant-list.component";
 import {UserModel} from "../../models/userModel";
-import {BehaviorSubject, Subscription} from "rxjs";
+import {BehaviorSubject, repeat, Subscription} from "rxjs";
 import {DateModel} from "../../models/dateModel";
 import {EventStateService} from "../../services/event-state.service";
 import {BackendService} from "../../services/backend.service";
@@ -23,14 +23,8 @@ export class DateContainerComponent {
   }
 
   ngOnInit() {
-    this.filterParticipants();
     this.subscribeToDates();
   }
-
-   private filterParticipants() {
-    this.listUsers = this.participantList.participantsList?.filter(p => p.gender == 'male')
-   }
-
 
   subscribeToDates() {
     this.eventStateService.dates$.subscribe(dates => {
@@ -58,6 +52,7 @@ export class DateContainerComponent {
       this.backendService.matchUserWithUser(eventData.tableUsers[0], eventData.tableUsers[1]).subscribe({
         next: (response) => {
           this.eventStateService.removeDate(eventData.tableUsers[0]);
+          response.tableNumber = eventData.tableNumber;
           this.eventStateService.addEvent(response);
         },
         error: (error) => {
@@ -66,5 +61,8 @@ export class DateContainerComponent {
       })
       // tell backend to create date, then add date to EventStateService
     }
+  }
+  handleTableSwap(event: { previousTableNumber: number, currentTableNumber: number }) {
+    this.eventStateService.changeTable(event.previousTableNumber, event.currentTableNumber)
   }
 }

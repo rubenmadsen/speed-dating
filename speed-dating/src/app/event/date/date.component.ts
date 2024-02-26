@@ -28,6 +28,7 @@ export class DateComponent {
   tableData: { users: UserModel[], matchVal: number } = { users: [], matchVal: 0 };
 
   @Output() changeDetected = new EventEmitter<{ tableUsers: UserModel[], tableNumber: number }>();
+  @Output() tableSwapDetected = new EventEmitter<{ previousTableNumber: number, currentTableNumber: number }>();
 
 
   /**
@@ -84,12 +85,12 @@ export class DateComponent {
   emitUpdatedTables(previousContainer: any, currentContainer: any) {
     this.changeDetected.emit({
       tableUsers: previousContainer.data.users,
-      tableNumber: previousContainer.id, // Ensure you have tableNumber in your container's data
+      tableNumber: this.extractTableNumber(previousContainer.id),
     });
 
     this.changeDetected.emit({
       tableUsers: currentContainer.data.users,
-      tableNumber: currentContainer.id, // Ensure you have tableNumber in your container's data
+      tableNumber: this.extractTableNumber(currentContainer.id),
     });
   }
 
@@ -98,22 +99,19 @@ export class DateComponent {
    * Move participants from entire table to another table.
    */
   moveTable(event: any) {
-    const itemFromPrevContainer = event.previousContainer.data.users[0]
-    const itemFromPrevContainer1 = event.previousContainer.data.users[1]
+
     const itemFromPrevContainer2 = event.previousContainer.data.matchVal
-
-    const itemFromCurrentContainer = event.container.data.users[0]
-    const itemFromCurrentContainer1 = event.container.data.users[1]
     const itemFromCurrentContainer2 = event.container.data.matchVal
-
     event.container.data.matchVal = itemFromPrevContainer2
     event.previousContainer.data.matchVal = itemFromCurrentContainer2
     this.tableData['matchVal'] = itemFromPrevContainer2
 
-    event.previousContainer.data.users[0] = itemFromCurrentContainer === undefined ? 'TBD' : itemFromCurrentContainer
-    event.previousContainer.data.users[1] = itemFromCurrentContainer1 === undefined ? 'TBD' : itemFromCurrentContainer1
-    event.container.data.users[0] = itemFromPrevContainer === undefined ? 'TBD' : itemFromPrevContainer
-    event.container.data.users[1] = itemFromPrevContainer1 === undefined ? 'TBD' : itemFromPrevContainer1
+    const previousTableNumber = this.extractTableNumber(event.previousContainer.id);
+    const currentTableNumber = this.extractTableNumber(event.container.id);
+    this.tableSwapDetected.emit({ previousTableNumber, currentTableNumber });
+  }
 
+  extractTableNumber(id: string): number {
+    return parseInt(id.replace('table-', ''), 10);
   }
 }
