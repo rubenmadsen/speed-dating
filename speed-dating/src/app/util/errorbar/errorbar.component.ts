@@ -27,6 +27,7 @@ export class ErrorbarComponent {
   private displayTime:number = 3000;
   private foldingTime:number = 500;
   private subject:Subject<StatusMessage>;
+  private interval:any;
   constructor(private globalService:GlobalService) {
       this.subject = globalService.getGlobalStatusSubject();
       this.setSubject(this.subject)
@@ -48,11 +49,20 @@ export class ErrorbarComponent {
     });
   }
 
+  private release(){
+    clearInterval(this.interval);
+    this.fold();
+  }
   /**
    * Adds a message to the queue
    * @param message The message
    */
   addMessage(message:any){
+    if (message.ms != undefined)
+      if (message.ms === -2){
+        this.release();
+        return;
+      }
     this.queue.push(message);
     if(!this.running){
       this.running = true;
@@ -64,9 +74,10 @@ export class ErrorbarComponent {
   private start(){
     const mes = this.queue.shift()!
     this.unfold(mes);
-    const ms = mes.ms != undefined ? mes.ms : this.displayTime;
-
-    setTimeout(() => {
+    let ms = mes.ms != undefined ? mes.ms : this.displayTime;
+    if (ms === -1)
+      ms = 10000000;
+    this.interval = setTimeout(() => {
       this.fold();
     },
       ms);
