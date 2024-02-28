@@ -175,9 +175,15 @@ export class EventPageComponent implements OnInit, OnDestroy {
        return
      }
 
+     this.backend.setDatesForRound(this.event!, this.datesList).subscribe({
+       next: (response) => {
+         console.log(response)
+       },
+       error: (error) => {
+         console.log(error)
+       }
+     })
 
-
-    // Send dates to backend, this.datesList
   }
 
   /**
@@ -286,7 +292,6 @@ export class EventPageComponent implements OnInit, OnDestroy {
   getParticipant(id :string){
     this.backend.getSpecificUser(id).subscribe(user => {
       this.clickedParticipant = user;
-      console.log(user.firstname)
       this.participantIsClickedOn = !this.participantIsClickedOn;
     });
   }
