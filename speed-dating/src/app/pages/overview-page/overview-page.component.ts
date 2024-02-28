@@ -12,6 +12,7 @@ import {firstValueFrom} from "rxjs";
   styleUrls: ['./overview-page.component.css']
 })
 export class OverviewPageComponent {
+
   protected yourEvents: EventModel[];
   protected recommendedEvents: EventModel[];
   protected completedEvents: EventModel[];
@@ -38,13 +39,26 @@ export class OverviewPageComponent {
     this.isOrganizer = me.isOrganizer;
     this.me = me;
     this.isLoadingContacts = false;
-    await this.getMoreEvents();
-    await this.loadCityEvents()
+    this.loadMyEvents();
+    this.loadCompleted();
+    await this.loadCityEvents();
   }
 
-  async loadMyEvents(){
-
-
+  loadMyEvents(){
+    this.me.events.forEach(event => {
+      if (!event.hasEnded) {
+        this.yourEvents.push(event);
+      }
+    });
+    this.isLoadingCompletedEvents = false;
+  }
+  loadCompleted(){
+     this.me.events.forEach(event => {
+       if (event.hasEnded) {
+         this.completedEvents.push(event);
+       }
+     });
+     this.isLoadingYourEvents = false;
   }
 
   async loadCityEvents(){
@@ -61,41 +75,24 @@ export class OverviewPageComponent {
     this.isLoadingRecommendedEvents = false;
   }
 
-  async getMoreEvents(){
-    const pp =  await firstValueFrom(this.backend.getAlleventsStream(this.pingpong));
-    this.pingpong = pp
-    pp.items.forEach(event => {
-      if (this.me.events.some(x => x._id === event._id)) {
-        if (!this.yourEvents.some(e => e._id === event._id) && !event.hasEnded) { // Check for duplicates
-          this.yourEvents.push(event);
-        }
-      }
-    });
-    this.me.events.forEach(event => {
-      if(event.hasEnded) {
-        const isEventAlreadyInCompleted = this.completedEvents.some(completedEvent => completedEvent._id === event._id);
-        if (!isEventAlreadyInCompleted) {
-          this.completedEvents.push(event);
-        }
-        this.isLoadingYourEvents = false;
-      } else {
-        const isEventAlreadyInYourEvents = this.yourEvents.some(yourEvent => yourEvent._id === event._id);
-        if (!isEventAlreadyInYourEvents) {
-          this.yourEvents.push(event);
-        }
-        this.isLoadingCompletedEvents = false;
-      }
-    });
-
-    if(pp.items.length !== 0){
-      await this.getMoreEvents()
-    } else {
-      this.isLoadingYourEvents = false;
-      this.isLoadingContacts = false;
-      this.isLoadingCompletedEvents = false;
-      return
-    }
-  }
+  // async getMoreEvents(){
+  //   const pp =  await firstValueFrom(this.backend.getAlleventsStream(this.pingpong));
+  //   this.pingpong = pp
+  //   pp.items.forEach(event => {
+  //     if (this.me.events.some(x => x._id === event._id)) {
+  //       if (!this.yourEvents.some(e => e._id === event._id) && !event.hasEnded) { // Check for duplicates
+  //         this.yourEvents.push(event);
+  //       }
+  //     }
+  //   });
+  //   if(pp.items.length !== 0){
+  //     await this.getMoreEvents()
+  //   } else {
+  //     this.isLoadingContacts = false;
+  //     this.isLoadingCompletedEvents = false;
+  //     return
+  //   }
+  // }
 
   addEvent(event:EventModel){
     this.yourEvents.push(event);
