@@ -39,60 +39,78 @@ export class OverviewPageComponent {
     this.isOrganizer = me.isOrganizer;
     this.me = me;
     this.isLoadingContacts = false;
-    this.loadMyEvents();
-    this.loadCompleted();
-    await this.loadCityEvents();
+    // this.loadMyEvents();
+    // this.loadCompleted();
+    // await this.loadCityEvents();
+    this.getMoreEvents()
   }
 
-  loadMyEvents(){
-    this.me.events.forEach(event => {
-      if (!event.hasEnded) {
-        this.yourEvents.push(event);
-      }
-    });
-    this.isLoadingCompletedEvents = false;
-  }
-  loadCompleted(){
-     this.me.events.forEach(event => {
-       if (event.hasEnded) {
-         this.completedEvents.push(event);
-       }
-     });
-     this.isLoadingYourEvents = false;
-  }
-
-  async loadCityEvents(){
-    this.backend.getEventsByLocation(this.me).subscribe( {
-      next: (response) => {
-        response.forEach(event => {
-          this.recommendedEvents.push(event)
-        });
-      },
-      error: (err => {
-        console.log(err)
-      })
-    })
-    this.isLoadingRecommendedEvents = false;
-  }
-
-  // async getMoreEvents(){
-  //   const pp =  await firstValueFrom(this.backend.getAlleventsStream(this.pingpong));
-  //   this.pingpong = pp
-  //   pp.items.forEach(event => {
-  //     if (this.me.events.some(x => x._id === event._id)) {
-  //       if (!this.yourEvents.some(e => e._id === event._id) && !event.hasEnded) { // Check for duplicates
-  //         this.yourEvents.push(event);
-  //       }
+  // loadMyEvents(){
+  //   this.me.events.forEach(event => {
+  //     if (!event.hasEnded) {
+  //       this.yourEvents.push(event);
   //     }
   //   });
-  //   if(pp.items.length !== 0){
-  //     await this.getMoreEvents()
-  //   } else {
-  //     this.isLoadingContacts = false;
-  //     this.isLoadingCompletedEvents = false;
-  //     return
-  //   }
+  //   this.isLoadingCompletedEvents = false;
   // }
+  // loadCompleted(){
+  //    this.me.events.forEach(event => {
+  //      if (event.hasEnded) {
+  //        this.completedEvents.push(event);
+  //      }
+  //    });
+  //    this.isLoadingYourEvents = false;
+  // }
+  //
+  // async loadCityEvents(){
+  //   this.backend.getEventsByLocation(this.me).subscribe( {
+  //     next: (response) => {
+  //       response.forEach(event => {
+  //         this.recommendedEvents.push(event)
+  //       });
+  //     },
+  //     error: (err => {
+  //       console.log(err)
+  //     })
+  //   })
+  //   this.isLoadingRecommendedEvents = false;
+  // }
+
+  getMoreEvents(){
+    this.backend.getAlleventsStream(this.pingpong).subscribe(pp => {
+
+      this.pingpong = pp
+
+      const yourEventsFilter = pp.items.filter(event =>
+        event.participants.some(participant => participant._id === this.me._id)
+      );
+      yourEventsFilter.forEach(event => {
+        // console.log(this.yourEvents);
+        if(event.hasEnded){
+          this.completedEvents.push(event)
+          this.isLoadingCompletedEvents = false;
+        } else {
+          this.yourEvents.push(event)
+          this.isLoadingYourEvents = false;
+        }
+      })
+
+      const cityFilter = pp.items.filter(event => event.city._id === this.me.city._id && !(this.yourEvents.includes(event)));
+
+      cityFilter.forEach(event => {
+        console.log(event)
+        this.recommendedEvents.push(event)
+      });
+
+      if(pp.items.length !== 0){
+        this.getMoreEvents()
+      }
+      this.isLoadingContacts = false;
+      this.isLoadingRecommendedEvents = false;
+      this.isLoadingYourEvents = false;
+      this.isLoadingCompletedEvents = false;
+    })
+  }
 
   addEvent(event:EventModel){
     this.yourEvents.push(event);
