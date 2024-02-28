@@ -26,14 +26,14 @@ router.get("/city/:cityId/events", function (req, res) {
   console.log("city id", req.params.cityId)
   CityModel.findById(req.params.cityId).populate({ 
     path: 'events',
-    populate: {
+    populate:[ {
       path: 'city',
       model: 'city',
     },
-    populate: {
+    {
       path: 'participants',
       model: 'user'
-    }   
+    }]   
     }).then(city => {
       console.log(city)
       city.events.city = city
