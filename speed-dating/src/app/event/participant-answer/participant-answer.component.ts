@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {DateModel} from "../../models/dateModel";
 
 @Component({
@@ -6,10 +6,13 @@ import {DateModel} from "../../models/dateModel";
   templateUrl: './participant-answer.component.html',
   styleUrls: ['./participant-answer.component.css']
 })
-export class ParticipantAnswerComponent {
+export class ParticipantAnswerComponent implements OnInit{
   @Input() date!: DateModel
 
   constructor() {
 
+  }
+  ngOnInit(){
+    console.log("TSET")
   }
 }

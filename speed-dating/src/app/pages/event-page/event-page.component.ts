@@ -256,4 +256,5 @@ export class EventPageComponent implements OnInit, OnDestroy {
       this.participantIsClickedOn = !this.participantIsClickedOn;
     });
   }
+
 }
