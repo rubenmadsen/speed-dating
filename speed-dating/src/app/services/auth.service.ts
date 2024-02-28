@@ -23,7 +23,6 @@ export class AuthService {
   checkSession(): void {
     this.http.get<any>( this.backendURL +'api/validate-token', { withCredentials: true }).subscribe({
       next: (response) => {
-        console.log("hej")
         this.userSubject.next(response.user);
         this.isLoggedInSubject.next(response.valid)
         this.isOrganizerSubject.next(response.isOrganizer)
