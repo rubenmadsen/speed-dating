@@ -1,7 +1,7 @@
 <div class="event-info-container">
   <img [src]="'http://localhost:3000/' + event?.imagePath"/>
   <div class="event-text-container">
-    <p class="date">{{ event!.startDate }}</p>
+    <p class="date">{{ event?.startDate | date: 'fullDate' }}</p>
     <p class="location">{{ event!.location }}</p>
     <p class="information">{{ event!.description }}</p>
     <p *ngIf="!event?.hasEnded" class="registered">{{ event!.participants.length }}/{{event!.totalParticipants}} Registered</p>
