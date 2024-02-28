@@ -14,6 +14,10 @@
   justify-content: flex-start;
 }
 
+app-button{
+  width: fit-content;
+}
+
 h1 {
   font-size: 2rem;
   font-weight: bold;
@@ -27,6 +31,7 @@ h2 {
 
 .placeholder-text {
   font-style: italic;
+  min-height:5rem;
 }
 
 .card-container::-webkit-scrollbar {

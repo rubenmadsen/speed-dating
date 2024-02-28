@@ -1,3 +1,23 @@
+
+/*!*Color scheme based on the logo*!*/
+/*:root {*/
+/*  --vibrant-red: #E63946;*/
+/*  --deep-pink: #FF61A6;*/
+/*  --purple: #9B5DE5;*/
+/*  --soft-lavender: #C77DFF;*/
+/*  --warm-white: #FDFDFF;*/
+/*  --metallic-silver: #C0C0C0;*/
+/*}*/
+
+/*.smash-theme {*/
+/*  --primary-color: var(--vibrant-red);*/
+/*  --accent-color: var(--deep-pink);*/
+/*  --secondary-color: var(--purple);*/
+/*  --tertiary-color: var(--soft-lavender);*/
+/*  --neutral-color: var(--warm-white);*/
+/*  --detail-color: var(--metallic-silver);*/
+/*}*/
+
 :root{
   --white-clr: #f3f3f3;
   --black-clr: #343434;

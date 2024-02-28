@@ -3,6 +3,7 @@ import {EventModel} from "../../models/eventModel";
 import {UserModel} from "../../models/userModel";
 import {BackendService} from "../../services/backend.service";
 import {PingPong} from "../../interfaces/PingPong";
+import {firstValueFrom} from "rxjs";
 
 
 @Component({
@@ -11,6 +12,7 @@ import {PingPong} from "../../interfaces/PingPong";
   styleUrls: ['./overview-page.component.css']
 })
 export class OverviewPageComponent {
+
   protected yourEvents: EventModel[];
   protected recommendedEvents: EventModel[];
   protected completedEvents: EventModel[];
@@ -32,39 +34,64 @@ export class OverviewPageComponent {
   }
 
   async ngOnInit(){
-    this.backend.getMe().subscribe(me => {
-      console.log(me)
-      this.contacts = me.sharedContacts;
-      this.isOrganizer = me.isOrganizer;
-      this.me = me;
-      this.getMoreEvents()
-      this.isLoadingContacts = false;
-    });
-
-
+    const me = await firstValueFrom(this.backend.getMe());
+    this.contacts = me.sharedContacts;
+    this.isOrganizer = me.isOrganizer;
+    this.me = me;
+    this.isLoadingContacts = false;
+    // this.loadMyEvents();
+    // this.loadCompleted();
+    // await this.loadCityEvents();
+    this.getMoreEvents()
   }
+
+  // loadMyEvents(){
+  //   this.me.events.forEach(event => {
+  //     if (!event.hasEnded) {
+  //       this.yourEvents.push(event);
+  //     }
+  //   });
+  //   this.isLoadingCompletedEvents = false;
+  // }
+  // loadCompleted(){
+  //    this.me.events.forEach(event => {
+  //      if (event.hasEnded) {
+  //        this.completedEvents.push(event);
+  //      }
+  //    });
+  //    this.isLoadingYourEvents = false;
+  // }
+  //
+  // async loadCityEvents(){
+  //   this.backend.getEventsByLocation(this.me).subscribe( {
+  //     next: (response) => {
+  //       response.forEach(event => {
+  //         this.recommendedEvents.push(event)
+  //       });
+  //     },
+  //     error: (err => {
+  //       console.log(err)
+  //     })
+  //   })
+  //   this.isLoadingRecommendedEvents = false;
+  // }
 
   getMoreEvents(){
     this.backend.getAlleventsStream(this.pingpong).subscribe(pp => {
 
       this.pingpong = pp
 
-      const yourEventsFilter = pp.items.filter(event => {
-        this.me.events.forEach(x => { // If organizer
-          if (x._id === event._id) {
-            this.yourEvents.push(event)
-          }
-        })
+      const yourEventsFilter = pp.items.filter(event =>
         event.participants.some(participant => participant._id === this.me._id)
-    });
+      );
       yourEventsFilter.forEach(event => {
         // console.log(this.yourEvents);
         if(event.hasEnded){
           this.completedEvents.push(event)
-          this.isLoadingYourEvents = false;
+          this.isLoadingCompletedEvents = false;
         } else {
           this.yourEvents.push(event)
-          this.isLoadingCompletedEvents = false;
+          this.isLoadingYourEvents = false;
         }
       })
 
@@ -73,27 +100,22 @@ export class OverviewPageComponent {
       cityFilter.forEach(event => {
         console.log(event)
         this.recommendedEvents.push(event)
-
-        this.isLoadingRecommendedEvents = false;
       });
 
       if(pp.items.length !== 0){
         this.getMoreEvents()
       }
-
-      this.isLoadingYourEvents = false;
       this.isLoadingContacts = false;
       this.isLoadingRecommendedEvents = false;
+      this.isLoadingYourEvents = false;
       this.isLoadingCompletedEvents = false;
     })
   }
 
-
   addEvent(event:EventModel){
     this.yourEvents.push(event);
-    console.log("sd")
-    console.log("Added event ", event)
   }
+
   openEventPopup(){
     this.showNewEventPopup = !this.showNewEventPopup
   }

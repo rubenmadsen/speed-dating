@@ -28,7 +28,7 @@ export class EventCardComponent {
     this.status = this.event.currentParticipants +  "/" + this.event.totalParticipants;
     this.imageUrl = `url(http://localhost:3000/${this.event.imagePath})`;
     const me = await firstValueFrom(this.backend.getMe());
-    if (me){
+    if (me && !me.isOrganizer){
       const seats = this.event.participants.filter(participant => participant.gender === me.gender).length
       this.status = 10 - seats + "";
       if ((10 - seats) === 0)

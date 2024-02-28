@@ -42,11 +42,26 @@ app-event-info {
   width: 50%;
 }
 
+.loader {
+  border: 0.25rem solid var(--black-clr);
+  border-top: 0.25rem solid white;
+  border-radius: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
+  animation: spin 1s linear infinite;
+  margin-left:3rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 @media (max-width: 960px) {
 
   .page-container {
     width: 100%;
-  }  
+  }
 
   .info-and-list-container {
     flex-direction: column;
