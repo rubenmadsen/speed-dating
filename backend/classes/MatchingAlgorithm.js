@@ -144,6 +144,8 @@ class MatchingAlgorithm {
         date.personTwo = girl;
 
         //return activityResults;
+        if (this.event)
+            date.event = this.event;
         return date;
     }
 

@@ -240,14 +240,18 @@ router.get("/event/:eventId/simulatedates",async function (req, res) {
 /**
  * Sets the dates for the current date round of an Event
  */
-router.post("/event/:eventId/dates",authorizeUser, function (req,res) {
+router.post("/event/:eventId/dates",authorizeUser, async function (req,res) {
+    console.log("body", req.body)
+    const personOne = await User.findById(req.body.personOne);
+    console.log("person one", personOne)
+
     Event.findById(req.params.eventId).then(event => {
         Date.insertMany(req.body).then(dateIds => {
             Event.findByIdAndUpdate(
                 req.params.eventId,
                 {
                     $push:{ dates:{ dateIds } } ,
-                    $inc:{round: event.round + 1}
+                    $inc:{round:1}
                 },
                 {new: true}
             ).then(updatedEvent => {

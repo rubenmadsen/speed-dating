@@ -85,7 +85,6 @@ router.get("/validate/:email", function (req, res) {
  * Gets a specific user
  */
 router.get('/user/user/:id',authorizeUser, async function (req, res){
-    console.log("Vad är detta för skit");
     User.findOne({_id: req.params.id}).then(user=>{
         if (user){
             console.log(user)
