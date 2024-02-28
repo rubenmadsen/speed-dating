@@ -1,20 +1,25 @@
 <div class="participant-answer-container">
-  <p>{{date.dateRound}}</p>
-  <div id="date-info-container">{{ date.personTwo }} | {{date.percentage}}% match</div>
+  <p>Meeting 1</p>
+  <div id="date-info-container">{{ date.personTwo }}  | {{date.percentage}}% match</div>
+
   <div class="answer-container">
-    <p class="nameP">{{ date.personOne }}/p>
-    <ng-container *ngFor="let feedback of date.feedback"><p>{{feedback}}</p></ng-container>
-<!--    <p>Rate your date: 8/10</p>
+    <p class="nameP">{{date.personOne}}</p>
+<!--    <ng-container *ngFor="let feedback of date.feedback"><p>{{feedback}}</p></ng-container>-->
+<!--
+    <p>Rate your date: 8/10</p>
     <p>How would you rate X: 5/10</p>
     <p>How would you rate Y: 5/10</p>
     <p>How would you rate Z: 5/10</p>
     <p>How would you rate V: 5/10</p>
-    <p>How would you rate Q: 5/10</p>-->
+    <p>How would you rate Q: 5/10</p>
+-->
   </div>
 
   <div class="answer-container">
-    <p class="nameP">{{ date.personTwo }}</p>
+    <p class="nameP">{{date.personTwo}}</p>
+<!--
     <ng-container *ngFor="let feedback of date.feedback"><p>{{feedback}}</p></ng-container>
+-->
 <!--    <p>Rate your date: 8/10</p>
     <p>How would you rate X: 5/10</p>
     <p>How would you rate Y: 5/10</p>

@@ -1,11 +1,10 @@
 .participant-answer-container{
   height: 100%;
-  width: 30%;
+  width: 90%;
 }
 #date-info-container{
   font-weight: bold;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
+  width: 15rem;
 }
 .answer-container{
   height: 50%;

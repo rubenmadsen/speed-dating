@@ -13,6 +13,9 @@ export class DateReviewComponent implements OnInit{
   @Input() isOpen: Boolean = false;
   @Input() user : UserModel | undefined;
   @Input()event!: EventModel |null;
+/*
+  dates!: DateModel[];
+*/
   userDates : DateModel[] = [];
   constructor(private backend: BackendService) {
 
@@ -20,18 +23,38 @@ export class DateReviewComponent implements OnInit{
   ngOnInit(){
     this.user
     this.event
+/*
     console.log(this.event?.dates)
+*/
+/*
+    this.getDatesFromBackend();
+*/
+/*
     this.getDateForUser();
+*/
   }
 
 
-  getDateForUser(){
+/*  getDateForUser(){
     this.event?.dates.forEach(date=>{
       if (date.personOne===this.user){
         this.userDates.push(date)
       }
     });
+  }*/
+  getDatesFromBackend(){
+    if (this.event !== null){
+      this.backend.getSimulatedDatesWithFeedback(this.event).subscribe(event=>{
+        console.log("e: ", event)
+        /*dates.forEach(date =>{
+          if(date.personOne === this.user){
+            this.userDates.push(date)
+          }
+        })*/
+      });
+    }
   }
+
   togglePopUp(){
     console.log("Table No: ")
     /*this.isOpen = !this.isOpen;*/

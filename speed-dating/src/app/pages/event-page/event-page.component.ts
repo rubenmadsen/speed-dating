@@ -27,7 +27,6 @@ export class EventPageComponent implements OnInit, OnDestroy {
 
   protected readonly faGripVertical = faGripVertical;
   event: EventModel | null = null;
-
   @ViewChild(ParticipantListComponent) childParticipantList!: ParticipantListComponent;
 
   clickedParticipant!:UserModel;
@@ -71,7 +70,6 @@ export class EventPageComponent implements OnInit, OnDestroy {
     this.subscription = this.eventService.currentEvent.subscribe(event => {
       this.event = event;
     });
-
     // await this.authService.checkSession();
     this.isOrganizer$ = this.authService.isOrganizer;
     this.participantsList = this.event?.participants;

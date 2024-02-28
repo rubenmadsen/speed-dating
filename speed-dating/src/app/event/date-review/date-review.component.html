@@ -5,17 +5,18 @@
       <h1>{{user?.firstname}} {{user?.lastname}}</h1>
       <p>Age: {{user?.age}}</p>
       <p>Sex: {{user?.gender}}</p>
-<!--
-      <p>Interests {{user?.activityData}}</p>
--->
 
 
     </div>
     <div id="date-review-container">
-      <ng-container *ngFor="let date of userDates">
-        <app-participant-answer [date]="date"></app-participant-answer>
+      <ng-container *ngIf="userDates.length !== 0">
+        <ng-container *ngFor="let date of userDates">
+          <app-participant-answer [date]="date"></app-participant-answer>
+        </ng-container>
       </ng-container>
-
+      <ng-container *ngIf="userDates.length ===0">
+        <p> No feedback</p>
+      </ng-container>
     </div>
 
 

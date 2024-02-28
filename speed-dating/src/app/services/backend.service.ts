@@ -198,7 +198,13 @@ export class BackendService {
     return this.http.post<DateModel[]>(this.eventURL + event._id + "dates", dates, this.requestOptions);
   }
 
-
+  /**
+   * Sets simulate dates and DateFeedback for an Event
+   *  @param event an event
+   */
+  getSimulatedDatesWithFeedback(event :EventModel):Observable<EventModel>{
+    return this.http.get<EventModel> (this.eventURL + event._id+ "/simulatedates", this.requestOptions);
+  }
 
 
   // Date
