@@ -1,15 +1,18 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, NgModule, Output, ViewEncapsulation} from '@angular/core';
 import {BackendService} from "../../services/backend.service";
 import {CategoryModel} from "../../models/categoryModel";
 import {ActivityModel} from "../../models/activityModel";
 import {ActivityRatingModel} from "../../models/activityRatingModel";
 import {faStar} from "@fortawesome/free-solid-svg-icons";
 
+
 @Component({
   selector: 'app-activities-rating',
   templateUrl: './activities-rating.component.html',
-  styleUrls: ['./activities-rating.component.css']
+  styleUrls: ['./activities-rating.component.css'],
+  encapsulation: ViewEncapsulation.Emulated
 })
+
 export class ActivitiesRatingComponent {
 
   protected readonly faStar = faStar
@@ -17,7 +20,7 @@ export class ActivitiesRatingComponent {
   categories: CategoryModel[] = [];
   activities: ActivityModel[] = [];
   hoverState: Record<string, number> = {};
-
+  toolTips: string[] = ["","Really dont like","Dont like","Whatever","Like","Really like"]
   // Public to allow Signup component to reach the list
   public activityRatings: ActivityRatingModel[] = [];
 

@@ -23,6 +23,9 @@
               (mouseleave)="
                 activity._id ? handleMouseLeave(activity._id) : null
               "
+              title="{{toolTips[i]}}"
+              matTooltipClass="custom-tooltip"
+              matTooltip="{{toolTips[i]}}" matTooltipShowDelay="0"
             ></fa-icon>
           </div>
         </div>

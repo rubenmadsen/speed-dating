@@ -11,6 +11,7 @@ const path = require("path");
 const User = require("./models/userModel");
 const Event = require("./models/eventModel");
 const Date = require("./models/dateModel");
+const City = require("./models/cityModel");
 
 // Routes
 const userRoutes = require("./routes/userRoutes");
@@ -47,29 +48,6 @@ app.use(uploadRoutes);
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
-
-app.get("/api/validate-token", authorizeUser, async function (req, res) {
-  const user = await User.findById(req.user.id) .populate('city')
-  .populate("sharedContacts")
-  .populate("events")
-  .populate({
-    path: 'activityData', // Populating activityData
-    populate: {
-      path: 'activity', // Within each activityData, populate activity
-      model: 'activity', // Ensure this matches the name you've used in mongoose.model for your Activity model
-      populate: {
-        path: 'category', // Within each activity, now populate category
-        model: 'category' // Again, ensure this matches the name used in mongoose.model for your Category model
-      }
-    }
-  });;
-  if (user) {
-    res.status(200).send({ valid: true, user: user , isOrganizer: user.isOrganizer});
-  } else {
-    res.status(404).send({ valid: false, message: "User not found" });
-  }
-});
-
 
 
 mongoose.connect(process.env.DB_SERVER).then((result) => {

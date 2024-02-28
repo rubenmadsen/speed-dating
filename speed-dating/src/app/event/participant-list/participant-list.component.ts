@@ -33,9 +33,10 @@ export class ParticipantListComponent {
   drop(event: any) {
     if (event.container === event.previousContainer) { // Drag and drop within same container
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex)
-    } else if (event.previousIndex !== 0 && event.previousContainer.data.users[event.previousIndex].firstname !== "TBD" && event.previousContainer.data.users[event.previousIndex].firstname !== undefined) { 
+    } else if (event.previousIndex !== 0 && event.previousContainer.data.users[event.previousIndex].firstname !== "TBD" && event.previousContainer.data.users[event.previousIndex].firstname !== undefined) {
       transferArrayItem(event.previousContainer.data.users, event.container.data, event.previousIndex, 1)
       event.previousContainer.data.users[1] = { firstname: 'TBD' };
+      event.previousContainer.data.matchVal = 0;
     }
   }
 

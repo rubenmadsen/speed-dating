@@ -195,7 +195,7 @@ export class BackendService {
    * Creates and adds the date to an event.
    */
   setDatesForRound(event:EventModel, dates:DateModel[]):Observable<DateModel[]>{
-    return this.http.post<DateModel[]>(this.eventURL + event._id + "dates", dates, this.requestOptions);
+    return this.http.post<DateModel[]>(this.eventURL + event._id + "/dates", dates, this.requestOptions);
   }
 
   /**
