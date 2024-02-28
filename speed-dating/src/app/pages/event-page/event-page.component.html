@@ -62,11 +62,13 @@
     <div class="info-and-list-container">
       <app-event-info [event]="event"></app-event-info>
     </div>
+    <div class="loader" *ngIf="isLoading"></div>
     <app-button
       *ngIf="
         !isRegisted &&
         event!.participants.length < event!.totalParticipants &&
-        !event?.hasEnded
+        !event?.hasEnded &&
+        !isLoading
       "
       [buttonClass]="'accent border-accent clr-white '"
       [buttonText]="'Register'"
@@ -74,7 +76,8 @@
     ></app-button>
 
     <app-button
-      *ngIf="isRegisted && !event?.hasEnded"
+      *ngIf="isRegisted && !event?.hasEnded &&
+        !isLoading"
       [buttonClass]="'accent border-accent clr-white '"
       [buttonText]="'Unregister'"
       (click)="unregister()"
@@ -84,14 +87,16 @@
       *ngIf="
         !isRegisted &&
         event!.participants.length >= event!.totalParticipants &&
-        !event?.hasEnded
+        !event?.hasEnded &&
+        !isLoading
       "
       [buttonClass]="'accent border-accent clr-white disabled'"
       [buttonText]="'Event full'"
     ></app-button>
 
     <app-button
-      *ngIf="event?.hasEnded"
+      *ngIf="event?.hasEnded &&
+        !isLoading"
       [buttonClass]="'accent border-accent clr-white disabled'"
       [buttonText]="'Event ended'"
     ></app-button>

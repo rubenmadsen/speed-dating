@@ -1,6 +1,6 @@
 import {Component, Input, OnDestroy, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {faGripVertical} from "@fortawesome/free-solid-svg-icons/faGripVertical";
-import {BehaviorSubject, Observable, Subscription} from "rxjs";
+import {BehaviorSubject, delay, Observable, Subscription} from "rxjs";
 import {EventService} from "../../services/event.service";
 import {EventModel} from "../../models/eventModel";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -47,6 +47,7 @@ export class EventPageComponent implements OnInit, OnDestroy {
   automaticMatchingButtonClass: string = 'accent border-accent clr-white disabled';
   startDateButtonClass: string = 'accent border-accent clr-white disabled';
 
+  isLoading: Boolean = false;
 
   isOrganizer$: Observable<boolean> | undefined;
 
@@ -135,8 +136,19 @@ export class EventPageComponent implements OnInit, OnDestroy {
      }
     this.backend.joinEvent(this.event).subscribe(r => {
       this.eventService.changeEvent(r)
-      this.isRegisted = true;
+      this.isLoading = true;
+
+
     });
+    this.sleep(1000).then(() => {
+      this.isRegisted = true;
+      this.isLoading = false;
+    })
+  }
+
+  sleep(ms: number): Promise<void> {
+    return new Promise(
+      (resolve) => setTimeout(resolve, ms));
   }
 
   unregister() {
@@ -146,7 +158,11 @@ export class EventPageComponent implements OnInit, OnDestroy {
     this.backend.leaveEvent(this.event).subscribe(r => {
       console.log(r);
       this.eventService.changeEvent(r)
+      this.isLoading = true;
+    })
+    this.sleep(1000).then(() => {
       this.isRegisted = false;
+      this.isLoading = false;
     })
   }
 
