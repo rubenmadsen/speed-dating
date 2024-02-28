@@ -1,20 +1,10 @@
 <div class="page-container">
   <div class="banner">
-    <h1>Match Your Meat</h1>
-    <h2>His name is Anton Qannarson</h2>
-    <div class="button-container">
-      <app-button
-        [buttonClass]="'trans clr-accent border-accent'"
-        [buttonText]="'Events'">
-      </app-button>
-      <app-button
-        [buttonClass]="'accent border-accent'"
-        [buttonText]="'Read More'">
-      </app-button>
-    </div>
+    <h1 class="unselectable">Meet Your Match</h1>
+    <h2 class="unselectable"> Meet the match of your dreams</h2>
   </div>
   <div class="page-content">
-    <h3>Upcoming Events</h3>
+    <h3 class="unselectable">Upcoming Events</h3>
     <app-card-container [eventCardClass]="'event_card_larger'" *ngIf="done" [events]="events"></app-card-container>
   </div>
 </div>
