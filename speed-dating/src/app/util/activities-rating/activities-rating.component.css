@@ -1,3 +1,5 @@
+/*@import "@angular/material/prebuilt-themes/indigo-pink.css";*/
+
 .activities-rating-container {
   display: flex;
   flex-direction: column;
@@ -51,10 +53,14 @@
 .star-rating fa-icon {
   color: #d0d0d0;
   cursor: pointer;
-}
 
+}
 .star-rating fa-icon.filled {
   color: #f5d442;
+}
+.mat-tooltip {
+  background-color: #333;
+  color: #fff;
 }
 
 @media (max-width: 820px) {
@@ -93,4 +99,5 @@
   .star-button {
     font-size: 1rem;
   }
+
 }

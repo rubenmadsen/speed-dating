@@ -41,6 +41,8 @@ import { ActivitiesRatingComponent } from './util/activities-rating/activities-r
 import { ErrorbarComponent } from './util/errorbar/errorbar.component';
 import { NewEventPopupComponent } from './event/new-event-popup/new-event-popup.component';
 import { HamburgerComponent } from './util/hamburger/hamburger.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 
 
@@ -88,7 +90,9 @@ import { HamburgerComponent } from './util/hamburger/hamburger.component';
     FontAwesomeModule,
     DragDropModule,
     FormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    BrowserAnimationsModule,
+    MatTooltipModule
   ],
   providers: [
     BackendService,
