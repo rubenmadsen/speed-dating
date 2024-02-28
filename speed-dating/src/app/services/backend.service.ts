@@ -189,6 +189,14 @@ export class BackendService {
     return this.http.get<EventModel>(this.eventURL + event._id + "/leave",this.requestOptions);
   }
 
+  /**
+   * 201 Dates created
+   * 500 Knas
+   * Creates and adds the date to an event.
+   */
+  setDatesForRound(event:EventModel, dates:DateModel[]):Observable<DateModel[]>{
+    return this.http.post<DateModel[]>(this.eventURL + event._id + "dates", dates, this.requestOptions);
+  }
 
 
 

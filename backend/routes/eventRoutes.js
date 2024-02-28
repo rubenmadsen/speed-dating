@@ -176,6 +176,9 @@ router.get("/event/:eventId/leave", authorizeUser, async function (req, res) {
     }
 });
 
+/**
+ * Retrieve all x Dates
+ */
 router.post("/event/stream", function (req, res) {
     let pingpong = req.body;
     pingpong.items = [];
@@ -196,6 +199,9 @@ router.post("/event/stream", function (req, res) {
         });
 });
 
+/**
+ * Simulate dates and DateFeedback for an Event
+ */
 router.get("/event/:eventId/simulatedates",async function (req, res) {
     const event = await Event.findById(req.params.eventId).populate("dates")
     console.log("event",event)
@@ -218,4 +224,36 @@ router.get("/event/:eventId/simulatedates",async function (req, res) {
     await event.save()
     res.send(event);
 });
+
+/**
+ * Sets the dates for the current date round of an Event
+ */
+router.post("/event/:eventId/dates",authorizeUser, function (req,res) {
+    Event.findById(req.params.eventId).then(event => {
+        Date.insertMany(req.body).then(dateIds => {
+            Event.findByIdAndUpdate(
+                req.params.eventId,
+                {
+                    $push:{ dates:{ dateIds } } ,
+                    $inc:{round: event.round + 1}
+                },
+                {new: true}
+            ).then(updatedEvent => {
+                res.status(201).send();
+            }).catch(err => {
+                console.log(err);
+                res.status(500).send({ message: "Could not update event" })
+            })
+        }).catch(err => {
+            console.log(err);
+            res.status(500).send({message: "Could not create dates"});
+        })
+    }).catch(err => {
+        console.log(err);
+        res.status(500).send({message: "Could not find event"});
+    })
+});
+
+
+
 module.exports = router;
