@@ -58,7 +58,7 @@ input, select {
 
 @media (max-width: 960px) {
   .new-event-popup-container {
-    width: 300px; /* Adjusted width for smaller screens */
+    width: 450px; /* Adjusted width for smaller screens */
     height: auto; /* Adjust height as needed */
   }
 }
@@ -70,7 +70,7 @@ input, select {
     top: 100%;
     left: 0;
     transform: none;
-    transform: translate(0%, 12%);
+    transform: translate(0%, 5%);
 
 
     transition: top 0.5s ease; /* Remove transform to allow 'top' to control position */
