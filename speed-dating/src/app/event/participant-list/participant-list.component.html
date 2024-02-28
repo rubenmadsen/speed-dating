@@ -1,11 +1,11 @@
 <div
   cdkDropList
-  class="participant-list"
+  class="participant-list unselectable"
   id="list"
   [cdkDropListData]="listUsers"
   (cdkDropListDropped)="drop($event)"
 >
-  <p>Registered Participants</p>
+<!--  <p class="participant-list-title">Registered Participants</p>-->
   <div class="participant" cdkDrag *ngFor="let user of listUsers">
     {{ user.firstname }}
   </div>

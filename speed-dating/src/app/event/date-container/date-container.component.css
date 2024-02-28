@@ -1,5 +1,4 @@
 .date-container {
-  background-color: aliceblue;
   border-radius: 0 0 1rem 1rem;
   display: grid;
   grid-template-columns: repeat(3, auto);
@@ -10,7 +9,7 @@
 }
 
 @media (max-width: 960px) {
-  
+
   .date-container {
     grid-template-columns: repeat(2, auto);
   }

@@ -1,8 +1,8 @@
 .participant-list {
-  background-color: aliceblue;
   border-radius: 0.3rem;
   text-align: center;
   padding: 0.5rem;
+  height:100%;
 }
 
 .participant {
@@ -11,10 +11,11 @@
   border-radius: 0.3rem;
   margin: 0.5rem;
   padding: 0.5rem;
+  color: white;
 }
 
-.participant:nth-child(odd) {
-  background: var(--secondary-clr);
+.participant-list-title {
+  padding: 0.5rem;
 }
 
 p {
