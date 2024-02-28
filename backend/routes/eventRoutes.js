@@ -5,6 +5,7 @@ const { Router, response, length} = require("express");
 const { authorizeUser } = require("../authorization/authorize");
 const Event = require("../models/eventModel");
 const User = require("../models/userModel");
+const City = require("../models/cityModel");
 const DateFeedBack = require("../models/dateFeedbackModel");
 const Date = require("../models/dateModel");
 
@@ -38,12 +39,22 @@ router.post("/event", authorizeUser, async (req, res) => {
     if(user.isOrganizer){
       req.body.organizer = user;
 
+
+      const city = await City.findById(req.body.city);
+      if (!city) {
+          return res.status(404).send({ message: "City not found" });
+      }
+
       const newEvent = req.body;
       const r = Math.floor(Math.random() * 12);
 
       newEvent.imagePath = `venues/venue${r}.jpg`
       const unpopulatedResult = await Event.create(newEvent);
       const populatedResult = await Event.findById(unpopulatedResult._id).populate('city');
+
+
+      city.events.push(unpopulatedResult._id);
+      await city.save();
 
       user.events.push(populatedResult._id);
       await user.save();
