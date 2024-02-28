@@ -66,7 +66,7 @@ export class AuthService {
   }
 
   loggedIn(): Promise<boolean> {
-    return firstValueFrom(this.http.get<any>(this.backendURL + 'api/validate-token', { withCredentials: true })).then(response => {
+    return firstValueFrom(this.http.get<any>(this.userURL + 'profile/me', { withCredentials: true })).then(response => {
       return response.valid;
     }).catch(error => {
       return false;
