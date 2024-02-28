@@ -43,6 +43,7 @@ import { NewEventPopupComponent } from './event/new-event-popup/new-event-popup.
 import { HamburgerComponent } from './util/hamburger/hamburger.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {DatePipe} from "@angular/common";
 
 
 
@@ -96,6 +97,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
   ],
   providers: [
     BackendService,
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

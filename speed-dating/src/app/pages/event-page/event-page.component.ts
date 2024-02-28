@@ -67,11 +67,9 @@ export class EventPageComponent implements OnInit, OnDestroy {
    async ngOnInit() {
     this.eventStateService.clearDates();
     this.subscribeToDates()
-
     this.subscription = this.eventService.currentEvent.subscribe(event => {
       this.event = event;
     });
-
     // await this.authService.checkSession();
     this.isOrganizer$ = this.authService.isOrganizer;
     this.participantsList = this.event?.participants;
@@ -98,7 +96,7 @@ export class EventPageComponent implements OnInit, OnDestroy {
       this.automaticMatchingButtonClass = accentClass + disabledClass;
       this.startDateButtonClass = accentClass + disabledClass;
     }
-  }
+   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
@@ -177,6 +175,8 @@ export class EventPageComponent implements OnInit, OnDestroy {
        return
      }
 
+
+
     // Send dates to backend, this.datesList
   }
 
@@ -240,19 +240,35 @@ export class EventPageComponent implements OnInit, OnDestroy {
    * Method to automatically match the dates
    */
   automaticMatching() {
-    if (!this.hasAutoMatched) {
+    if(this.participantsList?.length !== this.event?.totalParticipants){
+      const loadingMess: StatusMessage = {
+        message: "Missing participants, can't automatch",
+        type: StatusMessageType.WARNING,
+      };
+      this.globalService.setGlobalStatus(loadingMess);
+      return
+    }
 
+    if (!this.hasAutoMatched) {
       const loadingMess: StatusMessage = {
         message: "Automatic matching in progress...",
         type: StatusMessageType.SUCCESS,
+        ms: -1,
       };
       this.globalService.setGlobalStatus(loadingMess);
       this.backend.getNextRoundOfDatesForEvent(this.event!).subscribe({
         next: (response) => {
-          this.childParticipantList.clearList();
-          this.eventStateService.updateDates(response)
-          this.hasAutoMatched = true;
-
+          if(response.length != 0){
+            this.childParticipantList.clearList();
+            this.eventStateService.updateDates(response)
+            this.hasAutoMatched = true;
+          }
+          const loadingMess: StatusMessage = {
+            message: "Automatic matching in progress...",
+            type: StatusMessageType.SUCCESS,
+            ms: -2,
+          };
+          this.globalService.setGlobalStatus(loadingMess);
         },
         error: (error) => {
           console.log(error);
@@ -266,6 +282,7 @@ export class EventPageComponent implements OnInit, OnDestroy {
         this.globalService.setGlobalStatus(mess);
     }
   }
+
   getParticipant(id :string){
     this.backend.getSpecificUser(id).subscribe(user => {
       this.clickedParticipant = user;

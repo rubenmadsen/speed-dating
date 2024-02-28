@@ -11,17 +11,20 @@ export class AuthService {
 
   private readonly PORT = 3000;
   private readonly backendURL: string = "http://localHost:" + this.PORT + "/";  // local
+  private readonly userURL: string = this.backendURL + "user/";
+
   private isLoggedInSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private isOrganizerSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   private userSubject: BehaviorSubject<UserModel | null> = new BehaviorSubject<UserModel | null>(null);
+
 
   constructor(private http: HttpClient, private backendService: BackendService) {
     this.checkSession();
   }
 
   checkSession(): void {
-    this.http.get<any>( this.backendURL +'api/validate-token', { withCredentials: true }).subscribe({
+    this.http.get<any>( this.userURL +'profile/me',{ withCredentials: true }).subscribe({
       next: (response) => {
         this.userSubject.next(response.user);
         this.isLoggedInSubject.next(response.valid)

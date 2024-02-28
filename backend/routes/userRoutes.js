@@ -99,6 +99,41 @@ router.get('/user/user/:id',authorizeUser, async function (req, res){
     });
 
 });
+router.get("/user/profile/me", authorizeUser, async function (req, res) {
+  const user = await User.findById(req.user.id) .populate('city')
+  .populate("sharedContacts")
+  .populate({
+    path: 'events',
+    model: 'event',
+    populate:[
+      {
+      path: 'participants',
+      model: 'user'
+      },
+      {
+      path: 'city',
+      model: 'city'
+      }
+    ]
+  })
+  .populate({
+    path: 'activityData', // Populating activityData
+    populate: {
+      path: 'activity', // Within each activityData, populate activity
+      model: 'activity', // Ensure this matches the name you've used in mongoose.model for your Activity model
+      populate: {
+        path: 'category', // Within each activity, now populate category
+        model: 'category' // Again, ensure this matches the name used in mongoose.model for your Category model
+      }
+    }
+  });;
+  if (user) {
+    res.status(200).send({ valid: true, user: user , isOrganizer: user.isOrganizer});
+  } else {
+    res.status(404).send({ valid: false, message: "User not found" });
+  }
+});
+
 
 /**
  * Log in as user

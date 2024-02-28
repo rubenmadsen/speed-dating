@@ -23,7 +23,12 @@
           <div class="star-rating">
             <fa-icon
               *ngFor="let _ of [].constructor(b.points); let i = index"
-              class="star-button"
+              class="star-button yellow-star"
+              [icon]="faStar"
+            ></fa-icon>
+            <fa-icon
+              *ngFor="let _ of [].constructor(5-b.points); let i = index"
+              class="star-button grey-star"
               [icon]="faStar"
             ></fa-icon>
           </div>

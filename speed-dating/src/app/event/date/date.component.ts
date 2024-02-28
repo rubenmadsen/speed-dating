@@ -73,6 +73,7 @@ export class DateComponent {
         } else {
           //TODO: Ghetto shit, not sure why this is needed to move females between tables.
           event.previousContainer.data.users[1] = event.container.data.users.pop()
+          console.log(event.previousContainer.data)
           this.emitUpdatedTables(event.previousContainer, event.container);
         }
       }
@@ -83,6 +84,7 @@ export class DateComponent {
   }
 
   emitUpdatedTables(previousContainer: any, currentContainer: any) {
+
     this.changeDetected.emit({
       tableUsers: previousContainer.data.users,
       tableNumber: this.extractTableNumber(previousContainer.id),
@@ -99,13 +101,11 @@ export class DateComponent {
    * Move participants from entire table to another table.
    */
   moveTable(event: any) {
-
     const itemFromPrevContainer2 = event.previousContainer.data.matchVal
     const itemFromCurrentContainer2 = event.container.data.matchVal
     event.container.data.matchVal = itemFromPrevContainer2
     event.previousContainer.data.matchVal = itemFromCurrentContainer2
     this.tableData['matchVal'] = itemFromPrevContainer2
-
     const previousTableNumber = this.extractTableNumber(event.previousContainer.id);
     const currentTableNumber = this.extractTableNumber(event.container.id);
     this.tableSwapDetected.emit({ previousTableNumber, currentTableNumber });

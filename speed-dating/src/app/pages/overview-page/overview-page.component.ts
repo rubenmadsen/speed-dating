@@ -39,77 +39,43 @@ export class OverviewPageComponent {
     this.isOrganizer = me.isOrganizer;
     this.me = me;
     this.isLoadingContacts = false;
-    // this.loadMyEvents();
-    // this.loadCompleted();
-    // await this.loadCityEvents();
-    this.getMoreEvents()
+    this.loadMyEvents();
+    this.loadCompleted();
+    await this.loadCityEvents();
   }
 
-  // loadMyEvents(){
-  //   this.me.events.forEach(event => {
-  //     if (!event.hasEnded) {
-  //       this.yourEvents.push(event);
-  //     }
-  //   });
-  //   this.isLoadingCompletedEvents = false;
-  // }
-  // loadCompleted(){
-  //    this.me.events.forEach(event => {
-  //      if (event.hasEnded) {
-  //        this.completedEvents.push(event);
-  //      }
-  //    });
-  //    this.isLoadingYourEvents = false;
-  // }
-  //
-  // async loadCityEvents(){
-  //   this.backend.getEventsByLocation(this.me).subscribe( {
-  //     next: (response) => {
-  //       response.forEach(event => {
-  //         this.recommendedEvents.push(event)
-  //       });
-  //     },
-  //     error: (err => {
-  //       console.log(err)
-  //     })
-  //   })
-  //   this.isLoadingRecommendedEvents = false;
-  // }
-
-  getMoreEvents(){
-    this.backend.getAlleventsStream(this.pingpong).subscribe(pp => {
-
-      this.pingpong = pp
-
-      const yourEventsFilter = pp.items.filter(event =>
-        event.participants.some(participant => participant._id === this.me._id)
-      );
-      yourEventsFilter.forEach(event => {
-        // console.log(this.yourEvents);
-        if(event.hasEnded){
-          this.completedEvents.push(event)
-          this.isLoadingCompletedEvents = false;
-        } else {
-          this.yourEvents.push(event)
-          this.isLoadingYourEvents = false;
-        }
-      })
-
-      const cityFilter = pp.items.filter(event => event.city._id === this.me.city._id && !(this.yourEvents.includes(event)));
-
-      cityFilter.forEach(event => {
-        console.log(event)
-        this.recommendedEvents.push(event)
-      });
-
-      if(pp.items.length !== 0){
-        this.getMoreEvents()
+  loadMyEvents(){
+    this.me.events.forEach(event => {
+      if (!event.hasEnded) {
+        this.yourEvents.push(event);
       }
-      this.isLoadingContacts = false;
-      this.isLoadingRecommendedEvents = false;
-      this.isLoadingYourEvents = false;
-      this.isLoadingCompletedEvents = false;
+    });
+    this.isLoadingCompletedEvents = false;
+  }
+
+  loadCompleted(){
+     this.me.events.forEach(event => {
+       if (event.hasEnded) {
+         this.completedEvents.push(event);
+       }
+     });
+     this.isLoadingYourEvents = false;
+  }
+
+  async loadCityEvents(){
+    this.backend.getEventsByLocation(this.me).subscribe( {
+      next: (response) => {
+        response.forEach(event => {
+          if(!event.participants.some(x => x._id === this.me._id)){
+            this.recommendedEvents.push(event)
+          }
+        });
+      },
+      error: (err => {
+        console.log(err)
+      })
     })
+    this.isLoadingRecommendedEvents = false;
   }
 
   addEvent(event:EventModel){
