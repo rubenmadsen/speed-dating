@@ -28,7 +28,7 @@ export class ActivitiesRatingComponent {
     await this.backend.getAllActivities().then(activities => this.activities = activities.sort((a , b) => a.name > b.name ? 1 : -1));
     this.activityRatings = this.activities.map(activity => ({
       activity: activity,
-      points: 0,
+      points: 3,
     }));
   }
 

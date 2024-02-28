@@ -41,6 +41,7 @@ import { ActivitiesRatingComponent } from './util/activities-rating/activities-r
 import { ErrorbarComponent } from './util/errorbar/errorbar.component';
 import { NewEventPopupComponent } from './event/new-event-popup/new-event-popup.component';
 import { HamburgerComponent } from './util/hamburger/hamburger.component';
+import {DatePipe} from "@angular/common";
 
 
 
@@ -92,6 +93,7 @@ import { HamburgerComponent } from './util/hamburger/hamburger.component';
   ],
   providers: [
     BackendService,
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

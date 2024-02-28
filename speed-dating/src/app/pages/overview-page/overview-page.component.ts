@@ -47,12 +47,12 @@ export class OverviewPageComponent {
   loadMyEvents(){
     this.me.events.forEach(event => {
       if (!event.hasEnded) {
-
         this.yourEvents.push(event);
       }
     });
     this.isLoadingCompletedEvents = false;
   }
+
   loadCompleted(){
      this.me.events.forEach(event => {
        if (event.hasEnded) {
@@ -77,25 +77,6 @@ export class OverviewPageComponent {
     })
     this.isLoadingRecommendedEvents = false;
   }
-
-  // async getMoreEvents(){
-  //   const pp =  await firstValueFrom(this.backend.getAlleventsStream(this.pingpong));
-  //   this.pingpong = pp
-  //   pp.items.forEach(event => {
-  //     if (this.me.events.some(x => x._id === event._id)) {
-  //       if (!this.yourEvents.some(e => e._id === event._id) && !event.hasEnded) { // Check for duplicates
-  //         this.yourEvents.push(event);
-  //       }
-  //     }
-  //   });
-  //   if(pp.items.length !== 0){
-  //     await this.getMoreEvents()
-  //   } else {
-  //     this.isLoadingContacts = false;
-  //     this.isLoadingCompletedEvents = false;
-  //     return
-  //   }
-  // }
 
   addEvent(event:EventModel){
     this.yourEvents.push(event);

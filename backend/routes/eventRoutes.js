@@ -144,15 +144,16 @@ router.get("/event/:eventId/join", authorizeUser, async function (req, res) {
     const me = await User.findById(req.user.id);
 
     Event.findById(req.params.eventId).populate("participants").then( event => {
-        if (event.participants.filter(participant => participant.gender === me.gender).length < 10 && !event.participants.includes(me) && me.isOrganizer === false){
-            event.participants.push(me)
-            event.currentParticipants++;
-            event.save().then(() => {
-                me.events.push(event)
-                me.save().then(() => {
-                    res.send(event);
+        console.log("participants:" + event.participants)
+        if (event.participants.filter(participant => participant.gender === me.gender).length < 10 && !event.participants.includes(me) && me.isOrganizer === false) {
+                event.participants.push(me)
+                event.currentParticipants++;
+                event.save().then(() => {
+                    me.events.push(event)
+                    me.save().then(() => {
+                        res.status(201).send(event);
+                    });
                 });
-            });
         }
         else{
             res.status(401).send();

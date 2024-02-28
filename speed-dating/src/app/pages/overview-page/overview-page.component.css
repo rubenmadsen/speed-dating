@@ -31,6 +31,7 @@ h2 {
 
 .placeholder-text {
   font-style: italic;
+  min-height:5rem;
 }
 
 .card-container::-webkit-scrollbar {
