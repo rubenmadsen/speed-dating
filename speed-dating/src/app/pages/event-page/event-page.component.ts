@@ -56,6 +56,7 @@ export class EventPageComponent implements OnInit, OnDestroy {
               private globalService: GlobalService,
               private router: Router,
               private _location: Location) { }
+
   backClicked() {
     this._location.back();
   }
