@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, Observable, firstValueFrom} from "rxjs";
+import {BehaviorSubject, Observable, firstValueFrom, filter, OperatorFunction, ReplaySubject} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {BackendService} from "./backend.service";
+import {UserModel} from "../models/userModel";
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +12,9 @@ export class AuthService {
   private readonly PORT = 3000;
   private readonly backendURL: string = "http://localHost:" + this.PORT + "/";  // local
   private isLoggedInSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-
   private isOrganizerSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
+  private userSubject: BehaviorSubject<UserModel | null> = new BehaviorSubject<UserModel | null>(null);
 
   constructor(private http: HttpClient, private backendService: BackendService) {
     this.checkSession();
@@ -21,11 +23,20 @@ export class AuthService {
   checkSession(): void {
     this.http.get<any>( this.backendURL +'api/validate-token', { withCredentials: true }).subscribe({
       next: (response) => {
+        console.log("hej")
+        this.userSubject.next(response.user);
         this.isLoggedInSubject.next(response.valid)
         this.isOrganizerSubject.next(response.isOrganizer)
       },
-      error: () => this.isLoggedInSubject.next(false)
+      error: () => {
+        this.isLoggedInSubject.next(false)
+      }
     });
+  }
+  getUser(): Observable<UserModel> {
+    return this.userSubject.asObservable().pipe(
+      filter(user => user !== null) as OperatorFunction<UserModel | null, UserModel>
+    );
   }
 
   get isLoggedIn(): Observable<boolean> {

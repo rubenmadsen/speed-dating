@@ -34,11 +34,11 @@ export class ProfilePageComponent implements OnInit {
       next: (response) => {
         this.user = response;
         this.arm = response.activityData;
-
       }, error: (error) => {
         console.log(error);
       }
     });
     await this.backendService.getAllCategories().then(categories => this.categories = categories.sort((a , b) => a.name > b.name ? 1 : -1));
+
   }
 }

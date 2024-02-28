@@ -16,7 +16,7 @@
   </div>
   <div class="activity-container">
     <div class="activity" *ngFor="let category of categories">
-      <h2>{{ category.name }}</h2>
+      <h2>{{ category!.name }}</h2>
       <ng-container *ngFor="let b of arm">
         <div *ngIf="b.activity.category.name === category.name && b.points !== 0">
           <p>{{ b.activity.name }}</p>

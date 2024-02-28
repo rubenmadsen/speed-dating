@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable, Injector} from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {catchError, firstValueFrom, map, Observable, of, tap} from "rxjs";
+import {catchError, filter, firstValueFrom, map, Observable, of, tap} from "rxjs";
 import {UserModel} from "../models/userModel";
 import {EventModel} from "../models/eventModel";
 import {CityModel} from "../models/cityModel";
@@ -9,6 +9,7 @@ import {ActivityModel} from "../models/activityModel";
 import {DateModel} from "../models/dateModel";
 import {PingPong} from "../interfaces/PingPong";
 import {FileResponse} from "../interfaces/FileResponse";
+import {AuthService} from "./auth.service";
 
 @Injectable({
   providedIn: 'root'
@@ -43,8 +44,17 @@ export class BackendService {
     },
     withCredentials: true
   }
-  constructor(private http:HttpClient) {
 
+  private _authService: AuthService | null = null;
+
+  constructor(private http:HttpClient,private injector: Injector) {
+
+  }
+  private get authService(): AuthService {
+    if (!this._authService) {
+      this._authService = this.injector.get(AuthService);
+    }
+    return this._authService;
   }
 
   /**
@@ -71,7 +81,11 @@ export class BackendService {
   }
 
   getMe():Observable<UserModel>{
-    return this.http.get<UserModel>(this.userURL + "profile/me",this.requestOptions);
+    if(this.authService.getUser() != null){
+      return this.authService.getUser()
+    } else {
+      return this.http.get<UserModel>(this.userURL + "profile/me",this.requestOptions);
+    }
   }
 
   /**

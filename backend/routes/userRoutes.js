@@ -178,37 +178,6 @@ router.get("/user/:id/preferences", function (req, res) {
     });
 });
 
-/**
- * Get logged in user profile, based on jwt token.
- */
-router.get("/user/profile/me", authorizeUser, async function(req,res) {
-  try {
-    const user = await User.findById(req.user.id)
-        .populate('city')
-        .populate("sharedContacts")
-        .populate("events")
-        .populate({
-          path: 'activityData', // Populating activityData
-          populate: {
-            path: 'activity', // Within each activityData, populate activity
-            model: 'activity', // Ensure this matches the name you've used in mongoose.model for your Activity model
-            populate: {
-              path: 'category', // Within each activity, now populate category
-              model: 'category' // Again, ensure this matches the name used in mongoose.model for your Category model
-            }
-          }
-        });
-
-    if (!user) {
-      return res.status(404).send({ message: "User not found." });
-    }
-    
-    res.status(200).send(user);
-  } catch (err) {
-    console.log(err)
-    res.status(500).send('Internal server error');
-  }
-});
 
 /**
  * Get the interests of a user
