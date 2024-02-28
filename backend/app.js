@@ -11,6 +11,7 @@ const path = require("path");
 const User = require("./models/userModel");
 const Event = require("./models/eventModel");
 const Date = require("./models/dateModel");
+const City = require("./models/cityModel");
 
 // Routes
 const userRoutes = require("./routes/userRoutes");
@@ -51,7 +52,19 @@ app.get("/", (req, res) => {
 app.get("/api/validate-token", authorizeUser, async function (req, res) {
   const user = await User.findById(req.user.id) .populate('city')
   .populate("sharedContacts")
-  .populate("events")
+  .populate({
+    path: 'events',
+    model: 'event',
+    populate: [{
+      path: 'participants',
+      model: 'user'
+    },{
+      path: 'city',
+      model: 'city'
+    }
+  ]
+    }
+  )
   .populate({
     path: 'activityData', // Populating activityData
     populate: {

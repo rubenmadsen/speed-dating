@@ -47,6 +47,8 @@ export class DateContainerComponent {
    * @param eventData the new date pair
    */
   handleEvent(eventData: { tableUsers: UserModel[], tableNumber: number }) {
+    console.log(eventData)
+
     if (eventData.tableUsers[1].firstname != 'TBD'){
       this.backendService.matchUserWithUser(eventData.tableUsers[0], eventData.tableUsers[1]).subscribe({
         next: (response) => {

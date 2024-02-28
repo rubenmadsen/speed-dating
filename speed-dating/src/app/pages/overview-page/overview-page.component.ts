@@ -47,6 +47,7 @@ export class OverviewPageComponent {
   loadMyEvents(){
     this.me.events.forEach(event => {
       if (!event.hasEnded) {
+
         this.yourEvents.push(event);
       }
     });
@@ -65,7 +66,9 @@ export class OverviewPageComponent {
     this.backend.getEventsByLocation(this.me).subscribe( {
       next: (response) => {
         response.forEach(event => {
-          this.recommendedEvents.push(event)
+          if(!event.participants.some(x => x._id === this.me._id)){
+            this.recommendedEvents.push(event)
+          }
         });
       },
       error: (err => {
