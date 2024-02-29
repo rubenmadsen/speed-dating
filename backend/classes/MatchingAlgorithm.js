@@ -10,7 +10,7 @@ class MatchingAlgorithm {
     females = [];
     dates = [];
     categories = {};
-    event;
+    event = null;
     constructor() {
 
     }
@@ -132,8 +132,8 @@ class MatchingAlgorithm {
         totalScore = Math.floor(totalScore/5);
         const date = new Date();
         date.event = this.event;
-        if (this.event !== undefined)
-            date.rateRound = this.event.round;
+        if (this.event)
+            date.dateRound = this.event.round;
         date.tableNumber = 0;
         //date.dateRound = this.event.round + 1;
         date.percentage = totalScore;
