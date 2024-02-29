@@ -202,11 +202,12 @@ router.post("/event/stream", function (req, res) {
  */
 router.get("/event/:eventId/simulatedates", async function (req, res) {
     const event = await Event.findById(req.params.eventId).populate("dates");
+    //console.log("event",event)
     if (!event || event.round === 0) {
         res.send({message: "There is no dates to match"});
         return;
     }
-    const dates = event.dates.filter(date => date.dateRound === event.round);
+    const dates = event.dates.filter(date => date.dateRound === event.round - 1);
     const feedbackPromises = [];
     for (let date of dates) {
         const fbOne = new DateFeedBack({
@@ -220,16 +221,23 @@ router.get("/event/:eventId/simulatedates", async function (req, res) {
             question: [Math.floor(Math.random() * 6), Math.floor(Math.random() * 6), Math.floor(Math.random() * 6)]
         });
 
-        feedbackPromises.push(fbOne.save(), fbTwo.save());
+        date.feedbackOne = fbOne;
+        date.feedbackTwo = fbTwo;
+        await date.save()
+        //feedbackPromises.push(Date.updateOne({date._id, feedbackOne:fbOne,feedbackTwo:fbTwo}));
     }
 
-    try {
-        await Promise.all(feedbackPromises);
-        res.send(event);
-    } catch (error) {
-        console.error("Error saving feedback:", error);
-        res.status(500).send({message: "Could not save feedback"});
-    }
+    const updatedEvent = await Event.findById(event._id).populate("dates");
+    console.log("event after",updatedEvent)
+    res.send(updatedEvent)
+    //
+    // try {
+    //     await Promise.all(feedbackPromises);
+    //     res.send(event);
+    // } catch (error) {
+    //     console.error("Error saving feedback:", error);
+    //     res.status(500).send({message: "Could not save feedback"});
+    // }
 });
 
 
@@ -237,39 +245,38 @@ router.get("/event/:eventId/simulatedates", async function (req, res) {
  * Sets the dates for the current date round of an Event
  */
 router.post("/event/:eventId/dates", authorizeUser, async function (req, res) {
-    Event.findById(req.params.eventId).then(event => {
+    try {
+        const event = await Event.findById(req.params.eventId);
         if (!event) {
             return res.status(404).send({ message: "Event not found" });
         }
 
-        Date.insertMany(req.body).then(dates => {
-            // Extract _id values from the dates documents created
-            const dateIds = dates.map(date => date._id);
+        const dates = await Date.insertMany(req.body);
+        const dateIds = dates.map(date => date._id);
 
-            Event.findByIdAndUpdate(
-                req.params.eventId,
-                {
-                    $push: { dates: { $each: dateIds } },
-                    $inc: { round: 1 }
-                },
-                { new: true }
-            ).then(updatedEvent => {
-                if (!updatedEvent) {
-                    return res.status(404).send({ message: "Event not found" });
-                }
-                res.status(201).send(updatedEvent);
-            }).catch(err => {
-                console.log(err);
-                res.status(500).send({ message: "Could not update event" });
-            });
-        }).catch(err => {
-            console.log(err);
-            res.status(500).send({ message: "Could not create dates" });
-        });
-    }).catch(err => {
+        const updatedEvent = await Event.findByIdAndUpdate(
+            req.params.eventId,
+            { $push: { dates: { $each: dateIds } }, $inc: { round: 1 } },
+            { new: true }
+        );
+
+        if (!updatedEvent) {
+            return res.status(404).send({ message: "Event not found" });
+        }
+
+        // Now you can use await directly without .then()
+        const populatedEvent = await Event.findById(updatedEvent._id)
+            .populate({
+                path: 'participants',
+                model: 'user' // Ensure this matches the model name you used in mongoose.model
+            })
+            .populate('dates'); // Assuming 'dates' is the correct path and you have a corresponding model
+
+        res.status(201).send(populatedEvent);
+    } catch (err) {
         console.log(err);
-        res.status(500).send({ message: "Could not find event" });
-    });
+        res.status(500).send({ message: "An error occurred" });
+    }
 });
 
 
