@@ -257,7 +257,7 @@ router.post("/event/:eventId/dates", authorizeUser, async function (req, res) {
                 if (!updatedEvent) {
                     return res.status(404).send({ message: "Event not found" });
                 }
-                res.status(201).send();
+                res.status(201).send(updatedEvent);
             }).catch(err => {
                 console.log(err);
                 res.status(500).send({ message: "Could not update event" });
