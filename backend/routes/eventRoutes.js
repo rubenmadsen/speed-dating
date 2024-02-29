@@ -200,28 +200,38 @@ router.post("/event/stream", function (req, res) {
 /**
  * Simulate dates and DateFeedback for an Event
  */
-router.get("/event/:eventId/simulatedates",async function (req, res) {
-    const event = await Event.findById(req.params.eventId).populate("dates")
-    console.log("event",event)
-    if (event.round === 0)
-        res.send({message:"There is no dates to match"})
-    for (let i = 0; i < event.dates.length; i++) {
-        let date = event.dates[i];
-        const fbOne = new DateFeedBack();
-        fbOne.author = date.personOne;
-        fbOne.date = date;
-        fbOne.question = [Math.floor(Math.random() * 6),Math.floor(Math.random() * 6),Math.floor(Math.random() * 6)]
-
-        const fbTwo = new DateFeedBack();
-        fbTwo.author = date.personTwo;
-        fbTwo.date = date;
-        fbTwo.question = [Math.floor(Math.random() * 6),Math.floor(Math.random() * 6),Math.floor(Math.random() * 6)]
-        date.feedbackOne = fbOne;
-        date.feedbackTwo = fbTwo;
+router.get("/event/:eventId/simulatedates", async function (req, res) {
+    const event = await Event.findById(req.params.eventId).populate("dates");
+    if (!event || event.round === 0) {
+        res.send({message: "There is no dates to match"});
+        return;
     }
-    await event.save()
-    res.send(event);
+    const dates = event.dates.filter(date => date.dateRound === event.round);
+    const feedbackPromises = [];
+    for (let date of dates) {
+        const fbOne = new DateFeedBack({
+            author: date.personOne,
+            date: date._id,
+            question: [Math.floor(Math.random() * 6), Math.floor(Math.random() * 6), Math.floor(Math.random() * 6)]
+        });
+        const fbTwo = new DateFeedBack({
+            author: date.personTwo,
+            date: date._id,
+            question: [Math.floor(Math.random() * 6), Math.floor(Math.random() * 6), Math.floor(Math.random() * 6)]
+        });
+
+        feedbackPromises.push(fbOne.save(), fbTwo.save());
+    }
+
+    try {
+        await Promise.all(feedbackPromises);
+        res.send(event);
+    } catch (error) {
+        console.error("Error saving feedback:", error);
+        res.status(500).send({message: "Could not save feedback"});
+    }
 });
+
 
 /**
  * Sets the dates for the current date round of an Event
