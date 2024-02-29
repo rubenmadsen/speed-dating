@@ -1,5 +1,5 @@
 <!-- TODO fixa en back-knapp -->
-<div class="page-container" cdkDropListGroup>
+<div class="page-container" cdkDropListGroup (focusin)="participantIsClickedOn=false">
   <app-button
     class="back-button"
     [buttonClass]="'trans clr-accent border-accent'"

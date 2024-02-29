@@ -27,7 +27,6 @@ export class EventPageComponent implements OnInit, OnDestroy {
 
   protected readonly faGripVertical = faGripVertical;
   event: EventModel | null = null;
-
   @ViewChild(ParticipantListComponent) childParticipantList!: ParticipantListComponent;
 
   clickedParticipant!:UserModel;
@@ -295,4 +294,5 @@ export class EventPageComponent implements OnInit, OnDestroy {
       this.participantIsClickedOn = !this.participantIsClickedOn;
     });
   }
+
 }
