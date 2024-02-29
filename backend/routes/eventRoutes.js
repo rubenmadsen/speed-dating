@@ -227,17 +227,28 @@ router.get("/event/:eventId/simulatedates", async function (req, res) {
         //feedbackPromises.push(Date.updateOne({date._id, feedbackOne:fbOne,feedbackTwo:fbTwo}));
     }
 
-    const updatedEvent = await Event.findById(event._id).populate("dates");
-    console.log("event after",updatedEvent)
-    res.send(updatedEvent)
-    //
-    // try {
-    //     await Promise.all(feedbackPromises);
-    //     res.send(event);
-    // } catch (error) {
-    //     console.error("Error saving feedback:", error);
-    //     res.status(500).send({message: "Could not save feedback"});
-    // }
+    Event.findById(req.params.eventId)
+        .populate({
+            path: 'dates', // Populate dates
+            populate: [
+                { path: 'feedbackOne' }, // Nested populate for feedbackOne
+                { path: 'feedbackTwo' }  // Nested populate for feedbackTwo
+            ]
+        })
+        .then(newEvent => {
+            if (!event) {
+                return res.status(404).send({ message: 'Event not found' });
+            }
+            res.send(newEvent);
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).send({ message: 'Error retrieving event' });
+        });
+    // const updatedEvent = await Event.findById(event._id).populate("dates");
+    // console.log("event after",updatedEvent)
+    // res.send(updatedEvent)
+
 });
 
 
