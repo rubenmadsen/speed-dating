@@ -78,7 +78,7 @@ router.delete("/event/:eventId",authorizeUser,function (req,res){
  */
 router.get("/event/:eventId",authorizeUser,function (req,res){
     console.log("Incoming event id:" + req.params.eventId)
-    Event.findById(req.params.eventId).populate("dates").then(result => {
+    Event.findById(req.params.eventId).populate("dates").populate("dates.feedbackOne").then(result => {
         //console.log("event",result)
         res.send(result);
     }).catch(err => {
@@ -102,20 +102,6 @@ router.get("/event/:eventId/next",authorizeUser, function (req, res) {
                 }
                 res.send(dates)
                 console.log("Generated dates for next round")
-                // for (const d of dates) {
-                //     await d.save();
-                // }
-                // Event.findById(req.params.eventId).populate({
-                //     path: 'dates', // Populate the 'dates' field
-                //     populate: [
-                //         { path: 'personOne' }, // Within each 'date', populate 'personOne'
-                //         { path: 'personTwo' }  // And 'personTwo'
-                //     ]
-                // }).then(upDates => {
-                //
-                //     console.log(upDates)
-                //     res.status(200).send(upDates.dates);
-                // });
             });
         });
     });
