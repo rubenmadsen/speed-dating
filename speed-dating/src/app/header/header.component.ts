@@ -66,7 +66,6 @@ export class HeaderComponent {
   }
 
   protected toggleSignUpPopup(event:any) {
-    event.stopPropagation();
     this.showSignUpPopup = !this.showSignUpPopup;
     this.showLoginPopup = false;
   }

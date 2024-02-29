@@ -8,4 +8,6 @@ import { EventModel } from '../../models/eventModel';
 })
 export class EventInfoComponent {
   @Input() event!: EventModel | null;
+
+  @Input() isOrganizer!: boolean;
 }

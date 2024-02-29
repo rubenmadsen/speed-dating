@@ -8,7 +8,6 @@ import {AuthService} from "../../services/auth.service";
 import {UserModel} from "../../models/userModel";
 import {BackendService} from "../../services/backend.service";
 import {DateModel} from "../../models/dateModel";
-
 import {ParticipantListComponent} from '../../event/participant-list/participant-list.component';
 import {DateContainerComponent} from '../../event/date-container/date-container.component';
 import {EventStateService} from "../../services/event-state.service";
@@ -41,6 +40,8 @@ export class EventPageComponent implements OnInit, OnDestroy {
   hasAutoMatched = false;
   removedIsPressed = false;
 
+  allowedToRegister = true;
+
   cancelEventButtonClass: string = 'trans clr-accent border-accent';
   clearTablesButtonClass: string = 'trans clr-accent border-accent disabled';
   automaticMatchingButtonClass: string = 'accent border-accent clr-white disabled';
@@ -66,21 +67,16 @@ export class EventPageComponent implements OnInit, OnDestroy {
    async ngOnInit() {
     this.eventStateService.clearDates();
     this.subscribeToDates()
+
     this.subscription = this.eventService.currentEvent.subscribe(event => {
       this.event = event!;
     });
-    // await this.authService.checkSession();
+
     this.isOrganizer$ = this.authService.isOrganizer;
     this.participantsList = this.event?.participants;
-    this.createEmptyDates();
 
-    this.backend.getMe().subscribe(r => {
-      this.me = r
-      if (this.event?.participants.some(participant => participant._id === r._id)) {
-        this.isRegisted = true;
-      } else {
-      }
-    });
+    this.createEmptyDates();
+    this.checkUserRegistration();
 
     const baseClass = 'trans clr-accent border-accent';
     const disabledClass = ' disabled';
@@ -96,6 +92,21 @@ export class EventPageComponent implements OnInit, OnDestroy {
       this.startDateButtonClass = accentClass + disabledClass;
     }
    }
+
+  checkUserRegistration(){
+    this.backend.getMe().subscribe(r => {
+      this.me = r
+      const sameGenderCount = this.event?.participants.filter(participant => participant.gender === this.me.gender).length;
+
+      if (this.event?.participants.some(participant => participant._id === r._id)) {
+        this.isRegisted = true;
+      } else {
+        if(sameGenderCount === this.event.totalParticipants / 2){
+          this.allowedToRegister = false;
+        }
+      }
+    });
+  }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
@@ -121,8 +132,8 @@ export class EventPageComponent implements OnInit, OnDestroy {
         this.eventStateService.addEvent(date)
       }
     })
-
   }
+
   back(){
     this.removedIsPressed = false;
   }
@@ -142,7 +153,7 @@ export class EventPageComponent implements OnInit, OnDestroy {
     })
   }
 
-  sleep(ms: number): Promise<void> {
+  async sleep(ms: number): Promise<void> {
     return new Promise(
       (resolve) => setTimeout(resolve, ms));
   }
@@ -172,7 +183,15 @@ export class EventPageComponent implements OnInit, OnDestroy {
        return
      }
      this.backend.setDatesForRound(this.event!, this.datesList).subscribe({
-        next: (response) => {
+        next: async (response) => {
+          const mess: StatusMessage = {
+            message: "Dates running....",
+            type: StatusMessageType.SUCCESS,
+            ms: 3000
+          };
+          this.globalService.setGlobalStatus(mess);
+          await this.sleep(3000);
+
           this.event = response;
           this.eventService.changeEvent(this.event);
           this.clearTables();
@@ -191,7 +210,6 @@ export class EventPageComponent implements OnInit, OnDestroy {
          console.log(error)
        }
      })
-
   }
 
   /**
@@ -199,10 +217,12 @@ export class EventPageComponent implements OnInit, OnDestroy {
    */
   checkDates(): boolean {
     for (const date of this.datesList) {
-      console.log(date.personTwo)
       if (date.personTwo === null) {
         return false;
       }
+    }
+    if(this.event.currentParticipants != this.event.totalParticipants){
+      return false
     }
     return true;
   }
@@ -222,6 +242,10 @@ export class EventPageComponent implements OnInit, OnDestroy {
     }
     this.backend.deleteEvent(this.event!).subscribe({
       next: (response) => {
+        const index = this.me.events.findIndex(event => event === this.event);
+        if(index !== -1){
+          this.me.events.splice(index, 1);
+        }
         const loadingMess: StatusMessage = {
           message: "Event removed",
           type: StatusMessageType.SUCCESS,
@@ -236,9 +260,7 @@ export class EventPageComponent implements OnInit, OnDestroy {
         };
         this.globalService.setGlobalStatus(loadingMess);        }
     })
-
   }
-
 
   /**
    * Method to have the child components re-generate their lists
@@ -304,5 +326,4 @@ export class EventPageComponent implements OnInit, OnDestroy {
       this.participantIsClickedOn = !this.participantIsClickedOn;
     });
   }
-
 }

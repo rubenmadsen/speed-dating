@@ -70,7 +70,7 @@ export class NewEventPopupComponent {
           };
           this.globalService.setGlobalStatus(mess);
           this.isVisible = false;
-          console.log("response",response)
+
           if (this.callback)
             this.callback(response);
         },

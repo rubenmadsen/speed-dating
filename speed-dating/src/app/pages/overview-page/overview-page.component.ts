@@ -80,6 +80,7 @@ export class OverviewPageComponent {
 
   addEvent(event:EventModel){
     this.yourEvents.push(event);
+    this.me.events.push(event)
   }
 
   openEventPopup(){
