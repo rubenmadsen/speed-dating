@@ -202,7 +202,7 @@ router.post("/event/stream", function (req, res) {
  */
 router.get("/event/:eventId/simulatedates", async function (req, res) {
     const event = await Event.findById(req.params.eventId).populate("dates");
-//console.log("event",event)
+    //console.log("event",event)
     if (!event || event.round === 0) {
         res.send({message: "There is no dates to match"});
         return;
@@ -227,31 +227,30 @@ router.get("/event/:eventId/simulatedates", async function (req, res) {
         //feedbackPromises.push(Date.updateOne({date._id, feedbackOne:fbOne,feedbackTwo:fbTwo}));
     }
 
-    const updatedEvent = await Event.findById(event._id).populate(
-        {
-            path: 'dates',
+    Event.findById(req.params.eventId)
+        .populate({
+            path: 'dates', // Populate dates
             populate: [
-                {
-                    path: 'feedbackOne',
-                    model: 'datefeedback'
-                    },
-                    {
-                        path: 'feedbackTwo',
-                        model: 'datefeedback'
-                    }
+                { path: 'feedbackOne',
+                    model: 'datefeedback' }, // Nested populate for feedbackOne
+                { path: 'feedbackTwo',
+                model: 'datefeedback' }  // Nested populate for feedbackTwo
             ]
-            
         })
-    console.log("event after",updatedEvent)
-    res.send(updatedEvent)
-    //
-    // try {
-    //     await Promise.all(feedbackPromises);
-        //     res.send(event);
-    // } catch (error) {
-        //     console.error("Error saving feedback:", error);
-        //     res.status(500).send({message: "Could not save feedback"});
-    // }
+        .then(newEvent => {
+            if (!event) {
+                return res.status(404).send({ message: 'Event not found' });
+            }
+            res.send(newEvent);
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).send({ message: 'Error retrieving event' });
+        });
+    // const updatedEvent = await Event.findById(event._id).populate("dates");
+    // console.log("event after",updatedEvent)
+    // res.send(updatedEvent)
+
 });
 
 
@@ -292,6 +291,7 @@ router.post("/event/:eventId/dates", authorizeUser, async function (req, res) {
         res.status(500).send({ message: "An error occurred" });
     }
 });
+
 
 
 module.exports = router;
