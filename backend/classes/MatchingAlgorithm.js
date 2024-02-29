@@ -135,8 +135,10 @@ class MatchingAlgorithm {
             //console.log("scores",scores)
         });
         totalScore = Math.floor(totalScore/5);
-        const date = Date();
+        const date = new Date();
         date.event = this.event;
+        if (this.event)
+            date.rateRound = this.event.round + 1;
         date.tableNumber = 0;
         //date.dateRound = this.event.round + 1;
         date.percentage = totalScore;
