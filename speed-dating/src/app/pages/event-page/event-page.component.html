@@ -44,7 +44,7 @@
       ></app-button>
       <app-button
         [buttonClass]="startDateButtonClass"
-        buttonText="Start date"
+        buttonText="Start date {{event!.round}}"
         (click) = startDates()
       ></app-button>
     </div>

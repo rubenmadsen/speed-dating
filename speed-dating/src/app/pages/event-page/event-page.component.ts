@@ -176,6 +176,18 @@ export class EventPageComponent implements OnInit, OnDestroy {
 
      this.backend.setDatesForRound(this.event!, this.datesList).subscribe({
        next: (response) => {
+         this.event!.round = this.event!.round + 1;
+         this.event?.dates.push(... this.datesList);
+         this.eventStateService.clearDates();
+         this.createEmptyDates();
+         this.backend.getSimulatedDatesWithFeedback(this.event!).subscribe({
+           next: (response) => {
+             console.log(response);
+           },
+           error: (error) => {
+             console.log(error);
+           }
+         })
          console.log(response)
        },
        error: (error) => {
