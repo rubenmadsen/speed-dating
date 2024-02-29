@@ -99,15 +99,13 @@ class MatchingAlgorithm {
     async calculateActivityScores(guy, girl) {
         console.log("Calculate score")
         const activityResults = JSON.parse(JSON.stringify(this.categories));
-        const male = guy; // = await User.findById(guy._id).populate('activityData.activity');
-        const female = girl; // = await User.findById(girl._id).populate('activityData.activity');
+        const male = guy;
+        const female = girl;
         male.activityData.forEach((data) => {
             const categoryID = data.activity.category;
             const activityID = data.activity._id;
             const points = data.points;
-            //console.log("cat:" + data.activity.category.toString())
-            //console.log("\tact:" + data.activity._id.toString())
-            //console.log("\t\tpoints:" + data.points)
+
             activityResults[categoryID][activityID].malePoints = points;
         })
         female.activityData.forEach((data) => {
@@ -115,9 +113,6 @@ class MatchingAlgorithm {
             const categoryID = data.activity.category;
             const activityID = data.activity._id;
             const points = data.points;
-            //console.log("cat:" + data.activity.category.toString())
-            //console.log("\tact:" + data.activity._id.toString())
-            //console.log("\t\tpoints:" + data.points)
             activityResults[categoryID][activityID].femalePoints = points;
             activityResults[categoryID][activityID].score = this.#activityPoints(activityResults[categoryID][activityID].malePoints,activityResults[categoryID][activityID].femalePoints);
         })
@@ -137,8 +132,8 @@ class MatchingAlgorithm {
         totalScore = Math.floor(totalScore/5);
         const date = new Date();
         date.event = this.event;
-        if (this.event)
-            date.rateRound = this.event.round + 1;
+        if (this.event !== undefined)
+            date.rateRound = this.event.round;
         date.tableNumber = 0;
         //date.dateRound = this.event.round + 1;
         date.percentage = totalScore;

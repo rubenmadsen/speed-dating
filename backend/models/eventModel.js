@@ -28,7 +28,7 @@ const eventSchema = new Schema({
   },
   round: {
     type: Number,
-    default: 0,
+    default: 1,
   },
   location: {
     type: String,
