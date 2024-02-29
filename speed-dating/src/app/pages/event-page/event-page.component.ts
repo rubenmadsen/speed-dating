@@ -69,6 +69,7 @@ export class EventPageComponent implements OnInit, OnDestroy {
     this.subscription = this.eventService.currentEvent.subscribe(event => {
       this.event = event;
     });
+    console.log(this.event)
     // await this.authService.checkSession();
     this.isOrganizer$ = this.authService.isOrganizer;
     this.participantsList = this.event?.participants;
@@ -176,10 +177,11 @@ export class EventPageComponent implements OnInit, OnDestroy {
 
      this.backend.setDatesForRound(this.event!, this.datesList).subscribe({
        next: (response) => {
-         this.event!.round = this.event!.round + 1;
-         this.event?.dates.push(... this.datesList);
-         this.eventStateService.clearDates();
-         this.createEmptyDates();
+        console.log(response)
+        this.event = response;
+        this.eventService.changeEvent(this.event)
+        this.clearTables();
+        this.createEmptyDates()
          this.backend.getSimulatedDatesWithFeedback(this.event!).subscribe({
            next: (response) => {
              console.log(response);
