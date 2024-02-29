@@ -202,7 +202,7 @@ router.post("/event/stream", function (req, res) {
  */
 router.get("/event/:eventId/simulatedates", async function (req, res) {
     const event = await Event.findById(req.params.eventId).populate("dates");
-    //console.log("event",event)
+//console.log("event",event)
     if (!event || event.round === 0) {
         res.send({message: "There is no dates to match"});
         return;
@@ -227,16 +227,30 @@ router.get("/event/:eventId/simulatedates", async function (req, res) {
         //feedbackPromises.push(Date.updateOne({date._id, feedbackOne:fbOne,feedbackTwo:fbTwo}));
     }
 
-    const updatedEvent = await Event.findById(event._id).populate("dates");
+    const updatedEvent = await Event.findById(event._id).populate(
+        {
+            path: 'dates',
+            populate: [
+                {
+                    path: 'feedbackOne',
+                    model: 'datefeedback'
+                    },
+                    {
+                        path: 'feedbackTwo',
+                        model: 'datefeedback'
+                    }
+            ]
+            
+        })
     console.log("event after",updatedEvent)
     res.send(updatedEvent)
     //
     // try {
     //     await Promise.all(feedbackPromises);
-    //     res.send(event);
+        //     res.send(event);
     // } catch (error) {
-    //     console.error("Error saving feedback:", error);
-    //     res.status(500).send({message: "Could not save feedback"});
+        //     console.error("Error saving feedback:", error);
+        //     res.status(500).send({message: "Could not save feedback"});
     // }
 });
 

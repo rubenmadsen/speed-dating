@@ -69,7 +69,6 @@ export class EventPageComponent implements OnInit, OnDestroy {
     this.subscription = this.eventService.currentEvent.subscribe(event => {
       this.event = event;
     });
-    console.log(this.event)
     // await this.authService.checkSession();
     this.isOrganizer$ = this.authService.isOrganizer;
     this.participantsList = this.event?.participants;
@@ -190,7 +189,6 @@ export class EventPageComponent implements OnInit, OnDestroy {
              console.log(error);
            }
          })
-         console.log(response)
        },
        error: (error) => {
          console.log(error)
