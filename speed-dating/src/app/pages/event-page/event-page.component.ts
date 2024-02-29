@@ -26,7 +26,7 @@ import {Location} from '@angular/common';
 export class EventPageComponent implements OnInit, OnDestroy {
 
   protected readonly faGripVertical = faGripVertical;
-  event: EventModel | null = null;
+  event!: EventModel;
   @ViewChild(ParticipantListComponent) childParticipantList!: ParticipantListComponent;
 
   clickedParticipant!:UserModel;
@@ -67,7 +67,7 @@ export class EventPageComponent implements OnInit, OnDestroy {
     this.eventStateService.clearDates();
     this.subscribeToDates()
     this.subscription = this.eventService.currentEvent.subscribe(event => {
-      this.event = event;
+      this.event = event!;
     });
     // await this.authService.checkSession();
     this.isOrganizer$ = this.authService.isOrganizer;
@@ -134,9 +134,8 @@ export class EventPageComponent implements OnInit, OnDestroy {
     this.backend.joinEvent(this.event).subscribe(r => {
       this.eventService.changeEvent(r)
       this.isLoading = true;
-
-
     });
+
     this.sleep(1000).then(() => {
       this.isRegisted = true;
       this.isLoading = false;
@@ -153,7 +152,6 @@ export class EventPageComponent implements OnInit, OnDestroy {
       return
     }
     this.backend.leaveEvent(this.event).subscribe(r => {
-      console.log(r);
       this.eventService.changeEvent(r)
       this.isLoading = true;
     })
@@ -173,17 +171,16 @@ export class EventPageComponent implements OnInit, OnDestroy {
        this.globalService.setGlobalStatus(mess);
        return
      }
-
      this.backend.setDatesForRound(this.event!, this.datesList).subscribe({
-       next: (response) => {
-        console.log(response)
-        this.event = response;
-        this.eventService.changeEvent(this.event)
-        this.clearTables();
-        this.createEmptyDates()
-         this.backend.getSimulatedDatesWithFeedback(this.event!).subscribe({
+        next: (response) => {
+          this.event = response;
+          this.eventService.changeEvent(this.event);
+          this.clearTables();
+          this.eventStateService.clearDates();
+          this.createEmptyDates()
+          this.backend.getSimulatedDatesWithFeedback(this.event!).subscribe({
            next: (response) => {
-             console.log(response);
+             this.event = response;
            },
            error: (error) => {
              console.log(error);
@@ -202,6 +199,7 @@ export class EventPageComponent implements OnInit, OnDestroy {
    */
   checkDates(): boolean {
     for (const date of this.datesList) {
+      console.log(date.personTwo)
       if (date.personTwo === null) {
         return false;
       }

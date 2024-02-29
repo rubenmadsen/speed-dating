@@ -56,7 +56,6 @@ export class DateComponent {
       this.moveTable(event);
       return
     }
-
     if (event.previousContainer.id.includes("table") && event.container.id.includes("table")) { // Move between tables.
       transferArrayItem(event.previousContainer.data.users, event.container.data.users, event.previousIndex, 1);
 
@@ -73,18 +72,18 @@ export class DateComponent {
         } else {
           //TODO: Ghetto shit, not sure why this is needed to move females between tables.
           event.previousContainer.data.users[1] = event.container.data.users.pop()
-          console.log(event.previousContainer.data)
           this.emitUpdatedTables(event.previousContainer, event.container);
         }
       }
-
       this.tableUsers = [this.tableUsers[0], this.tableUsers[1]]
       this.tableData.users = this.tableUsers
     }
   }
 
   emitUpdatedTables(previousContainer: any, currentContainer: any) {
-
+    if(previousContainer.data.users[1].firstname === 'TBD'){
+      previousContainer.data.matchVal = 0
+    }
     this.changeDetected.emit({
       tableUsers: previousContainer.data.users,
       tableNumber: this.extractTableNumber(previousContainer.id),

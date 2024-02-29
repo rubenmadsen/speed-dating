@@ -62,20 +62,20 @@ export class OverviewPageComponent {
      this.isLoadingYourEvents = false;
   }
 
-  async loadCityEvents(){
+   async loadCityEvents(){
     this.backend.getEventsByLocation(this.me).subscribe( {
       next: (response) => {
         response.forEach(event => {
           if(!event.participants.some(x => x._id === this.me._id)){
             this.recommendedEvents.push(event)
           }
-        });
+          });
       },
-      error: (err => {
-        console.log(err)
-      })
+      error: (error) => {
+        console.log(error)
+      }
     })
-    this.isLoadingRecommendedEvents = false;
+     this.isLoadingRecommendedEvents = false;
   }
 
   addEvent(event:EventModel){

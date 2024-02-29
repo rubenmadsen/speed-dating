@@ -215,14 +215,16 @@ router.get("/event/:eventId/simulatedates", async function (req, res) {
             date: date._id,
             question: [Math.floor(Math.random() * 6), Math.floor(Math.random() * 6), Math.floor(Math.random() * 6)]
         });
+        await fbOne.save()
         const fbTwo = new DateFeedBack({
             author: date.personTwo,
             date: date._id,
             question: [Math.floor(Math.random() * 6), Math.floor(Math.random() * 6), Math.floor(Math.random() * 6)]
         });
+        await fbTwo.save()
 
-        date.feedbackOne = fbOne;
-        date.feedbackTwo = fbTwo;
+        date.feedbackOne = fbOne._id;
+        date.feedbackTwo = fbTwo._id;
         await date.save()
         //feedbackPromises.push(Date.updateOne({date._id, feedbackOne:fbOne,feedbackTwo:fbTwo}));
     }
@@ -231,11 +233,15 @@ router.get("/event/:eventId/simulatedates", async function (req, res) {
         .populate({
             path: 'dates', // Populate dates
             populate: [
-                { path: 'feedbackOne',
-                    model: 'datefeedback' }, // Nested populate for feedbackOne
-                { path: 'feedbackTwo',
-                model: 'datefeedback' }  // Nested populate for feedbackTwo
+                { path: 'feedbackOne'
+                    }, // Nested populate for feedbackOne
+                { path: 'feedbackTwo'
+                 }  // Nested populate for feedbackTwo
             ]
+        })
+        .populate({
+            path: 'participants',
+            model: 'user' // Ensure this matches the model name you used in mongoose.model
         })
         .then(newEvent => {
             if (!event) {

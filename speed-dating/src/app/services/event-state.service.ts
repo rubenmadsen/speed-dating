@@ -37,7 +37,24 @@ export class EventStateService {
     const updatedDates = currentDates.filter(date => date.personOne !== user);
     this.datesSubject.next(updatedDates);
     this.sortDatesByTableNumber()
+  }
 
+  resetTable(tableNumber: number){
+    const currentDates = this.datesSubject.value;
+    const index = currentDates.findIndex(date => date.tableNumber === tableNumber);
+    if (index !== -1) {
+      currentDates[index].personTwo = null;
+    }
+    this.updateDates(currentDates);
+  }
+
+  removeUser(user: UserModel){
+    const currentDates = this.datesSubject.value;
+    const index = currentDates.findIndex(date => date.personTwo === user);
+    if (index !== -1) {
+      currentDates[index].personTwo = null;
+    }
+    this.updateDates(currentDates);
   }
 
   /**

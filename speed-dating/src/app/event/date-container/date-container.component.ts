@@ -5,6 +5,8 @@ import {BehaviorSubject, repeat, Subscription} from "rxjs";
 import {DateModel} from "../../models/dateModel";
 import {EventStateService} from "../../services/event-state.service";
 import {BackendService} from "../../services/backend.service";
+import {EventService} from "../../services/event.service";
+import {EventModel} from "../../models/eventModel";
 
 @Component({
   selector: 'app-date-container',
@@ -15,6 +17,7 @@ export class DateContainerComponent {
 
   @Input() datesList!: DateModel[];
   @Input() participantList!: ParticipantListComponent;
+  @Input() event!: EventModel;
   @Output() onParticipantClick = new EventEmitter<string>();
   listUsers?: UserModel[];
   hasDates: boolean = false;
@@ -47,20 +50,20 @@ export class DateContainerComponent {
    * @param eventData the new date pair
    */
   handleEvent(eventData: { tableUsers: UserModel[], tableNumber: number }) {
-    console.log(eventData)
-
     if (eventData.tableUsers[1].firstname != 'TBD'){
       this.backendService.matchUserWithUser(eventData.tableUsers[0], eventData.tableUsers[1]).subscribe({
         next: (response) => {
           this.eventStateService.removeDate(eventData.tableUsers[0]);
           response.tableNumber = eventData.tableNumber;
+          response.event = this.event;
           this.eventStateService.addEvent(response);
         },
         error: (error) => {
           console.log(error)
         }
       })
-      // tell backend to create date, then add date to EventStateService
+    }else {
+      this.eventStateService.resetTable(eventData.tableNumber)
     }
   }
   onUserClick(id: string){

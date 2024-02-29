@@ -2,6 +2,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import {Component, EventEmitter, Input, Output, SimpleChanges} from '@angular/core';
 import {UserModel} from "../../models/userModel";
 import {DateModel} from "../../models/dateModel";
+import {EventStateService} from "../../services/event-state.service";
 
 @Component({
   selector: 'app-participant-list',
@@ -14,6 +15,8 @@ export class ParticipantListComponent {
   listUsers?: UserModel[] = [];
   @Input() datesList!: DateModel[];
 
+  constructor(private eventStateService: EventStateService) {
+  }
   ngOnInit() {
     this.populateList();
   }
@@ -34,6 +37,7 @@ export class ParticipantListComponent {
     if (event.container === event.previousContainer) { // Drag and drop within same container
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex)
     } else if (event.previousIndex !== 0 && event.previousContainer.data.users[event.previousIndex].firstname !== "TBD" && event.previousContainer.data.users[event.previousIndex].firstname !== undefined) {
+      this.eventStateService.removeUser(event.previousContainer.data.users[1])
       transferArrayItem(event.previousContainer.data.users, event.container.data, event.previousIndex, 1)
       event.previousContainer.data.users[1] = { firstname: 'TBD' };
       event.previousContainer.data.matchVal = 0;
@@ -43,7 +47,6 @@ export class ParticipantListComponent {
   clearList(){
     this.listUsers = []
   }
-
 
   /**
    * Recieves item from a date table if.
