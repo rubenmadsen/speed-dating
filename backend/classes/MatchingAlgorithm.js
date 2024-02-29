@@ -135,7 +135,7 @@ class MatchingAlgorithm {
             //console.log("scores",scores)
         });
         totalScore = Math.floor(totalScore/5);
-        const date = new Date();
+        const date = Date();
         date.event = this.event;
         date.tableNumber = 0;
         //date.dateRound = this.event.round + 1;

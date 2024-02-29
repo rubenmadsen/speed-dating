@@ -240,34 +240,40 @@ router.get("/event/:eventId/simulatedates",async function (req, res) {
 /**
  * Sets the dates for the current date round of an Event
  */
-router.post("/event/:eventId/dates",authorizeUser, async function (req,res) {
-    console.log("body", req.body)
-    const personOne = await User.findById(req.body.personOne);
-    console.log("person one", personOne)
-
+router.post("/event/:eventId/dates", authorizeUser, async function (req, res) {
     Event.findById(req.params.eventId).then(event => {
-        Date.insertMany(req.body).then(dateIds => {
+        if (!event) {
+            return res.status(404).send({ message: "Event not found" });
+        }
+
+        Date.insertMany(req.body).then(dates => {
+            // Extract _id values from the dates documents created
+            const dateIds = dates.map(date => date._id);
+
             Event.findByIdAndUpdate(
                 req.params.eventId,
                 {
-                    $push:{ dates:{ dateIds } } ,
-                    $inc:{round:1}
+                    $push: { dates: { $each: dateIds } },
+                    $inc: { round: 1 }
                 },
-                {new: true}
+                { new: true }
             ).then(updatedEvent => {
+                if (!updatedEvent) {
+                    return res.status(404).send({ message: "Event not found" });
+                }
                 res.status(201).send();
             }).catch(err => {
                 console.log(err);
-                res.status(500).send({ message: "Could not update event" })
-            })
+                res.status(500).send({ message: "Could not update event" });
+            });
         }).catch(err => {
             console.log(err);
-            res.status(500).send({message: "Could not create dates"});
-        })
+            res.status(500).send({ message: "Could not create dates" });
+        });
     }).catch(err => {
         console.log(err);
-        res.status(500).send({message: "Could not find event"});
-    })
+        res.status(500).send({ message: "Could not find event" });
+    });
 });
 
 
