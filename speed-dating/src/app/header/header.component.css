@@ -45,18 +45,21 @@ app-button {
 }
 
 @media (max-width: 680px) {
-  .top-container{
+  .top-container {
     height: 50px;
   }
+
   header nav {
     flex-direction: column;
     margin-right: 0;
     justify-content: flex-start;
     align-items: flex-end;
   }
-  header nav app-button{
+
+  header nav app-button {
 
   }
+
   img {
     max-height: 8.1rem;
     max-width: 13rem;

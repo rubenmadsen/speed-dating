@@ -50,6 +50,10 @@
   background: var(--accent-clr);
 }
 
+.white {
+  background: var(--white-clr);
+}
+
 .secondary:hover {
   background: var(--accent-clr);
 }

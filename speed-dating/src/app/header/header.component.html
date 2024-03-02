@@ -3,18 +3,23 @@
     <img src="./assets/img/logo/02.jpg" alt="logo" routerLink="/">
 
     <nav>
-    <app-hamburger #hamRef></app-hamburger>
+      <app-hamburger #hamRef></app-hamburger>
       <ng-container *ngIf="hamRef.isOpen || !hamRef.isDisplayed">
-          <ng-container *ngIf="!(isLoggedIn$ | async)">
-            <app-button class="sign-up-button" [buttonClass]="'trans clr-accent border-accent'" [buttonText]="'Sign up'" (click)="toggleSignUpPopup($event, false); hamRef.toggleMenu();"> </app-button>
-            <app-button [buttonClass]="'accent border-accent clr-white '" [buttonText]="'Login'" (click)="hamRef.toggleMenu();toggleLoginPopup($event);"> </app-button>
-          </ng-container>
+        <ng-container *ngIf="!(isLoggedIn$ | async)">
+          <app-button class="sign-up-button" [buttonClass]="'white clr-accent border-accent'" [buttonText]="'Sign up'"
+                      (click)="toggleSignUpPopup($event, false); hamRef.toggleMenu();"></app-button>
+          <app-button [buttonClass]="'accent border-accent clr-white '" [buttonText]="'Login'"
+                      (click)="hamRef.toggleMenu();toggleLoginPopup($event);"></app-button>
+        </ng-container>
 
-          <ng-container *ngIf="(isLoggedIn$ | async)">
-            <app-button [buttonClass]="'trans clr-accent border-accent'" [buttonText]="'My Page'" (click)="hamRef.toggleMenu();home($event);"></app-button>
-            <app-button [buttonClass]="'trans clr-accent border-accent'" [buttonText]="'Profile'" (click)="hamRef.toggleMenu();profile($event);"> </app-button>
-            <app-button [buttonClass]="'accent border-accent clr-white '" [buttonText]="'Logout'" (click)="hamRef.toggleMenu();logout($event);"> </app-button>
-          </ng-container>
+        <ng-container *ngIf="(isLoggedIn$ | async)">
+          <app-button [buttonClass]="'white clr-accent border-accent'" [buttonText]="'My Page'"
+                      (click)="hamRef.toggleMenu();home($event);"></app-button>
+          <app-button [buttonClass]="'white clr-accent border-accent'" [buttonText]="'Profile'"
+                      (click)="hamRef.toggleMenu();profile($event);"></app-button>
+          <app-button [buttonClass]="'accent border-accent clr-white '" [buttonText]="'Logout'"
+                      (click)="hamRef.toggleMenu();logout($event);"></app-button>
+        </ng-container>
       </ng-container>
     </nav>
   </div>
@@ -24,5 +29,6 @@
 <div class="hide_out_background" *ngIf="showLoginPopup" (click)="toggleLoginPopup($event)"></div>
 <div class="hide_out_background" *ngIf="showSignUpPopup" (click)="toggleSignUpPopup($event, false)"></div>
 
-<app-sign-up (removeHideoutBackground)="closeBackground()"  *ngIf="showSignUpPopup"></app-sign-up>
-<app-login (removeHideoutBackground)="closeBackground()"(registerClick)="toggleSignUpPopup($event, true)" *ngIf="showLoginPopup"></app-login>
+<app-sign-up (removeHideoutBackground)="closeBackground()" *ngIf="showSignUpPopup"></app-sign-up>
+<app-login (removeHideoutBackground)="closeBackground()" (registerClick)="toggleSignUpPopup($event, true)"
+           *ngIf="showLoginPopup"></app-login>

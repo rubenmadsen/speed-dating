@@ -1,9 +1,9 @@
-import { Component, ElementRef, HostListener, Renderer2 } from '@angular/core';
-import { StatusMessageType } from '../interfaces/StatusMessageType';
-import { AuthService } from '../services/auth.service';
-import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
-import { GlobalService } from '../services/global.service';
+import {Component, ElementRef, HostListener, Renderer2} from '@angular/core';
+import {StatusMessageType} from '../interfaces/StatusMessageType';
+import {AuthService} from '../services/auth.service';
+import {Observable} from 'rxjs';
+import {Router} from '@angular/router';
+import {GlobalService} from '../services/global.service';
 
 @Component({
   selector: 'app-header',
@@ -21,9 +21,10 @@ export class HeaderComponent {
     private authService: AuthService,
     private router: Router,
     private globalService: GlobalService
-  ) {}
+  ) {
+  }
 
-  logout(event:any) {
+  logout(event: any) {
     event.stopPropagation();
     this.authService.logout();
     const message = {
@@ -42,7 +43,7 @@ export class HeaderComponent {
   /**
    * Redirect the user to the "home/overview" page
    */
-  home(event:any) {
+  home(event: any) {
     event.stopPropagation();
     setTimeout(() => this.router.navigate(['overview']), 500);
   }
@@ -50,7 +51,7 @@ export class HeaderComponent {
   /**
    * Redirect the user to the profile page
    */
-  profile(event:any) {
+  profile(event: any) {
     event.stopPropagation();
     setTimeout(() => this.router.navigate(['profile']), 500);
   }
@@ -59,13 +60,13 @@ export class HeaderComponent {
     this.isLoggedIn$ = await this.authService.isLoggedIn;
   }
 
-  protected toggleLoginPopup(event:any) {
+  protected toggleLoginPopup(event: any) {
     event.stopPropagation();
     this.showLoginPopup = !this.showLoginPopup;
     this.showSignUpPopup = false;
   }
 
-  protected toggleSignUpPopup(event:any, from_login: boolean) {
+  protected toggleSignUpPopup(event: any, from_login: boolean) {
     if (!from_login) {
       event.stopPropagation()
     }
