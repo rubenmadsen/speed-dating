@@ -12,7 +12,7 @@ export class HomepageComponent {
 
   events:EventModel[] = [];
   done: Boolean = false;
-  pingpong:PingPong<EventModel> = {amount:10,itemType:'EventModel',items:[], retrieved:0};
+  pingpong:PingPong<EventModel> = { amount:10,itemType:'EventModel',items:[], retrieved:0 };
 
   constructor(private backend: BackendService) {}
 
