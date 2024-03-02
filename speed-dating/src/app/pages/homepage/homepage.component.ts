@@ -29,6 +29,7 @@ export class HomepageComponent {
 
       finishedFilter.forEach(event => {
         this.events.push(event)
+        this.events = this.events.sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime());
       })
 
       //this.events = this.events.sort((a,b) => a.startDate > b.startDate ? 1 : -1);

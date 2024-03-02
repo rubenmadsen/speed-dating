@@ -349,7 +349,7 @@ function getRandomProfilePicture(gender){
 }
 function getRandomDateInRange(daysInThePast, daysInTheFuture) {
   const currentDate = new global.Date();
-  const oneYearAgo = new global.Date(currentDate.setDate(currentDate.getDate() + daysInThePast));
+  const oneYearAgo = new global.Date(currentDate.setDate(currentDate.getDate() - daysInThePast));
   const threeDaysInFuture = new global.Date(new global.Date().setDate(new global.Date().getDate() + daysInTheFuture));
 
   const startTimestamp = oneYearAgo.getTime();
