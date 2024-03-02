@@ -20,21 +20,23 @@
   <div *ngIf="isLoadingYourEvents" class="loader"></div>
   <div class="card-container" *ngIf="yourEvents.length > 0">
     <ng-container *ngFor="let event of yourEvents">
-      <app-event-card [event]="event"></app-event-card>
+      <app-event-card [event]="event" [ngStyle]="{border: checkDate(event) ? '3px solid lime' : 'none'}"></app-event-card>
     </ng-container>
   </div>
 
-  <h2 class="unselectable">Events Near You</h2>
-  <p class="placeholder-text unselectable" *ngIf="!isLoadingRecommendedEvents && recommendedEvents.length <= 0">There are no events nearby</p>
-  <div *ngIf="isLoadingRecommendedEvents" class="loader"></div>
-  <div class="card-container" *ngIf="recommendedEvents.length > 0 && !isLoadingCompletedEvents">
-    <ng-container *ngFor="let event of recommendedEvents">
-      <app-event-card [event]="event"></app-event-card>
-    </ng-container>
-  </div>
+  <ng-container *ngIf="!isOrganizer">
+    <h2 class="unselectable">Events Near You</h2>
+    <p class="placeholder-text unselectable" *ngIf="!isLoadingRecommendedEvents && recommendedEvents.length <= 0">There are no events nearby</p>
+    <div *ngIf="isLoadingRecommendedEvents" class="loader"></div>
+    <div class="card-container" *ngIf="recommendedEvents.length > 0 && !isLoadingCompletedEvents">
+      <ng-container *ngFor="let event of recommendedEvents">
+        <app-event-card [event]="event"></app-event-card>
+      </ng-container>
+    </div>
+  </ng-container>
 
   <h2 class="unselectable">Completed Events</h2>
-  <p class="placeholder-text unselectable" *ngIf="!isLoadingCompletedEvents && completedEvents.length <= 0">You haven't been to any events</p>
+  <p class="placeholder-text unselectable" *ngIf="!isLoadingCompletedEvents && completedEvents.length <= 0">You haven't {{fillerText}} any events</p>
   <div *ngIf="isLoadingCompletedEvents" class="loader"></div>
   <div class="card-container"  *ngIf="completedEvents.length > 0">
     <ng-container *ngFor="let event of completedEvents">

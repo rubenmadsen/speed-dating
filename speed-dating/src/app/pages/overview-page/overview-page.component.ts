@@ -20,6 +20,8 @@ export class OverviewPageComponent {
   protected isOrganizer: Boolean = false;
   protected me!: UserModel;
   showNewEventPopup: Boolean = false;
+  protected fillerText: string = "";
+  protected dateNow: Date = new Date();
 
   protected isLoadingContacts: Boolean = true;
   protected isLoadingYourEvents: Boolean = true;
@@ -42,6 +44,9 @@ export class OverviewPageComponent {
     this.loadMyEvents();
     this.loadCompleted();
     await this.loadCityEvents();
+    this.fillerText = this.isOrganizer ? "hosted" : "been to";
+    console.log(this.dateNow.toISOString());
+    
   }
 
   loadMyEvents(){
@@ -92,5 +97,9 @@ export class OverviewPageComponent {
     if (!this.eRef.nativeElement.contains(event.target) && (this.showNewEventPopup)) {
       this.showNewEventPopup = false;
     }
+  }
+
+  checkDate(event: EventModel): boolean {
+    return this.dateNow >= new Date(event.startDate) && !event.hasEnded;
   }
 }
