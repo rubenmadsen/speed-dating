@@ -157,7 +157,7 @@ async function generateRandomUser(isOrganizer) {
 
 async function generateRandomEvent() {
   const newEvent = Event();
-  newEvent.startDate = getRandomDate();
+  newEvent.startDate = getRandomDateInRange(360, 14);
   newEvent.imagePath = getRandomVenuePicture();
   newEvent.location = getRandomVenue();
   const city = await getRandomCity();
@@ -277,14 +277,14 @@ function getRandomCity() {
   return City.findOne({ name: city });
 }
 
-function getRandomDate() {
-  return new global.Date(
-    new global.Date().getTime() +
-      Math.random() +
-      Math.floor(Math.random() * 70) +
-      18
-  );
-}
+// function getRandomDate() {
+//   return new global.Date(
+//     new global.Date().getTime() +
+//       Math.random() +
+//       Math.floor(Math.random() * 70) +
+//       18
+//   );
+// }
 const savingDocuments = new Map();
 
 async function generateMatches() {
@@ -347,6 +347,24 @@ function getRandomProfilePicture(gender){
     console.log('Unable to scan directory: ' + err);
   }
 }
+function getRandomDateInRange(daysInThePast, daysInTheFuture) {
+  const currentDate = new global.Date();
+  const oneYearAgo = new global.Date(currentDate.setDate(currentDate.getDate() - daysInThePast));
+  const threeDaysInFuture = new global.Date(new global.Date().setDate(new global.Date().getDate() + daysInTheFuture));
+
+  const startTimestamp = oneYearAgo.getTime();
+  const endTimestamp = threeDaysInFuture.getTime();
+  const randomTimestamp = startTimestamp + Math.random() * (endTimestamp - startTimestamp);
+
+  // Create a new Date object from randomTimestamp before calling setHours
+  const randomDate = new global.Date(randomTimestamp);
+  const randomHour = Math.floor(Math.random() * (21 - 16 + 1)) + 16;
+  randomDate.setHours(randomHour, 0, 0, 0);
+
+  // Make sure to return the new global.Date object, not the model Date
+  return randomDate;
+}
+
 const femaleNames = [
   "Emma",
   "Olivia",
