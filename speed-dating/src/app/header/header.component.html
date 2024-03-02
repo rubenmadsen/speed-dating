@@ -6,7 +6,7 @@
     <app-hamburger #hamRef></app-hamburger>
       <ng-container *ngIf="hamRef.isOpen || !hamRef.isDisplayed">
           <ng-container *ngIf="!(isLoggedIn$ | async)">
-            <app-button class="sign-up-button" [buttonClass]="'trans clr-accent border-accent'" [buttonText]="'Sign up'" (click)="toggleSignUpPopup($event); hamRef.toggleMenu();"> </app-button>
+            <app-button class="sign-up-button" [buttonClass]="'trans clr-accent border-accent'" [buttonText]="'Sign up'" (click)="toggleSignUpPopup($event, false); hamRef.toggleMenu();"> </app-button>
             <app-button [buttonClass]="'accent border-accent clr-white '" [buttonText]="'Login'" (click)="hamRef.toggleMenu();toggleLoginPopup($event);"> </app-button>
           </ng-container>
 
@@ -22,7 +22,7 @@
 </header>
 
 <div class="hide_out_background" *ngIf="showLoginPopup" (click)="toggleLoginPopup($event)"></div>
-<div class="hide_out_background" *ngIf="showSignUpPopup" (click)="toggleSignUpPopup($event)"></div>
+<div class="hide_out_background" *ngIf="showSignUpPopup" (click)="toggleSignUpPopup($event, false)"></div>
 
 <app-sign-up (removeHideoutBackground)="closeBackground()"  *ngIf="showSignUpPopup"></app-sign-up>
-<app-login (removeHideoutBackground)="closeBackground()"(registerClick)="toggleSignUpPopup($event)" *ngIf="showLoginPopup"></app-login>
+<app-login (removeHideoutBackground)="closeBackground()"(registerClick)="toggleSignUpPopup($event, true)" *ngIf="showLoginPopup"></app-login>

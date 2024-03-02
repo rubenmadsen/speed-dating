@@ -45,6 +45,10 @@ app-button {
   margin-bottom: 1rem;
 }
 
+.register:hover {
+  text-decoration: black underline;
+}
+
 .login-error {
   margin-top: 1rem;
   font-size: 0.7rem;
