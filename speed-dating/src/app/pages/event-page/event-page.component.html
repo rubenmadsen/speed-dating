@@ -11,6 +11,7 @@
       <app-event-info [event]="event"></app-event-info>
       <app-participant-list
         #participantList
+        [dropListDisabled]="!isCreator$"
         [datesList]="datesList"
         [participantsList]="participantsList"
       ></app-participant-list>
@@ -54,6 +55,7 @@
 
     <app-date-container
       class="date-container"
+      [dropListDisabled]="!isCreator$"
       [event]="event"
       [datesList]="datesList"
       [participantList]="participantList"

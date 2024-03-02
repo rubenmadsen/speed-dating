@@ -2,6 +2,7 @@
   cdkDropList
   class="participant-list unselectable"
   id="list"
+  [cdkDropListDisabled]="dropListDisabled"
   [cdkDropListData]="listUsers"
   (cdkDropListDropped)="drop($event)"
 >

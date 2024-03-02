@@ -3,6 +3,7 @@ import {Component, EventEmitter, Input, Output, SimpleChanges} from '@angular/co
 import {UserModel} from "../../models/userModel";
 import {DateModel} from "../../models/dateModel";
 import {EventStateService} from "../../services/event-state.service";
+import {BooleanInput} from "@angular/cdk/coercion";
 
 @Component({
   selector: 'app-participant-list',
@@ -14,6 +15,7 @@ export class ParticipantListComponent {
   @Input() participantsList?: UserModel[];
   listUsers?: UserModel[] = [];
   @Input() datesList!: DateModel[];
+  @Input() dropListDisabled: BooleanInput = false;
 
   constructor(private eventStateService: EventStateService) {
   }

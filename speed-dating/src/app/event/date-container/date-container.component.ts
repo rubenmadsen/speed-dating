@@ -7,6 +7,7 @@ import {EventStateService} from "../../services/event-state.service";
 import {BackendService} from "../../services/backend.service";
 import {EventService} from "../../services/event.service";
 import {EventModel} from "../../models/eventModel";
+import {BooleanInput} from "@angular/cdk/coercion";
 
 @Component({
   selector: 'app-date-container',
@@ -18,6 +19,7 @@ export class DateContainerComponent {
   @Input() datesList!: DateModel[];
   @Input() participantList!: ParticipantListComponent;
   @Input() event!: EventModel;
+  @Input() dropListDisabled: BooleanInput = false;
   @Output() onParticipantClick = new EventEmitter<string>();
   listUsers?: UserModel[];
   hasDates: boolean = false;

@@ -2,6 +2,7 @@
   cdkDropList
   class="table"
   id="table-{{ tableNumber }}"
+  [cdkDropListDisabled]="dropListDisabled"
   [cdkDropListData]="tableData"
   (cdkDropListDropped)="drop($event)"
   (click)="onParticipantClick($event)"
