@@ -64,6 +64,7 @@ app-participant-list{
 @media (max-width: 960px) {
 
   .page-container {
+    padding: 0;
     width: 100%;
   }
 
