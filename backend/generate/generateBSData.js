@@ -347,6 +347,19 @@ function getRandomProfilePicture(gender){
     console.log('Unable to scan directory: ' + err);
   }
 }
+function getRandomDate(){
+  const currentDate = new Date();
+  const oneYearAgo = new Date(currentDate.setFullYear(currentDate.getFullYear() - 1));
+  const threeDaysInFuture = new Date(new Date().setDate(new Date().getDate() + 3));
+
+  const startTimestamp = oneYearAgo.getTime();
+  const endTimestamp = threeDaysInFuture.getTime();
+  const randomTimestamp = startTimestamp + Math.random() * (endTimestamp - startTimestamp);
+  const randomHour = Math.floor(Math.random() * (21 - 16 + 1)) + 16;
+  randomTimestamp.setHours(randomHour, 0, 0, 0);
+
+  return new Date(randomTimestamp);
+}
 const femaleNames = [
   "Emma",
   "Olivia",
