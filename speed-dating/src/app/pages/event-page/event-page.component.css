@@ -97,4 +97,8 @@ app-participant-list{
     align-items: center;
   }
 
+  .event-full-msg {
+    margin: auto;
+  }
+
 }
