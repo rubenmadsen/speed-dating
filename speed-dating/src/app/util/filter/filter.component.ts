@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {EventModel} from "../../models/eventModel"
+import {distinct} from "rxjs";
 
 @Component({
   selector: 'app-filter',
@@ -12,17 +13,10 @@ export class FilterComponent {
   selectedCity: string | null;
 
   @Input() set events(value: EventModel[]) {
-    const uniqueCities = new Set();
-    this._events = value
-      .filter(event => {
-        const isDuplicate = uniqueCities.has(event.city.name);
-        uniqueCities.add(event.city.name);
-        return !isDuplicate;
-      })
-      .sort((a, b) => a.city.name.localeCompare(String(b.city.name)));
+    this._events = value;
   }
   get events(): EventModel[] {
-    return this._events;
+    return this.getUnique(this._events).sort((a, b) => a.city.name.localeCompare(String(b.city.name)));
   }
   @Output() citySelected: EventEmitter<string | null> = new EventEmitter<string | null>();
 
@@ -37,6 +31,18 @@ export class FilterComponent {
   protected resetFilter(): void {
     this.selectedCity = null;
     this.onCityChange();
+  }
+
+  protected getUnique(events: EventModel[]) {
+    let unique = [...new Set(events.map(event => event.city.name))]
+    let eventCollection = []
+    for (let event of events) {
+      if (unique.includes(event.city.name)) {
+        eventCollection.push(event)
+        delete unique[unique.indexOf(event.city.name)]
+      }
+    }
+    return eventCollection
   }
 
 }
