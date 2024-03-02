@@ -61,7 +61,17 @@ app-button {
     max-height: 8.1rem;
     max-width: 13rem;
   }
-
+  .hamItemContainer{
+    margin-top: -6px;
+    margin-right: -1rem;
+    background-color: var(--white-clr);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding: 1rem;
+  }
+  .hamItemContainer app-button{
+    width: 200px;
+  }
   /*app-button {*/
   /*  padding: 0rem;*/
   /*}*/
