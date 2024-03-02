@@ -146,7 +146,7 @@ router.post("/user/login", async function (req, res) {
       httpOnly: true,
       maxAge: DAY(3) * 1000,
       sameSite: "none",
-      secure: true,
+      // secure: true,
     });
     res.status(200).send(user._id);
   } catch (err) {
