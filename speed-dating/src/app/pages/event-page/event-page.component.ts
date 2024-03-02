@@ -51,6 +51,8 @@ export class EventPageComponent implements OnInit, OnDestroy {
 
   isOrganizer$: Observable<boolean> | undefined;
 
+  isCreator$: Boolean = false;
+
   constructor(private eventService: EventService, private authService: AuthService,
               private backend: BackendService,
               private eventStateService: EventStateService,
@@ -96,6 +98,8 @@ export class EventPageComponent implements OnInit, OnDestroy {
   checkUserRegistration(){
     this.backend.getMe().subscribe(r => {
       this.me = r
+      this.isCreator$ = r.events.includes(this.event);
+      console.log(this.isCreator$)
       const sameGenderCount = this.event?.participants.filter(participant => participant.gender === this.me.gender).length;
 
       if (this.event?.participants.some(participant => participant._id === r._id)) {
