@@ -20,7 +20,7 @@
   <div *ngIf="isLoadingYourEvents" class="loader"></div>
   <div class="card-container" *ngIf="yourEvents.length > 0">
     <ng-container *ngFor="let event of yourEvents">
-      <app-event-card [event]="event" [ngStyle]="{border: checkDate(event) ? '3px solid lime' : 'none'}"></app-event-card>
+      <app-event-card class="eventCard" [event]="event" [ngClass]="checkDate(event) ? 'glowBorder' : 'none'"></app-event-card>
     </ng-container>
   </div>
 
