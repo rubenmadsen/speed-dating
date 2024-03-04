@@ -54,6 +54,10 @@
   background: var(--white-clr);
 }
 
+.attention {
+  background: var(--attention-clr);
+}
+
 .secondary:hover {
   background: var(--accent-clr);
 }
@@ -72,6 +76,10 @@
 
 .border-accent {
   border: 1px solid var(--accent-clr);
+}
+
+.border-attention {
+  border: 1px solid var(--attention-clr);
 }
 
 .small {

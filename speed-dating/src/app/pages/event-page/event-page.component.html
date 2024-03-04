@@ -23,12 +23,12 @@
         (click)="removeEvent()"
       ></app-button>
       <app-button *ngIf="removedIsPressed"
-                  [buttonClass]="automaticMatchingButtonClass"
+                  [buttonClass]="'accent border-accent clr-white'"
                   buttonText="Back"
                   (click)="back()"
       ></app-button>
       <app-button *ngIf="removedIsPressed"
-                  [buttonClass]="automaticMatchingButtonClass"
+                  [buttonClass]="'attention clr-white border-attention'"
                   buttonText="Confirm Cancellation"
                   (click)="removeEvent()"
       ></app-button>
