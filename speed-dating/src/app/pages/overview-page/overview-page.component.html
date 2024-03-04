@@ -6,7 +6,7 @@
     [buttonText]="'Host new Event'"
   ></app-button>
 
-  <h2 *ngIf="!isOrganizer" class="unselectable">Matches</h2>
+  <h2 *ngIf="!isOrganizer" class="unselectable">Your Matches</h2>
   <p class="placeholder-text unselectable" *ngIf="!isLoadingContacts && contacts.length <= 0 &&!isOrganizer">You have no contacts</p>
   <div *ngIf="isLoadingContacts" class="loader"></div>
   <div class="card-container" *ngIf="contacts.length > 0">
