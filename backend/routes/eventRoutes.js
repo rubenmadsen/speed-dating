@@ -76,15 +76,23 @@ router.delete("/event/:eventId",authorizeUser,function (req,res){
 /**
  * Retrieve a specific event
  */
-router.get("/event/:eventId",authorizeUser,function (req,res){
-    console.log("Incoming event id:" + req.params.eventId)
-    Event.findById(req.params.eventId).populate("dates").populate("dates.feedbackOne").then(result => {
-        //console.log("event",result)
-        res.send(result);
-    }).catch(err => {
-        res.status(404).send();
-        console.log(err);
-    });
+router.get("/event/:eventId", authorizeUser, async function (req, res) {
+    try {
+        // Use async/await for consistency and readability
+        const event = await Event.findById(req.params.eventId)
+            .populate({
+                path: 'dates',
+                model: 'date'
+            });
+        
+        if (!event) {
+            return res.status(404).send({ message: "Event not found" });
+        }
+        res.send(event);
+    } catch (err) {
+        console.error(err); // It's a good practice to log the error
+        res.status(500).send({ message: "An error occurred" });
+    }
 });
 /**
  * Generates the next date round

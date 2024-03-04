@@ -20,7 +20,7 @@ export class DateComponent {
   @Input() male?: UserModel;
   @Input() female!: UserModel | null;
   @Input() dropListDisabled: BooleanInput = false;
-
+  @Input() isOrganizer: boolean = true;
   @Output() returnUserToList = new EventEmitter<UserModel>();
   previewUsers: Array<String> = []
 
@@ -72,7 +72,6 @@ export class DateComponent {
           this.returnUserToList.emit(this.tableUsers[i]);
           this.changeDetected.emit({tableUsers: this.tableUsers, tableNumber: this.tableNumber})
         } else {
-          //TODO: Ghetto shit, not sure why this is needed to move females between tables.
           event.previousContainer.data.users[1] = event.container.data.users.pop()
           this.emitUpdatedTables(event.previousContainer, event.container);
         }

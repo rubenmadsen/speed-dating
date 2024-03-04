@@ -82,7 +82,7 @@
     ></app-button>
 
     <app-button
-      *ngIf="isRegisted && !event?.hasEnded &&
+      *ngIf="isRegisted && !event?.hasEnded  && !isOnGoing &&
         !isLoading"
       [buttonClass]="'accent border-accent clr-white '"
       [buttonText]="'Unregister'"
@@ -110,5 +110,26 @@
       [buttonClass]="'accent border-accent clr-white disabled'"
       [buttonText]="'Event ended'"
     ></app-button>
+
+
+
+  <div class="ongoing-date-container" *ngIf="isOnGoing && isRegisted">
+    <div class="top-container">
+    <div *ngIf="event.round > 1">
+      <app-date [isOrganizer]= "false" [tableNumber]="myTableNumber" [male]="me" ></app-date>
+    </div>
+    <div *ngIf="event.round <= 1">
+    <app-date [isOrganizer] = "false" [tableNumber]="1" [male]="me" ></app-date>
+    </div>
+    <div class="toggle-container">
+      <p> Share contact information </p>
+      <app-toggle></app-toggle>
+    </div>
+    </div>
+  </div>
+
+
+
+    <p *ngIf="isOnGoing && isRegisted"> Waiting for host...</p>
   </ng-container>
 </div>

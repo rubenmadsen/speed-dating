@@ -35,6 +35,9 @@ export class EventPageComponent implements OnInit, OnDestroy {
   participantsList?: UserModel[];
   datesList: DateModel[] = [];
 
+  protected dateNow: Date = new Date();
+
+
   me!: UserModel;
   isRegisted: Boolean = false;
   hasAutoMatched = false;
@@ -48,8 +51,11 @@ export class EventPageComponent implements OnInit, OnDestroy {
   startDateButtonClass: string = 'accent border-accent clr-white disabled';
 
   isLoading: Boolean = false;
+  isOnGoing: boolean = false;
 
   isOrganizer$: Observable<boolean> | undefined;
+
+  randomTableNumbers: number[] = [];
 
   isCreator$: Boolean = false;
 
@@ -69,10 +75,10 @@ export class EventPageComponent implements OnInit, OnDestroy {
    async ngOnInit() {
     this.eventStateService.clearDates();
     this.subscribeToDates()
-
     this.subscription = this.eventService.currentEvent.subscribe(event => {
       this.event = event!;
     });
+
 
     this.isOrganizer$ = this.authService.isOrganizer;
     this.participantsList = this.event?.participants;
@@ -93,7 +99,12 @@ export class EventPageComponent implements OnInit, OnDestroy {
       this.automaticMatchingButtonClass = accentClass + disabledClass;
       this.startDateButtonClass = accentClass + disabledClass;
     }
-   }
+
+    this.isOnGoing = this.dateNow >= new Date(this.event.startDate) && !this.event.hasEnded;
+
+    this.getMyTableNumber();
+    console.log(this.event.round)
+  }
 
   checkUserRegistration(){
     this.backend.getMe().subscribe(r => {
@@ -108,6 +119,18 @@ export class EventPageComponent implements OnInit, OnDestroy {
         }
       }
     });
+  }
+
+  myTableNumber: number = 1;
+  getMyTableNumber(): number {
+    for (const date of this.event.dates) {
+      if (date.dateRound == this.event.round - 1) {
+        if (date.personTwo?._id?.toString === this.me._id!.toString|| date.personOne._id?.toString === this.me._id!.toString) {
+          this.myTableNumber = date.tableNumber
+        }
+      }
+    }
+    return 1;
   }
 
   ngOnDestroy() {
@@ -213,6 +236,7 @@ export class EventPageComponent implements OnInit, OnDestroy {
        }
      })
   }
+
 
   /**
    * Helper method to check is all dates has both participants

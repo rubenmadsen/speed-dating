@@ -144,6 +144,9 @@ export class BackendService {
   }
 
 
+  getSpecificEvent(event: EventModel): Observable<EventModel>{
+    return this.http.get<EventModel>(this.eventURL  + event._id,this.requestOptions);
+  }
   /**
    * Gets all events based on a City or a User's City
    * @param sender
@@ -205,6 +208,7 @@ export class BackendService {
   getSimulatedDatesWithFeedback(event :EventModel):Observable<EventModel>{
     return this.http.get<EventModel> (this.eventURL + event._id+ "/simulatedates", this.requestOptions);
   }
+
 
 
   // Date

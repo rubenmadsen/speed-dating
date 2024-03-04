@@ -8,10 +8,10 @@
   (click)="onParticipantClick($event)"
 >
   <p>Table {{ tableNumber }}</p>
-  <app-match-precentage-bar
-    id="matchBar"
-    matchValue="{{tableData['matchVal']}}"
-    >
+  <app-match-precentage-bar *ngIf="isOrganizer"
+                            id="matchBar"
+                            matchValue="{{tableData['matchVal']}}"
+  >
   </app-match-precentage-bar>
   <div
     class="participant"
@@ -19,15 +19,15 @@
     *ngFor="let user of tableUsers; let i = index"
     [ngClass]="i == 0 ? 'male' : 'female'"
     [ngStyle]="{ cursor: user.firstname === 'TBD' ? 'not-allowed' : (i == 0 ? 'move' : 'grab') }"
-    [cdkDragDisabled]="user.firstname === 'TBD'"
+    [cdkDragDisabled]="user.firstname === 'TBD' || !isOrganizer"
     id="{{user._id}}"
   >
     {{ user.firstname }}
 
-    <ng-container *ngIf="i == 0">
+    <ng-container *ngIf="i == 0 && isOrganizer">
       <div *cdkDragPreview>
-        <div class="participant">{{ tableUsers[0].firstname}}</div>
-        <div class="participant">{{ tableUsers[1].firstname }}</div>
+        <div class="participant drag-preview">{{ tableUsers[0].firstname}}</div>
+        <div class="participant drag-preview">{{ tableUsers[1].firstname }}</div>
       </div>
     </ng-container>
   </div>
