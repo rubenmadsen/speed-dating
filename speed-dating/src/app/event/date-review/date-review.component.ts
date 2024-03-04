@@ -38,7 +38,6 @@ export class DateReviewComponent implements OnInit{
           this.backend.getDate(date).subscribe(d=>{
             if (d.personOne._id == this.user?._id){
               this.userDates.push(d)
-              console.log(d.feedbackOne);
             }
           });
         });

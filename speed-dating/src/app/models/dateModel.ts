@@ -10,5 +10,6 @@ export interface DateModel extends BaseModel {
   percentage: number;
   personOne: UserModel;
   personTwo: UserModel | null;
-  feedback: DateFeedbackModel[];
+  feedbackOne:DateFeedbackModel|null;
+  feedbackTwo: DateFeedbackModel|null;
 }

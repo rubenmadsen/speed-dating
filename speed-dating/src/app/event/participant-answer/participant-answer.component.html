@@ -4,8 +4,7 @@
 
   <div class="answer-container">
     <p class="nameP">{{date.personOne?.firstname}}</p>
-    <ng-container *ngFor="let feedback of date.feedback"><p>{{feedback}}</p></ng-container>
-<!--
+    <p *ngFor="let question of feedbackOne">{{question}}</p><!--
     <p>Rate your date: 8/10</p>
     <p>How would you rate X: 5/10</p>
     <p>How would you rate Y: 5/10</p>
@@ -17,7 +16,7 @@
 
   <div class="answer-container">
     <p class="nameP">{{date.personTwo?.firstname}}</p>
-    <ng-container *ngFor="let feedback of date.feedback"><p>{{feedback}}</p></ng-container>
+    <p *ngFor="let question of feedbackTwo">{{question}}</p>
 <!--    <p>Rate your date: 8/10</p>
     <p>How would you rate X: 5/10</p>
     <p>How would you rate Y: 5/10</p>

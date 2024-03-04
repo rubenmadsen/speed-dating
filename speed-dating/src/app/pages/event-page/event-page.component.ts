@@ -127,7 +127,8 @@ export class EventPageComponent implements OnInit, OnDestroy {
           personOne: participant,
           personTwo: null,
           percentage: 0,
-          feedback: [],
+          feedbackOne: null,
+          feedbackTwo:null,
         }
         i += 1;
         this.eventStateService.addEvent(date)
