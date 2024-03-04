@@ -170,14 +170,19 @@ async function addUserToEvent(userId, eventId) {
 }
 async function generateDemoOrganizer() {
   const newDummy = await generateRandomUser(false);
+  newDummy.isOrganizer = true;
   newDummy.email = "organizer@demo.com";
   newDummy.password = "1234";
+  newDummy.firstname = "Cay"
+  newDummy.lastname = "Horstman"
   newDummy.gender = "male"
   return newDummy;
 }
 async function generateDemoParticipant() {
   const newDummy = await generateRandomUser(false);
   newDummy.email = "participant@demo.com";
+  newDummy.firstname = "Michael"
+  newDummy.lastname = "Dubois"
   newDummy.password = "1234";
   newDummy.gender = "male"
   return newDummy;
