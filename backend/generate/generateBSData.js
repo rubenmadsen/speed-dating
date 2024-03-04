@@ -50,8 +50,7 @@ function generateDatabase(events_num, users_num) {
       console.log("Generating Dummies");
       await User.create(await generateDummyParticipant());
       await User.create(await generateDummyOrganizer());
-      await User.create(await generateDemoOrganizer());
-      await User.create(await generateDemoParticipant());
+
       console.log("Generating Events");
       await generateNRandomEvents(events_num);
 
@@ -92,9 +91,15 @@ function generateDatabase(events_num, users_num) {
 async function generateDemo() {
   try {
     const de = Event();
+
+    const organizer = await generateDemoOrganizer()
+    await organizer.save();
+    console.log("DemoOrganizer", organizer)
+    const participant =  await generateDemoParticipant();
+    await participant.save();
     de.startDate = getRandomDateInRange(0,0);
     de.imagePath = getRandomVenuePicture();
-    de.organizer = await User.findOne({email:"organizer@demo.com"});
+    de.organizer = organizer;
     de.hasEnded = false;
     de.floorPlan = "";
     de.round = 1;
@@ -103,9 +108,16 @@ async function generateDemo() {
     de.description = "This is an event created for the demonstration of this website.";
     de.totalParticipants = 20;
     de.currentParticipants = 0;
-
     const event = await Event.create(de);
-
+    //organizer.events.push(event);
+    await User.updateOne(
+        {_id:organizer._id},
+        {$push: {events:event}}
+        );
+    // await User.updateOne(
+    //     {_id:participant._id},
+    //     {$push: {events:event}}
+    // );
     const men = await User.aggregate([
       {$match: {gender: "male", isOrganizer: false}},
       {$sample: {size: 9}},
@@ -123,10 +135,10 @@ async function generateDemo() {
     });
 
     women.forEach(woman => {
+      event.participants.push(woman._id);
       woman.events.push(event._id); // Assuming you want to push event ID
       event.currentParticipants++;
     });
-
 
     await event.save(); // Now we're directly calling save() on the document
     console.log("Demo event generation complete");
@@ -160,12 +172,14 @@ async function generateDemoOrganizer() {
   const newDummy = await generateRandomUser(false);
   newDummy.email = "organizer@demo.com";
   newDummy.password = "1234";
+  newDummy.gender = "male"
   return newDummy;
 }
 async function generateDemoParticipant() {
   const newDummy = await generateRandomUser(false);
   newDummy.email = "participant@demo.com";
   newDummy.password = "1234";
+  newDummy.gender = "male"
   return newDummy;
 }
 async function generateDummyParticipant() {
