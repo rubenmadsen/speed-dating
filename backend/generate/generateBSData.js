@@ -54,6 +54,7 @@ function generateDatabase(events_num, users_num) {
       await User.create(await generateDemoParticipant());
       console.log("Generating Events");
       await generateNRandomEvents(events_num);
+
       const events = await Event.find({});
       for (const event of events) {
         const r = Math.round(Math.random())
@@ -84,7 +85,54 @@ function generateDatabase(events_num, users_num) {
       console.log("Done.")
     })
     .catch((err) => console.log(err))
-    .then(() => {});
+    .then(async () => {
+    });
+}
+
+async function generateDemo() {
+  try {
+    const de = Event();
+    de.startDate = getRandomDateInRange(0,0);
+    de.imagePath = getRandomVenuePicture();
+    de.organizer = await User.findOne({email:"organizer@demo.com"});
+    de.hasEnded = false;
+    de.floorPlan = "";
+    de.round = 1;
+    de.location = "Uppsala domkyrka";
+    de.city = await getRandomCity();
+    de.description = "This is an event created for the demonstration of this website.";
+    de.totalParticipants = 20;
+    de.currentParticipants = 0;
+
+    const event = await Event.create(de);
+
+    const men = await User.aggregate([
+      {$match: {gender: "male", isOrganizer: false}},
+      {$sample: {size: 9}},
+    ]);
+
+    const women = await User.aggregate([
+      {$match: {gender: "female", isOrganizer: false}},
+      {$sample: {size: 10}},
+    ]);
+
+    men.forEach(man => {
+      event.participants.push(man._id); // Again, assuming pushing IDs
+      man.events.push(event._id);
+      event.currentParticipants++;
+    });
+
+    women.forEach(woman => {
+      woman.events.push(event._id); // Assuming you want to push event ID
+      event.currentParticipants++;
+    });
+
+
+    await event.save(); // Now we're directly calling save() on the document
+    console.log("Demo event generation complete");
+  } catch (error) {
+    console.error("Error generating demo event:", error);
+  }
 }
 
 /********************************************************************/
@@ -183,6 +231,7 @@ async function generateRandomEvent() {
   newEvent.organizer = organizer._id;
   return newEvent;
 }
+
 async function generateNRandomEvents(N) {
   const promises = [];
 
@@ -287,7 +336,7 @@ function getRandomAddress() {
 }
 function getRandomCity() {
   const city = getRandomFromList(cities);
-  return City.findOne({ name: city });
+  return  City.findOne({ name: city });
 }
 
 // function getRandomDate() {
@@ -1010,3 +1059,4 @@ module.exports.getRandomProfilePicture = getRandomProfilePicture;
 
 module.exports.clearCollection = clearCollection;
 module.exports.generateDatabase = generateDatabase;
+module.exports.generateDemo = generateDemo;
