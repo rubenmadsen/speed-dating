@@ -98,10 +98,8 @@ export class EventPageComponent implements OnInit, OnDestroy {
   checkUserRegistration(){
     this.backend.getMe().subscribe(r => {
       this.me = r
-      this.isCreator$ = r.events.includes(this.event);
-      console.log(this.isCreator$)
+      this.isCreator$ = true;
       const sameGenderCount = this.event?.participants.filter(participant => participant.gender === this.me.gender).length;
-
       if (this.event?.participants.some(participant => participant._id === r._id)) {
         this.isRegisted = true;
       } else {
@@ -195,7 +193,6 @@ export class EventPageComponent implements OnInit, OnDestroy {
           };
           this.globalService.setGlobalStatus(mess);
           await this.sleep(3000);
-
           this.event = response;
           this.eventService.changeEvent(this.event);
           this.clearTables();
@@ -204,6 +201,7 @@ export class EventPageComponent implements OnInit, OnDestroy {
           this.backend.getSimulatedDatesWithFeedback(this.event!).subscribe({
            next: (response) => {
              this.event = response;
+             console.log(this.event)
            },
            error: (error) => {
              console.log(error);
