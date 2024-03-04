@@ -12,7 +12,7 @@ const { generateDatabase, generateDemo } = require("../generate/generateBSData")
 const router = Router();
 
 router.get("/generation/", async function (req, res) {
-  generateDatabase(10,40)
+  generateDatabase(40,20)
     .then(() => {
       generateDemo().then(() => {
         res.status(200).send("Ok");
