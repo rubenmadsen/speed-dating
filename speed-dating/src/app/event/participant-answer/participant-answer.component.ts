@@ -1,5 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {DateModel} from "../../models/dateModel";
+import {DateFeedbackModel} from "../../models/dateFeedbackModel";
+import {BackendService} from "../../services/backend.service";
 
 @Component({
   selector: 'app-participant-answer',
@@ -7,12 +9,18 @@ import {DateModel} from "../../models/dateModel";
   styleUrls: ['./participant-answer.component.css']
 })
 export class ParticipantAnswerComponent implements OnInit{
-  @Input() date!: DateModel
-
-  constructor() {
+  @Input() date!: DateModel;
+  dateFeedback : DateFeedbackModel | undefined;
+  constructor(private backendService : BackendService) {
 
   }
   ngOnInit(){
-    console.log("TSET")
+    console.log("DATE", this.date)
+/*    if (this.date.feedback !== undefined){
+      /!*this.backendService.getDateFeedback(this.date).subscribe(dfb=>{
+
+      });*!/
+    }*/
+
   }
 }

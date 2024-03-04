@@ -16,6 +16,7 @@ import {StatusMessageType} from "../../interfaces/StatusMessageType";
 import {GlobalService} from "../../services/global.service";
 
 import {Location} from '@angular/common';
+import {DateReviewComponent} from "../../event/date-review/date-review.component";
 
 @Component({
   selector: 'app-event-page',
@@ -27,9 +28,7 @@ export class EventPageComponent implements OnInit, OnDestroy {
   protected readonly faGripVertical = faGripVertical;
   event!: EventModel;
   @ViewChild(ParticipantListComponent) childParticipantList!: ParticipantListComponent;
-
-  clickedParticipant!:UserModel;
-  participantIsClickedOn: Boolean = false;
+  @ViewChild(DateReviewComponent) childDateReview!: DateReviewComponent;
 
   subscription!: Subscription;
   participantsList?: UserModel[];
@@ -322,10 +321,10 @@ export class EventPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  getParticipant(id :string){
+  getParticipant(id :string):void{
     this.backend.getSpecificUser(id).subscribe(user => {
-      this.clickedParticipant = user;
-      this.participantIsClickedOn = !this.participantIsClickedOn;
+      this.childDateReview.onOpenReview(user);
     });
+
   }
 }

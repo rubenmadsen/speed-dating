@@ -1,5 +1,5 @@
 <div *ngIf="isOpen" class="date-review-popup">
-  <button>X</button>
+  <button (click)="closePopUp()">X</button>
   <div class="date-review-content">
     <div id="profile-info-container">
       <h1>{{user?.firstname}} {{user?.lastname}}</h1>
