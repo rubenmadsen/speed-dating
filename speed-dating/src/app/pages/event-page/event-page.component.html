@@ -11,38 +11,42 @@
       <app-event-info [event]="event"></app-event-info>
       <app-participant-list
         #participantList
+        [dropListDisabled]="!isCreator$"
         [datesList]="datesList"
         [participantsList]="participantsList"
       ></app-participant-list>
     </div>
     <div class="matching-button-container">
-      <app-button *ngIf="!removedIsPressed"
+      <app-button *ngIf="!removedIsPressed && isCreator$"
         [buttonClass]="cancelEventButtonClass"
         buttonText="Cancel Event"
         (click)="removeEvent()"
       ></app-button>
       <app-button *ngIf="removedIsPressed"
-                  [buttonClass]="automaticMatchingButtonClass"
+                  [buttonClass]="'accent border-accent clr-white'"
                   buttonText="Back"
                   (click)="back()"
       ></app-button>
       <app-button *ngIf="removedIsPressed"
-                  [buttonClass]="automaticMatchingButtonClass"
+                  [buttonClass]="'attention clr-white border-attention'"
                   buttonText="Confirm Cancellation"
                   (click)="removeEvent()"
       ></app-button>
 
       <app-button
+        *ngIf="isCreator$"
         [buttonClass]="clearTablesButtonClass"
         buttonText="Clear Tables"
         (click)="clearTables()"
       ></app-button>
       <app-button
+        *ngIf="isCreator$"
         [buttonClass]="automaticMatchingButtonClass"
         buttonText="Automatic matching"
         (click)="automaticMatching()"
       ></app-button>
       <app-button
+        *ngIf="isCreator$"
         [buttonClass]="startDateButtonClass"
         buttonText="Start date round: {{event!.round}}"
         (click) = startDates()
@@ -51,6 +55,7 @@
 
     <app-date-container
       class="date-container"
+      [dropListDisabled]="!isCreator$"
       [event]="event"
       [datesList]="datesList"
       [participantList]="participantList"

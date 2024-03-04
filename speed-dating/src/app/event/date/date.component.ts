@@ -3,6 +3,7 @@ import { CdkDragStart, transferArrayItem } from '@angular/cdk/drag-drop';
 import {faInfo} from "@fortawesome/free-solid-svg-icons/faInfo";
 import {DateModel} from "../../models/dateModel";
 import {UserModel} from "../../models/userModel";
+import {BooleanInput} from "@angular/cdk/coercion";
 
 
 @Component({
@@ -18,6 +19,7 @@ export class DateComponent {
   @Input() tableNumber = 1;
   @Input() male?: UserModel;
   @Input() female!: UserModel | null;
+  @Input() dropListDisabled: BooleanInput = false;
 
   @Output() returnUserToList = new EventEmitter<UserModel>();
   previewUsers: Array<String> = []

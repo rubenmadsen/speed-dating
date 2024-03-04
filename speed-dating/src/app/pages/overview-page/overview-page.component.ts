@@ -44,9 +44,7 @@ export class OverviewPageComponent {
     this.loadMyEvents();
     this.loadCompleted();
     await this.loadCityEvents();
-    this.fillerText = this.isOrganizer ? "hosted" : "been to";
-    console.log(this.dateNow.toISOString());
-    
+    this.fillerText = this.isOrganizer ? "hosted" : "been to";   
   }
 
   loadMyEvents(){

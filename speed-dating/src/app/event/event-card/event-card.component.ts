@@ -58,7 +58,6 @@ export class EventCardComponent {
     const currentDate = new Date();
     const sixDaysFromNow = new Date(currentDate);
     sixDaysFromNow.setDate(currentDate.getDate() + 6);
-    console.log("Six days from now", sixDaysFromNow)
     //currentDate.setHours(0, 0, 0, 0);
     //sixDaysFromNow.setHours(23, 59, 59, 999);
     //dateToCheck.setHours(12, 0, 0, 0);

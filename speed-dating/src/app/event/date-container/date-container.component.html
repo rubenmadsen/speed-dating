@@ -4,6 +4,7 @@
               (changeDetected)="handleEvent($event)"
               (tableSwapDetected)="handleTableSwap($event)"
               class="date"
+              [dropListDisabled]="dropListDisabled"
               [tableNumber]="date.tableNumber"
               [matchVal]="date.percentage"
               [male]="date.personOne"

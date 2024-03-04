@@ -2,11 +2,12 @@
   cdkDropList
   class="participant-list unselectable"
   id="list"
+  [cdkDropListDisabled]="dropListDisabled"
   [cdkDropListData]="listUsers"
   (cdkDropListDropped)="drop($event)"
 >
 <!--  <p class="participant-list-title">Registered Participants</p>-->
-  <div class="participant" cdkDrag *ngFor="let user of listUsers">
+  <div class="participant" cdkDrag *ngFor="let user of listUsers" [ngStyle]="{cursor: dropListDisabled ? 'not-allowed' : 'grab'}">
     {{ user.firstname }}
   </div>
 </div>

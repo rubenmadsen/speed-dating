@@ -6,7 +6,7 @@
     [buttonText]="'Host new Event'"
   ></app-button>
 
-  <h2 *ngIf="!isOrganizer" class="unselectable">Shared Contacts</h2>
+  <h2 *ngIf="!isOrganizer" class="unselectable">Your Matches</h2>
   <p class="placeholder-text unselectable" *ngIf="!isLoadingContacts && contacts.length <= 0 &&!isOrganizer">You have no contacts</p>
   <div *ngIf="isLoadingContacts" class="loader"></div>
   <div class="card-container" *ngIf="contacts.length > 0">
@@ -20,7 +20,7 @@
   <div *ngIf="isLoadingYourEvents" class="loader"></div>
   <div class="card-container" *ngIf="yourEvents.length > 0">
     <ng-container *ngFor="let event of yourEvents">
-      <app-event-card [event]="event" [ngStyle]="{border: checkDate(event) ? '3px solid lime' : 'none'}"></app-event-card>
+      <app-event-card class="eventCard" [event]="event" [ngClass]="checkDate(event) ? 'glowBorder' : 'none'"></app-event-card>
     </ng-container>
   </div>
 
