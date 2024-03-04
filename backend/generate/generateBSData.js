@@ -36,7 +36,7 @@ function clearCollection(Model) {
     });
 }
 
-function generateDatabase() {
+function generateDatabase(events_num, users_num) {
   return clearDatabase()
     .then(async () => {
       console.log("Generating Categories and Activities");
@@ -44,14 +44,16 @@ function generateDatabase() {
       console.log("Generating City");
       await generateCities();
       console.log("Generating participants");
-      await generateNRandomUsers(150, false); // Participants
+      await generateNRandomUsers(users_num, false); // Participants
       console.log("Generating Organizers");
       await generateNRandomUsers(2, true); // Organizers
       console.log("Generating Dummies");
       await User.create(await generateDummyParticipant());
       await User.create(await generateDummyOrganizer());
+      await User.create(await generateDemoOrganizer());
+      await User.create(await generateDemoParticipant());
       console.log("Generating Events");
-      await generateNRandomEvents(50);
+      await generateNRandomEvents(events_num);
       const events = await Event.find({});
       for (const event of events) {
         const r = Math.round(Math.random())
@@ -106,7 +108,18 @@ async function addUserToEvent(userId, eventId) {
     console.error('Error adding user to event:', error);
   }
 }
-
+async function generateDemoOrganizer() {
+  const newDummy = await generateRandomUser(false);
+  newDummy.email = "organizer@demo.com";
+  newDummy.password = "1234";
+  return newDummy;
+}
+async function generateDemoParticipant() {
+  const newDummy = await generateRandomUser(false);
+  newDummy.email = "participant@demo.com";
+  newDummy.password = "1234";
+  return newDummy;
+}
 async function generateDummyParticipant() {
   const newDummy = await generateRandomUser(false);
   newDummy.email = "p@p.p";
