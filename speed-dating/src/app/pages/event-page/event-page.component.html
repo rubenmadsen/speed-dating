@@ -114,22 +114,33 @@
 
 
   <div class="ongoing-date-container" *ngIf="isOnGoing && isRegisted">
-    <div class="top-container">
-    <div *ngIf="event.round > 1">
-      <app-date [isOrganizer]= "false" [tableNumber]="myTableNumber" [male]="me" ></app-date>
+    <div class="date-container-test" *ngIf="event.round > 1">
+      <div class="inner-date-container-test" *ngFor="let n of [].constructor(event.round -1); let i= index">
+        <app-date [isOrganizer]= "false" [tableNumber]="getMyTableNumber(i + 1)" [male]="me" [female]="getMyCounterpart(i +1)"></app-date>
+        <div class="toggle-container">
+          <p> Share contact information </p>
+          <app-toggle></app-toggle>
+        </div>
+      </div>
+      <div  *ngIf="!hasGoneOnDate" class="inner-date-container-test">
+        <app-button
+          (click)="goOnDate()"
+          [buttonClass]="'accent border-accent clr-white '"
+          [buttonText]="'GO ON DATE'">
+        </app-button>
+      </div>
+      <div *ngIf="continueIsPressed" class="inner-date-container-test">
+        <app-date [isOrganizer] = "false" [tableNumber]="0" [male]="me"></app-date>
+      </div>
     </div>
-    <div *ngIf="event.round <= 1">
-    <app-date [isOrganizer] = "false" [tableNumber]="1" [male]="me" ></app-date>
-    </div>
-    <div class="toggle-container">
-      <p> Share contact information </p>
-      <app-toggle></app-toggle>
-    </div>
+    <div class="date-container-test" *ngIf="event.round <= 1">
+      <div class="inner-date-container-test">
+        <app-date [isOrganizer] = "false" [tableNumber]="0" [male]="me"></app-date>
+      </div>
     </div>
   </div>
-
-
-
-    <p *ngIf="isOnGoing && isRegisted"> Waiting for host...</p>
+    <div *ngIf="hasGoneOnDate && !continueIsPressed">
+      <app-rating-form (onContinue)="continue($event)"></app-rating-form>
+    </div>
   </ng-container>
 </div>

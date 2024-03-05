@@ -7,12 +7,14 @@
   (cdkDropListDropped)="drop($event)"
   (click)="onParticipantClick($event)"
 >
-  <p>Table {{ tableNumber }}</p>
+  <p>Table {{ tableNumber > 0 ? tableNumber : ': TBD' }}</p>
   <app-match-precentage-bar *ngIf="isOrganizer"
                             id="matchBar"
                             matchValue="{{tableData['matchVal']}}"
   >
   </app-match-precentage-bar>
+
+  <div *ngIf="isOrganizer">
   <div
     class="participant"
     cdkDrag
@@ -24,11 +26,26 @@
   >
     {{ user.firstname }}
 
-    <ng-container *ngIf="i == 0 && isOrganizer">
+    <ng-container *ngIf="i == 0">
       <div *cdkDragPreview>
         <div class="participant drag-preview">{{ tableUsers[0].firstname}}</div>
         <div class="participant drag-preview">{{ tableUsers[1].firstname }}</div>
       </div>
     </ng-container>
   </div>
+  </div>
+
+  <div *ngIf="!isOrganizer">
+    <div class="participant"
+         [ngClass]="male ? 'male' : 'female'"
+    [ngStyle]="{ cursor: male?.firstname === 'TBD' ? 'not-allowed' : 'move' }">
+    {{ male?.firstname }}
+  </div>
+  <div class="participant"
+       [ngClass]="female ? 'female' : 'male'"
+      [ngStyle]="{ cursor: female?.firstname === 'TBD' ? 'not-allowed' : 'grab' }">
+    {{ female?.firstname ? female!.firstname : 'TBD' }}
 </div>
+</div>
+</div>
+

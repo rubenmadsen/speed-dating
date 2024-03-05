@@ -62,10 +62,6 @@ app-event-info {
   margin: 0.5rem;
 }
 
-.ongoing-date-container div {
-  width: 100%;
-  margin-right: 1rem;
-}
 
 .ongoing-date-container {
   display: flex;
@@ -74,12 +70,22 @@ app-event-info {
   justify-content: space-between;
 }
 
+.date-container-test {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.inner-date-container-test {
+  margin-right: 1rem;
+}
+
 .toggle-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
 }
+
 .toggle-container * {
   margin: 0.2rem;
 }

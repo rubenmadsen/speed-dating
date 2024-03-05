@@ -29,6 +29,21 @@ router.get("/event", function (req, res) {
     });
 });
 
+router.put("/event/:eventId", authorizeUser, async (req, res) => {
+    console.log(req.body)
+    try {
+        const updatedEvent = await EventModel.findByIdAndUpdate(req.body.eventId, req.body, { new: true });
+        if (!updatedEvent) {
+            return res.status(404).send({ message: 'Event not found' });
+        }
+        res.status(200).json(updatedEvent);
+    } catch (error) {
+        res.status(500).send({ message: 'Error updating event', error });
+    }
+
+})
+
+
 /**
  * New event
  */
@@ -80,10 +95,31 @@ router.get("/event/:eventId", authorizeUser, async function (req, res) {
     try {
         // Use async/await for consistency and readability
         const event = await Event.findById(req.params.eventId)
-            .populate({
+            .populate([
+                {
                 path: 'dates',
-                model: 'date'
-            });
+                model: 'date',
+                populate: [
+                    {
+                        path: 'personOne',
+                        model: 'user'       
+                    },
+                    {
+                        path: 'personTwo',
+                        model:'user'
+                    }
+                ]
+                },
+                {
+                path: 'city',
+                model: 'city'
+                },
+                {
+                path: 'participants',
+                model: 'user'
+                }
+            ]);
+        
         
         if (!event) {
             return res.status(404).send({ message: "Event not found" });

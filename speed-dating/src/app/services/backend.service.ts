@@ -165,6 +165,13 @@ export class BackendService {
     return this.http.post<EventModel>(this.eventURL,event,this.requestOptions);
   }
 
+  updateEvent(event: EventModel): Observable<EventModel> {
+    return this.http.put<EventModel>(this.eventURL + event._id, event, this.requestOptions);
+  }
+
+  createFeedback(feedback: DateFeedbackModel): Observable<DateFeedbackModel>{
+    return this.http.post<DateFeedbackModel>(this.dateURL + "datefeedback",feedback, this.requestOptions);
+  }
   /**
    * Calculates the date and matches for a new generation of Dates
    * @param event

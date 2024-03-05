@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { BackendService } from 'src/app/services/backend.service';
 
 @Component({
@@ -15,6 +15,9 @@ export class RatingFormComponent {
   checked: boolean = true;
   answersBy: string = "";
   answersFor: string = "";
+
+  @Output() onContinue = new EventEmitter<any>(); // You can use a more specific type instead of any
+
 
   constructor(private backend: BackendService) { }
 
@@ -70,19 +73,16 @@ export class RatingFormComponent {
   /**
    * Continue button is pressed.
    */
-  continue() { //TODO: Do something with this.
+  continue() {
     const answers = {
-      'q1': this.question1,
-      'q2': this.question2,
-      'q3': this.question3,
-      'q4': this.question4,
-      'q5': this.question5,
+      'q1': Number(this.question1),
+      'q3': Number(this.question3),
+      'q4': Number(this.question4),
       'shareContact': this.checked,
       'answersBy': this.answersBy,
       'answersFor': this.answersFor
     }
-
-    console.log(answers);
+    this.onContinue.emit(answers);
   }
 
 }

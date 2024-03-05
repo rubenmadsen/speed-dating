@@ -16,7 +16,7 @@ export class DateComponent {
   protected readonly faInfo = faInfo;
   // tableUsers: Array<String> = [];
 
-  @Input() tableNumber = 1;
+  @Input() tableNumber!: number;
   @Input() male?: UserModel;
   @Input() female!: UserModel | null;
   @Input() dropListDisabled: BooleanInput = false;
@@ -46,6 +46,9 @@ export class DateComponent {
       matchVal: this.matchVal,
     };
   }
+
+
+
 
 
   /**

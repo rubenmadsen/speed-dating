@@ -6,6 +6,7 @@ const { authorizeUser } = require("../authorization/authorize");
 const Date = require("../models/dateModel");
 const User = require("../models/userModel");
 const MatchingAlgorithm = require("../classes/MatchingAlgorithm");
+const DateFeedbackModel = require("../models/dateFeedbackModel");
 
 const router = Router();
 
@@ -103,6 +104,15 @@ router.get("/date/swapskanks/:table1Id/:table2Id", authorizeUser, async function
  */
 
 
+router.post("/date/datefeedback", async (req,res) => {
+    try{
+        console.log(req.body)
+        const result = await DateFeedbackModel.create(req.body);
+        res.status(200).send(result)
+    }catch(err){
+        res.status(500).send({message: "Couldnt create feedback"});
+    }
+});
 
 
 module.exports = router;

@@ -26,10 +26,14 @@ export class EventStateService {
 
   addEvent(date: DateModel){
     const currentDates = this.datesSubject.value;
-    const updatedDates = [...currentDates, date];
+    const highestDateRound = currentDates.reduce((max, current) => Math.max(max, current.dateRound), 0);
+    const newDateWithRound = {
+      ...date,
+      dateRound: highestDateRound
+    }
+    const updatedDates = [...currentDates, newDateWithRound];
     this.datesSubject.next(updatedDates);
     this.sortDatesByTableNumber()
-
   }
 
   removeDate(user: UserModel){

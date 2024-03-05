@@ -10,11 +10,6 @@ const dateFeedbackSchema = new Schema({
     ref: "UserModel",
     required: [true, "Date feedback must have an author"],
   },
-  date: {
-    type: Schema.Types.ObjectId,
-    ref: "DateModel",
-    required: [true, "Date feedback must specify a date"],
-  },
   question:{
     type:[Number],
     default:[]

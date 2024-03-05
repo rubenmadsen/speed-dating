@@ -1,6 +1,6 @@
 import {Component, Input, OnDestroy, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {faGripVertical} from "@fortawesome/free-solid-svg-icons/faGripVertical";
-import {BehaviorSubject, delay, Observable, Subscription} from "rxjs";
+import {BehaviorSubject, delay, Observable, Subscription, takeWhile} from "rxjs";
 import {EventService} from "../../services/event.service";
 import {EventModel} from "../../models/eventModel";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -17,6 +17,7 @@ import {GlobalService} from "../../services/global.service";
 
 import {Location} from '@angular/common';
 import {DateReviewComponent} from "../../event/date-review/date-review.component";
+import {DateFeedbackModel} from "../../models/dateFeedbackModel";
 
 @Component({
   selector: 'app-event-page',
@@ -36,6 +37,7 @@ export class EventPageComponent implements OnInit, OnDestroy {
 
   protected dateNow: Date = new Date();
 
+  continueIsPressed: boolean = false;
 
   me!: UserModel;
   isRegisted: Boolean = false;
@@ -57,6 +59,8 @@ export class EventPageComponent implements OnInit, OnDestroy {
   randomTableNumbers: number[] = [];
 
   isCreator$: Boolean = false;
+
+  hasGoneOnDate: boolean = false;
 
   constructor(private eventService: EventService, private authService: AuthService,
               private backend: BackendService,
@@ -98,13 +102,62 @@ export class EventPageComponent implements OnInit, OnDestroy {
       this.automaticMatchingButtonClass = accentClass + disabledClass;
       this.startDateButtonClass = accentClass + disabledClass;
     }
-
     this.isOnGoing = this.dateNow >= new Date(this.event.startDate) && !this.event.hasEnded;
-
-    this.getMyTableNumber();
-    console.log(this.event.round)
+    await this.getSpecifivEvent();
+   }
+   async getSpecifivEvent(){
+    this.backend.getSpecificEvent(this.event).subscribe( {
+      next: (response) => {
+        this.event = response
+        console.log(this.event)
+        this.eventService.changeEvent(this.event);
+      }
+    })
   }
 
+  goOnDate(){
+     this.hasGoneOnDate = !this.hasGoneOnDate;
+  }
+
+  continue(answer: any){
+    const feedback: DateFeedbackModel = {
+      author: this.me,
+      question: [answer.q1, answer.q3, answer.q4]
+    }
+    this.backend.createFeedback(feedback).subscribe({
+      next: (response) => {
+        console.log(response)
+      },
+      error: (error) => {
+        console.log(error)
+      }
+    });
+     if(this.currentDate?.personTwo?._id === this.me._id) {
+       this.currentDate.feedbackTwo = feedback;
+     } else {
+       this.currentDate.feedbackOne = feedback;
+     }
+    const dateIndex = this.event.dates.findIndex(date => date._id === this.currentDate._id);
+    if (dateIndex !== -1) {
+      if(this.currentDate.personTwo?._id === this.me._id) {
+        this.event.dates[dateIndex].feedbackTwo = feedback;
+      } else {
+        this.event.dates[dateIndex].feedbackOne = feedback;
+      }
+    } else {
+      console.error('Current date not found');
+    }
+
+    // this.backend.updateEvent(this.event).subscribe({
+    //   next: (response) => {
+    //     console.log(response)
+    //   },
+    //   error: (error) => {
+    //     console.log(error)
+    //   }
+    // })
+     this.continueIsPressed = !this.continueIsPressed;
+  }
   checkUserRegistration(){
     this.backend.getMe().subscribe(r => {
       this.me = r
@@ -119,17 +172,31 @@ export class EventPageComponent implements OnInit, OnDestroy {
       }
     });
   }
+  currentDate!: DateModel;
 
-  myTableNumber: number = 1;
-  getMyTableNumber(): number {
+  getMyTableNumber(round: number): number {
     for (const date of this.event.dates) {
-      if (date.dateRound == this.event.round - 1) {
-        if (date.personTwo?._id?.toString === this.me._id!.toString|| date.personOne._id?.toString === this.me._id!.toString) {
-          this.myTableNumber = date.tableNumber
+      if (date.dateRound == round) {
+        if (date.personTwo?._id === this.me._id || date.personOne._id === this.me._id) {
+          this.currentDate = date;
+          return date.tableNumber
         }
       }
     }
     return 1;
+  }
+
+   getMyCounterpart(round: number): UserModel | null {
+    for (let date of this.event.dates) {
+      if (date.dateRound == round) {
+        if (date.personTwo?._id === this.me._id) {
+          return date.personOne
+        } else if (date.personOne._id === this.me._id){
+          return  date.personTwo
+        }
+      }
+    }
+    return null;
   }
 
   ngOnDestroy() {
@@ -224,7 +291,6 @@ export class EventPageComponent implements OnInit, OnDestroy {
           this.backend.getSimulatedDatesWithFeedback(this.event!).subscribe({
            next: (response) => {
              this.event = response;
-             console.log(this.event)
            },
            error: (error) => {
              console.log(error);
@@ -348,7 +414,7 @@ export class EventPageComponent implements OnInit, OnDestroy {
 
   getParticipant(id :string):void{
     this.backend.getSpecificUser(id).subscribe(user => {
-      this.childDateReview.onOpenReview(user);
+      // this.childDateReview.onOpenReview(user);
     });
 
   }
