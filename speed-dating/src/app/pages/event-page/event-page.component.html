@@ -1,5 +1,5 @@
 <!-- TODO fixa en back-knapp -->
-<div class="page-container" cdkDropListGroup (focusin)="participantIsClickedOn=false">
+<div class="page-container" cdkDropListGroup >
   <app-button
     class="back-button"
     [buttonClass]="'trans clr-accent border-accent'"
@@ -23,12 +23,12 @@
         (click)="removeEvent()"
       ></app-button>
       <app-button *ngIf="removedIsPressed"
-                  [buttonClass]="automaticMatchingButtonClass"
+                  [buttonClass]="'accent border-accent clr-white'"
                   buttonText="Back"
                   (click)="back()"
       ></app-button>
       <app-button *ngIf="removedIsPressed"
-                  [buttonClass]="automaticMatchingButtonClass"
+                  [buttonClass]="'attention clr-white border-attention'"
                   buttonText="Confirm Cancellation"
                   (click)="removeEvent()"
       ></app-button>
@@ -61,7 +61,7 @@
       [participantList]="participantList"
       (onParticipantClick)="getParticipant($event)"
     ></app-date-container>
-    <app-date-review [user]="clickedParticipant" [event]="event" [isOpen]="participantIsClickedOn"> </app-date-review>
+    <app-date-review [event]="event"> </app-date-review>
   </ng-container>
 
   <ng-container *ngIf="!(isOrganizer$ | async)">

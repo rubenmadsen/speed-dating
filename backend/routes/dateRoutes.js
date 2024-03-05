@@ -13,7 +13,13 @@ const router = Router();
  * Get specific Date
  */
 router.get("/date/:dateId",authorizeUser,function (req,res){
-   Date.findById(req.params.dateId).populate("personOne personTwo").then(date => {
+   Date.findById(req.params.dateId).populate({
+       path: 'personOne',
+       model: 'user'
+   }).populate({
+       path: 'personTwo',
+       model: 'user'
+   }).then(date => {
        res.send(date);
    })
 });

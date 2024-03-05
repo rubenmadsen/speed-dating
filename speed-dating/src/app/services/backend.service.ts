@@ -10,6 +10,7 @@ import {DateModel} from "../models/dateModel";
 import {PingPong} from "../interfaces/PingPong";
 import {FileResponse} from "../interfaces/FileResponse";
 import {AuthService} from "./auth.service";
+import {DateFeedbackModel} from "../models/dateFeedbackModel";
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,7 @@ export class BackendService {
   private readonly categoryURL: string = this.backendURL + "category/";
   private readonly activityURL: string = this.backendURL + "activity/";
   private readonly dateURL: string = this.backendURL + "date/";
-
+  private readonly feedBackURL: string = this.backendURL + "feedback/";
 
   headerDict = {
     'Content-Type': 'application/json',
@@ -216,7 +217,7 @@ export class BackendService {
    * Get specific Date
    */
   getDate(date:DateModel):Observable<DateModel>{
-    return this.http.get<DateModel>(this.dateURL + date._id);
+    return this.http.get<DateModel>(this.dateURL + date._id,this.requestOptions);
   }
 
   /**
@@ -252,7 +253,9 @@ export class BackendService {
 
   // DateFeedback
 
-
+  getDateFeedback(dateFeedbackId: string):Observable<DateFeedbackModel>{
+    return this.http.get<DateFeedbackModel>(this.feedBackURL + "dateFeedback/"+dateFeedbackId)
+  }
 
 
 

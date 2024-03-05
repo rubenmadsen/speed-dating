@@ -22,6 +22,7 @@ const generationRoutes = require("./routes/generationRoutes");
 const cityRoutes = require("./routes/cityRoutes");
 const activityRoutes = require("./routes/activitityRoute");
 const uploadRoutes = require("./routes/uploadRoute");
+const feedbackRoutes = require("./routes/feedbackRoutes")
 const MatchingAlgorithm = require('./classes/MatchingAlgorithm');
 
 // Environment
@@ -44,6 +45,7 @@ app.use(generationRoutes);
 app.use(cityRoutes);
 app.use(activityRoutes);
 app.use(uploadRoutes);
+app.use(feedbackRoutes)
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
