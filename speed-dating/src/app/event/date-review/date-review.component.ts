@@ -26,6 +26,7 @@ export class DateReviewComponent implements OnInit{
   ngOnInit(){}
 
   onOpenReview(user: UserModel):void{
+    console.log(this.event)
     this.user = user
     this.isOpen = true
     this.userDates=[]
@@ -33,15 +34,11 @@ export class DateReviewComponent implements OnInit{
   }
 
   getDatesFromBackend() {
-    if (this.event !== null) {
-        this.event.dates.forEach(date => {
-          this.backend.getDate(date).subscribe(d=>{
-            if (d.personOne._id == this.user?._id){
-              this.userDates.push(d)
-            }
-          });
-        });
-    }
+    this.event?.dates.forEach(date => {
+      if (date.personTwo?._id == this.user?._id || date.personOne._id == this.user?._id){
+        this.userDates.push(date)
+      }
+    })
  }
   /*togglePopUp(){
     this.isOpen=false;

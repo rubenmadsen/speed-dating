@@ -129,9 +129,12 @@ router.get("/event/:eventId", authorizeUser, async function (req, res) {
                 }
             ]);
         
-        
         if (!event) {
             return res.status(404).send({ message: "Event not found" });
+        }
+        if (event.round > 3) {
+            event.hasEnded = true;
+            await event.save();
         }
         res.send(event);
     } catch (err) {

@@ -79,7 +79,9 @@ app-event-info {
 .inner-date-container-test {
   margin-right: 1rem;
 }
-
+.hidden {
+  display: none;
+}
 .toggle-container {
   display: flex;
   justify-content: center;

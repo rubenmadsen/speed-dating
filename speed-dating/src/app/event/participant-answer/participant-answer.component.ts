@@ -10,39 +10,14 @@ import {BackendService} from "../../services/backend.service";
 })
 export class ParticipantAnswerComponent implements OnInit{
   @Input() date!: DateModel;
-  feedbackOne: number[] = [];
-  feedbackTwo: number[] = [];
+  feedbackOne!: DateFeedbackModel;
+  feedbackTwo!: DateFeedbackModel;
 
   constructor(private backendService : BackendService) {
 
   }
   ngOnInit(){
-    this.getFeedbackTwoQuestions()
-    this.getFeedbackOneQuestions()
+    this.feedbackOne = this.date.feedbackOne!;
+    this.feedbackTwo = this.date.feedbackTwo!;
   }
-  getFeedbackOneQuestions(){
-    if (this.date.feedbackOne?._id != null) {
-      this.backendService.getDateFeedback(this.date.feedbackOne?._id).subscribe(dfb => {
-        if (dfb !==null){
-          this.feedbackOne = dfb.question;
-        }
-        else {
-          this.feedbackTwo = [];
-        }
-      });
-    }
-  }
-  getFeedbackTwoQuestions(){
-    if (this.date.feedbackTwo?._id != null) {
-      this.backendService.getDateFeedback(this.date.feedbackTwo?._id).subscribe(dfb => {
-        if (dfb !==null){
-          this.feedbackTwo = dfb.question;
-        }
-        else {
-          this.feedbackTwo = [];
-        }
-      });
-    }
-  }
-
 }

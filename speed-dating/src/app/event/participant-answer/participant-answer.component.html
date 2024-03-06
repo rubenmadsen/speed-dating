@@ -4,24 +4,17 @@
 
   <div class="answer-container">
     <p class="nameP">{{date.personOne.firstname}}</p>
-    <p *ngFor="let question of feedbackOne">{{question}}</p><!--
-    <p>Rate your date: 8/10</p>
-    <p>How would you rate X: 5/10</p>
-    <p>How would you rate Y: 5/10</p>
-    <p>How would you rate Z: 5/10</p>
-    <p>How would you rate V: 5/10</p>
-    <p>How would you rate Q: 5/10</p>
--->
+    <p> How would you rate your match : {{feedbackOne.question[0]}}</p>
+    <p> How much do you think you have in common with this person : {{feedbackOne.question[1]}}</p>
+    <p> How interested are you in getting to know this person better : {{feedbackOne.question[2]}}</p>
+
   </div>
 
   <div class="answer-container">
     <p class="nameP">{{date.personTwo?.firstname}}</p>
-    <p *ngFor="let question of feedbackTwo">{{question}}</p>
-<!--    <p>Rate your date: 8/10</p>
-    <p>How would you rate X: 5/10</p>
-    <p>How would you rate Y: 5/10</p>
-    <p>How would you rate Z: 5/10</p>
-    <p>How would you rate V: 5/10</p>
-    <p>How would you rate Q: 5/10</p>-->
+    <p> How would you rate your match : {{feedbackTwo.question[0]}}</p>
+    <p> How much do you think you have in common with this person : {{feedbackTwo.question[1]}}</p>
+    <p> How interested are you in getting to know this person better : {{feedbackTwo.question[2]}}</p>
+
   </div>
 </div>

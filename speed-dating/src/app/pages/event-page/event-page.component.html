@@ -6,17 +6,18 @@
     [buttonText]="'Back'"
     (click)="backClicked()"
   ></app-button>
-  <ng-container *ngIf="isOrganizer$ | async">
+  <ng-container *ngIf="(isOrganizer$ | async)">
     <div class="info-and-list-container">
       <app-event-info [event]="event"></app-event-info>
       <app-participant-list
         #participantList
+        [ngClass]="{'hidden': event.hasEnded}"
         [dropListDisabled]="!isCreator$"
         [datesList]="datesList"
         [participantsList]="participantsList"
       ></app-participant-list>
     </div>
-    <div class="matching-button-container">
+    <div [ngClass]="{'hidden': event.hasEnded}" class="matching-button-container">
       <app-button *ngIf="!removedIsPressed && isCreator$"
         [buttonClass]="cancelEventButtonClass"
         buttonText="Cancel Event"
@@ -57,6 +58,8 @@
       class="date-container"
       [dropListDisabled]="!isCreator$"
       [event]="event"
+      [ngClass]="{'hidden': event.hasEnded}"
+
       [datesList]="datesList"
       [participantList]="participantList"
       (onParticipantClick)="getParticipant($event)"

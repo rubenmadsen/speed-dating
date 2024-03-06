@@ -109,8 +109,8 @@ export class EventPageComponent implements OnInit, OnDestroy {
     this.backend.getSpecificEvent(this.event).subscribe( {
       next: (response) => {
         this.event = response
-        console.log(this.event)
         this.eventService.changeEvent(this.event);
+        console.log(this.event)
       }
     })
   }
@@ -150,8 +150,6 @@ export class EventPageComponent implements OnInit, OnDestroy {
         console.log(error)
       }
     });
-
-
      this.continueIsPressed = !this.continueIsPressed;
   }
   checkUserRegistration(){
@@ -220,6 +218,10 @@ export class EventPageComponent implements OnInit, OnDestroy {
         this.eventStateService.addEvent(date)
       }
     })
+  }
+
+  updateEvent(){
+
   }
 
   back(){
@@ -410,7 +412,7 @@ export class EventPageComponent implements OnInit, OnDestroy {
 
   getParticipant(id :string):void{
     this.backend.getSpecificUser(id).subscribe(user => {
-      // this.childDateReview.onOpenReview(user);
+      this.childDateReview.onOpenReview(user);
     });
 
   }
