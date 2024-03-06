@@ -104,15 +104,35 @@ router.get("/date/swapskanks/:table1Id/:table2Id", authorizeUser, async function
  */
 
 
-router.post("/date/datefeedback", async (req,res) => {
+router.put("/date/datefeedback/:feedbackId", async (req,res) => {
     try{
-        console.log(req.body)
-        const result = await DateFeedbackModel.create(req.body);
-        res.status(200).send(result)
+        const {feedbackId} = req.params;
+        const updateData = req.body
+        const updatedFeedback = await DateFeedbackModel.findByIdAndUpdate(feedbackId, updateData, { new: true });
+        if (!updatedFeedback) {
+            return res.status(404).send({ message: 'Feedback not found' });
+        }
+        res.status(200).json(updatedFeedback);    
     }catch(err){
         res.status(500).send({message: "Couldnt create feedback"});
     }
 });
 
+
+router.put("date/:dateId", async (req , res) => {
+    try {
+        const { dateId } = req.params;
+        const updateData = req.body;
+        const updatedDate = await DateModel.findByIdAndUpdate(dateId, updateData, { new: true });
+        if (!updatedDate) {
+            return res.status(404).send({ message: 'Date not found' });
+        }
+        res.status(200).json(updatedDate);
+    } catch(error){
+        res.status(500).send({ message: 'Error updating date', error });
+
+    }
+
+})
 
 module.exports = router;

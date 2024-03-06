@@ -169,8 +169,8 @@ export class BackendService {
     return this.http.put<EventModel>(this.eventURL + event._id, event, this.requestOptions);
   }
 
-  createFeedback(feedback: DateFeedbackModel): Observable<DateFeedbackModel>{
-    return this.http.post<DateFeedbackModel>(this.dateURL + "datefeedback",feedback, this.requestOptions);
+  updateFeedback(id: string,feedback: DateFeedbackModel): Observable<DateFeedbackModel>{
+    return this.http.put<DateFeedbackModel>(this.dateURL + "datefeedback/" + id,feedback, this.requestOptions);
   }
   /**
    * Calculates the date and matches for a new generation of Dates
@@ -225,6 +225,10 @@ export class BackendService {
    */
   getDate(date:DateModel):Observable<DateModel>{
     return this.http.get<DateModel>(this.dateURL + date._id,this.requestOptions);
+  }
+
+  updateDate(date: DateModel): Observable<DateModel>{
+    return this.http.put<DateModel>(this.dateURL + date._id, date,this.requestOptions);
   }
 
   /**

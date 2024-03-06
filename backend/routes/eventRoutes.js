@@ -30,9 +30,10 @@ router.get("/event", function (req, res) {
 });
 
 router.put("/event/:eventId", authorizeUser, async (req, res) => {
-    console.log(req.body)
     try {
-        const updatedEvent = await EventModel.findByIdAndUpdate(req.body.eventId, req.body, { new: true });
+        const {eventId} = req.params;
+        const updateData = req.body
+        const updatedEvent = await EventModel.findByIdAndUpdate(eventId, updateData, { new: true });
         if (!updatedEvent) {
             return res.status(404).send({ message: 'Event not found' });
         }
@@ -107,6 +108,14 @@ router.get("/event/:eventId", authorizeUser, async function (req, res) {
                     {
                         path: 'personTwo',
                         model:'user'
+                    },
+                    {
+                        path: 'feedbackOne',
+                        model: 'datefeedback'
+                    },
+                    {
+                        path: 'feedbackTwo',
+                        model: 'datefeedback'
                     }
                 ]
                 },

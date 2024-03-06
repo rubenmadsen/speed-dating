@@ -120,42 +120,38 @@ export class EventPageComponent implements OnInit, OnDestroy {
   }
 
   continue(answer: any){
-    const feedback: DateFeedbackModel = {
+
+    const feedbackToUpdate = this.currentDate.personTwo?._id === this.me._id ? 'feedbackTwo' : 'feedbackOne';
+    const feedbackId = this.currentDate[feedbackToUpdate]?._id;
+
+    if (!feedbackId) {
+      console.error('Feedback ID not found');
+      return;
+    }
+    const feedbackData = {
       author: this.me,
       question: [answer.q1, answer.q3, answer.q4]
-    }
-    this.backend.createFeedback(feedback).subscribe({
+    };
+
+    this.backend.updateFeedback(feedbackId, feedbackData).subscribe({
       next: (response) => {
-        console.log(response)
-      },
+        const dateIndex = this.event.dates.findIndex(date => date._id === this.currentDate._id);
+        if (dateIndex !== -1) {
+          if(this.currentDate.personTwo?._id === this.me._id) {
+            this.event.dates[dateIndex].feedbackTwo = response;
+          } else {
+            this.event.dates[dateIndex].feedbackOne = response;
+          }
+        } else {
+          console.error('Current date not found');
+        }
+        },
       error: (error) => {
         console.log(error)
       }
     });
-     if(this.currentDate?.personTwo?._id === this.me._id) {
-       this.currentDate.feedbackTwo = feedback;
-     } else {
-       this.currentDate.feedbackOne = feedback;
-     }
-    const dateIndex = this.event.dates.findIndex(date => date._id === this.currentDate._id);
-    if (dateIndex !== -1) {
-      if(this.currentDate.personTwo?._id === this.me._id) {
-        this.event.dates[dateIndex].feedbackTwo = feedback;
-      } else {
-        this.event.dates[dateIndex].feedbackOne = feedback;
-      }
-    } else {
-      console.error('Current date not found');
-    }
 
-    // this.backend.updateEvent(this.event).subscribe({
-    //   next: (response) => {
-    //     console.log(response)
-    //   },
-    //   error: (error) => {
-    //     console.log(error)
-    //   }
-    // })
+
      this.continueIsPressed = !this.continueIsPressed;
   }
   checkUserRegistration(){
