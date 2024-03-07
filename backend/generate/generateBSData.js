@@ -237,13 +237,16 @@ async function generateRandomUser(isOrganizer) {
 
 async function generateRandomEvent() {
   const newEvent = Event();
-  newEvent.startDate = getRandomDateInRange(360, 14);
+  const randomDate = getRandomDateInRange(14, 14);
+  const currentDate = new global.Date()
+  newEvent.startDate = randomDate;
   newEvent.imagePath = getRandomVenuePicture();
   newEvent.location = getRandomVenue();
   const city = await getRandomCity();
   //console.log("CITY", city)
   newEvent.city = city._id;
   newEvent.address = getRandomAddress();
+  newEvent.hasEnded = randomDate < currentDate;
   newEvent.description = getRandomVenueDescription();
   const organizer = await User.findOne({email:"o@o.o"});
   // console.log("Organ",organizer)
