@@ -82,30 +82,9 @@ router.get("/date/swaptables/:table1Id/:table2Id", authorizeUser, async function
     }).catch(err => console.log(err));
 });
 
-
-/**
- * Swap females
- */
-router.get("/date/swapskanks/:table1Id/:table2Id", authorizeUser, async function (req, res) {
-    Date.findById(req.params.table1Id).populate("personOne personTwo").then(t1 =>{
-        Date.findById(req.params.table2Id).populate("personOne personTwo").then(t2 => {
-            const storedUser = t1.personTwo;
-            t1.personTwo = t2.personTwo;
-            t2.personTwo = storedUser;
-            t1.save().then(() => {
-                t2.save().then(() => {
-                    res.send();
-                }).catch(err => console.log(err));
-            }).catch(err => console.log(err));
-        }).catch(err => console.log(err));
-    }).catch(err => console.log(err));
-});
-
 /**
  * Get Dates for even
  */
-
-
 router.put("/date/datefeedback/:feedbackId", async (req,res) => {
     try{
         const {feedbackId} = req.params;

@@ -237,13 +237,7 @@ export class BackendService {
   swapTables(t1:DateModel, t2:DateModel):Observable<DateModel[]>{
     return this.http.get<DateModel[]>(this.dateURL + "swaptables/" +t1._id + "/" + t2._id,this.requestOptions);
   }
-  
-  /**
-   * Swap tables
-   */
-  swapSkanks(t1:DateModel, t2:DateModel):Observable<DateModel[]>{
-    return this.http.get<DateModel[]>(this.dateURL + "swapskanks/" +t1._id + "/" + t2._id,this.requestOptions);
-  }
+
 
   matchUsers(user1:UserModel, user2:UserModel):Observable<DateModel>{
     return this.http.get<DateModel>(this.dateURL + "match/" + user1._id + "/" + user2._id);
