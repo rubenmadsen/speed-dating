@@ -3,6 +3,7 @@ import {UserModel} from "../../models/userModel";
 import {EventModel} from "../../models/eventModel";
 import {BackendService} from "../../services/backend.service";
 import {DateModel} from "../../models/dateModel";
+import {faX} from "@fortawesome/free-solid-svg-icons/faX";
 
 @Component({
   selector: 'app-date-review',
@@ -13,6 +14,8 @@ export class DateReviewComponent implements OnInit{
   @Input() isOpen: Boolean = false;
   @Input() user : UserModel | undefined;
   @Input() event!: EventModel |null;
+
+  protected readonly faX = faX;
 
 /*
   dates!: DateModel[];
