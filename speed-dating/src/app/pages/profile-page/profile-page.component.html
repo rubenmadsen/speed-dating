@@ -14,7 +14,7 @@
       <p>{{ user?.description }}</p>
     </div>
   </div>
-  <div class="activity-container">
+  <div *ngIf="!user?.isOrganizer" class="activity-container">
     <div class="activity" *ngFor="let category of categories">
       <h2>{{ category!.name }}</h2>
       <ng-container *ngFor="let b of arm">
