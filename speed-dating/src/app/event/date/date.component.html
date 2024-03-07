@@ -24,7 +24,7 @@
     [cdkDragDisabled]="user.firstname === 'TBD' || !isOrganizer"
     id="{{user._id}}"
   >
-    {{ user.firstname }}
+    {{ user.firstname !== 'TBD' ? user.firstname + " " + user.lastname  : user.firstname }}
 
     <ng-container *ngIf="i == 0">
       <div *cdkDragPreview>
@@ -39,12 +39,12 @@
     <div class="participant"
          [ngClass]="male ? 'male' : 'female'"
     [ngStyle]="{ cursor: male?.firstname === 'TBD' ? 'not-allowed' : 'move' }">
-    {{ male?.firstname }}
+    {{ male?.firstname + " " + male?.lastname }}
   </div>
   <div class="participant"
        [ngClass]="female ? 'female' : 'male'"
       [ngStyle]="{ cursor: female?.firstname === 'TBD' ? 'not-allowed' : 'grab' }">
-    {{ female?.firstname ? female!.firstname : 'TBD' }}
+    {{ female?.firstname ? female!.firstname + " " + female?.lastname : 'TBD' }}
 </div>
 </div>
 </div>
