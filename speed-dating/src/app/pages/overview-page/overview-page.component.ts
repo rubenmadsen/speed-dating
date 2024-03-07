@@ -86,7 +86,7 @@ export class OverviewPageComponent {
     this.backend.getEventsByLocation(this.me).subscribe( {
       next: (response) => {
         response.forEach(event => {
-          if(!event.participants.some(x => x._id === this.me._id)){
+          if(!event.participants.some(x => x._id === this.me._id) && !event.hasEnded){
             this.recommendedEvents.push(event)
           }
           });
