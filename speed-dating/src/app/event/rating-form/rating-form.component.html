@@ -1,31 +1,70 @@
-<form class="big-form" action="submit" name="rating-form">
-    <div class="questions">
-        <div class="form" id="q1">
-            <p>How would you rate your match?</p>
-            <div class="radioButtons">
-                <label *ngFor="let item of [].constructor(10), let i = index" for="Q1{{i+1}}">{{i+1}}<br/>
-                    <input type="text" name="valueQ1" id="Q1{{i+1}}" type="radio" [value]="i+1" (change)="changeValueQ1(i+1)">
-                </label>
-            </div>
-        </div>
+<div class="form-container">
+  <form action="submit" name="rating-form">
+    <div class="form-item-container" id="q1">
+      <p class="form-question">How was your date?</p>
 
-        <div class="form" id="q3">
-            <p>How much do you think you have in common with this person?</p>
-            <div class="radioButtons">
-                <label *ngFor="let item of [].constructor(10), let i = index" for="Q3{{i+1}}">{{i+1}}<br/>
-                    <input name="valueQ3" id="Q3{{i+1}}" type="radio" value="{{i+1}}" (change)="changeValueQ3(i+1)">
-                </label>
-            </div>
-        </div>
+      <div class="radio-btns-container">
+        <label
+          *ngFor="let item of [].constructor(10); let i = index"
+          for="Q1{{ i + 1 }}"
+          >{{ i + 1 }}
 
-        <div class="form" id="q4">
-            <p>How interested are you in getting to know this person better?</p>
-            <div class="radioButtons">
-                <label *ngFor="let item of [].constructor(10), let i = index" for="Q4{{i+1}}">{{i+1}}<br/>
-                    <input name="valueQ4" id="Q4{{i+1}}" type="radio" value="{{i+1}}" (change)="changeValueQ4(i+1)">
-                </label>
-            </div>
-        </div>
-      <app-button buttonText="Continue" buttonClass="secondary" id="continueBtn" (appClick)="continue()"></app-button>
+          <input
+            type="text"
+            name="valueQ1"
+            id="Q1{{ i + 1 }}"
+            type="radio"
+            [value]="i + 1"
+            (change)="changeValueQ1(i + 1)"
+          />
+        </label>
+      </div>
     </div>
-</form>
+
+    <div class="form-item-container" id="q3">
+      <p class="form-question">How much did you two have in common?</p>
+      <div class="radio-btns-container">
+        <label
+          *ngFor="let item of [].constructor(10); let i = index"
+          for="Q3{{ i + 1 }}"
+          >{{ i + 1 }}
+          <input
+            name="valueQ3"
+            id="Q3{{ i + 1 }}"
+            type="radio"
+            value="{{ i + 1 }}"
+            (change)="changeValueQ3(i + 1)"
+          />
+        </label>
+      </div>
+    </div>
+
+    <div class="form-item-container" id="q4">
+      <p class="form-question">
+        How interested are you in meeting this person again?
+      </p>
+      <div class="radio-btns-container">
+        <label
+          *ngFor="let item of [].constructor(10); let i = index"
+          for="Q4{{ i + 1 }}"
+          >{{ i + 1 }}
+          <input
+            name="valueQ4"
+            id="Q4{{ i + 1 }}"
+            type="radio"
+            value="{{ i + 1 }}"
+            (change)="changeValueQ4(i + 1)"
+          />
+        </label>
+      </div>
+    </div>
+
+    <div class="submit-container">
+      <app-button
+        buttonText="Submit Rating"
+        buttonClass="secondary"
+        (appClick)="continue()"
+      ></app-button>
+    </div>
+  </form>
+</div>

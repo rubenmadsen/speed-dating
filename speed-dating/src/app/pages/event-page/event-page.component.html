@@ -118,7 +118,8 @@
       [buttonText]="'Event ended'"
     ></app-button>
 
-    <div class="ongoing-event-container" *ngIf="isOnGoing && isRegisted && !hasEnded">
+    <div class="ongoing-event-container" *ngIf="isRegisted">
+    <!-- <div class="ongoing-event-container" *ngIf="isOnGoing && isRegisted && !hasEnded"> -->
       <div class="dates-container" *ngIf="event.round > 1">
         <div
           class="date"
