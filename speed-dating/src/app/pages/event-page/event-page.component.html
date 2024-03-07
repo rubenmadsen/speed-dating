@@ -1,37 +1,43 @@
 <!-- TODO fixa en back-knapp -->
-<div class="page-container" cdkDropListGroup >
+<div class="page-container" cdkDropListGroup>
   <app-button
     class="back-button"
     [buttonClass]="'trans clr-accent border-accent'"
     [buttonText]="'Back'"
     (click)="backClicked()"
   ></app-button>
-  <ng-container *ngIf="(isOrganizer$ | async)">
+  <ng-container *ngIf="isOrganizer$ | async">
     <div class="info-and-list-container">
       <app-event-info [event]="event"></app-event-info>
       <app-participant-list
         #participantList
-        [ngClass]="{'hidden': event.hasEnded}"
+        [ngClass]="{ hidden: event.hasEnded }"
         [dropListDisabled]="!isCreator$"
         [datesList]="datesList"
         [participantsList]="participantsList"
       ></app-participant-list>
     </div>
-    <div [ngClass]="{'hidden': event.hasEnded}" class="matching-button-container">
-      <app-button *ngIf="!removedIsPressed && isCreator$"
+    <div
+      [ngClass]="{ hidden: event.hasEnded }"
+      class="matching-button-container"
+    >
+      <app-button
+        *ngIf="!removedIsPressed && isCreator$"
         [buttonClass]="cancelEventButtonClass"
         buttonText="Cancel Event"
         (click)="removeEvent()"
       ></app-button>
-      <app-button *ngIf="removedIsPressed"
-                  [buttonClass]="'accent border-accent clr-white'"
-                  buttonText="Back"
-                  (click)="back()"
+      <app-button
+        *ngIf="removedIsPressed"
+        [buttonClass]="'accent border-accent clr-white'"
+        buttonText="Back"
+        (click)="back()"
       ></app-button>
-      <app-button *ngIf="removedIsPressed"
-                  [buttonClass]="'attention clr-white border-attention'"
-                  buttonText="Confirm Cancellation"
-                  (click)="removeEvent()"
+      <app-button
+        *ngIf="removedIsPressed"
+        [buttonClass]="'attention clr-white border-attention'"
+        buttonText="Confirm Cancellation"
+        (click)="removeEvent()"
       ></app-button>
 
       <app-button
@@ -49,8 +55,8 @@
       <app-button
         *ngIf="isCreator$"
         [buttonClass]="startDateButtonClass"
-        buttonText="Start date round: {{event!.round}}"
-        (click) = startDates()
+        buttonText="Start date round: {{ event!.round }}"
+        (click)="startDates()"
       ></app-button>
     </div>
 
@@ -58,8 +64,7 @@
       class="date-container"
       [dropListDisabled]="!isCreator$"
       [event]="event"
-      [ngClass]="{'hidden': event.hasEnded}"
-
+      [ngClass]="{ hidden: event.hasEnded }"
       [datesList]="datesList"
       [participantList]="participantList"
       (onParticipantClick)="getParticipant($event)"
@@ -74,7 +79,8 @@
     <div class="loader" *ngIf="isLoading"></div>
     <app-button
       *ngIf="
-        !isRegisted && allowedToRegister &&
+        !isRegisted &&
+        allowedToRegister &&
         event!.participants.length < event!.totalParticipants &&
         !event?.hasEnded &&
         !isLoading
@@ -85,8 +91,7 @@
     ></app-button>
 
     <app-button
-      *ngIf="isRegisted && !event?.hasEnded  && !isOnGoing &&
-        !isLoading"
+      *ngIf="isRegisted && !event?.hasEnded && !isOnGoing && !isLoading"
       [buttonClass]="'accent border-accent clr-white '"
       [buttonText]="'Unregister'"
       (click)="unregister()"
@@ -108,40 +113,60 @@
     </p>
 
     <app-button
-      *ngIf="event?.hasEnded && hasEnded &&
-        !isLoading"
+      *ngIf="event?.hasEnded && hasEnded && !isLoading"
       [buttonClass]="'accent border-accent clr-white disabled'"
       [buttonText]="'Event ended'"
     ></app-button>
 
+    <!-- TODO lägg till isOngoing och !hasEnded -->
+    <div class="ongoing-event-container" *ngIf="isRegisted">
+      <div class="dates-container" *ngIf="event.round > 1">
+        <div
+          class="date"
+          *ngFor="let n of [].constructor(event.round - 1); let i = index"
+        >
+          <app-date
+            [isOrganizer]="false"
+            [tableNumber]="getMyTableNumber(i + 1)"
+            [male]="me"
+            [female]="getMyCounterpart(i + 1)"
+          ></app-date>
 
-
-  <div class="ongoing-date-container" *ngIf="isOnGoing && isRegisted && !hasEnded">
-    <div class="date-container-test" *ngIf="event.round > 1">
-      <div class="inner-date-container-test" *ngFor="let n of [].constructor(event.round -1); let i= index">
-        <app-date [isOrganizer]= "false" [tableNumber]="getMyTableNumber(i + 1)" [male]="me" [female]="getMyCounterpart(i +1)"></app-date>
-        <div class="toggle-container">
-          <p> Share contact information </p>
-          <app-toggle></app-toggle>
+          <div class="toggle-container">
+            <p class="match-text">Match?</p>
+            <app-toggle></app-toggle>
+          </div>
         </div>
-      </div>
-      <div  *ngIf="!hasGoneOnDate" class="inner-date-container-test">
+
         <app-button
+          class="next-date-btn"
+          *ngIf="!hasGoneOnDate"
           (click)="goOnDate()"
           [buttonClass]="'accent border-accent clr-white '"
-          [buttonText]="'GO ON DATE'">
+          [buttonText]="'Start Next Date!'"
+        >
         </app-button>
+
+        <div *ngIf="continueIsPressed" class="date">
+          <app-date
+            [isOrganizer]="false"
+            [tableNumber]="0"
+            [male]="me"
+          ></app-date>
+        </div>
       </div>
-      <div *ngIf="continueIsPressed" class="inner-date-container-test">
-        <app-date [isOrganizer] = "false" [tableNumber]="0" [male]="me"></app-date>
+
+      <div class="dates-container" *ngIf="event.round <= 1">
+        <div class="date">
+          <app-date
+            [isOrganizer]="false"
+            [tableNumber]="0"
+            [male]="me"
+          ></app-date>
+        </div>
       </div>
     </div>
-    <div class="date-container-test" *ngIf="event.round <= 1">
-      <div class="inner-date-container-test">
-        <app-date [isOrganizer] = "false" [tableNumber]="0" [male]="me"></app-date>
-      </div>
-    </div>
-  </div>
+
     <div *ngIf="hasGoneOnDate && !continueIsPressed">
       <app-rating-form (onContinue)="continue($event)"></app-rating-form>
     </div>
