@@ -108,7 +108,7 @@
     </p>
 
     <app-button
-      *ngIf="event?.hasEnded &&
+      *ngIf="event?.hasEnded && hasEnded &&
         !isLoading"
       [buttonClass]="'accent border-accent clr-white disabled'"
       [buttonText]="'Event ended'"
@@ -116,7 +116,7 @@
 
 
 
-  <div class="ongoing-date-container" *ngIf="isOnGoing && isRegisted">
+  <div class="ongoing-date-container" *ngIf="isOnGoing && isRegisted && !hasEnded">
     <div class="date-container-test" *ngIf="event.round > 1">
       <div class="inner-date-container-test" *ngFor="let n of [].constructor(event.round -1); let i= index">
         <app-date [isOrganizer]= "false" [tableNumber]="getMyTableNumber(i + 1)" [male]="me" [female]="getMyCounterpart(i +1)"></app-date>

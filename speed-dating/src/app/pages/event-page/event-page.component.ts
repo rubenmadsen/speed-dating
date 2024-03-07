@@ -62,6 +62,8 @@ export class EventPageComponent implements OnInit, OnDestroy {
 
   hasGoneOnDate: boolean = false;
 
+  hasEnded: boolean = false;
+
   constructor(private eventService: EventService, private authService: AuthService,
               private backend: BackendService,
               private eventStateService: EventStateService,
@@ -102,7 +104,7 @@ export class EventPageComponent implements OnInit, OnDestroy {
       this.automaticMatchingButtonClass = accentClass + disabledClass;
       this.startDateButtonClass = accentClass + disabledClass;
     }
-    this.isOnGoing = this.dateNow >= new Date(this.event.startDate) && !this.event.hasEnded;
+    this.isOnGoing = this.checkDate(this.event);
     await this.getSpecifivEvent();
    }
    async getSpecifivEvent(){
@@ -115,6 +117,16 @@ export class EventPageComponent implements OnInit, OnDestroy {
     })
   }
 
+  checkDate(event: EventModel): boolean {
+    const dateNow = new Date();
+    const startDate = new Date(event.startDate);
+
+    const isSameDay = dateNow.getDate() === startDate.getDate() &&
+      dateNow.getMonth() === startDate.getMonth() &&
+      dateNow.getFullYear() === startDate.getFullYear();
+
+    return isSameDay && !event.hasEnded;
+  }
   goOnDate(){
      this.hasGoneOnDate = !this.hasGoneOnDate;
   }
@@ -151,6 +163,10 @@ export class EventPageComponent implements OnInit, OnDestroy {
       }
     });
      this.continueIsPressed = !this.continueIsPressed;
+     if(this.event.round > 3){
+       this.hasEnded = true;
+       console.log("hej")
+     }
   }
   checkUserRegistration(){
     this.backend.getMe().subscribe(r => {
@@ -220,9 +236,7 @@ export class EventPageComponent implements OnInit, OnDestroy {
     })
   }
 
-  updateEvent(){
 
-  }
 
   back(){
     this.removedIsPressed = false;

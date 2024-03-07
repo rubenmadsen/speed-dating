@@ -32,7 +32,7 @@ export class EventCardComponent {
     if (me && !me.isOrganizer){
       const seats = this.event.participants.filter(participant => participant.gender === me.gender).length
       this.status = 10 - seats + "";
-      if ((10 - seats) === 0)
+      if ((10 - seats) === 0 || this.event.hasEnded)
         this.spotsRef.nativeElement.classList.toggle("full",true)
       else
         this.spotsRef.nativeElement.classList.toggle("available",true)
