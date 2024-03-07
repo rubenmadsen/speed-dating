@@ -1,20 +1,23 @@
 .participant-answer-container{
-  height: 100%;
-  width: 90%;
+  display: flex;
+  flex-direction: column;
 }
-#date-info-container{
+
+.date-info-container{
   font-weight: bold;
-  width: 15rem;
+  text-align: center;
 }
-.answer-container{
-  height: 50%;
-  width: 100%;
-  background-color: white;
-  margin-bottom: 1rem;
+
+.answer-container {
+  padding: 1rem;
 }
-.answer-container p{
-  padding: 3px;
+
+.answer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
 }
-.nameP{
+
+.participant-name {
   font-weight: bold;
 }

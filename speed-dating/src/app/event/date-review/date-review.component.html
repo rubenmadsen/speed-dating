@@ -1,25 +1,25 @@
-<div *ngIf="isOpen" class="date-review-popup">
-  <button (click)="closePopUp()">X</button>
-  <div class="date-review-content">
-    <div id="profile-info-container">
-      <h1>{{user?.firstname}} {{user?.lastname}}</h1>
-      <p>Age: {{user?.age}}</p>
-      <p>Sex: {{user?.gender}}</p>
-
-
-    </div>
-    <div id="date-review-container">
-      <ng-container *ngIf="userDates.length !== 0">
-        <ng-container *ngFor="let date of userDates">
-          <app-participant-answer [date]="date"></app-participant-answer>
-        </ng-container>
-      </ng-container>
-      <ng-container *ngIf="userDates.length ===0">
-        <p> No feedback</p>
-      </ng-container>
-    </div>
-
-
+<div *ngIf="isOpen" class="date-review-container">
+  <div class="review-header">
+    <fa-icon [icon]="faX" class="close" (click)="closePopUp()"></fa-icon>
   </div>
 
+  <div class="profile-info-container">
+    <h1>{{ user?.firstname }} {{ user?.lastname }} -&nbsp;</h1>
+    <p>{{ user?.age }} year old&nbsp;</p>
+    <p>{{ user?.gender }}</p>
+  </div>
+
+  <div class="participant-answer-container" *ngIf="userDates.length !== 0">
+    <ng-container *ngFor="let date of userDates">
+      <app-participant-answer [date]="date"></app-participant-answer>
+    </ng-container>
+  </div>
+
+
+  <!-- 
+      <ng-container *ngIf="userDates.length === 0">
+        <p>No feedback</p>
+      </ng-container> -->
+
+  <!-- </div> -->
 </div>

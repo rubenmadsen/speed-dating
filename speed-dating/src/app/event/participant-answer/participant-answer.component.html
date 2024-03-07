@@ -1,20 +1,40 @@
 <div class="participant-answer-container">
-  <p>Meeting {{date.dateRound}}</p>
-  <div id="date-info-container">{{ date.personTwo?.firstname }}  | {{date.percentage}}% match</div>
-
-  <div class="answer-container">
-    <p class="nameP">{{date.personOne.firstname}}</p>
-    <p> How would you rate your match : {{feedbackOne.question[0]}}</p>
-    <p> How much do you think you have in common with this person : {{feedbackOne.question[1]}}</p>
-    <p> How interested are you in getting to know this person better : {{feedbackOne.question[2]}}</p>
-
+  
+  <div class="date-info-container">
+    <p>Date {{ date.dateRound }}</p>
+    <p>{{ date.percentage }}% match</p>
   </div>
 
   <div class="answer-container">
-    <p class="nameP">{{date.personTwo?.firstname}}</p>
-    <p> How would you rate your match : {{feedbackTwo.question[0]}}</p>
-    <p> How much do you think you have in common with this person : {{feedbackTwo.question[1]}}</p>
-    <p> How interested are you in getting to know this person better : {{feedbackTwo.question[2]}}</p>
-
+    <p class="participant-name">{{ date.personOne.firstname }}</p>
+    <div class="answer">
+      <p>Date Rating:&nbsp;</p>
+      <p>{{ feedbackOne.question[0] }}/10</p>
+    </div>
+    <div class="answer">
+      <p>In Common:&nbsp;</p>
+      <p>{{ feedbackOne.question[1] }}/10</p>
+    </div>
+    <div class="answer">
+      <p>Meet Again?&nbsp;</p>
+      <p>{{ feedbackOne.question[2] }}/10</p>
+    </div>
   </div>
+
+  <div class="answer-container">
+    <p class="participant-name">{{ date.personTwo?.firstname }}</p>
+    <div class="answer">
+      <p>Date Rating:&nbsp;</p>
+      <p>{{ feedbackTwo.question[0] }}/10</p>
+    </div>
+    <div class="answer">
+      <p>In Common:&nbsp;</p>
+      <p>{{ feedbackTwo.question[1] }}/10</p>
+    </div>
+    <div class="answer">
+      <p>Meet Again?&nbsp;</p>
+      <p>{{ feedbackTwo.question[2] }}/10</p>
+    </div>
+  </div>
+
 </div>
