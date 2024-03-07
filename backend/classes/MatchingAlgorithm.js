@@ -28,7 +28,6 @@ class MatchingAlgorithm {
         this.males = this.event.participants.filter(participant => participant.gender === "male");
         this.females = this.event.participants.filter(participant => participant.gender === "female");
         await this.loadCategoriesAndActivities()
-        //console.log("Cats",this.categories)
     }
     async loadCategoriesAndActivities(){
         const cats = await Category.find({});
@@ -59,8 +58,8 @@ class MatchingAlgorithm {
                 exclusionList = exclusionList.concat(previousDates)
             }
 
-            const females = this.females.filter(skank => {
-                return !exclusionList.includes(skank);
+            const females = this.females.filter(person => {
+                return !exclusionList.includes(person);
             });
             let counter = 1;
             for (const female of females) {

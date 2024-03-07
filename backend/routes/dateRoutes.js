@@ -81,8 +81,10 @@ router.get("/date/swaptables/:table1Id/:table2Id", authorizeUser, async function
         }).catch(err => console.log(err));
     }).catch(err => console.log(err));
 });
+
+
 /**
- * Swap skanks
+ * Swap females
  */
 router.get("/date/swapskanks/:table1Id/:table2Id", authorizeUser, async function (req, res) {
     Date.findById(req.params.table1Id).populate("personOne personTwo").then(t1 =>{
