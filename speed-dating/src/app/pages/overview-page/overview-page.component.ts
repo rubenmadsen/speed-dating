@@ -28,7 +28,7 @@ export class OverviewPageComponent {
   protected isLoadingRecommendedEvents: Boolean = true;
   protected isLoadingCompletedEvents: Boolean = true;
 
-  pingpong:PingPong<EventModel> = {amount:10,itemType:'EventModel',items:[], retrieved:0};
+  pingpong:PingPong<EventModel> = {amount:20,itemType:'EventModel',items:[], retrieved:0};
   constructor(private backend: BackendService,private eRef: ElementRef) {
     this.yourEvents = [];
     this.recommendedEvents = [];
@@ -48,21 +48,38 @@ export class OverviewPageComponent {
   }
 
   loadMyEvents(){
+    if(this.me.isOrganizer){
+      this.backend.getAlleventsStream(this.pingpong).subscribe(pp => {
+        pp.items.forEach(event => {
+          if(event.hasEnded){
+            this.completedEvents.push(event)
+          } else {
+            this.yourEvents.push(event)
+          }
+        })
+        this.yourEvents.sort((a , b) => a.startDate > b.startDate ? 1 : -1);
+      })
+      this.isLoadingYourEvents = false;
+      return
+    }
     this.me.events.forEach(event => {
       if (!event.hasEnded) {
         this.yourEvents.push(event);
       }
     });
-    this.isLoadingCompletedEvents = false;
+    this.yourEvents.sort((a , b) => a.startDate > b.startDate ? 1 : -1);
+    this.isLoadingYourEvents = false;
+
   }
 
   loadCompleted(){
+
      this.me.events.forEach(event => {
        if (event.hasEnded) {
          this.completedEvents.push(event);
        }
      });
-     this.isLoadingYourEvents = false;
+    this.isLoadingCompletedEvents = false;
   }
 
    async loadCityEvents(){
@@ -98,6 +115,13 @@ export class OverviewPageComponent {
   }
 
   checkDate(event: EventModel): boolean {
-    return this.dateNow >= new Date(event.startDate) && !event.hasEnded;
+    const dateNow = new Date();
+    const startDate = new Date(event.startDate);
+
+    const isSameDay = dateNow.getDate() === startDate.getDate() &&
+      dateNow.getMonth() === startDate.getMonth() &&
+      dateNow.getFullYear() === startDate.getFullYear();
+
+    return isSameDay && !event.hasEnded;
   }
 }
