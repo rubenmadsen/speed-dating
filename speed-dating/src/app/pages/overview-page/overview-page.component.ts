@@ -63,9 +63,14 @@ export class OverviewPageComponent {
       return
     }
     this.me.events.forEach(event => {
-      if (!event.hasEnded) {
+      const startDate = new Date(event.startDate)
+      if(startDate > new Date() && !event.hasEnded){
         this.yourEvents.push(event);
       }
+    if(startDate < new Date()){
+      this.completedEvents.push(event)
+    }
+
     });
     this.yourEvents.sort((a , b) => a.startDate > b.startDate ? 1 : -1);
     this.isLoadingYourEvents = false;
@@ -117,7 +122,6 @@ export class OverviewPageComponent {
   checkDate(event: EventModel): boolean {
     const dateNow = new Date();
     const startDate = new Date(event.startDate);
-
     const isSameDay = dateNow.getDate() === startDate.getDate() &&
       dateNow.getMonth() === startDate.getMonth() &&
       dateNow.getFullYear() === startDate.getFullYear();
